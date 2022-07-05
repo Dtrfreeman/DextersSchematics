@@ -1,0 +1,11 @@
+#!/usr/bin/layout
+#name=D
+#help=Highligh the current file for D
+
+string temp;
+
+
+int main(){
+
+text->setLexer("d");
+}

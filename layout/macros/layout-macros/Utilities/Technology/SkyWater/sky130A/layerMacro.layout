@@ -1,0 +1,44 @@
+#!/usr/bin/layout
+#name=Layer setup
+#help=performs as layer and settings setup for sky130A PDK. 
+
+
+int main(){ 
+stringList sl=components::getLibs();
+int i;
+string path="";
+for(i=0; i<sl.size();i++){
+    int pos=sl.at(i).indexOf("sky130",0);
+    if (pos>=0) {
+        path=components::getPath(sl.at(i));
+        }
+}
+file f;
+if (path==""){
+    for(i=0; i<sl.size();i++){
+        f.filename=components::getPath(sl.at(i))+"/sky130A/libs.tech/LayoutEditor/autoLayerMacro.layout";
+        if (f.exists()) {
+            file f2;f2.filename=components::getPath(sl.at(i))+"/sky130A/libs.ref/sky130_fd_sc_hd/LayoutEditor/sky130_fd_sc_hd.lel";
+            if (f2.exists()) components::addLib(f2.filename);
+            break;
+            }
+    }
+}
+else
+  f.filename=path+"/../../../libs.tech/LayoutEditor/autoLayerMacro.layout";
+if (f.exists()) {
+   layout->executeMacro(f.filename);
+   if (layout::objectExists()){  // do not execute on autoLayerMacro as a layout object is not yet created
+      layout->showStatus("layer setup complete");
+       if (layout->drawing->currentCell->firstElement!=NULL) layout->showStatus("setup must be performed before loading any design!");
+   }
+   }
+else layout->showMessage("Layer Setup","sky130A PDK not found!\nPlease add it within the SchematicEditor.");
+
+}
+
+
+
+
+
+

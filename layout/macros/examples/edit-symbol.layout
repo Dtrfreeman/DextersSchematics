@@ -1,0 +1,30 @@
+#!/usr/bin/layout
+#name=symbol edit
+#help=edit the symbol of a sheet component
+
+int main(){
+
+        component *comp=schematic->drawing->currentSheet->getSheetComponent();
+        
+        if (comp==NULL) {
+                debug.clear();
+                debug ("current sheet has no sheet component");
+                debug.show();
+                return 0;
+        }
+
+         symbol *sym= comp->getSymbol();
+        sElementList *sl=sym->firstElement;
+        while (sl!=NULL) {
+                if (sl->thisElement!=NULL){
+                        sl->thisElement->setColor(255,0,50);
+                }
+                sl=sl->nextElement;
+        }
+        pointArray pa;
+        pa.attach(0,0);
+        pa.attach(30,0);
+        pa.attach(0,30);
+        sym->addPolygon(pa,0,155,255);
+}
+

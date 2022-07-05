@@ -1,0 +1,11 @@
+#!/usr/bin/layout
+#name=Python
+#help=Highligh the current file for Python
+
+string temp;
+
+
+int main(){
+
+text->setLexer("python");
+}

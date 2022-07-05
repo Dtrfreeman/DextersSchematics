@@ -1,0 +1,78 @@
+#!/usr/bin/layout
+#name=rectangle
+#help=generate a label array
+
+//parameter with default value
+#parameter label "myText$row/$col"
+#parameter textHeight "100µm"
+#parameter spaceX "2.8mm"
+#parameter spaceY "1.8mm"
+#parameterInt ny 8
+#parameterInt nx 59
+#parameter layer "1"
+#parameter rowFormat "1"
+#parameter colFormat "1"
+
+#include "shapelib.layout"
+
+int main(){
+string label=iPar("label");
+int textHeight=databaseunits(iPar("textHeight"));
+int spaceX=databaseunits(iPar("spaceX"));
+int spaceY=databaseunits(iPar("spaceY"));
+int nx=iPar("nx");
+int ny=iPar("ny");
+string formatY=iPar("rowFormat");
+string formatX=iPar("colFormat");
+int layer=getLayer(iPar("layer"));
+string cellname="labelarray_"+label+"_"+userunits(textHeight)+"_"+userunits(spaceX)+"_"+userunits(spaceY)+"_"+iPar("nx")+"_"+iPar("ny")+"_"+iPar("layer")+"_"+ formatX+"_"+formatY;
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+string abc=" ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+int x,y;
+for (x=1;x<=nx;x++){
+   for (y=1;y<=ny;y++){
+      string text=label;
+      string sx,sy,s;
+      sx.setNum(x);
+      sy.setNum(y);
+      if  (formatX=="001"){
+           s.setNum(nx);
+           int i=s.size();
+           while (i>sx.size()) sx="0"+sx;
+      } else if (formatX=="A") {
+           int a,b;
+           a=(x-1)/26;b=(x-1)%26+1;
+           sx="";
+           sx=abc.mid(a,1).trimmed();
+           sx=sx+abc.mid(b,1).trimmed();
+      }
+      if  (formatY=="001"){
+           s.setNum(ny);
+           int i=s.size();
+           while (i>sy.size()) sy="0"+sy;
+      } else if (formatY=="A") {
+           int a,b;
+           a=(y-1)/26;b=(y-1)%26+1;
+           sy="";
+           sy=abc.mid(a,1).trimmed();
+           sy=sy+abc.mid(b,1).trimmed();
+      }
+      text.replace("$row",-sy);
+      text.replace("$col",sx);
+      point p;
+      p.setX((x-1)*spaceX);
+      p.setY((y-1)*spaceY);
+      element *e=layout->drawing->currentCell->addText(layer,p,text);
+      e->setWidth(textHeight);
+ }
+}
+}
+
+
+

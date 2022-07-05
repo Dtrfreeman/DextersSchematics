@@ -1,0 +1,32 @@
+#!/usr/bin/layout
+#name=Simulate + Probe
+#help=Starts a simulation with Qucs
+
+string temp;
+
+
+
+int main(){
+  file f;
+  temp=f.tempPath()+"/";
+  string callbackDir=f.currentPath()+"/../../../callback/";
+  f.filename=temp+"qucs-data.dat";
+  f.remove();
+  f.filename=temp+"qucs-netlist.txt";
+  f.open(false);
+  f.setCodec("ISO-8859-13");
+  f.write(text->drawing->text());
+  f.close();
+  stringList sl;
+  sl.append("-i");
+  sl.append(temp+"qucs-netlist.txt");
+  sl.append("-o");
+  sl.append(temp+"qucs-data.dat");
+  bool b=process::externalTool("Qucs","qucsator",sl,callbackDir+"qucs-sim.layout");
+  if (!b) b=process::externalTool("","qucs-sim",sl,callbackDir+"qucs-sim.layout");
+  return 0;
+}
+
+
+
+ 

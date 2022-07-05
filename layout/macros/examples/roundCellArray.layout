@@ -1,0 +1,56 @@
+#!/usr/bin/layout
+#name=Macro: roundCellArray.layout
+#help=filling a wafer with cell references
+
+bool insideCircle(point p, int radius){
+ double x=p.x();
+ double y=p.y();
+ double r=radius;
+ double d=x*x+y*y;
+ if (d<r*r) return true;
+ return false;
+}
+
+int main(){
+string baseCell="baseCell";
+int circleRadius=50000000;  //in databaseunits
+int xCenter=0; // center of the circle
+int yCenter=0;
+//layout->drawing->selectAll(); //uncomment these two line to delete design first
+//layout->drawing->deleteSelect();
+string cellname=layout->drawing->currentCell->cellName;
+cell *c=layout->drawing->findCell(baseCell);
+if (c==NULL){
+	layout->showMessage("Error","base cell not found");
+       return 0;
+}
+point min=c->minimum();
+point max=c->maximum();
+point size=max-min;
+point center; center.set(xCenter,yCenter);
+int startX=min.x();
+int startY=min.y();
+while (startY>-circleRadius) startY-=size.y();
+while (startX>-circleRadius) startX-=size.x();
+int x=startX;
+int y=-startY;
+do {
+   y=startY;
+   do {
+       point pc; pc.set(x-min.x()+xCenter,y-min.y()+yCenter);
+       point p1,p2,p3,p4;
+       p1.set(x,y); //lower left
+       p2.set(x+size.x(),y); //lower right
+       p3.set(x,y+size.y()); // upper left
+       p4.set(x+size.x(),y+size.y()); // upper right
+       if (insideCircle(p1,circleRadius)&&insideCircle(p2,circleRadius)
+           &&insideCircle(p3,circleRadius)&&insideCircle(p4,circleRadius)){
+              element *e=layout->drawing->currentCell->addCellref(c,pc);
+       }
+       y+= size.y();
+  } while (y<circleRadius+size.y());
+   x+= size.x();
+} while (x<circleRadius+size.x());
+//layout->drawing->currentCell->addCircle(1,center,circleRadius,360); //uncomment to show circle
+layout->drawing->scaleFull();
+}

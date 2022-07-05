@@ -1,0 +1,42 @@
+#!/usr/bin/layout
+#name=set datatype
+#help=set datatype to one for all shape touching a special layer
+
+int  main() {
+ // get first cell
+  cellList *cells=layout->drawing->firstCell;
+
+  // loop over all cells
+  while (cells!=NULL){  
+    if (cells->thisCell!=NULL){
+       if( cells->thisCell->cellName.left(3)=="cmm") {
+	       cells->thisCell->deselectAll();
+	       // get first Element of this cell
+	       elementList *el=cells->thisCell->firstElement;
+	       // loop over all element
+	       while (el!=NULL) {
+		       if (el->thisElement!=NULL){
+				if (el->thisElement->layerNum==91)  {
+					el->thisElement->selectAll();
+				      cells->thisCell->selectTouchingOrOverlapping(el->thisElement);
+				  }
+		       }
+			el=el->nextElement;
+	      }
+	       // loop over all element
+		el=cells->thisCell->firstElement;
+		       while (el!=NULL) {
+			       if (el->thisElement!=NULL){
+					if ((el->thisElement->layerNum==30)&&(el->thisElement->select)) {
+					       el->thisElement->setDatatype(1);
+					  }
+			       }
+				el=el->nextElement;
+		      }
+               cells->thisCell->deselectAll();
+	   }
+    }
+  cells=cells->nextCell;
+  }
+}
+ 

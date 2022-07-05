@@ -1,0 +1,37 @@
+#!/usr/bin/layout
+#name=Simulate + Probe
+#help=Starts a simulation with Qucs
+
+string temp;
+
+
+int main(){
+  file f;
+  temp=f.tempPath()+"/";
+  setup::checkNetlistSetup("qucs");
+  string callbackDir=f.currentPath()+"/../../../callback/";
+  f.filename=temp+"qucs-data.dat";
+  f.remove();
+  schematic->saveNetList(temp+"qucs-netlist.txt","qucs");
+  stringList sl;
+  sl.append("-i");
+  sl.append(temp+"qucs-netlist.txt");
+  sl.append("-o");
+  sl.append(temp+"qucs-data.dat");
+  bool b=process::externalTool("Qucs","qucsator",sl,callbackDir+"qucs-sim.layout");
+  if (!b) b=process::externalTool("","qucs-sim",sl,callbackDir+"qucs-sim.layout");
+  if (b) return 0;
+  string s=schematic->generateNetList("qucs");
+  string s1="**************************************************\n* Qucs was not found on your system!\n* Install it ( http://http://qucs.sourceforge.net/ ) or\n* adjust this macro to start the simulation!\n**************************************************\n\n\n* Qucs netlist:\n\n"+s;
+  if (!b){
+      textEdit *te=project::getCentralTextEditor();
+      te->newDoc();
+      te->drawing->setText(s1);
+      te->drawing->setLexer("XML");
+  }
+  return 0;
+}
+
+
+
+ 

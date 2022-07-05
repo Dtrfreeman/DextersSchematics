@@ -1,0 +1,32 @@
+#!/usr/bin/layout
+#name=Device Parameter
+#help=print out any device parameter of the current shematic sheet
+
+
+int main(){
+
+        debug.clear();
+        
+        sElementList *el=schematic->drawing->currentSheet->firstElement;
+        while (el!=NULL){
+                if (el->thisElement!=NULL){
+                        if (el->thisElement->isDevice()){
+                                string s1=el->thisElement->getComponent()->getName();
+                                string s2=el->thisElement->getParameter("devicename");
+                                debug("device "+s2+" ("+s1+")");
+                                stringList sl=el->thisElement->getParameterList();
+                                for (int i=0; i<sl.size();++i){
+                                        s1=sl.at(i);
+                                        s2=el->thisElement->getParsedParameter(s1);
+                                        debug("        "+s1+" = "+s2);
+                                }
+                                debug("");
+                        }
+                }
+                el=el->nextElement;
+        }
+        debug.show();
+        return 0;
+
+}
+

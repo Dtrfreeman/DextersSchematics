@@ -1,0 +1,19 @@
+#!/usr/bin/layout
+#name=Macro Template
+#help=creates a macro template in the text editor
+
+int main(){
+text->newFile();
+text->setFile(text->countFiles()-1);
+string s="#!/usr/bin/layout\n";
+s+="#name=My LayoutEditor Macro\n";
+s+="#help=description of my new macro\n";
+s+="\n\n";
+s+="int main(){\n";
+s+="// macro content\n";
+s+="\n\n\n";
+s+="}\n\n";
+text->drawing->setText(s);
+text->drawing->title="my macro";
+text->drawing->setLexer("cpp");
+}

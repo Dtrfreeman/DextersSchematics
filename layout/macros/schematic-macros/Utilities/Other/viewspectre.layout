@@ -1,0 +1,32 @@
+#!/usr/bin/layout
+#name=View Spectre Netlist
+#help=Displays spectre netlists
+
+void setupSpectre(){
+  string license=process::getEnv("SNPSLMD_LICENSE_FILE");
+
+  //adjust this line to the correct license server
+  if (license=="") process::setEnv("SNPSLMD_LICENSE_FILE","27000@licenseServer");
+
+}
+
+void showNetlist(string net){
+  string s=schematic->generateNetList(net);
+  textEdit *te=project::getCentralTextEditor();
+  te->newDoc();
+  te->drawing->setText(s);
+  te->drawing->setLexer("spice");
+  te->drawing->title=net+" netlist";
+}
+
+int main(){
+  setup::checkNetlistSetup("spectre");
+  setupSpectre();
+  showNetlist("spectre");
+
+  
+  return 0;
+}
+
+
+ 

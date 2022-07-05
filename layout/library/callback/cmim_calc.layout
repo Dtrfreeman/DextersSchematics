@@ -1,0 +1,15 @@
+#!/usr/bin/layout
+#name=callback C mim
+#help=calculation of capacitance of cmim
+
+int main(){
+  sElement *e=iPDK_getCurrentInst();
+  double w=e->getParameter("width").toDoubleFromEng();
+  double l=e->getParameter("length").toDoubleFromEng();
+  double cap=w*l*0.002+0.00000000003*(2*w+2*l);
+  string s4; s4.setEng(cap);
+  e->setParameter("cap",s4);
+}
+
+
+ 

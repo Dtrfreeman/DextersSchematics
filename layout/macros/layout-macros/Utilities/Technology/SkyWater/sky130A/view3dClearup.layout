@@ -1,0 +1,16 @@
+#!/usr/bin/layout
+#name=3d view: clearup created layers
+#help=installs LayoutEditor files
+
+int main(){
+
+layout->drawing->deleteLayer(299);
+layers::num[299].disable();
+layout->drawing->deleteLayer(298);
+layers::num[298].disable();
+layout->drawing->deleteLayer(297);
+layers::num[297].disable();
+layout->drawing->deleteLayer(296);
+layers::num[296].disable();
+
+}

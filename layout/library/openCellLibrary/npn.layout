@@ -1,0 +1,112 @@
+#!/usr/bin/layout
+#name=npn
+#help=npn pcell
+
+#include "oclCore.layout"
+
+#parameter width "5u"
+#parameter length "5u"
+#parameter design "simple"
+
+int main(){
+checkSetup();
+int width=databaseunits(iPDK_getParameterValue("width"));
+int length=databaseunits(iPDK_getParameterValue("length"));
+string design=iPDK_getParameterValue("design");
+string cellname="npn_"+iPDK_getParameterHash();
+if (layout->drawing->existCellname(cellname)) {
+        layout->drawing->setCell(cellname);
+        return 0;
+        }
+int overlap=100;
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cl->thisCell);
+
+layout->drawing->activeLayer=bipPDifLayer;
+layout->drawing->point(-3500,-2000);
+layout->drawing->point(width+2000,length+2000);
+layout->drawing->box();
+layout->drawing->activeLayer=bipNDifLayer;
+layout->drawing->point(0,0);
+layout->drawing->point(width,length);
+layout->drawing->box();
+layout->drawing->activeLayer=contLayer;
+layout->drawing->point(1000,1000);
+layout->drawing->point(width-1000,length-1000);
+layout->drawing->box();
+layout->drawing->activeLayer=m1Layer;
+layout->drawing->point(1000-contSpace,1000-contSpace);
+layout->drawing->point(width-1000+contSpace,length-1000+contSpace);
+layout->drawing->box();
+layout->drawing->point(width/2,length/2);
+layout->drawing->text("E");
+// basic
+layout->drawing->activeLayer=contLayer;
+layout->drawing->point(-2000,-1000);
+layout->drawing->point(-2500,length+1000);
+layout->drawing->box();
+layout->drawing->activeLayer=m1Layer;
+layout->drawing->point(-2000+contSpace,-1000-contSpace);
+layout->drawing->point(-2500-contSpace,length+1000+contSpace);
+layout->drawing->box();
+layout->drawing->point(-2000,-1000);
+layout->drawing->text("B");
+//collector
+layout->drawing->activeLayer=bipNDeepLayer;
+layout->drawing->point(-7500,-2000);
+layout->drawing->point(-9500,length+2000);
+layout->drawing->box();
+layout->drawing->activeLayer=bipNDifLayer;
+layout->drawing->point(-6500,-3000);
+layout->drawing->point(-10500,length+3000);
+layout->drawing->box();
+layout->drawing->activeLayer=contLayer;
+layout->drawing->point(-7000,-2500);
+layout->drawing->point(-10000,length+2500);
+layout->drawing->box();
+layout->drawing->activeLayer=m1Layer;
+layout->drawing->point(-7000+contSpace,-2500-contSpace);
+layout->drawing->point(-10000-contSpace,length+2500+contSpace);
+layout->drawing->box();
+layout->drawing->point(-7000,-2500);
+layout->drawing->text("C");
+if (design=="simple"){
+    //epi...
+    layout->drawing->activeLayer=bipBurriedLayer;
+    layout->drawing->point(-10500,-3000);
+    layout->drawing->point(width+3000,length+3000);
+    layout->drawing->box();
+    layout->drawing->activeLayer=bipEpiLayer;
+    layout->drawing->point(-13500,-6000);
+    layout->drawing->point(width+6000,length+6000);
+    layout->drawing->box();
+}
+else {
+    // ring design
+    //epi...
+    layout->drawing->activeLayer=bipBurriedLayer;
+    layout->drawing->point(-10500,-9000);
+    layout->drawing->point(width+9000,length+9000);
+    layout->drawing->box();
+    layout->drawing->activeLayer=bipEpiLayer;
+    layout->drawing->point(-13500,-12000);
+    layout->drawing->point(width+12000,length+12000);
+    layout->drawing->box();
+    layout->drawing->activeLayer=bipNDeepLayer;
+    layout->drawing->point(width+6000,-8000);
+    layout->drawing->point(width+8000,length+8000);
+    layout->drawing->box();
+    layout->drawing->point(-9500,-8000);
+    layout->drawing->point(-7500,length+8000);
+    layout->drawing->box();
+    layout->drawing->point(-7500,length+6000);
+    layout->drawing->point(width+6000,length+8000);
+    layout->drawing->box();
+    layout->drawing->point(-7500,-6000);
+    layout->drawing->point(width+6000,-8000);
+    layout->drawing->box();
+
+}
+
+}

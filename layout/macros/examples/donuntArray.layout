@@ -1,0 +1,40 @@
+#!/usr/bin/layout
+#name=donut array
+#help=an array of donut with different parameter
+
+
+int main(){
+  int nx=5;
+  int ny=5;
+  int sizeStart=200;
+  int sizeStep=100;
+  int stepX=4000;
+  int stepY=3900;
+  int radiusouter=1000;
+  int radiusinner=500;
+  int radiusStep=50;
+  int x,y;
+  for(x=0;x<nx;x++){
+   for(y=0;y<ny;y++){
+     layout->drawing->activeLayer=10;
+     layout->drawing->point(x*stepX,y*stepY);
+     layout->drawing->point(x*stepX,y*stepY+radiusouter+radiusStep*y);
+     layout->drawing->point(x*stepX,y*stepY+radiusouter+radiusStep*y);
+     layout->drawing->spiral();
+     layout->drawing->currentCell->firstElement->thisElement->selectAll();
+     layout->drawing->point(x*stepX,y*stepY);
+     layout->drawing->point(x*stepX,y*stepY+radiusinner+radiusStep*x);
+     layout->drawing->point(x*stepX,y*stepY+radiusinner+radiusStep*x);
+     layout->drawing->spiral();
+     layout->drawing->currentCell->firstElement->thisElement->selectAll();
+     layout->drawing->point(x*stepX,y*stepY+radiusinner+radiusStep*x);
+     layout->drawing->point(x*stepX,y*stepY+radiusouter+radiusStep*y);
+     layout->drawing->path();
+     layout->drawing->currentCell->firstElement->thisElement->selectAll();
+     layout->drawing->mergeSelect();
+     layout->drawing->closeToPolygon();
+     layout->drawing->deselectAll();
+     }
+  }
+  layout->drawing->scaleFull();
+}

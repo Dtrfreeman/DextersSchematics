@@ -1,0 +1,29 @@
+#!/usr/bin/layout
+#name=callback place & route
+#help=callback macro called after completing the place & route
+
+string temp;
+string workDir;
+
+
+int main(){
+  if (process::trigger()=="output") {
+     layout->showProgress("OpenROAD running");
+     cout(process::toolData());
+     return 0;
+     }
+  layout->showStatus("OpenbROAD completed");
+  string s=process::toolResult();
+  if (s.size()>3){
+    textEdit *te=project::getCentralTextEditor();
+    if (te->filename!="") te->newDoc();
+    else if (te->drawing->title!="") te->newDoc();
+    te->drawing->title="OpenROAD results";
+    te->drawing->setText(s);
+    te->drawing->setModifySaved();
+  }
+  return 0;
+}
+
+
+ 

@@ -1,0 +1,27 @@
+#!/usr/bin/layout
+#name=3D view
+#help=generates devided layers and show 3d view
+
+#include "pcbcore.layout"
+
+int main(){
+    layout3d->drawing->deleteAllCell();
+    generateLayer();
+    layers::num[10].enable();
+    layers::num[11].enable();
+    layers::num[12].enable();
+    layers::num[13].enable();
+    layers::num[14].enable();
+    layers::num[15].enable();
+    layers::num[72].enable();
+    layers::num[73].enable();
+    layers::num[74].enable();
+    layers::num[75].enable();
+    layers::num[76].enable();
+    layers::num[77].enable();
+    layout->view3dTool->extrudeCurrentCell();
+    layout->view3dTool->loadModel(12,layers::num[28].get3dThickness(),"");
+    layout->view3dTool->loadModel(75, layers::num[60].get3dLevel() + layers::num[60].get3dThickness(),"rx180");
+    layout->view3dTool->syncView();
+
+}

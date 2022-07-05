@@ -1,0 +1,22 @@
+#!/usr/bin/layout
+#name=View VHDL Netlist
+#help=Displays VHDL netlists
+
+void showNetlist(string net){
+  string s=schematic->generateNetList(net);
+  textEdit *te=project::getCentralTextEditor();
+  te->newDoc();
+  te->drawing->setText(s);
+  te->drawing->setLexer("VHDL");
+  te->drawing->title=net+" netlist";
+}
+
+int main(){
+  setup::checkNetlistSetup("VHDL");
+  showNetlist("VHDL");
+  
+  return 0;
+}
+
+
+ 

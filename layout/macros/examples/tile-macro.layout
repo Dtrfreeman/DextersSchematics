@@ -1,0 +1,49 @@
+#!/usr/bin/layout
+#name=tile a layout
+#help=breaks a layout into tiles
+
+
+int main(){
+file f;
+
+// enter your parameter here:
+int nx=10;
+int ny=10;
+string outPath=f.homePath();
+string baseName="layoutTile";
+string tempFile=f.tempPath()+"/tempLayout.gds.gz";
+// end of parameter entry
+
+layout->drawing->saveFile(tempFile);
+
+point pmax,pmin;
+pmax.set(-1000000000,-1000000000);
+pmin.set(1000000000,1000000000);
+layout->drawing->currentCell->maximum(&pmax);
+layout->drawing->currentCell->minimum(&pmin);
+int stepX=(pmax.x()-pmin.x())/nx+1;
+int stepY=(pmax.y()-pmin.y())/ny+1;
+
+int x,y;
+int layerbackup=layout->drawing->activeLayer;
+layout->drawing->activeLayer=999;
+layout->drawing->currentCell->deselectAll();
+string sx,sy;
+for (x=0;x<nx;x++)  {
+   for (y=0;y<ny;y++){
+   sx.setNum(x);
+   sy.setNum(y);
+   layout->drawing->point(pmin.x()+x*stepX,pmin.y()+y*stepY);
+   layout->drawing->point(pmin.x()+(x+1)*stepX,pmin.y()+(y+1)*stepY);
+   layout->drawing->box();
+   layout->drawing->currentCell->selectLayer(999);
+   layout->drawing->currentCell->cropWithSelection();
+   layout->drawing->stripUnneeded();
+   layout->drawing->saveFile(outPath+"/"+baseName+sx+"_"+sy+".gds");
+   layout->drawing->openFile(tempFile);
+}
+}
+
+layout->drawing->activeLayer=layerbackup;
+layout->drawing->openFile(tempFile);
+}

@@ -1,0 +1,70 @@
+ 
+
+
+<Component PMOS>
+<Description>
+P-Channel
+</Description>
+<Parameter>
+<string W 1>
+callback=pmos_check()
+unit=nm
+info=width
+<string L 1>
+callback=pmos_check()
+unit=nm
+info=length
+<string wmax 10000>
+edit=false
+display=false
+<string wmin 130>
+edit=false
+display=false
+<string lmax 10000>
+edit=false
+display=false
+<string lmin 130>
+edit=false
+display=false
+</Parameter>
+<Layout>
+[tcl]
+#for parameter	prog
+*	        pmos_draw
+</Layout>
+<Prefix MP>
+<Label>
+$devicename
+$W/$L
+</Label>
+<Symbol 0>
+<Line -6 0 -8 0 #646464>
+<Line 24 48 24 32 wire>
+<Line 24 32 -8 32 wire>
+<Line -16 32 -16 -32 wire>
+<Line -24 -32 -16 -32 wire>
+<Line -8 -24 -8 -40 wire>
+<Line -8 8 -8 -8 wire>
+<Line -8 40 -8 24 wire>
+<Line -6 4 -6 -4 wire>
+<Line 10 0 -6 -4 wire>
+<Line 10 0 -6 4 wire>
+<Line -8 -32 24 -32 wire>
+<Line 24 -32 24 -48 #646464>
+<Port 24 -48 S>
+<Port -24 -32 G>
+<Port 24 48 D>
+</Symbol>
+<Offsetlabel 0 20 18>
+<Offsetlabel 90 -16 -20>
+<Offsetlabel 180 24 15>
+<Offsetlabel 270 -19 -15>
+<Netlist hspice>
+M$devicename $node(D) $node(G) $node(S) VDD PMOS_VTL W=$W L=$L
+</Netlist>
+<Netlist spice>
+M$devicename $node(D) $node(G) $node(S) VDD PMOS_VTL W=$W L=$L
+</Netlist>
+<Model spice>
+</Model>
+</Component>

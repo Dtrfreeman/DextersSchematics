@@ -1,0 +1,3984 @@
+<Category and_or>
+a2111o
+a2111oi
+a211o
+a211oi
+a21bo
+a21boi
+a21o
+a21oi
+a221o
+a221oi
+a222oi
+a22o
+a22oi
+and2
+and2b
+and3
+and3b
+and4
+and4b
+and4bb
+nand2
+nand2b
+nand3
+nand3b
+nand4
+nand4b
+nand4bb
+nor2
+nor2b
+nor3
+nor3b
+nor4
+nor4b
+nor4bb
+or2
+or2b
+or3
+or3b
+or4
+or4b
+or4bb
+xnor2
+xnor3
+xor2
+xor3
+</Category>
+<Category inv_buf>
+buf
+bufbuf
+bufinv
+clkbuf
+clkinv
+ebufn
+einvn
+einvp
+inv
+</Category>
+<Category other>
+conb
+fa
+fah
+fahcin
+fahcon
+ha
+mux2
+mux2i
+mux4
+</Category>
+<Category flip-flop>
+dfbbn
+dfbbp
+dfrbp
+dfrtn
+dfrtp
+dfsbp
+dfstp
+dfxbp
+dfxtp
+sdfbbn
+sdfbbp
+sdfrbp
+sdfrtn
+sdfrtp
+sdfsbp
+sdfstp
+sdfxbp
+sdfxtp
+</Category>
+
+<Component a2111o>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a2111o_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a2111o_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a2111o_4
+</Layout>
+<Label>
+a2111o
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc -45 30 -45 15 -45 45 wire>
+<Line -45 15 -55 15 -55 45 -45 45 wire>
+<Line -55 23 -60 23 wire>
+<Line -55 37 -60 37 wire>
+<Port -60 37 A1 local digitalIn>
+<Port -60 23 A2 local digitalIn>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -21 8 -60 8 wire>
+<Line -21 -6 -60 -6 wire>
+<Line -24 -21 -60 -21 wire>
+<Line 30 0 45 0 wire>
+<Port -60 8 B1 local digitalIn>
+<Port -60 -6 C1 local digitalIn>
+<Port -60 -21 D1 local digitalIn>
+<Port 45 0 X local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A1) $node(A2) $node(B1) $node(C1) $node(D1) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__a2111o_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__a2111o $devicename ($node(X), $node(A1), $node(A2), $node(B1), $node(C1), $node(D1), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component a2111oi>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 0 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=0      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a2111oi_0
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a2111oi_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a2111oi_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a2111oi_4
+</Layout>
+<Label>
+a2111oi
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc -45 30 -45 15 -45 45 wire>
+<Line -45 15 -55 15 -55 45 -45 45 wire>
+<Line -55 23 -60 23 wire>
+<Line -55 37 -60 37 wire>
+<Port -60 37 A1 local digitalIn>
+<Port -60 23 A2 local digitalIn>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -21 8 -60 8 wire>
+<Line -21 -6 -60 -6 wire>
+<Line -24 -21 -60 -21 wire>
+<Line 38 0 45 0 wire>
+<Circle 30 4 38 -4 wire>
+<Port -60 8 B1 local digitalIn>
+<Port -60 -6 C1 local digitalIn>
+<Port -60 -21 D1 local digitalIn>
+<Port 45 0 Y local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A1) $node(A2) $node(B1) $node(C1) $node(D1) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__a2111oi_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__a2111oi $devicename ($node(Y), $node(A1), $node(A2), $node(B1), $node(C1), $node(D1), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component a211o>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a211o_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a211o_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a211o_4
+</Layout>
+<Label>
+a211o
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc -45 30 -45 15 -45 45 wire>
+<Line -45 15 -55 15 -55 45 -45 45 wire>
+<Line -55 23 -60 23 wire>
+<Line -55 37 -60 37 wire>
+<Port -60 37 A1 local digitalIn>
+<Port -60 23 A2 local digitalIn>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -22 -15 -60 -15 wire>
+<Line -19 0 -60 0 wire>
+<Line 30 0 45 0 wire>
+<Port -60 0 B1 local digitalIn>
+<Port -60 -15 C1 local digitalIn>
+<Port 45 0 D1 local digitalIn>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A1) $node(A2) $node(B1) $node(C1) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__a211o_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__a211o $devicename ($node(X), $node(A1), $node(A2), $node(B1), $node(C1), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component a211oi>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a211oi_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a211oi_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a211oi_4
+</Layout>
+<Label>
+a211oi
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc -45 30 -45 15 -45 45 wire>
+<Line -45 15 -55 15 -55 45 -45 45 wire>
+<Line -55 23 -60 23 wire>
+<Line -55 37 -60 37 wire>
+<Port -60 37 A1 local digitalIn>
+<Port -60 23 A2 local digitalIn>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -22 -15 -60 -15 wire>
+<Line -19 0 -60 0 wire>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Port -60 0 B1 local digitalIn>
+<Port -60 -15 C1 local digitalIn>
+<Port 45 0 D1 local digitalIn>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A1) $node(A2) $node(B1) $node(C1) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__a211oi_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__a211oi $devicename ($node(Y), $node(A1), $node(A2), $node(B1), $node(C1), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component a21bo>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a21bo_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a21bo_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a21bo_4
+</Layout>
+<Label>
+a21bo
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc -45 30 -45 15 -45 45 wire>
+<Line -45 15 -55 15 -55 45 -45 45 wire>
+<Line -55 23 -60 23 wire>
+<Line -55 37 -60 37 wire>
+<Port -60 37 A1 local digitalIn>
+<Port -60 23 A2 local digitalIn>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -31 -15 -60 -15 wire>
+<Line 30 0 45 0 wire>
+<Circle -23 -11 -31 -19 wire>
+<Port -60 -15 B1_N local digitalIn>
+<Port 45 0 X local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A1) $node(A2) $node(B1_N) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__a21bo_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__a21bo $devicename ($node(X), $node(A1), $node(A2), $node(B1_N), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component a21boi>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 0 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=0      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a21boi_0
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a21boi_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a21boi_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a21boi_4
+</Layout>
+<Label>
+a21boi
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc -45 30 -45 15 -45 45 wire>
+<Line -45 15 -55 15 -55 45 -45 45 wire>
+<Line -55 23 -60 23 wire>
+<Line -55 37 -60 37 wire>
+<Port -60 37 A1 local digitalIn>
+<Port -60 23 A2 local digitalIn>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -31 -15 -60 -15 wire>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Circle -23 -11 -31 -19 wire>
+<Port -60 -15 B1_N local digitalIn>
+<Port 45 0 Y local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A1) $node(A2) $node(B1_N) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__a21boi_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__a21boi $devicename ($node(Y), $node(A1), $node(A2), $node(B1_N), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component a21o>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a21o_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a21o_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a21o_4
+</Layout>
+<Label>
+a21o
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc -45 30 -45 15 -45 45 wire>
+<Line -45 15 -55 15 -55 45 -45 45 wire>
+<Line -55 23 -60 23 wire>
+<Line -55 37 -60 37 wire>
+<Port -60 37 A1 local digitalIn>
+<Port -60 23 A2 local digitalIn>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -22 -15 -60 -15 wire>
+<Line 30 0 45 0 wire>
+<Port -60 -15 B1 local digitalIn>
+<Port 45 0 X local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A1) $node(A2) $node(B1) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__a21o_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__a21o $devicename ($node(X), $node(A1), $node(A2), $node(B1), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component a21oi>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a21oi_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a21oi_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a21oi_4
+</Layout>
+<Label>
+a21oi
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc -45 30 -45 15 -45 45 wire>
+<Line -45 15 -55 15 -55 45 -45 45 wire>
+<Line -55 23 -60 23 wire>
+<Line -55 37 -60 37 wire>
+<Port -60 37 A1 local digitalIn>
+<Port -60 23 A2 local digitalIn>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -22 -15 -60 -15 wire>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Port -60 -15 B1 local digitalIn>
+<Port 45 0 Y local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A1) $node(A2) $node(B1) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__a21oi_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__a21oi $devicename ($node(Y), $node(A1), $node(A2), $node(B1), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component a221o>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a221o_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a221o_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a221o_4
+</Layout>
+<Label>
+a221o
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Line 30 0 45 0 wire>
+<Line -19 0 -30 0 wire>
+<Line -24 -20 -60 -20 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -30 30 0 30 wire>
+<Line 0 -30 -30 -30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Arc -20 -30 30 0 0 30 wire>
+<Port -60 -7 B2 local digitalIn>
+<Port -60 7 B1 local digitalIn>
+<Line -55 7 -60 7 wire>
+<Line -55 -7 -60 -7 wire>
+<Line -45 -15 -55 -15 -55 15 -45 15 wire>
+<Arc -45 0 -45 -15 -45 15 wire>
+<Port -60 23 A2 local digitalIn>
+<Port -60 37 A1 local digitalIn>
+<Line -55 37 -60 37 wire>
+<Line -55 23 -60 23 wire>
+<Line -45 15 -55 15 -55 45 -45 45 wire>
+<Arc -45 30 -45 15 -45 45 wire>
+<Port 45 0 X local digitalOut>
+<Port -60 -20 C1 local digitalIn>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A1) $node(A2) $node(B1) $node(B2) $node(C1) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__a221o_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__a221o $devicename ($node(X), $node(A1), $node(A2), $node(B1), $node(B2), $node(C1), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component a221oi>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a221oi_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a221oi_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a221oi_4
+</Layout>
+<Label>
+a221oi
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Line 38 0 45 0 wire>
+<Circle 30 4 38 -4 wire>
+<Line -19 0 -30 0 wire>
+<Line -24 -20 -60 -20 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -30 30 0 30 wire>
+<Line 0 -30 -30 -30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Arc -20 -30 30 0 0 30 wire>
+<Port -60 -7 B2 local digitalIn>
+<Port -60 7 B1 local digitalIn>
+<Line -55 7 -60 7 wire>
+<Line -55 -7 -60 -7 wire>
+<Line -45 -15 -55 -15 -55 15 -45 15 wire>
+<Arc -45 0 -45 -15 -45 15 wire>
+<Port -60 23 A2 local digitalIn>
+<Port -60 37 A1 local digitalIn>
+<Line -55 37 -60 37 wire>
+<Line -55 23 -60 23 wire>
+<Line -45 15 -55 15 -55 45 -45 45 wire>
+<Arc -45 30 -45 15 -45 45 wire>
+<Port 45 0 Y local digitalOut>
+<Port -60 -20 C1 local digitalIn>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A1) $node(A2) $node(B1) $node(B2) $node(C1) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__a221oi_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__a221oi $devicename ($node(Y), $node(A1), $node(A2), $node(B1), $node(B2), $node(C1), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component a222oi>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a222oi_1
+</Layout>
+<Label>
+a222oi
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc -45 30 -45 15 -45 45 wire>
+<Line -45 15 -55 15 -55 45 -45 45 wire>
+<Line -55 23 -60 23 wire>
+<Line -55 37 -60 37 wire>
+<Port -60 37 A1 local digitalIn>
+<Port -60 23 A2 local digitalIn>
+<Arc -45 0 -45 -15 -45 15 wire>
+<Line -45 15 -55 15 -55 -15 -45 -15 wire>
+<Line -30 0 -20 0 wire>
+<Line -55 7 -60 7 wire>
+<Line -55 -7 -60 -7 wire>
+<Port -60 7 B1 local digitalIn>
+<Port -60 -7 B2 local digitalIn>
+<Arc -45 -30 -45 -45 -45 -15 wire>
+<Line -45 -15 -55 -15 -55 -45 -45 -45 wire>
+<Line -55 -23 -60 -23 wire>
+<Line -55 -37 -60 -37 wire>
+<Port -60 -37 C2 local digitalIn>
+<Port -60 -23 C1 local digitalIn>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line 38 0 45 0 wire>
+<Circle 30 4 38 -4 wire>
+<Port 45 0 Y local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A1) $node(A2) $node(B1) $node(B2) $node(C1) $node(C2) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__a222oi_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__a222oi $devicename ($node(Y), $node(A1), $node(A2), $node(B1), $node(B2), $node(C1), $node(C2), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component a22o>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a22o_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a22o_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a22o_4
+</Layout>
+<Label>
+a22o
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc -45 30 -45 15 -45 45 wire>
+<Line -45 15 -55 15 -55 45 -45 45 wire>
+<Line -55 23 -60 23 wire>
+<Line -55 37 -60 37 wire>
+<Port -60 37 A1 local digitalIn>
+<Port -60 23 A2 local digitalIn>
+<Arc -45 -30 -45 -45 -45 -15 wire>
+<Line -45 -15 -55 -15 -55 -45 -45 -45 wire>
+<Line -55 -23 -60 -23 wire>
+<Line -55 -37 -60 -37 wire>
+<Port -60 -37 B2 local digitalIn>
+<Port -60 -23 B1 local digitalIn>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line 30 0 45 0 wire>
+<Port 45 0 X local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A1) $node(A2) $node(B1) $node(B2) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__a22o_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__a22o $devicename ($node(X), $node(A1), $node(A2), $node(B1), $node(B2), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component a22oi>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a22oi_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a22oi_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__a22oi_4
+</Layout>
+<Label>
+a22oi
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc -45 30 -45 15 -45 45 wire>
+<Line -45 15 -55 15 -55 45 -45 45 wire>
+<Line -55 23 -60 23 wire>
+<Line -55 37 -60 37 wire>
+<Port -60 37 A1 local digitalIn>
+<Port -60 23 A2 local digitalIn>
+<Arc -45 -30 -45 -45 -45 -15 wire>
+<Line -45 -15 -55 -15 -55 -45 -45 -45 wire>
+<Line -55 -23 -60 -23 wire>
+<Line -55 -37 -60 -37 wire>
+<Port -60 -37 B2 local digitalIn>
+<Port -60 -23 B1 local digitalIn>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line 38 0 45 0 wire>
+<Circle 30 4 38 -4 wire>
+<Port 45 0 Y local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A1) $node(A2) $node(B1) $node(B2) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__a22oi_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__a22oi $devicename ($node(Y), $node(A1), $node(A2), $node(B1), $node(B2), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component and2>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 0 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=0      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and2_0
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and2_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and2_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and2_4
+</Layout>
+<Label>
+and2
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc 0 0 0 -30 0 30 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Line -20 -15 -30 -15 wire>
+<Line -20 15 -30 15 wire>
+<Line 30 0 40 0 wire>
+<Port -30 15 A local digitalIn>
+<Port -30 -15 B local digitalIn>
+<Port 40 0 X local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A) $node(B) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__and2_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__and2 $devicename ($node(X), $node(A), $node(B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component and2b>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and2b_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and2b_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and2b_4
+</Layout>
+<Label>
+and2b
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc 0 0 0 -30 0 30 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Line -20 -15 -30 -15 wire>
+<Line -30 15 -28 15 wire>
+<Line 30 0 40 0 wire>
+<Circle -28 11 -20 19 wire>
+<Port -30 15 A_N local digitalIn>
+<Port -30 -15 B local digitalIn>
+<Port 40 0 X local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A_N) $node(B) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__and2b_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__and2b $devicename ($node(X), $node(A_N), $node(B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component and3>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and3_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and3_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and3_4
+</Layout>
+<Label>
+and3
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc 0 0 0 -30 0 30 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Line -20 -20 -30 -20 wire>
+<Line -20 0 -30 0 wire>
+<Line -20 20 -30 20 wire>
+<Line 30 0 40 0 wire>
+<Port -30 20 A local digitalIn>
+<Port -30 0 B local digitalIn>
+<Port -30 -20 C local digitalIn>
+<Port 40 0 X local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A) $node(B) $node(C) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__and3_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__and3 $devicename ($node(X), $node(A), $node(B), $node(C), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component and3b>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and3b_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and3b_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and3b_4
+</Layout>
+<Label>
+and3b
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc 0 0 0 -30 0 30 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Line -20 -20 -30 -20 wire>
+<Line -20 0 -30 0 wire>
+<Line -28 20 -30 20 wire>
+<Circle -28 16 -20 24 wire>
+<Line 30 0 40 0 wire>
+<Port -30 20 A_N local digitalIn>
+<Port -30 0 B local digitalIn>
+<Port -30 -20 C local digitalIn>
+<Port 40 0 X local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A_N) $node(B) $node(C) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__and3b_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__and3b $devicename ($node(X), $node(A_N), $node(B), $node(C), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component and4>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and4_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and4_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and4_4
+</Layout>
+<Label>
+and4
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc 0 0 0 -30 0 30 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Line -20 -24 -30 -24 wire>
+<Line -20 8 -30 8 wire>
+<Line -20 -8 -30 -8 wire>
+<Line -20 24 -30 24 wire>
+<Line 30 0 40 0 wire>
+<Port -30 24 A local digitalIn>
+<Port -30 8 B local digitalIn>
+<Port -30 -8 C local digitalIn>
+<Port -30 -24 D local digitalIn>
+<Port 40 0 X local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A) $node(B) $node(C) $node(D) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__and4_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__and4 $devicename ($node(X), $node(A), $node(B), $node(C), $node(D), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component and4b>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and4b_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and4b_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and4b_4
+</Layout>
+<Label>
+and4b
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc 0 0 0 -30 0 30 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Line -20 -24 -30 -24 wire>
+<Line -20 8 -30 8 wire>
+<Line -20 -8 -30 -8 wire>
+<Line -28 24 -30 24 wire>
+<Circle -28 20 -20 28 wire>
+<Line 30 0 40 0 wire>
+<Port -30 24 A_N local digitalIn>
+<Port -30 8 B local digitalIn>
+<Port -30 -8 C local digitalIn>
+<Port -30 -24 D local digitalIn>
+<Port 40 0 X local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A_N) $node(B) $node(C) $node(D) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__and4b_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__and4b $devicename ($node(X), $node(A_N), $node(B), $node(C), $node(D), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component and4bb>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and4bb_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and4bb_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__and4bb_4
+</Layout>
+<Label>
+and4bb
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc 0 0 0 -30 0 30 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Line -20 -24 -30 -24 wire>
+<Line -28 8 -30 8 wire>
+<Line -20 -8 -30 -8 wire>
+<Line -28 24 -30 24 wire>
+<Circle -28 20 -20 28 wire>
+<Circle -28 4 -20 12 wire>
+<Line 30 0 40 0 wire>
+<Port -30 24 A_N local digitalIn>
+<Port -30 8 B_N local digitalIn>
+<Port -30 -8 C local digitalIn>
+<Port -30 -24 D local digitalIn>
+<Port 40 0 X local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A_N) $node(B_N) $node(C) $node(D) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__and4bb_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__and4bb $devicename ($node(X), $node(A_N), $node(B_N), $node(C), $node(D), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component buf>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4 6 8 12 16>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__buf_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__buf_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__buf_4
+output=6      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__buf_6
+output=8      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__buf_8
+output=12      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__buf_12
+output=16      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__buf_16
+</Layout>
+<Label>
+buf
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Port 40 0 X local digitalOut>
+<Port -30 0 A local digitalIn>
+<Line 22 0 40 0 wire>
+<Line -20 0 -30 0 wire>
+<Line -20 -20 -20 20 22 0 -20 -20 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 -29>
+<Netlist spice>
+X$devicename $node(A) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__buf_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__buf $devicename ($node(X), $node(A), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component bufbuf>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 8 16>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=8      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__bufbuf_8
+output=16      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__bufbuf_16
+</Layout>
+<Label>
+bufbuf
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Port 80 0 X local digitalOut>
+<Port -30 0 A local digitalIn>
+<Line 70 0 80 0 wire>
+<Line -20 0 -30 0 wire>
+<Line -20 -20 -20 20 22 0 -20 -20 wire>
+<Line 22 0 28 0 wire>
+<Line 28 -20 28 20 70 0 28 -20 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 -29>
+<Netlist spice>
+X$devicename $node(A) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__bufbuf_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__bufbuf $devicename ($node(X), $node(A), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component bufinv>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 8 16>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=8      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__bufinv_8
+output=16      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__bufinv_16
+</Layout>
+<Label>
+bufinv
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Port 80 0 Y local digitalOut>
+<Port -30 0 A local digitalIn>
+<Line 78 0 80 0 wire>
+<Circle 70 4 78 -4 wire>
+<Line -20 0 -30 0 wire>
+<Line -20 -20 -20 20 22 0 -20 -20 wire>
+<Line 22 0 28 0 wire>
+<Line 28 -20 28 20 70 0 28 -20 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 -29>
+<Netlist spice>
+X$devicename $node(A) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__bufinv_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__bufinv $devicename ($node(Y), $node(A), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component clkbuf>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4 8 16>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__clkbuf_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__clkbuf_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__clkbuf_4
+output=8      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__clkbuf_8
+output=16      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__clkbuf_16
+</Layout>
+<Label>
+clkbuf
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Port 40 0 X local digitalOut>
+<Port -30 0 A local digitalIn>
+<Line 22 0 40 0 wire>
+<Line -20 0 -30 0 wire>
+<Line -20 -20 -20 20 22 0 -20 -20 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 -29>
+<Netlist spice>
+X$devicename $node(A) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__clkbuf_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__clkbuf $devicename ($node(X), $node(A), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component clkinv>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4 8 16>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__clkinv_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__clkinv_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__clkinv_4
+output=8      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__clkinv_8
+output=16      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__clkinv_16
+</Layout>
+<Label>
+clkinv
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Port 40 0 Y local digitalOut>
+<Port -30 0 A local digitalIn>
+<Line 30 0 40 0 wire>
+<Circle 22 4 30 -4 wire>
+<Line -20 0 -30 0 wire>
+<Line -20 -20 -20 20 22 0 -20 -20 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 -29>
+<Netlist spice>
+X$devicename $node(A) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__clkinv_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__clkinv $devicename ($node(Y), $node(A), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component conb>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__conb_1
+</Layout>
+<Label>
+conb
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Rect 15 15 -15 -15 wire>
+<Line 15 5 20 5 wire>
+<Port 20 5 HI local digitalOut>
+<Line 15 -5 20 -5 wire>
+<Port 20 -5 LO local digitalOut>
+<Text -10 -5 wire 0/1>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 -17>
+<Netlist spice>
+X$devicename VGND VNB VPB VPWR $node(HI) $node(LO) sky130_fd_sc_hd__conb_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__conb $devicename ($node(HI), $node(LO), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component dfbbn>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__dfbbn_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__dfbbn_2
+</Layout>
+<Label>
+dfbbn
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Text -17 6 wire D>
+<Line -20 -6 -15 -10 -20 -15 wire>
+<Port -30 -10 CLK_N local digitalIn>
+<Circle -20 -14 -28 -6 wire>
+<Line -28 -10 -30 -10 wire>
+<Port -30 10 D local digitalIn>
+<Line -20 10 -30 10 wire>
+<Port 0 -35 RESET_B local digitalIn>
+<Line 0 -28 0 -35 wire>
+<Circle -4 -20 4 -28 wire>
+<Port 0 35 SET_B local digitalIn>
+<Line 0 28 0 35 wire>
+<Circle -4 20 4 28 wire>
+<Port 35 10 Q local digitalOut>
+<Port 35 -10 Q_N local digitalOut>
+<Line 28 -10 35 -10 wire>
+<Circle 20 -14 28 -6 wire>
+<Line 20 10 35 10 wire>
+<Rect 20 20 -20 -20 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -26>
+<Netlist spice>
+X$devicename $node(CLK_N) $node(D) $node(RESET_B) $node(SET_B) VGND VNB VPB VPWR $node(Q) $node(Q_N) sky130_fd_sc_hd__dfbbn_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__dfbbn $devicename ($node(Q), $node(Q_N), $node(D), $node(CLK_N), $node(SET_B), $node(RESET_B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component dfbbp>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__dfbbp_1
+</Layout>
+<Label>
+dfbbp
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Text -17 6 wire D>
+<Line -20 -6 -15 -10 -20 -15 wire>
+<Port -30 -10 CLK local digitalIn>
+<Line -20 -10 -30 -10 wire>
+<Port -30 10 D local digitalIn>
+<Line -20 10 -30 10 wire>
+<Port 0 -35 RESET_B local digitalIn>
+<Line 0 -28 0 -35 wire>
+<Circle -4 -20 4 -28 wire>
+<Port 0 35 SET_B local digitalIn>
+<Line 0 28 0 35 wire>
+<Circle -4 20 4 28 wire>
+<Port 35 10 Q local digitalOut>
+<Port 35 -10 Q_N local digitalOut>
+<Line 28 -10 35 -10 wire>
+<Circle 20 -14 28 -6 wire>
+<Line 20 10 35 10 wire>
+<Rect 20 20 -20 -20 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -26>
+<Netlist spice>
+X$devicename $node(CLK) $node(D) $node(RESET_B) $node(SET_B) VGND VNB VPB VPWR $node(Q) $node(Q_N) sky130_fd_sc_hd__dfbbp_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__dfbbp $devicename ($node(Q), $node(Q_N), $node(D), $node(CLK), $node(SET_B), $node(RESET_B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component dfrbp>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__dfrbp_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__dfrbp_2
+</Layout>
+<Label>
+dfrbp
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Text -17 6 wire D>
+<Line -20 -6 -15 -10 -20 -15 wire>
+<Port -30 -10 CLK local digitalIn>
+<Line -20 -10 -30 -10 wire>
+<Port -30 10 D local digitalIn>
+<Line -20 10 -30 10 wire>
+<Port 0 -35 RESET_B local digitalIn>
+<Line 0 -28 0 -35 wire>
+<Circle -4 -20 4 -28 wire>
+<Port 35 10 Q local digitalOut>
+<Port 35 -10 Q_N local digitalOut>
+<Line 28 -10 35 -10 wire>
+<Circle 20 -14 28 -6 wire>
+<Line 20 10 35 10 wire>
+<Rect 20 20 -20 -20 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -26>
+<Netlist spice>
+X$devicename $node(CLK) $node(D) $node(RESET_B) VGND VNB VPB VPWR $node(Q) $node(Q_N) sky130_fd_sc_hd__dfrbp_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__dfrbp $devicename ($node(Q), $node(Q_N), $node(CLK), $node(D), $node(RESET_B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component dfrtn>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__dfrtn_1
+</Layout>
+<Label>
+dfrtn
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Text -17 6 wire D>
+<Line -20 -6 -15 -10 -20 -15 wire>
+<Port -30 -10 CLK_N local digitalIn>
+<Circle -20 -14 -28 -6 wire>
+<Line -28 -10 -30 -10 wire>
+<Port -30 10 D local digitalIn>
+<Line -20 10 -30 10 wire>
+<Port 0 -35 RESET_B local digitalIn>
+<Line 0 -28 0 -35 wire>
+<Circle -4 -20 4 -28 wire>
+<Port 35 10 Q local digitalOut>
+<Line 20 10 35 10 wire>
+<Rect 20 20 -20 -20 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -26>
+<Netlist spice>
+X$devicename $node(CLK_N) $node(D) $node(RESET_B) VGND VNB VPB VPWR $node(Q) sky130_fd_sc_hd__dfrtn_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__dfrtn $devicename ($node(Q), $node(CLK_N), $node(D), $node(RESET_B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component dfrtp>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__dfrtp_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__dfrtp_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__dfrtp_4
+</Layout>
+<Label>
+dfrtp
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Text -17 6 wire D>
+<Line -20 -6 -15 -10 -20 -15 wire>
+<Port -30 -10 CLK local digitalIn>
+<Line -20 -10 -30 -10 wire>
+<Port -30 10 D local digitalIn>
+<Line -20 10 -30 10 wire>
+<Port 0 -35 RESET_B local digitalIn>
+<Line 0 -28 0 -35 wire>
+<Circle -4 -20 4 -28 wire>
+<Port 35 10 Q local digitalOut>
+<Line 20 10 35 10 wire>
+<Rect 20 20 -20 -20 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -26>
+<Netlist spice>
+X$devicename $node(CLK) $node(D) $node(RESET_B) VGND VNB VPB VPWR $node(Q) sky130_fd_sc_hd__dfrtp_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__dfrtp $devicename ($node(Q), $node(CLK), $node(D), $node(RESET_B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component dfsbp>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__dfsbp_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__dfsbp_2
+</Layout>
+<Label>
+dfsbp
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Text -17 6 wire D>
+<Line -20 -6 -15 -10 -20 -15 wire>
+<Port -30 -10 CLK local digitalIn>
+<Line -20 -10 -30 -10 wire>
+<Port -30 10 D local digitalIn>
+<Line -20 10 -30 10 wire>
+<Port 0 35 SET_B local digitalIn>
+<Line 0 28 0 35 wire>
+<Circle -4 20 4 28 wire>
+<Port 35 10 Q local digitalOut>
+<Port 35 -10 Q_N local digitalOut>
+<Line 28 -10 35 -10 wire>
+<Circle 20 -14 28 -6 wire>
+<Line 20 10 35 10 wire>
+<Rect 20 20 -20 -20 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -26>
+<Netlist spice>
+X$devicename $node(CLK) $node(D) $node(SET_B) VGND VNB VPB VPWR $node(Q) $node(Q_N) sky130_fd_sc_hd__dfsbp_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__dfsbp $devicename ($node(Q), $node(Q_N), $node(CLK), $node(D), $node(SET_B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component dfstp>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__dfstp_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__dfstp_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__dfstp_4
+</Layout>
+<Label>
+dfstp
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Text -17 6 wire D>
+<Line -20 -6 -15 -10 -20 -15 wire>
+<Port -30 -10 CLK local digitalIn>
+<Line -20 -10 -30 -10 wire>
+<Port -30 10 D local digitalIn>
+<Line -20 10 -30 10 wire>
+<Port 0 35 SET_B local digitalIn>
+<Line 0 28 0 35 wire>
+<Circle -4 20 4 28 wire>
+<Port 35 10 Q local digitalOut>
+<Line 20 10 35 10 wire>
+<Rect 20 20 -20 -20 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -26>
+<Netlist spice>
+X$devicename $node(CLK) $node(D) $node(SET_B) VGND VNB VPB VPWR $node(Q) sky130_fd_sc_hd__dfstp_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__dfstp $devicename ($node(Q), $node(CLK), $node(D), $node(SET_B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component dfxbp>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__dfxbp_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__dfxbp_2
+</Layout>
+<Label>
+dfxbp
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Text -17 6 wire D>
+<Line -20 -6 -15 -10 -20 -15 wire>
+<Port -30 -10 CLK local digitalIn>
+<Line -20 -10 -30 -10 wire>
+<Port -30 10 D local digitalIn>
+<Line -20 10 -30 10 wire>
+<Port 35 10 Q local digitalOut>
+<Port 35 -10 Q_N local digitalOut>
+<Line 28 -10 35 -10 wire>
+<Circle 20 -14 28 -6 wire>
+<Line 20 10 35 10 wire>
+<Rect 20 20 -20 -20 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -26>
+<Netlist spice>
+X$devicename $node(CLK) $node(D) VGND VNB VPB VPWR $node(Q) $node(Q_N) sky130_fd_sc_hd__dfxbp_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__dfxbp $devicename ($node(Q), $node(Q_N), $node(CLK), $node(D), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component dfxtp>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__dfxtp_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__dfxtp_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__dfxtp_4
+</Layout>
+<Label>
+dfxtp
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Text -17 6 wire D>
+<Line -20 -6 -15 -10 -20 -15 wire>
+<Port -30 -10 CLK local digitalIn>
+<Line -20 -10 -30 -10 wire>
+<Port -30 10 D local digitalIn>
+<Line -20 10 -30 10 wire>
+<Port 35 10 Q local digitalOut>
+<Line 20 10 35 10 wire>
+<Rect 20 20 -20 -20 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -26>
+<Netlist spice>
+X$devicename $node(CLK) $node(D) VGND VNB VPB VPWR $node(Q) sky130_fd_sc_hd__dfxtp_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__dfxtp $devicename ($node(Q), $node(CLK), $node(D), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component ebufn>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4 8>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__ebufn_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__ebufn_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__ebufn_4
+output=8      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__ebufn_8
+</Layout>
+<Label>
+ebufn
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Line 20 0 30 0 wire>
+<Port 30 0 Z local digitalInOut>
+<Line 20 0 -10 20 -10 -20 20 0 wire>
+<Line -10 0 -20 0 wire>
+<Port -20 0 A local digitalIn>
+<Circle 1 -11 9 -19 wire>
+<Line 5 -19 5 -25 wire>
+<Port 5 -25 TE_B local digitalIn>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 -29>
+<Netlist spice>
+X$devicename $node(A) $node(TE_B) VGND VNB VPB VPWR $node(Z) sky130_fd_sc_hd__ebufn_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__ebufn $devicename ($node(Z), $node(A), $node(TE_B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component einvn>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 0 1 2 4 8>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=0      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__einvn_0
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__einvn_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__einvn_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__einvn_4
+output=8      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__einvn_8
+</Layout>
+<Label>
+einvn
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Line 28 0 30 0 wire>
+<Port 30 0 Z local digitalInOut>
+<Circle 20 -4 28 4 wire>
+<Line 20 0 -10 20 -10 -20 20 0 wire>
+<Line -10 0 -20 0 wire>
+<Port -20 0 A local digitalIn>
+<Circle 1 -11 9 -19 wire>
+<Line 5 -19 5 -25 wire>
+<Port 5 -25 TE_B local digitalIn>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 -29>
+<Netlist spice>
+X$devicename $node(A) $node(TE_B) VGND VNB VPB VPWR $node(Z) sky130_fd_sc_hd__einvn_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__einvn $devicename ($node(Z), $node(A), $node(TE_B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component einvp>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4 8>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__einvp_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__einvp_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__einvp_4
+output=8      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__einvp_8
+</Layout>
+<Label>
+einvp
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Line 28 0 30 0 wire>
+<Port 30 0 Z local digitalInOut>
+<Circle 20 -4 28 4 wire>
+<Line 20 0 -10 20 -10 -20 20 0 wire>
+<Line -10 0 -20 0 wire>
+<Port -20 0 A local digitalIn>
+<Line 5 -10 5 -25 wire>
+<Port 5 -25 TE local digitalIn>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 -29>
+<Netlist spice>
+X$devicename $node(A) $node(TE) VGND VNB VPB VPWR $node(Z) sky130_fd_sc_hd__einvp_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__einvp $devicename ($node(Z), $node(A), $node(TE), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component fa>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__fa_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__fa_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__fa_4
+</Layout>
+<Label>
+fa
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Port 0 30 CIN local digitalIn>
+<Line 0 20 0 30 wire>
+<Port 30 -10 COUT local digitalOut>
+<Line 20 -10 30 -10 wire>
+<Port 30 10 SUM local digitalOut>
+<Line 20 10 30 10 wire>
+<Port -30 -10 B local digitalIn>
+<Line -20 -10 -30 -10 wire>
+<Port -30 10 A local digitalIn>
+<Line -20 10 -30 10 wire>
+<Rect 20 20 -20 -20 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -26>
+<Netlist spice>
+X$devicename $node(A) $node(B) $node(CIN) VGND VNB VPB VPWR $node(COUT) $node(SUM) sky130_fd_sc_hd__fa_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__fa $devicename ($node(COUT), $node(SUM), $node(A), $node(B), $node(CIN), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component fah>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__fah_1
+</Layout>
+<Label>
+fah
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Port 30 -10 COUT local digitalOut>
+<Line 20 -10 30 -10 wire>
+<Port 30 10 SUM local digitalOut>
+<Line 20 10 30 10 wire>
+<Port 0 30 CI local digitalIn>
+<Line 0 20 0 30 wire>
+<Port -30 -10 B local digitalIn>
+<Line -20 -10 -30 -10 wire>
+<Port -30 10 A local digitalIn>
+<Line -20 10 -30 10 wire>
+<Rect 20 20 -20 -20 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -26>
+<Netlist spice>
+X$devicename $node(A) $node(B) $node(CI) VGND VNB VPB VPWR $node(COUT) $node(SUM) sky130_fd_sc_hd__fah_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__fah $devicename ($node(COUT), $node(SUM), $node(A), $node(B), $node(CI), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component fahcin>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__fahcin_1
+</Layout>
+<Label>
+fahcin
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Port 30 -10 COUT local digitalOut>
+<Line 20 -10 30 -10 wire>
+<Port 30 10 SUM local digitalOut>
+<Line 20 10 30 10 wire>
+<Port 0 30 CIN local digitalIn>
+<Line 0 20 0 30 wire>
+<Port -30 -10 B local digitalIn>
+<Line -20 -10 -30 -10 wire>
+<Port -30 10 A local digitalIn>
+<Line -20 10 -30 10 wire>
+<Rect 20 20 -20 -20 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -26>
+<Netlist spice>
+X$devicename $node(A) $node(B) $node(CIN) VGND VNB VPB VPWR $node(COUT) $node(SUM) sky130_fd_sc_hd__fahcin_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__fahcin $devicename ($node(COUT), $node(SUM), $node(A), $node(B), $node(CIN), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component fahcon>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__fahcon_1
+</Layout>
+<Label>
+fahcon
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Port 30 -10 COUT_N local digitalOut>
+<Line 28 -10 30 -10 wire>
+<Circle 20 -14 28 -6 wire>
+<Port 30 10 SUM local digitalOut>
+<Line 20 10 30 10 wire>
+<Port 0 30 CI local digitalIn>
+<Line 0 20 0 30 wire>
+<Port -30 -10 B local digitalIn>
+<Line -20 -10 -30 -10 wire>
+<Port -30 10 A local digitalIn>
+<Line -20 10 -30 10 wire>
+<Rect 20 20 -20 -20 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -26>
+<Netlist spice>
+X$devicename $node(A) $node(B) $node(CI) VGND VNB VPB VPWR $node(COUT_N) $node(SUM) sky130_fd_sc_hd__fahcon_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__fahcon $devicename ($node(COUT_N), $node(SUM), $node(A), $node(B), $node(CI), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component ha>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__ha_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__ha_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__ha_4
+</Layout>
+<Label>
+ha
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Port 30 -10 SUM local digitalOut>
+<Line 20 -10 30 -10 wire>
+<Port 30 10 COUT local digitalOut>
+<Line 20 10 30 10 wire>
+<Port -30 -10 B local digitalIn>
+<Line -20 -10 -30 -10 wire>
+<Port -30 10 A local digitalIn>
+<Line -20 10 -30 10 wire>
+<Rect 20 20 -20 -20 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -26>
+<Netlist spice>
+X$devicename $node(A) $node(B) VGND VNB VPB VPWR $node(COUT) $node(SUM) sky130_fd_sc_hd__ha_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__ha $devicename ($node(COUT), $node(SUM), $node(A), $node(B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component inv>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4 6 8 12 16>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__inv_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__inv_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__inv_4
+output=6      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__inv_6
+output=8      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__inv_8
+output=12      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__inv_12
+output=16      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__inv_16
+</Layout>
+<Label>
+inv
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Port 40 0 Y local digitalOut>
+<Port -30 0 A local digitalIn>
+<Line 30 0 40 0 wire>
+<Circle 22 4 30 -4 wire>
+<Line -20 0 -30 0 wire>
+<Line -20 -20 -20 20 22 0 -20 -20 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 -29>
+<Netlist spice>
+X$devicename $node(A) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__inv_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__inv $devicename ($node(Y), $node(A), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component mux2>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4 8>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__mux2_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__mux2_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__mux2_4
+output=8      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__mux2_8
+</Layout>
+<Label>
+mux2
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Line 10 15 10 -15 -10 -30 -10 30 10 15 wire>
+<Line 0 22 0 35 wire>
+<Port 0 35 S local digitalIn>
+<Line 10 0 20 0 wire>
+<Port 20 0 X local digitalOut>
+<Line -10 20 -20 20 wire>
+<Port -20 20 A0 local digitalIn>
+<Line -10 -20 -20 -20 wire>
+<Port -20 -20 A1 local digitalIn>
+<Text -5 8 wire 0>
+<Text -5 -20 wire 1>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -26>
+<Netlist spice>
+X$devicename $node(A0) $node(A1) $node(S) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__mux2_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__mux2 $devicename ($node(X), $node(A0), $node(A1), $node(S), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component mux2i>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__mux2i_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__mux2i_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__mux2i_4
+</Layout>
+<Label>
+mux2i
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Line 10 15 10 -15 -10 -30 -10 30 10 15 wire>
+<Line 0 22 0 35 wire>
+<Port 0 35 S local digitalIn>
+<Line 18 0 20 0 wire>
+<Circle 10 -4 18 4 wire>
+<Port 20 0 Y local digitalOut>
+<Line -10 20 -20 20 wire>
+<Port -20 20 A0 local digitalIn>
+<Line -10 -20 -20 -20 wire>
+<Port -20 -20 A1 local digitalIn>
+<Text -5 8 wire 0>
+<Text -5 -20 wire 1>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -26>
+<Netlist spice>
+X$devicename $node(A0) $node(A1) $node(S) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__mux2i_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__mux2i $devicename ($node(Y), $node(A0), $node(A1), $node(S), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component mux4>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__mux4_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__mux4_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__mux4_4
+</Layout>
+<Label>
+mux4
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Line 10 15 10 -15 -10 -30 -10 30 10 15 wire>
+<Line -5 26 -5 35 wire>
+<Port -5 35 S0 local digitalIn>
+<Line 5 18 5 35 wire>
+<Port 5 35 S1 local digitalIn>
+<Line 10 0 20 0 wire>
+<Port 20 0 X local digitalOut>
+<Line -10 18 -20 18 wire>
+<Port -20 18 A0 local digitalIn>
+<Line -10 6 -20 6 wire>
+<Port -20 6 A1 local digitalIn>
+<Line -10 -6 -20 -6 wire>
+<Port -20 -6 A2 local digitalIn>
+<Line -10 -18 -20 -18 wire>
+<Port -20 -18 A3 local digitalIn>
+<Text -5 8 wire 0>
+<Text -5 -20 wire 1>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -26>
+<Netlist spice>
+X$devicename $node(A0) $node(A1) $node(A2) $node(A3) $node(S0) $node(S1) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__mux4_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__mux4 $devicename ($node(X), $node(A0), $node(A1), $node(A2), $node(A3), $node(S0), $node(S1), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component nand2>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4 8>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand2_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand2_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand2_4
+output=8      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand2_8
+</Layout>
+<Label>
+nand2
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc 0 0 0 -30 0 30 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Line -20 -15 -30 -15 wire>
+<Line -20 15 -30 15 wire>
+<Line 38 0 45 0 wire>
+<Circle 30 4 38 -4 wire>
+<Port -30 15 A local digitalIn>
+<Port -30 -15 B local digitalIn>
+<Port 45 0 Y local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A) $node(B) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__nand2_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__nand2 $devicename ($node(Y), $node(A), $node(B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component nand2b>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand2b_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand2b_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand2b_4
+</Layout>
+<Label>
+nand2b
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc 0 0 0 -30 0 30 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Line -20 -15 -30 -15 wire>
+<Line -28 15 -30 15 wire>
+<Line 38 0 45 0 wire>
+<Circle 30 4 38 -4 wire>
+<Port -30 15 A_N local digitalIn>
+<Circle -20 11 -28 19 wire>
+<Port -30 -15 B local digitalIn>
+<Port 45 0 Y local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A_N) $node(B) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__nand2b_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__nand2b $devicename ($node(Y), $node(A_N), $node(B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component nand3>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand3_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand3_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand3_4
+</Layout>
+<Label>
+nand3
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc 0 0 0 -30 0 30 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Line -20 -20 -30 -20 wire>
+<Line -20 0 -30 0 wire>
+<Line -20 20 -30 20 wire>
+<Line 38 0 45 0 wire>
+<Circle 30 4 38 -4 wire>
+<Port -30 20 A local digitalIn>
+<Port -30 0 B local digitalIn>
+<Port -30 -20 C local digitalIn>
+<Port 45 0 Y local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A) $node(B) $node(C) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__nand3_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__nand3 $devicename ($node(Y), $node(A), $node(B), $node(C), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component nand3b>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand3b_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand3b_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand3b_4
+</Layout>
+<Label>
+nand3b
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc 0 0 0 -30 0 30 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Line -20 -20 -30 -20 wire>
+<Line -20 0 -30 0 wire>
+<Line -28 20 -30 20 wire>
+<Line 38 0 45 0 wire>
+<Circle 30 4 38 -4 wire>
+<Port -30 20 A_N local digitalIn>
+<Circle -20 16 -28 24 wire>
+<Port -30 0 B local digitalIn>
+<Port -30 -20 C local digitalIn>
+<Port 45 0 Y local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A_N) $node(B) $node(C) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__nand3b_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__nand3b $devicename ($node(Y), $node(A_N), $node(B), $node(C), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component nand4>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand4_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand4_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand4_4
+</Layout>
+<Label>
+nand4
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc 0 0 0 -30 0 30 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Line -20 -24 -30 -24 wire>
+<Line -20 8 -30 8 wire>
+<Line -20 -8 -30 -8 wire>
+<Line -20 24 -30 24 wire>
+<Line 38 0 45 0 wire>
+<Circle 30 4 38 -4 wire>
+<Port -30 24 A local digitalIn>
+<Port -30 8 B local digitalIn>
+<Port -30 -8 C local digitalIn>
+<Port -30 -24 D local digitalIn>
+<Port 45 0 Y local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A) $node(B) $node(C) $node(D) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__nand4_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__nand4 $devicename ($node(Y), $node(A), $node(B), $node(C), $node(D), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component nand4b>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand4b_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand4b_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand4b_4
+</Layout>
+<Label>
+nand4b
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc 0 0 0 -30 0 30 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Line -20 -24 -30 -24 wire>
+<Line -20 8 -30 8 wire>
+<Line -20 -8 -30 -8 wire>
+<Line -28 24 -30 24 wire>
+<Line 38 0 45 0 wire>
+<Circle 30 4 38 -4 wire>
+<Port -30 24 A_N local digitalIn>
+<Circle -20 20 -28 28 wire>
+<Port -30 8 B local digitalIn>
+<Port -30 -8 C local digitalIn>
+<Port -30 -24 D local digitalIn>
+<Port 45 0 Y local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A_N) $node(B) $node(C) $node(D) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__nand4b_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__nand4b $devicename ($node(Y), $node(A_N), $node(B), $node(C), $node(D), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component nand4bb>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand4bb_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand4bb_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nand4bb_4
+</Layout>
+<Label>
+nand4bb
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc 0 0 0 -30 0 30 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Line -20 -24 -30 -24 wire>
+<Line -28 8 -30 8 wire>
+<Line -20 -8 -30 -8 wire>
+<Line -28 24 -30 24 wire>
+<Line 38 0 45 0 wire>
+<Circle 30 4 38 -4 wire>
+<Port -30 24 A_N local digitalIn>
+<Circle -20 20 -28 28 wire>
+<Port -30 8 B_N local digitalIn>
+<Circle -20 4 -28 12 wire>
+<Port -30 -8 C local digitalIn>
+<Port -30 -24 D local digitalIn>
+<Port 45 0 Y local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A_N) $node(B_N) $node(C) $node(D) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__nand4bb_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__nand4bb $devicename ($node(Y), $node(A_N), $node(B_N), $node(C), $node(D), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component nor2>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4 8>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor2_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor2_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor2_4
+output=8      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor2_8
+</Layout>
+<Label>
+nor2
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Port 45 0 Y local digitalOut>
+<Port -35 -15 A local digitalIn>
+<Port -35 15 B local digitalIn>
+<Line 38 0 45 0 wire>
+<Circle 30 4 38 -4 wire>
+<Line -22 15 -35 15 wire>
+<Line -22 -15 -35 -15 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -30 30 0 30 wire>
+<Line 0 -30 -30 -30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Arc -20 -30 30 0 0 30 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A) $node(B) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__nor2_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__nor2 $devicename ($node(Y), $node(A), $node(B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component nor2b>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor2b_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor2b_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor2b_4
+</Layout>
+<Label>
+nor2b
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Port 45 0 Y local digitalOut>
+<Port -35 -15 A local digitalIn>
+<Circle -22 11 -30 19 wire>
+<Port -35 15 B_N local digitalIn>
+<Line 38 0 45 0 wire>
+<Circle 30 4 38 -4 wire>
+<Line -30 15 -35 15 wire>
+<Line -22 -15 -35 -15 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -30 30 0 30 wire>
+<Line 0 -30 -30 -30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Arc -20 -30 30 0 0 30 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A) $node(B_N) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__nor2b_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__nor2b $devicename ($node(Y), $node(A), $node(B_N), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component nor3>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor3_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor3_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor3_4
+</Layout>
+<Label>
+nor3
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -22 -15 -35 -15 wire>
+<Line -22 15 -35 15 wire>
+<Line -19 0 -35 0 wire>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Port -35 15 A local digitalIn>
+<Port -35 0 B local digitalIn>
+<Port -35 -15 C local digitalIn>
+<Port 45 0 Y local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A) $node(B) $node(C) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__nor3_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__nor3 $devicename ($node(Y), $node(A), $node(B), $node(C), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component nor3b>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor3b_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor3b_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor3b_4
+</Layout>
+<Label>
+nor3b
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -30 -15 -35 -15 wire>
+<Line -22 15 -35 15 wire>
+<Line -19 0 -35 0 wire>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Port -35 15 A local digitalIn>
+<Port -35 0 B local digitalIn>
+<Port -35 -15 C_N local digitalIn>
+<Circle -22 -11 -30 -19 wire>
+<Port 45 0 Y local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A) $node(B) $node(C_N) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__nor3b_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__nor3b $devicename ($node(Y), $node(A), $node(B), $node(C_N), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component nor4>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor4_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor4_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor4_4
+</Layout>
+<Label>
+nor4
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -25 -24 -35 -24 wire>
+<Line -20 -8 -35 -8 wire>
+<Line -20 8 -35 8 wire>
+<Line -25 24 -35 24 wire>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Port -35 24 A local digitalIn>
+<Port -35 8 B local digitalIn>
+<Port -35 -8 C local digitalIn>
+<Port -35 -24 D local digitalIn>
+<Port 45 0 Y local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A) $node(B) $node(C) $node(D) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__nor4_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__nor4 $devicename ($node(Y), $node(A), $node(B), $node(C), $node(D), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component nor4b>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor4b_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor4b_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor4b_4
+</Layout>
+<Label>
+nor4b
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -35 -24 -35 -24 wire>
+<Line -20 -8 -35 -8 wire>
+<Line -20 8 -35 8 wire>
+<Line -25 24 -35 24 wire>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Port -35 24 A local digitalIn>
+<Port -35 8 B local digitalIn>
+<Port -35 -8 C local digitalIn>
+<Port -35 -24 D_N local digitalIn>
+<Port 45 0 Y local digitalOut>
+<Circle -27 -20 -35 -28 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A) $node(B) $node(C) $node(D_N) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__nor4b_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__nor4b $devicename ($node(Y), $node(A), $node(B), $node(C), $node(D_N), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component nor4bb>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor4bb_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor4bb_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__nor4bb_4
+</Layout>
+<Label>
+nor4bb
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -35 -24 -35 -24 wire>
+<Line -29 -8 -35 -8 wire>
+<Line -20 8 -35 8 wire>
+<Line -25 24 -35 24 wire>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Port -35 24 A local digitalIn>
+<Port -35 8 B local digitalIn>
+<Port -35 -8 C_N local digitalIn>
+<Port -35 -24 D_N local digitalIn>
+<Port 45 0 Y local digitalOut>
+<Circle -27 -20 -35 -28 wire>
+<Circle -21 -4 -29 -12 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A) $node(B) $node(C_N) $node(D_N) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__nor4bb_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__nor4bb $devicename ($node(Y), $node(A), $node(B), $node(C_N), $node(D_N), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component or2>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 0 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=0      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or2_0
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or2_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or2_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or2_4
+</Layout>
+<Label>
+or2
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Port 40 0 X local digitalOut>
+<Port -35 -15 A local digitalIn>
+<Port -35 15 B local digitalIn>
+<Line 30 0 40 0 wire>
+<Line -22 15 -35 15 wire>
+<Line -22 -15 -35 -15 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -30 30 0 30 wire>
+<Line 0 -30 -30 -30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Arc -20 -30 30 0 0 30 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A) $node(B) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__or2_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__or2 $devicename ($node(X), $node(A), $node(B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component or2b>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or2b_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or2b_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or2b_4
+</Layout>
+<Label>
+or2b
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Port 40 0 X local digitalOut>
+<Port -35 -15 A local digitalIn>
+<Circle -22 11 -30 19 wire>
+<Port -35 15 B_N local digitalIn>
+<Line 30 0 40 0 wire>
+<Line -30 15 -35 15 wire>
+<Line -22 -15 -35 -15 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -30 30 0 30 wire>
+<Line 0 -30 -30 -30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Arc -20 -30 30 0 0 30 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A) $node(B_N) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__or2b_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__or2b $devicename ($node(X), $node(A), $node(B_N), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component or3>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or3_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or3_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or3_4
+</Layout>
+<Label>
+or3
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -22 -15 -35 -15 wire>
+<Line -22 15 -35 15 wire>
+<Line -19 0 -35 0 wire>
+<Line 30 0 40 0 wire>
+<Port -35 15 A local digitalIn>
+<Port -35 0 B local digitalIn>
+<Port -35 -15 C local digitalIn>
+<Port 40 0 X local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A) $node(B) $node(C) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__or3_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__or3 $devicename ($node(X), $node(A), $node(B), $node(C), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+
+<Component or4>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or4_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or4_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or4_4
+</Layout>
+<Label>
+or4
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -25 -24 -35 -24 wire>
+<Line -20 -8 -35 -8 wire>
+<Line -20 8 -35 8 wire>
+<Line -25 24 -35 24 wire>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Port -35 24 A local digitalIn>
+<Port -35 8 B local digitalIn>
+<Port -35 -8 C local digitalIn>
+<Port -35 -24 D local digitalIn>
+<Port 45 0 X local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A) $node(B) $node(C) $node(D) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__or4_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__or4 $devicename ($node(X), $node(A), $node(B), $node(C), $node(D), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component or4b>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or4b_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or4b_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or4b_4
+</Layout>
+<Label>
+or4b
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -35 -24 -35 -24 wire>
+<Line -20 -8 -35 -8 wire>
+<Line -20 8 -35 8 wire>
+<Line -25 24 -35 24 wire>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Port -35 24 A local digitalIn>
+<Port -35 8 B local digitalIn>
+<Port -35 -8 C local digitalIn>
+<Port -35 -24 D_N local digitalIn>
+<Circle -27 -20 -35 -28 wire>
+<Port 45 0 X local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A) $node(B) $node(C) $node(D_N) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__or4b_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__or4b $devicename ($node(X), $node(A), $node(B), $node(C), $node(D_N), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component or4bb>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or4bb_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or4bb_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or4bb_4
+</Layout>
+<Label>
+or4bb
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -35 -24 -35 -24 wire>
+<Line -29 -8 -35 -8 wire>
+<Line -20 8 -35 8 wire>
+<Line -25 24 -35 24 wire>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Port -35 24 A local digitalIn>
+<Port -35 8 B local digitalIn>
+<Port -35 -8 C_N local digitalIn>
+<Circle -21 -4 -29 -12 wire>
+<Port -35 -24 D_N local digitalIn>
+<Circle -27 -20 -35 -28 wire>
+<Port 45 0 X local digitalOut>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 -18 17>
+<Netlist spice>
+X$devicename $node(A) $node(B) $node(C_N) $node(D_N) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__or4bb_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__or4bb $devicename ($node(X), $node(A), $node(B), $node(C_N), $node(D_N), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component sdfbbn>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__sdfbbn_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__sdfbbn_2
+</Layout>
+<Label>
+sdfbbn
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Rect 20 35 -20 -35 wire>
+<Line 20 21 35 21 wire>
+<Circle 20 3 28 11 wire>
+<Line 28 7 35 7 wire>
+<Port 35 7 Q_N local digitalOut>
+<Port 35 21 Q local digitalOut>
+<Circle -4 35 4 43 wire>
+<Line 0 43 0 50 wire>
+<Port 0 50 SET_B local digitalIn>
+<Circle -4 -35 4 -43 wire>
+<Line 0 -43 0 -50 wire>
+<Port 0 -50 RESET_B local digitalIn>
+<Line -20 21 -30 21 wire>
+<Port -30 21 D local digitalIn>
+<Line -20 7 -30 7 wire>
+<Port -30 7 SCD local digitalIn>
+<Line -20 -7 -30 -7 wire>
+<Port -30 -7 SCE local digitalIn>
+<Line -28 -21 -30 -21 wire>
+<Port -30 -21 CLK_N local digitalIn>
+<Circle -20 -25 -28 -17 wire>
+<Line -20 -16 -15 -21 -20 -26 wire>
+<Text -17 20 wire D>
+<Text -17 6 wire SCD>
+<Text -17 -8 wire SCE>
+<Port 0 -70 VPWR global>
+<Port 0 -90 VPB global>
+<Port 0 -110 VNB global>
+<Port 0 -130 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -36>
+<Netlist spice>
+X$devicename $node(CLK_N) $node(D) $node(RESET_B) $node(SCD) $node(SCE) $node(SET_B) VGND VNB VPB VPWR $node(Q) $node(Q_N) sky130_fd_sc_hd__sdfbbn_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__sdfbbn $devicename ($node(Q), $node(Q_N), $node(D), $node(SCD), $node(SCE), $node(CLK_N), $node(SET_B), $node(RESET_B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component sdfbbp>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__sdfbbp_1
+</Layout>
+<Label>
+sdfbbp
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Rect 20 35 -20 -35 wire>
+<Line 20 21 35 21 wire>
+<Circle 20 3 28 11 wire>
+<Line 28 7 35 7 wire>
+<Port 35 7 Q_N local digitalOut>
+<Port 35 21 Q local digitalOut>
+<Circle -4 35 4 43 wire>
+<Line 0 43 0 50 wire>
+<Port 0 50 SET_B local digitalIn>
+<Circle -4 -35 4 -43 wire>
+<Line 0 -43 0 -50 wire>
+<Port 0 -50 RESET_B local digitalIn>
+<Line -20 21 -30 21 wire>
+<Port -30 21 D local digitalIn>
+<Line -20 7 -30 7 wire>
+<Port -30 7 SCD local digitalIn>
+<Line -20 -7 -30 -7 wire>
+<Port -30 -7 SCE local digitalIn>
+<Line -20 -21 -30 -21 wire>
+<Port -30 -21 CLK local digitalIn>
+<Line -20 -16 -15 -21 -20 -26 wire>
+<Text -17 20 wire D>
+<Text -17 6 wire SCD>
+<Text -17 -8 wire SCE>
+<Port 0 -70 VPWR global>
+<Port 0 -90 VPB global>
+<Port 0 -110 VNB global>
+<Port 0 -130 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -36>
+<Netlist spice>
+X$devicename $node(CLK) $node(D) $node(RESET_B) $node(SCD) $node(SCE) $node(SET_B) VGND VNB VPB VPWR $node(Q) $node(Q_N) sky130_fd_sc_hd__sdfbbp_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__sdfbbp $devicename ($node(Q), $node(Q_N), $node(D), $node(SCD), $node(SCE), $node(CLK), $node(SET_B), $node(RESET_B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component sdfrbp>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__sdfrbp_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__sdfrbp_2
+</Layout>
+<Label>
+sdfrbp
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Rect 20 35 -20 -35 wire>
+<Line 20 21 35 21 wire>
+<Circle 20 3 28 11 wire>
+<Line 28 7 35 7 wire>
+<Port 35 7 Q_N local digitalOut>
+<Port 35 21 Q local digitalOut>
+<Circle -4 -35 4 -43 wire>
+<Line 0 -43 0 -50 wire>
+<Port 0 -50 RESET_B local digitalIn>
+<Line -20 21 -30 21 wire>
+<Port -30 21 D local digitalIn>
+<Line -20 7 -30 7 wire>
+<Port -30 7 SCD local digitalIn>
+<Line -20 -7 -30 -7 wire>
+<Port -30 -7 SCE local digitalIn>
+<Line -20 -21 -30 -21 wire>
+<Port -30 -21 CLK local digitalIn>
+<Line -20 -16 -15 -21 -20 -26 wire>
+<Text -17 20 wire D>
+<Text -17 6 wire SCD>
+<Text -17 -8 wire SCE>
+<Port 0 -70 VPWR global>
+<Port 0 -90 VPB global>
+<Port 0 -110 VNB global>
+<Port 0 -130 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -36>
+<Netlist spice>
+X$devicename $node(CLK) $node(D) $node(RESET_B) $node(SCD) $node(SCE) VGND VNB VPB VPWR $node(Q) $node(Q_N) sky130_fd_sc_hd__sdfrbp_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__sdfrbp $devicename ($node(Q), $node(Q_N), $node(CLK), $node(D), $node(SCD), $node(SCE), $node(RESET_B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component sdfrtn>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__sdfrtn_1
+</Layout>
+<Label>
+sdfrtn
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Rect 20 35 -20 -35 wire>
+<Line 20 21 35 21 wire>
+<Port 35 21 Q local digitalOut>
+<Circle -4 -35 4 -43 wire>
+<Line 0 -43 0 -50 wire>
+<Port 0 -50 RESET_B local digitalIn>
+<Line -20 21 -30 21 wire>
+<Port -30 21 D local digitalIn>
+<Line -20 7 -30 7 wire>
+<Port -30 7 SCD local digitalIn>
+<Line -20 -7 -30 -7 wire>
+<Port -30 -7 SCE local digitalIn>
+<Line -28 -21 -30 -21 wire>
+<Port -30 -21 CLK_N local digitalIn>
+<Circle -20 -25 -28 -17 wire>
+<Line -20 -16 -15 -21 -20 -26 wire>
+<Text -17 20 wire D>
+<Text -17 6 wire SCD>
+<Text -17 -8 wire SCE>
+<Port 0 -70 VPWR global>
+<Port 0 -90 VPB global>
+<Port 0 -110 VNB global>
+<Port 0 -130 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -36>
+<Netlist spice>
+X$devicename $node(CLK_N) $node(D) $node(RESET_B) $node(SCD) $node(SCE) VGND VNB VPB VPWR $node(Q) sky130_fd_sc_hd__sdfrtn_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__sdfrtn $devicename ($node(Q), $node(CLK_N), $node(D), $node(SCD), $node(SCE), $node(RESET_B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component sdfrtp>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__sdfrtp_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__sdfrtp_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__sdfrtp_4
+</Layout>
+<Label>
+sdfrtp
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Rect 20 35 -20 -35 wire>
+<Line 20 21 35 21 wire>
+<Port 35 21 Q local digitalOut>
+<Circle -4 -35 4 -43 wire>
+<Line 0 -43 0 -50 wire>
+<Port 0 -50 RESET_B local digitalIn>
+<Line -20 21 -30 21 wire>
+<Port -30 21 D local digitalIn>
+<Line -20 7 -30 7 wire>
+<Port -30 7 SCD local digitalIn>
+<Line -20 -7 -30 -7 wire>
+<Port -30 -7 SCE local digitalIn>
+<Line -20 -21 -30 -21 wire>
+<Port -30 -21 CLK local digitalIn>
+<Line -20 -16 -15 -21 -20 -26 wire>
+<Text -17 20 wire D>
+<Text -17 6 wire SCD>
+<Text -17 -8 wire SCE>
+<Port 0 -70 VPWR global>
+<Port 0 -90 VPB global>
+<Port 0 -110 VNB global>
+<Port 0 -130 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -36>
+<Netlist spice>
+X$devicename $node(CLK) $node(D) $node(RESET_B) $node(SCD) $node(SCE) VGND VNB VPB VPWR $node(Q) sky130_fd_sc_hd__sdfrtp_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__sdfrtp $devicename ($node(Q), $node(CLK), $node(D), $node(SCD), $node(SCE), $node(RESET_B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component sdfsbp>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__sdfsbp_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__sdfsbp_2
+</Layout>
+<Label>
+sdfsbp
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Rect 20 35 -20 -35 wire>
+<Line 20 21 35 21 wire>
+<Circle 20 3 28 11 wire>
+<Line 28 7 35 7 wire>
+<Port 35 7 Q_N local digitalOut>
+<Port 35 21 Q local digitalOut>
+<Circle -4 35 4 43 wire>
+<Line 0 43 0 50 wire>
+<Port 0 50 SET_B local digitalIn>
+<Line -20 21 -30 21 wire>
+<Port -30 21 D local digitalIn>
+<Line -20 7 -30 7 wire>
+<Port -30 7 SCD local digitalIn>
+<Line -20 -7 -30 -7 wire>
+<Port -30 -7 SCE local digitalIn>
+<Line -20 -21 -30 -21 wire>
+<Port -30 -21 CLK local digitalIn>
+<Line -20 -16 -15 -21 -20 -26 wire>
+<Text -17 20 wire D>
+<Text -17 6 wire SCD>
+<Text -17 -8 wire SCE>
+<Port 0 -70 VPWR global>
+<Port 0 -90 VPB global>
+<Port 0 -110 VNB global>
+<Port 0 -130 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -36>
+<Netlist spice>
+X$devicename $node(CLK) $node(D) $node(SCD) $node(SCE) $node(SET_B) VGND VNB VPB VPWR $node(Q) $node(Q_N) sky130_fd_sc_hd__sdfsbp_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__sdfsbp $devicename ($node(Q), $node(Q_N), $node(CLK), $node(D), $node(SCD), $node(SCE), $node(SET_B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component sdfstp>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__sdfstp_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__sdfstp_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__sdfstp_4
+</Layout>
+<Label>
+sdfstp
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Rect 20 35 -20 -35 wire>
+<Line 20 21 35 21 wire>
+<Port 35 21 Q local digitalOut>
+<Circle -4 35 4 43 wire>
+<Line 0 43 0 50 wire>
+<Port 0 50 SET_B local digitalIn>
+<Line -20 21 -30 21 wire>
+<Port -30 21 D local digitalIn>
+<Line -20 7 -30 7 wire>
+<Port -30 7 SCD local digitalIn>
+<Line -20 -7 -30 -7 wire>
+<Port -30 -7 SCE local digitalIn>
+<Line -20 -21 -30 -21 wire>
+<Port -30 -21 CLK local digitalIn>
+<Line -20 -16 -15 -21 -20 -26 wire>
+<Text -17 20 wire D>
+<Text -17 6 wire SCD>
+<Text -17 -8 wire SCE>
+<Port 0 -70 VPWR global>
+<Port 0 -90 VPB global>
+<Port 0 -110 VNB global>
+<Port 0 -130 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -36>
+<Netlist spice>
+X$devicename $node(CLK) $node(D) $node(SCD) $node(SCE) $node(SET_B) VGND VNB VPB VPWR $node(Q) sky130_fd_sc_hd__sdfstp_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__sdfstp $devicename ($node(Q), $node(CLK), $node(D), $node(SCD), $node(SCE), $node(SET_B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component sdfxbp>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__sdfxbp_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__sdfxbp_2
+</Layout>
+<Label>
+sdfxbp
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Rect 20 35 -20 -35 wire>
+<Line 20 21 35 21 wire>
+<Circle 20 3 28 11 wire>
+<Line 28 7 35 7 wire>
+<Port 35 7 Q_N local digitalOut>
+<Port 35 21 Q local digitalOut>
+<Line -20 21 -30 21 wire>
+<Port -30 21 D local digitalIn>
+<Line -20 7 -30 7 wire>
+<Port -30 7 SCD local digitalIn>
+<Line -20 -7 -30 -7 wire>
+<Port -30 -7 SCE local digitalIn>
+<Line -20 -21 -30 -21 wire>
+<Port -30 -21 CLK local digitalIn>
+<Line -20 -16 -15 -21 -20 -26 wire>
+<Text -17 20 wire D>
+<Text -17 6 wire SCD>
+<Text -17 -8 wire SCE>
+<Port 0 -70 VPWR global>
+<Port 0 -90 VPB global>
+<Port 0 -110 VNB global>
+<Port 0 -130 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -36>
+<Netlist spice>
+X$devicename $node(CLK) $node(D) $node(SCD) $node(SCE) VGND VNB VPB VPWR $node(Q) $node(Q_N) sky130_fd_sc_hd__sdfxbp_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__sdfxbp $devicename ($node(Q), $node(Q_N), $node(CLK), $node(D), $node(SCD), $node(SCE), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component sdfxtp>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__sdfxtp_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__sdfxtp_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__sdfxtp_4
+</Layout>
+<Label>
+sdfxtp
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Rect 20 35 -20 -35 wire>
+<Line 20 21 35 21 wire>
+<Port 35 21 Q local digitalOut>
+<Line -20 21 -30 21 wire>
+<Port -30 21 D local digitalIn>
+<Line -20 7 -30 7 wire>
+<Port -30 7 SCD local digitalIn>
+<Line -20 -7 -30 -7 wire>
+<Port -30 -7 SCE local digitalIn>
+<Line -20 -21 -30 -21 wire>
+<Port -30 -21 CLK local digitalIn>
+<Line -20 -16 -15 -21 -20 -26 wire>
+<Text -17 20 wire D>
+<Text -17 6 wire SCD>
+<Text -17 -8 wire SCE>
+<Port 0 -70 VPWR global>
+<Port 0 -90 VPB global>
+<Port 0 -110 VNB global>
+<Port 0 -130 VGND global>
+</Symbol>
+<Offsetlabel 0 11 -36>
+<Netlist spice>
+X$devicename $node(CLK) $node(D) $node(SCD) $node(SCE) VGND VNB VPB VPWR $node(Q) sky130_fd_sc_hd__sdfxtp_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__sdfxtp $devicename ($node(Q), $node(CLK), $node(D), $node(SCD), $node(SCE), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component xnor2>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__xnor2_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__xnor2_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__xnor2_4
+</Layout>
+<Label>
+xnor2
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Port -18 35 A local digitalIn>
+<Port -18 5 B local digitalIn>
+<Port 57 20 Y local digitalOut>
+<Circle 47 24 55 16 wire>
+<Line 17 -10 -13 -10 wire>
+<Line -13 50 17 50 wire>
+<Line -5 5 -18 5 wire>
+<Line -5 35 -18 35 wire>
+<Line 55 20 57 20 wire>
+<Arc -3 -10 47 20 17 50 wire>
+<Arc -3 50 17 -10 47 20 wire>
+<Arc -53 20 -13 -10 -13 50 wire>
+<Arc -58 20 -18 -10 -18 50 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 3 38>
+<Netlist spice>
+X$devicename $node(A) $node(B) VGND VNB VPB VPWR $node(Y) sky130_fd_sc_hd__xnor2_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__xnor2 $devicename ($node(Y), $node(A), $node(B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component xnor3>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__xnor3_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__xnor3_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__xnor3_4
+</Layout>
+<Label>
+xnor3
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Port -18 35 A local digitalIn>
+<Port -18 20 B local digitalIn>
+<Port -18 5 C local digitalIn>
+<Port 57 20 X local digitalOut>
+<Circle 47 24 55 16 wire>
+<Line 17 -10 -13 -10 wire>
+<Line -13 50 17 50 wire>
+<Line -5 5 -18 5 wire>
+<Line -5 35 -18 35 wire>
+<Line 55 20 57 20 wire>
+<Line -2 20 -18 20 wire>
+<Arc -3 -10 47 20 17 50 wire>
+<Arc -3 50 17 -10 47 20 wire>
+<Arc -53 20 -13 -10 -13 50 wire>
+<Arc -58 20 -18 -10 -18 50 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 3 38>
+<Netlist spice>
+X$devicename $node(A) $node(B) $node(C) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__xnor3_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__xnor3 $devicename ($node(X), $node(A), $node(B), $node(C), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component xor2>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__xor2_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__xor2_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__xor2_4
+</Layout>
+<Label>
+xor2
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Port -18 35 A local digitalIn>
+<Port -18 5 B local digitalIn>
+<Port 57 20 X local digitalOut>
+<Line 17 -10 -13 -10 wire>
+<Line -13 50 17 50 wire>
+<Line -5 5 -18 5 wire>
+<Line -5 35 -18 35 wire>
+<Line 47 20 57 20 wire>
+<Arc -3 -10 47 20 17 50 wire>
+<Arc -3 50 17 -10 47 20 wire>
+<Arc -53 20 -13 -10 -13 50 wire>
+<Arc -58 20 -18 -10 -18 50 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 3 38>
+<Netlist spice>
+X$devicename $node(A) $node(B) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__xor2_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__xor2 $devicename ($node(X), $node(A), $node(B), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+<Component xor3>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4>
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__xor3_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__xor3_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__xor3_4
+</Layout>
+<Label>
+xor3
+$devicename
+X$output
+</Label>
+<Prefix L>
+<Symbol 0>
+<Port -18 35 A local digitalIn>
+<Port -18 20 B local digitalIn>
+<Port -18 5 C local digitalIn>
+<Port 57 20 X local digitalOut>
+<Line 17 -10 -13 -10 wire>
+<Line -13 50 17 50 wire>
+<Line -5 5 -18 5 wire>
+<Line -5 35 -18 35 wire>
+<Line 47 20 57 20 wire>
+<Line -2 20 -18 20 wire>
+<Arc -3 -10 47 20 17 50 wire>
+<Arc -3 50 17 -10 47 20 wire>
+<Arc -53 20 -13 -10 -13 50 wire>
+<Arc -58 20 -18 -10 -18 50 wire>
+<Port 0 -50 VPWR global>
+<Port 0 -70 VPB global>
+<Port 0 -90 VNB global>
+<Port 0 -110 VGND global>
+</Symbol>
+<Offsetlabel 0 3 38>
+<Netlist spice>
+X$devicename $node(A) $node(B) $node(C) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__xor3_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__xor3 $devicename ($node(X), $node(A), $node(B), $node(C), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>
+
+<Component or3b>
+<Description>
+https://github.com/google/skywater-pdk
+</Description>
+<Parameter>
+<list output 1 2 4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=1      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or3b_1
+output=2      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or3b_2
+output=4      ../gds/sky130_fd_sc_hd.gds      sky130_fd_sc_hd__or3b_4
+</Layout>
+<Prefix L>
+<Label>
+or3b
+$devicename
+X$output
+</Label>
+<Symbol 0>
+<Port 0 -110 VGND global>
+<Port 0 -90 VNB global>
+<Port 0 -70 VPB global>
+<Port 0 -50 VPWR global>
+<Port 40 0 X local digitalOut>
+<Circle -22 -11 -30 -19 wire>
+<Port -35 -15 C_N local digitalIn>
+<Port -35 0 B local digitalIn>
+<Port -35 15 A local digitalIn>
+<Line 30 0 40 0 wire>
+<Line -19 0 -35 0 wire>
+<Line -22 15 -35 15 wire>
+<Line -30 -15 -35 -15 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -30 30 0 30 wire>
+<Line 0 -30 -30 -30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Arc -20 -30 30 0 0 30 wire>
+</Symbol>
+<Offsetlabel -360 -19 20>
+<Offsetlabel -270 -25 15>
+<Offsetlabel -180 -13 16>
+<Offsetlabel -90 -21 5>
+<Offsetlabel 0 -18 17>
+<Offsetlabel 90 -15 15>
+<Offsetlabel 180 -15 16>
+<Offsetlabel 270 -20 14>
+<Netlist spice>
+X$devicename $node(A) $node(B) $node(C_N) VGND VNB VPB VPWR $node(X) sky130_fd_sc_hd__or3b_$output
+</Netlist>
+<Netlist verilog>
+sky130_fd_sc_hd__or3b $devicename ($node(X), $node(A), $node(B), $node(C_N), VPWR, VGND, VPB, VNB )
+</Netlist>
+</Component>

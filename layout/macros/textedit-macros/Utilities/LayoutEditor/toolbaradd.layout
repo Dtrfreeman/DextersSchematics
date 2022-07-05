@@ -1,0 +1,14 @@
+#!/usr/bin/layout
+#name=Add Macro to Toolbar
+#help=Adds a macro to the toolbar of the LayoutEditor
+
+string temp;
+
+
+int main(){
+if (text->drawing->modified())text->save();
+text->needLayoutEditor();
+layout->addMacroToolButton(text->drawing->fileName,"","");
+layout->showMessage("Info","Please add the line:\nlayout->addMacroToolButton(\""+text->drawing->fileName+"\",\"\",\"\");\n to your autostart macro to restore the macro toolbar with the next restart of the LayoutEditor");
+layout->drawing->scaleFull();
+}

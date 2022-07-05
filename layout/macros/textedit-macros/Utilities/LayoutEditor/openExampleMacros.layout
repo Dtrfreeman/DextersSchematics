@@ -1,0 +1,28 @@
+#!/usr/bin/layout
+#name=Open Example Macro
+#help=open the folder with the shipped examples macro
+
+int main(){
+string s;
+if (process::isMac()){  // to open file from inside a app bundle
+	file f;
+	string linkname=f.homePath()+"/Documents/LayoutEditorExampleMacros";
+        f.filename=linkname;
+	if (!f.exists()){
+          f.filename="/Applications/layout/Contents/macros/examples";
+	  f.link(linkname);
+	}
+        s=layout->getOpenFilename("macros ( *.layout *.rb *.py )",linkname);
+}
+else if (process::isLinux()){
+   s=layout->getOpenFilename("macros ( *.layout *.rb *.py )","/opt/layout/macros/examples");
+}
+else {
+   s=layout->getOpenFilename("macros ( *.layout *.rb *.py )","c://Program Files (x86)/LayoutEditor/macros/examples");
+}
+if (s=="") return 0;
+text->open(s);
+text->drawing->fileName="";
+text->drawing->title="Example";
+}
+

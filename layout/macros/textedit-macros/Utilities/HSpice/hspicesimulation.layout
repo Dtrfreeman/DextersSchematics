@@ -1,0 +1,89 @@
+#!/usr/bin/layout
+#name=Simulate + Waveform Viewer
+#help=Displays the netlist for Spice
+
+void setupHSpice(){
+  string license=process::getEnv("SNPSLMD_LICENSE_FILE");
+
+  //adjust this line to the correct license server
+  if (license=="") process::setEnv("SNPSLMD_LICENSE_FILE","27000@licenseServer");
+}
+
+void setupSpectre(){
+  string license=process::getEnv("SNPSLMD_LICENSE_FILE");
+
+  //adjust this line to the correct license server
+  if (license=="") process::setEnv("SNPSLMD_LICENSE_FILE","27000@licenseServer");
+}
+
+
+
+int main(){
+
+  string type="hspice";
+
+  //type="spectre"; // uncommend to use spectre netlist format 
+
+  file f;
+  string types="ma0 ma1 ma2 ac0 ac1 ac2 ac3 ac4 ms0 ms1 ms2 sw0 sw1 sw2 sw3 mt0 tr0 tr1";
+  stringList resultfiles=types.split(" ");
+  int i;
+  for (i=0;i<resultfiles.size();i++){
+    f.filename=f.tempPath()+"/hspice_tmp."+resultfiles.at(i);
+    f.remove();
+  }
+  if (type=="spectre") setupSpectre();
+  else setupHSpice();
+  
+  string temp=f.tempPath()+"/hspice_tmp.sp";
+
+  f.filename=temp;
+  bool b=false;
+  f.open(b);
+  f.write(text->drawing->text());
+  f.close();
+
+  string out=f.tempPath()+"/hspice_tmp";
+  string listing=f.tempPath()+"/hspice_tmp.lis";
+  f.filename= listing;
+  f.remove();
+
+
+
+  stringList sl;
+  sl.append(temp);
+  if (type=="spectre") sl.append("-spectre ");
+  sl.append("-o");
+  sl.append(out);
+  // adjust this line to the correct hspice location
+  int i=process::execute("/opt/synopsys/hspice/suse32/hspice",sl);//temp+add+" -o "+out);
+  if (i!=0) {
+      text->newFile();
+      text->setFile(text->countFiles()-1);
+      text->drawing->title="hspice error";
+      text->drawing->setText("hspice not found or error in netlist!");
+      }
+  if (f.exists()){
+      text->newFile();
+      text->setFile(text->countFiles()-1);
+      text->drawing->title="hspice listing";
+      text->drawing->openFile(listing);
+  }
+
+  stringList out2;
+   
+  for (i=0;i<resultfiles.size();i++){
+    f.filename=f.tempPath()+"/hspice_tmp."+resultfiles.at(i);
+    if (f.exists()){
+        out2.append(f.filename);
+	}
+  }
+  // adjust this line to the correct waveform viewer location
+  bool b=true;
+  if (out2.size()!=0) b=process::startDetached("/opt/synopsys/cx/bin/wv",out2);
+
+  return 0;
+}
+
+
+ 

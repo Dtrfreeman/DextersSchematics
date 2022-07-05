@@ -1,0 +1,52 @@
+#!/usr/bin/layout
+#name=inductance extraction example
+#help=created an very simple example design and show how an automatic extraction of inductance can be made
+
+int main(){
+        // create a simple design with two shapes
+        pointArray pa;
+        element *e;
+        layout->drawing->selectAll();
+        layout->drawing->deleteSelect();
+        layers::num[6].set3dView(1000,1000);
+        pa.resize(5);
+        pa.set(0,221000,-450000);
+        pa.set(1,212000,-450000);
+        pa.set(2,212000,-399000);
+        pa.set(3,180000,-399000);
+        pa.set(4,180000,-443000);
+        e=layout->drawing->currentCell->addPath(pa,6);
+        e->setCap(0);
+        e->setWidth(4000);
+               
+        layers::num[1].set3dView(0,500);
+        pa.resize(6);
+        pa.set(0,160000,-437000);
+        pa.set(1,171000,-437000);
+        pa.set(2,171000,-399000);
+        pa.set(3,221000,-399000);
+        pa.set(4,221000,-436000);
+        pa.set(5,224000,-436000);
+        e=layout->drawing->currentCell->addPath(pa,1);
+        e->setCap(0);
+        e->setWidth(5000);     
+        
+        // setup and performs the extraction
+        layout->extractionTool->inductanceClear();
+        layout->drawing->deselectAll();
+        layout->drawing->activeLayer=1;
+        layout->drawing->selectActiveLayer();
+        layout->extractionTool->inductanceAddSelection();
+        layout->drawing->deselectAll();        
+        layout->drawing->activeLayer=6;
+        layout->drawing->selectActiveLayer();
+        layout->extractionTool->inductanceAddSelection();
+        layout->drawing->deselectAll();        
+        layout->extractionTool->inductanceCalc(1000000);
+        debug("output self inductance in nH");
+        debug(layout->extractionTool->inductanceResult(0,0)*1000000000);      //output in nH 
+        debug(layout->extractionTool->inductanceResult(1,1)*1000000000);     //output in nH 
+        debug.show();     
+       layout->drawing->scaleFull(); 
+}
+

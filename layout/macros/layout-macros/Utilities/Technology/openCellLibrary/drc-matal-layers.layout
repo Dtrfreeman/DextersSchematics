@@ -1,0 +1,22 @@
+#!/usr/bin/layout
+#name=DRC (metal only)
+#help=runs a DRC on metal and via layers only
+
+#include "drc.layout"
+
+int main(){
+checkSetup();
+if (!checkUnits()) {
+	layout->showMessage("Unit check","Incorrect Units!");
+ 	return 1;
+	}
+prepareDRC();
+
+metal1DRC();
+metal2DRC();
+metal3DRC();
+metal4DRC();
+metal5DRC();
+metal6DRC();
+finalDRC();
+}

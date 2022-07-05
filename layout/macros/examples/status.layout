@@ -1,0 +1,19 @@
+#!/usr/bin/layout
+#name=status example
+#help=status example
+
+int  main() {
+ int i,k;
+ for(i=0;i<=100;i++){ 
+  string s; s.setNum(i);
+  layout->showStatus("completed "+s+"%"); 
+  for (k=0;k<1000;k++){
+   //do something 
+   layout->drawing->newCell();
+   layout->drawing->p(10,10);
+   layout->drawing->p(20,20);
+   layout->drawing->box();
+   layout->drawing->deleteCurrentCell();
+  }
+ }
+}

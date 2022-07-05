@@ -1,0 +1,187 @@
+#!/usr/bin/layout
+#name=pmos
+#help=generate a pmos transitor 
+
+#include "oclCore.layout"
+
+void pmosSingle(int w, int l){
+int pos=0;
+int widthMetal=contSize+2*contEdge;
+int actContAdd=distActCont-contEdge;
+if (actContAdd<0) actContAdd=0;
+point p;
+p.set(actContAdd,-actContAdd);
+fillContact(p,w-2*actContAdd,widthMetal,0);
+layout->drawing->activeLayer=m1Layer;
+layout->drawing->point(actContAdd,0);
+layout->drawing->point(actContAdd+widthMetal,-w);
+layout->drawing->box();
+pos=actContAdd+widthMetal+distPolyCont-contEdge;
+layout->drawing->activeLayer=polyLayer;
+layout->drawing->point(pos,polyExtent);
+layout->drawing->point(pos+l,-w-polyExtent);
+layout->drawing->box();
+int gatePos=pos+l/2;
+pos+=l+distPolyCont-contEdge;
+p.set(pos,-actContAdd);
+fillContact(p,w-2*actContAdd,widthMetal,0);
+layout->drawing->activeLayer=m1Layer;
+layout->drawing->point(pos,0);
+layout->drawing->point(pos+widthMetal,-w);
+layout->drawing->box();
+pos+=widthMetal+actContAdd;
+//active
+layout->drawing->activeLayer=actLayer;
+layout->drawing->point(0,0);
+layout->drawing->point(pos,-w);
+layout->drawing->box();
+//implant
+layout->drawing->activeLayer=pImpLayer;
+layout->drawing->point(-impExt,impExt);
+layout->drawing->point(pos+impExt,-w-impExt);
+layout->drawing->box();
+//well
+layout->drawing->activeLayer=nWellLayer;
+layout->drawing->point(-wellExt,wellExt);
+layout->drawing->point(pos+wellExt,-w-wellExt);
+layout->drawing->box();
+layout->drawing->activeLayer=m1Layer;
+layout->drawing->point(actContAdd+widthMetal/2,-w/2);
+layout->drawing->text("S");
+layout->drawing->point(pos-actContAdd-widthMetal/2,-w/2);
+layout->drawing->text("D");
+layout->drawing->activeLayer=polyLayer;
+layout->drawing->point(gatePos,-w/2);
+layout->drawing->text("G");
+}
+
+void pmosMulti(int w, int l, int finger) {
+int pos=0;
+int sDist=150;
+int pDist=-100;
+int dDist=-300;
+int sStart;
+int sEnd;
+int pStart;
+int pEnd;
+int dStart;
+int dEnd;
+int widthMetal=contSize+2*contEdge;
+int actContAdd=distActCont-contEdge;
+if (actContAdd<0) actContAdd=0;
+point p;
+p.set(actContAdd,-actContAdd);
+fillContact(p,w-2*actContAdd,widthMetal,0);
+layout->drawing->activeLayer=m1Layer;
+layout->drawing->point(actContAdd,sDist);
+layout->drawing->point(actContAdd+widthMetal,-w);
+layout->drawing->box();
+sStart=actContAdd; sEnd=actContAdd+widthMetal;
+pos=actContAdd+widthMetal;
+layout->drawing->point(actContAdd+widthMetal/2,-w/2);
+layout->drawing->text("S");
+int fingerCount;
+for (fingerCount=0;fingerCount<finger;fingerCount++){
+  pos+=distPolyCont-contEdge;
+  layout->drawing->activeLayer=polyLayer;
+  layout->drawing->point(pos,polyExtent);
+  layout->drawing->point(pos+l,-w-polyExtent+pDist);
+  layout->drawing->box();
+  if (fingerCount==0) {
+    pStart=pos;
+    layout->drawing->point(pos+l/2,-w/2);
+    layout->drawing->text("G");
+  }
+  pEnd=pos+l;
+  pos+=l+distPolyCont-contEdge;
+  p.set(pos,-actContAdd);
+  fillContact(p,w-2*actContAdd,widthMetal,0);
+  layout->drawing->activeLayer=m1Layer;
+  if (fingerCount%2==0){
+    layout->drawing->point(pos,0);
+    layout->drawing->point(pos+widthMetal,-w+dDist);
+    layout->drawing->box();
+    dEnd=pos+widthMetal;
+     if (fingerCount==0){ //first drain
+        layout->drawing->point(pos+widthMetal/2,-w/2);
+	layout->drawing->text("D");
+	dStart=pos;
+     }
+     pos+=widthMetal;
+  }
+  else {
+    layout->drawing->point(pos,sDist);
+    layout->drawing->point(pos+widthMetal,-w);
+    layout->drawing->box();
+    pos+=widthMetal;
+    sEnd=pos;
+  }
+}
+pos+=actContAdd;
+//active
+layout->drawing->activeLayer=actLayer;
+layout->drawing->point(0,0);
+layout->drawing->point(pos,-w);
+layout->drawing->box();
+//implant
+layout->drawing->activeLayer=pImpLayer;
+layout->drawing->point(-impExt,impExt);
+layout->drawing->point(pos+impExt,-w-impExt);
+layout->drawing->box();
+//well
+layout->drawing->activeLayer=nWellLayer;
+layout->drawing->point(-wellExt,wellExt);
+layout->drawing->point(pos+wellExt,-w-wellExt);
+layout->drawing->box();
+//source
+layout->drawing->activeLayer=m1Layer;
+layout->drawing->point(sStart,sDist+m1Size);
+layout->drawing->point(sEnd,sDist);
+layout->drawing->box();
+//drain
+layout->drawing->point(dStart,-w+dDist+m1Size);
+layout->drawing->point(dEnd,-w+dDist);
+layout->drawing->box();
+//gate
+layout->drawing->activeLayer=polyLayer;
+layout->drawing->point(pStart,-w-polyExtent+pDist-polySize);
+layout->drawing->point(pEnd,-w-polyExtent+pDist);
+layout->drawing->box();
+}
+
+#parameter W ".5u"
+#parameter L ".3u"
+#parameterInt finger "1"
+
+int main(){
+    checkSetup();
+int w=databaseunits(iPDK_getParameterValue("W"));
+int l=databaseunits(iPDK_getParameterValue("L"));
+int finger=iPDK_getParameterValue("finger");
+string cellname="pmos_"+iPDK_getParameterHash(); 
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=28;
+int wr=w;
+if (finger<=0) finger=1;
+w=wr/finger;
+if (w<(contSize+2*distActCont)){
+	doVoid();
+	return 0;
+	}
+if (l<polySize) {
+	doVoid();
+	return 0;
+	}
+if (finger==1) {
+	pmosSingle(w,l);
+	}
+else {
+	pmosMulti(w,l,finger);
+	}
+}

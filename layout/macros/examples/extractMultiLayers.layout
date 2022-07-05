@@ -1,0 +1,40 @@
+#!/usr/bin/layout
+#name=extract multi layers
+#help=extract more than one layer from a design
+
+int main() {
+  // get first cell
+  cellList *cells=layout->drawing->firstCell;
+
+  // loop over all cells
+  while (cells!=NULL){  
+       if (cells->thisCell!=NULL){
+       // get first Element of this cell
+       elementList *l=cells->thisCell->firstElement;
+       cells->thisCell->selectAll();
+
+       // loop over all elements
+      while (l!=NULL) {
+               if (l->thisElement!=NULL) {
+		    if (l->thisElement->isCellref()) l->thisElement->deselectAll();
+                   else if (l->thisElement->isCellrefArray()) l->thisElement->deselectAll();
+                   else {
+		       int layer=l->thisElement->layerNum;
+		       //list all layer here you want to keep
+		       if (layer==1) l->thisElement->deselectAll();
+		       if (layer==3) l->thisElement->deselectAll();
+		       if (layer==5) l->thisElement->deselectAll();
+		       if (layer==7) l->thisElement->deselectAll();
+		       if (layer==9) l->thisElement->deselectAll();
+		       if (layer==11) l->thisElement->deselectAll();
+                   }
+               }
+               l=l->nextElement;
+           }
+
+    //round all selected elements
+    cells->thisCell->deleteSelect();
+   }
+   cells=cells->nextCell;
+  }
+}

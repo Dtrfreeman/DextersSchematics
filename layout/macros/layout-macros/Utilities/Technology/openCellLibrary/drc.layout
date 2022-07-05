@@ -1,0 +1,211 @@
+
+#include "lib.layout"
+
+void prepareDRC(){
+layout->drcTool->result="DRC (for Open Cell Library) on "+layout->drawing->currentCell->cellName+"\r\n";
+// setup error layer
+layout->drawing->activeLayer=0;
+layout->drcTool->setErrorLayerToActiveLayer();
+
+}
+
+
+void finalDRC(){
+layout->hideToolBar("Netlist");
+layout->showToolBar("Design Rule Checker");
+layout->drcTool->showReport();
+
+}
+
+
+void wellDRC(){
+layout->drcTool->ruleName= "Overlapping nwell pwell";
+layout->drcTool->layerCombination(2,3);
+layout->drcTool->ruleName= "Minimum size pwell";
+layout->drcTool->minimumSize(200,2,true);
+layout->drcTool->ruleName= "Minimum size nwell";
+layout->drcTool->minimumSize(200,3,true);
+
+}
+
+void polyDRC(){
+layout->drcTool->ruleName= "Poly: minimum size";
+layout->drcTool->minimumSize(100,9,true);
+layout->drcTool->ruleName= "Poly: minimum distance outside active";
+layout->drcTool->minimumElementDistance(150,9,true);
+layout->drcTool->ruleName= "Poly extension past active";
+layout->drcTool->minimumEnclosure(100,9,1);
+layout->drcTool->ruleName= "Poly extension past poly on active";
+layout->drcTool->minimumEnclosure(140,1,9);
+layout->drcTool->ruleName= "Poly distance to active";
+layout->drcTool->minimumDistanceOrOverlap(100,9,1);
+layout->drcTool->ruleName= "Poly: min spacing as gate";
+layout->drcTool->minimumOverlapDistance(140,9,1);
+}
+
+void activeAreaDRC(){
+layout->drcTool->ruleName= "Active: minimum size";
+layout->drcTool->minimumSize(180,1,true);
+layout->drcTool->ruleName= "Active: minimum distance";
+layout->drcTool->minimumElementDistance(150,1,true);
+layout->drcTool->ruleName= "Active: inside well";
+layout->drcTool->inside(150,1,2,3);
+}
+
+void implantDRC(){
+layout->drcTool->ruleName= "Contact inside implant";
+layout->drcTool->inside(25,10,4,5);
+layout->drcTool->ruleName= "Implant: (p) minimum distance";
+layout->drcTool->minimumElementDistance(450,4,true);
+layout->drcTool->ruleName= "Implant: (n) minimum distance";
+layout->drcTool->minimumElementDistance(450,5,true);
+layout->drcTool->ruleName= "Implant: (p) minimum size";
+layout->drcTool->minimumSize(450,4,true);
+layout->drcTool->ruleName= "Implant: (n) minimum size";
+layout->drcTool->minimumSize(450,5,true);
+layout->drcTool->ruleName= "Implant: no overlap p n";
+layout->drcTool->layerCombination(4,5);
+}
+
+void contactDRC(){
+layout->drcTool->ruleName= "Contact: minimum distance";
+layout->drcTool->minimumElementDistance(100,10,true);
+layout->drcTool->ruleName= "Contact: minimum size";
+layout->drcTool->minimumSize(100,10,true);
+layout->drcTool->ruleName= "Contact inside poly, active";
+layout->drcTool->inside(25,10,9,1);
+layout->drcTool->ruleName= "Contact inside metal";
+layout->drcTool->inside(0,10,11);
+layout->drcTool->ruleName= "Implant: (p) minimum distance";
+layout->drcTool->minimumElementDistance(100,4,true);
+layout->drcTool->ruleName= "Implant: (n) minimum distance";
+layout->drcTool->minimumElementDistance(100,5,true);
+layout->drcTool->ruleName= "Implant: (p) minimum size";
+layout->drcTool->minimumSize(100,4,true);
+layout->drcTool->ruleName= "Implant: (n) minimum size";
+layout->drcTool->minimumSize(100,5,true);
+layout->drcTool->ruleName= "Implant: no overlap p n";
+layout->drcTool->layerCombination(4,5);
+}
+
+void metal1DRC(){
+layout->drcTool->ruleName= "Metal1: minimum distance";
+layout->drcTool->minimumElementDistance(130,11,true);
+layout->drcTool->ruleName= "Metal1: minimum size";
+layout->drcTool->minimumSize(140,11,true);
+layout->drcTool->ruleName= "Via1 inside Metal1";
+layout->drcTool->inside(15,12,11);
+}
+
+void metal2DRC(){
+layout->drcTool->ruleName= "Metal2: minimum distance";
+layout->drcTool->minimumElementDistance(130,13,true);
+layout->drcTool->ruleName= "Metal2: minimum size";
+layout->drcTool->minimumSize(140,13,true);
+layout->drcTool->ruleName= "Via1 inside Metal2";
+layout->drcTool->inside(0,12,13);
+layout->drcTool->ruleName= "Via1: minimum distance";
+layout->drcTool->minimumElementDistance(100,12,true);
+layout->drcTool->ruleName= "Via1: minimum size";
+layout->drcTool->minimumSize(100,12,true);
+layout->drcTool->ruleName= "Via2 inside Metal2";
+layout->drcTool->inside(0,14,13);
+}
+
+void metal3DRC(){
+layout->drcTool->ruleName= "Metal3: minimum distance";
+layout->drcTool->minimumElementDistance(130,15,true);
+layout->drcTool->ruleName= "Metal3: minimum size";
+layout->drcTool->minimumSize(140,15,true);
+layout->drcTool->ruleName= "Via2 inside Metal3";
+layout->drcTool->inside(0,14,15);
+layout->drcTool->ruleName= "Via2: minimum distance";
+layout->drcTool->minimumElementDistance(100,14,true);
+layout->drcTool->ruleName= "Via2: minimum size";
+layout->drcTool->minimumSize(100,14,true);
+layout->drcTool->ruleName= "Via3 inside Metal3";
+layout->drcTool->inside(0,16,15);
+}
+
+void metal4DRC(){
+layout->drcTool->ruleName= "Metal4: minimum distance";
+layout->drcTool->minimumElementDistance(130,17,true);
+layout->drcTool->ruleName= "Metal4: minimum size";
+layout->drcTool->minimumSize(140,17,true);
+layout->drcTool->ruleName= "Via3 inside Metal4";
+layout->drcTool->inside(0,16,17);
+layout->drcTool->ruleName= "Via3: minimum distance";
+layout->drcTool->minimumElementDistance(100,16,true);
+layout->drcTool->ruleName= "Via3: minimum size";
+layout->drcTool->minimumSize(100,16,true);
+layout->drcTool->ruleName= "Via4 inside Metal4";
+layout->drcTool->inside(0,18,17);
+}
+
+void metal5DRC(){
+layout->drcTool->ruleName= "Metal5: minimum distance";
+layout->drcTool->minimumElementDistance(130,19,true);
+layout->drcTool->ruleName= "Metal5: minimum size";
+layout->drcTool->minimumSize(100,19,true);
+layout->drcTool->ruleName= "Via4 inside Metal5";
+layout->drcTool->inside(0,18,19);
+layout->drcTool->ruleName= "Via4: minimum distance";
+layout->drcTool->minimumElementDistance(100,18,true);
+layout->drcTool->ruleName= "Via4: minimum size";
+layout->drcTool->minimumSize(100,18,true);
+layout->drcTool->ruleName= "Via5 inside Metal5";
+layout->drcTool->inside(0,20,19);
+}
+
+void metal6DRC(){
+layout->drcTool->ruleName= "Metal6: minimum distance";
+layout->drcTool->minimumElementDistance(140,21,true);
+layout->drcTool->ruleName= "Metal6: minimum size";
+layout->drcTool->minimumSize(140,21,true);
+layout->drcTool->ruleName= "Via5 inside Metal6";
+layout->drcTool->inside(0,20,21);
+layout->drcTool->ruleName= "Via5: minimum distance";
+layout->drcTool->minimumElementDistance(200,20,true);
+layout->drcTool->ruleName= "Via5: minimum size";
+layout->drcTool->minimumSize(200,20,true);
+
+}
+
+void gridDRC(){
+layout->drcTool->ruleName= "Active on grid";
+layout->drcTool->onGrid(5,1);
+layout->drcTool->ruleName= "pwell on grid";
+layout->drcTool->onGrid(5,2);
+layout->drcTool->ruleName= "nwell on grid";
+layout->drcTool->onGrid(5,3);
+layout->drcTool->ruleName= "nimplant on grid";
+layout->drcTool->onGrid(5,4);
+layout->drcTool->ruleName= "pinplant on grid";
+layout->drcTool->onGrid(5,5);
+layout->drcTool->ruleName= "poly on grid";
+layout->drcTool->onGrid(5,9);
+layout->drcTool->ruleName= "contact on grid";
+layout->drcTool->onGrid(5,10);
+layout->drcTool->ruleName= "metal1 on grid";
+layout->drcTool->onGrid(5,11);
+layout->drcTool->ruleName= "via1 on grid";
+layout->drcTool->onGrid(5,12);
+layout->drcTool->ruleName= "metal2 on grid";
+layout->drcTool->onGrid(5,13);
+layout->drcTool->ruleName= "via2 on grid";
+layout->drcTool->onGrid(5,14);
+layout->drcTool->ruleName= "metal3 on grid";
+layout->drcTool->onGrid(5,15);
+layout->drcTool->ruleName= "via3 on grid";
+layout->drcTool->onGrid(5,16);
+layout->drcTool->ruleName= "metal4 on grid";
+layout->drcTool->onGrid(5,17);
+layout->drcTool->ruleName= "via4 on grid";
+layout->drcTool->onGrid(5,18);
+layout->drcTool->ruleName= "metal5 on grid";
+layout->drcTool->onGrid(5,19);
+layout->drcTool->ruleName= "via5 on grid";
+layout->drcTool->onGrid(5,20);
+layout->drcTool->ruleName= "metal6 on grid";
+layout->drcTool->onGrid(5,21);
+}

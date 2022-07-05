@@ -1,0 +1,26 @@
+#!/usr/bin/layout
+#name=function shapes
+#help=create a polygon on the active layer with a entered function
+
+double func(double d){
+return d*d/100;
+}
+
+
+int main(){
+  double d2;
+  layout->drawing->clearPoints();
+// add a x^2 polygon
+  layout->drawing->activeLayer=4;
+  for (d2=-100;d2<101;d2+=10){
+    layout->drawing->p(d2,func(d2));
+  }
+  layout->drawing->polygon();
+ // add a cos path
+  layout->drawing->activeLayer=2;
+  for (d2=-130;d2<=130;d2+=5){
+    layout->drawing->p(d2,-30*math::cos((d2-20)/50*math::pi));
+  }
+  layout->drawing->path();
+  layout->drawing->scaleFull();
+}

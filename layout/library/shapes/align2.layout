@@ -1,0 +1,75 @@
+#!/usr/bin/layout
+#name=alignmentmark
+#help=generate a alignmaent mark
+
+//parameter with default value
+#parameter size "50µm"
+#parameter thickness "10µm"
+#parameter space "1µm"
+#parameter boxsize "65µm"
+#parameter layer_1 "1"
+#parameter layer_2 "2"
+
+#include "shapelib.layout"
+
+int main(){
+int size=databaseunits(iPar("size"));
+int thick=databaseunits(iPar("thickness"));
+int space=databaseunits(iPar("space"));
+int box=databaseunits(iPar("boxsize"));
+int layer1=getLayer(iPar("layer_1"));
+int layer2=getLayer(iPar("layer_2"));
+string cellname="align2"+userunits(size)+"_"+userunits(space)+"_" +userunits(thick)+"_"+userunits(box)+"_"+iPar("layer_1")+"_"+iPar("layer_2");
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+int thick2=thick/2;
+int size2=size/2;
+layout->drawing->activeLayer=layer1;
+layout->drawing->point(thick2,thick2);
+layout->drawing->point(size2,thick2);
+layout->drawing->point(size2,-thick2);
+layout->drawing->point(thick2,-thick2);
+layout->drawing->point(thick2,-size2);
+layout->drawing->point(-thick2,-size2);
+layout->drawing->point(-thick2,-thick2);
+layout->drawing->point(-size2,-thick2);
+layout->drawing->point(-size2,thick2);
+layout->drawing->point(-thick2,thick2);
+layout->drawing->point(-thick2,size2);
+layout->drawing->point(thick2,size2);
+layout->drawing->point(thick2,thick2);
+layout->drawing->polygon();
+int thick2=thick/2+space;
+int size2=size/2+space;
+box=box/2;
+layout->drawing->activeLayer=layer2;
+layout->drawing->point(thick2,thick2);
+layout->drawing->point(size2,thick2);
+layout->drawing->point(box,thick2);
+layout->drawing->point(box,box);
+layout->drawing->point(-box,box);
+layout->drawing->point(-box,-box);
+layout->drawing->point(box,-box);
+layout->drawing->point(box,thick2);
+layout->drawing->point(size2,thick2);
+layout->drawing->point(size2,-thick2);
+layout->drawing->point(thick2,-thick2);
+layout->drawing->point(thick2,-size2);
+layout->drawing->point(-thick2,-size2);
+layout->drawing->point(-thick2,-thick2);
+layout->drawing->point(-size2,-thick2);
+layout->drawing->point(-size2,thick2);
+layout->drawing->point(-thick2,thick2);
+layout->drawing->point(-thick2,size2);
+layout->drawing->point(thick2,size2);
+layout->drawing->point(thick2,thick2);
+layout->drawing->polygon();
+}
+
+

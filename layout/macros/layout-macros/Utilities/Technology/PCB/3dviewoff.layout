@@ -1,0 +1,22 @@
+#!/usr/bin/layout
+#name=3D view off
+#help=remove devided layers and hide 3d view
+
+#include "pcbcore.layout"
+
+int main(){
+    clearGeneratedLayer();
+    layers::num[10].disable();
+    layers::num[11].disable();
+    layers::num[12].disable();
+    layers::num[13].disable();
+    layers::num[14].disable();
+    layers::num[15].disable();
+    layers::num[72].disable();
+    layers::num[73].disable();
+    layers::num[74].disable();
+    layers::num[75].disable();
+    layers::num[76].disable();
+    layers::num[77].disable();
+    layout3d->drawing->deleteAllCell();
+}

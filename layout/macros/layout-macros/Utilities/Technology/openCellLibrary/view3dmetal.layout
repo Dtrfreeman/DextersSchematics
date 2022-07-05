@@ -1,0 +1,32 @@
+#!/usr/bin/layout
+#name=3d view metal
+#help=3d view of the metal layers
+
+
+int main(){
+layout->view3dTool->clearModel();
+layers::reset3dView();
+layers::num[10].set3dView(0,100);
+layers::num[11].set3dView(100,170);
+layers::num[12].set3dView(170,240);
+layers::num[13].set3dView(240,310);
+layers::num[14].set3dView(310,380);
+layers::num[15].set3dView(380,480);
+layers::num[16].set3dView(480,580);
+layers::num[17].set3dView(580,700);
+layers::num[18].set3dView(700,820);
+layers::num[19].set3dView(820,940);
+layers::num[20].set3dView(940,1060);
+layers::num[21].set3dView(1060,1180);
+layers::num[30].set3dView(490,520);
+layers::num[31].set3dView(520,580);
+// poly
+//layers::num[9].set3dView(0,30);
+//bipolar layer
+//layers::num[40].set3dView(-500,100);
+//layers::num[41].set3dView(-400,350);
+//layers::num[43].set3dView(-150,160);
+//layers::num[44].set3dView(-150,160);
+//layers::num[45].set3dView(-50,80);
+layout->view3dTool->trigger3dRenderAll();
+}

@@ -1,0 +1,18 @@
+#!/usr/bin/layout
+#name=Encrypt Macro
+#help=Encypt the Macro and makes its unreadable for users
+
+
+
+int main(){
+  if (text->drawing->modified())text->save();
+  string filename=text->drawing->fileName;
+  file f; f.filename=text->drawing->fileName;
+  text->open(filename);
+  text->drawing->convert("encryptMacro");
+  text->drawing->title=f.baseName()+" (encrypted)";
+  text->drawing->fileName=filename.left(filename.size()-7)+"_encrypted.layout";
+  text->drawing->setModifyChanged();
+
+
+}

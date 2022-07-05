@@ -1,0 +1,41 @@
+#!/usr/bin/layout
+#name=microstrip generator
+#help=generate microstrip cells
+
+#include "microwavelib.layout"
+
+int main(){
+//layout->showMessage("parameter","NETLIST_PARAMETER");
+setMicrowave();
+string s="NETLIST_PARAMETER";
+int width=databaseunits(s.parameter("W"));
+int gap=databaseunits(s.parameter("G"));
+int slot=databaseunits(s.parameter("S"));
+string cellname="CGAP"+userunits(width)+"_"+userunits(slot)+"_"+userunits(gap);
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+int wh=width/2;
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=28;
+layout->drawing->point(0,0);
+layout->drawing->text("NETLIST_PIN1_NAME");
+layout->drawing->point(gap,0);
+layout->drawing->text("NETLIST_PIN2_NAME");
+layout->drawing->activeLayer=25;
+layout->drawing->point(-100,wh);
+layout->drawing->point(0,-width+wh);
+layout->drawing->box();
+layout->drawing->point(gap+100,wh);
+layout->drawing->point(gap,-width+wh);
+layout->drawing->box();
+layout->drawing->point(-100,wh+slot);
+layout->drawing->point(gap+100,CPWsize(width,slot));
+layout->drawing->box();
+layout->drawing->point(-100,-width+wh-slot);
+layout->drawing->point(gap+100,-CPWsize(width,slot));
+layout->drawing->box();
+}  

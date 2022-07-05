@@ -1,0 +1,19 @@
+#!/usr/bin/layout
+#name=callback npn transistor
+#help=calculation of simulation parameter for npn transistors
+
+int main(){
+  sElement *e=iPDK_getCurrentInst();
+  double w=e->getParameter("width").toDoubleFromEng();
+  double l=e->getParameter("length").toDoubleFromEng();
+  double is=w*l*1.0e+5;
+  string s4;
+  s4.setEng(is);
+  e->setParameter("IS",s4);
+  double bf=w*l*1.7e11 +200+w* 2.0e4 ;
+  s4.setEng(bf);
+  e->setParameter("BF",s4);
+}
+
+
+ 

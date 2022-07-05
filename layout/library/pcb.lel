@@ -1,0 +1,397 @@
+ 
+<Component BC107>
+<Description>
+Small signal npn BJT transistor
+300mW 50V 100mA
+</Description>
+<Parameter>
+</Parameter>
+<Layout>
+[package]
+#for parameter	layout-file	cellname	[portname pinnumber ] (nc for not connected)
+*	pcb/TO18.gds	TO18	port3 3 port2 2 port1 1
+</Layout>
+<Prefix QN>
+<Label>
+$devicename
+BC107
+</Label>
+<Symbol 0>
+<Port -15 0 port1>
+<Port 15 30 port2>
+<Port 15 -30 port3>
+<Line 5 15 5 -15 #0000c0>
+<Line -15 0 5 0 #0000c0>
+<Line 5 5 15 15 #0000c0>
+<Line 15 15 15 30 #0000c0>
+<Line 5 -5 15 -15 #0000c0>
+<Line 15 -15 15 -30 #0000c0>
+<Line 9 -15 15 -15 #0000c0>
+<Line 15 -9 15 -15 #0000c0>
+</Symbol>
+<Offsetlabel -360 22 8>
+<Offsetlabel -270 -7 -22>
+<Offsetlabel -180 0 -3>
+<Offsetlabel -90 8 0>
+<Offsetlabel 0 24 11>
+<Offsetlabel 90 9 0>
+<Offsetlabel 180 0 -6>
+<Offsetlabel 270 -11 -18>
+<Netlist hspice>
+$devicename $node(port2) $node(port1) $node(port3) BC107A
+</Netlist>
+<Netlist qucs>
+_BJT:$devicename $node(port1) $node(port2) $node(port3) $node(port2)  Type=npn Is=7.049f Nf=1 Nr=1 Ikf=4.589 Ikr=5.313 Vaf=116.3 Var=0 Ise=7.049f Ne=1.281 Isc=121.7p Nc=1.865 Bf=375.5 Br=2.611 Rbm=0 Irb=0 Rc=1.464 Re=0 Rb=0 Cje=11.5p Vje=0.5 Mje=0.2717 Cjc=5.38p Vjc=0.6218 Mjc=0.329 Xcjc=1 Cjs=0 Vjs=0.75 Mjs=0 Fc=0.5 Tf=451p Xtf=17.43 Vtf=10 Itf=6.194 Tr=10n Temp=26.85 Kf=0 Af=1 Ffe=1 Kb=0 Ab=1 Fb=1 Ptf=0 Xtb=1.5 Xti=3 Eg=1.11 Tnom=26.85 Area=1
+</Netlist>
+<Netlist spice>
+$devicename $node(port2) $node(port1) $node(port3) BC107A
+</Netlist>
+<Model hspice>
+.model BC107A NPN( IS=7.049f NF=1 NR=1 IKF=4.589 IKR=5.313 VA=116.3 VB=0 ISE=7.049f NE=1.281 ISC=121.7p NC=1.865 BF=375.5 BR=2.611 RBM=0 IRB=0 RC=1.464 RE=0 RB=0 CJE=11.5p PE=0.5 ME=0.2717 CJC=5.38p PC=0.6218 MC=0.329 XCJC=1 CCS=0 FC=0.5 TF=451p XTF=17.43 VTF=10 ITF=6.194 TR=10n KF=0 AF=1 PTF=0 XTB=1.5 XTI=3 EG=1.11 TNOM=26.85)
+</Model>
+<Model spice>
+.model BC107A NPN( IS=7.049f NF=1 NR=1 IKF=4.589 IKR=5.313 VA=116.3 VB=0 ISE=7.049f NE=1.281 ISC=121.7p NC=1.865 BF=375.5 BR=2.611 RBM=0 IRB=0 RC=1.464 RE=0 RB=0 CJE=11.5p PE=0.5 ME=0.2717 CJC=5.38p PC=0.6218 MC=0.329 XCJC=1 CCS=0 PS=0.75 MS=0 FC=0.5 TF=451p XTF=17.43 VTF=10 ITF=6.194 TR=10n KF=0 AF=1 PTF=0 XTB=1.5 XTI=3 EG=1.11 TNOM=26.85)
+</Model>
+</Component>
+<Component BC238>
+<Description>
+General Purpose Si npn 300mW  20V 200mA 150MHz
+package: TO-92
+</Description>
+<Parameter>
+</Parameter>
+<Layout>
+[package]
+#for parameter	layout-file	cellname	[portname pinnumber ] (nc for not connected)
+*	pcb/TO92.gds	TO92	port1 2 port2 3 port3 1
+</Layout>
+<Prefix QN>
+<Label>
+$devicename
+BC238
+</Label>
+<Symbol 0>
+<Port -15 0 port1>
+<Port 15 30 port2>
+<Port 15 -30 port3>
+<Line 5 15 5 -15 #0000c0>
+<Line -15 0 5 0 #0000c0>
+<Line 5 5 15 15 #0000c0>
+<Line 15 15 15 30 #0000c0>
+<Line 5 -5 15 -15 #0000c0>
+<Line 15 -15 15 -30 #0000c0>
+<Line 9 -15 15 -15 #0000c0>
+<Line 15 -9 15 -15 #0000c0>
+</Symbol>
+<Offsetlabel -360 22 7>
+<Offsetlabel -270 -7 -20>
+<Offsetlabel -180 2 -7>
+<Offsetlabel -90 9 -2>
+<Offsetlabel 0 22 11>
+<Offsetlabel 90 10 0>
+<Offsetlabel 180 0 -6>
+<Offsetlabel 270 -9 -18>
+<Netlist hspice>
+$devicename $node(port2) $node(port1) $node(port3) BC238
+</Netlist>
+<Netlist qucs>
+BJT:$devicename $node(port1) $node(port2) $node(port3)   $node(port2) Type=npn Is=1.8e-14 Nf=0.9955 Nr=1.005 Ikf=0.14 Ikr=0.03 Vaf=80 Var=12.5 Ise=5e-14 Ne=1.46 Isc=1.72e-13 Nc=1.27 Bf=400 Br=35.5 Rbm=0 Irb=0 Rc=0.25 Re=0.6 Rb=0.56 Cje=1.3e-11 Vje=0.75 Mje=0.33 Cjc=4e-12 Vjc=0.54 Mjc=0.33 Xcjc=1 Cjs=0 Vjs=0.75 Mjs=0 Fc=0.5 Tf=6.4e-10 Xtf=0 Vtf=0 Itf=0 Tr=5.072e-08 Temp=26.85 Kf=0 Af=1 Ffe=1 Kb=0 Ab=1 Fb=1 Ptf=0 Xtb=0 Xti=3 Eg=1.11 Tnom=26.85 Area=1
+</Netlist>
+<Netlist spice>
+$devicename $node(port2) $node(port1) $node(port3) BC238
+</Netlist>
+<Model hspice>
+.model BC238 NPN( IS=1.8e-14 NF=0.9955 NR=1.005 IKF=0.14 IKR=0.03 VA=80 VB=12.5 ISE=5e-14 NE=1.46 ISC=1.72e-13 NC=1.27 BF=400 BR=35.5 RBM=0 IRB=0 RC=0.25 RE=0.6 RB=0.56 CJE=1.3e-11 PE=0.75 ME=0.33 CJC=4e-12 PC=0.54 MC=0.33 XCJC=1 CCS=0 FC=0.5 TF=6.4e-10 XTF=0 VTF=0 ITF=0 TR=5.072e-08 KF=0 AF=1 PTF=0 XTB=0 XTI=3 EG=1.11 TNOM=26.85)
+</Model>
+<Model spice>
+.model BC238 NPN( IS=1.8e-14 NF=0.9955 NR=1.005 IKF=0.14 IKR=0.03 VA=80 VB=12.5 ISE=5e-14 NE=1.46 ISC=1.72e-13 NC=1.27 BF=400 BR=35.5 RBM=0 IRB=0 RC=0.25 RE=0.6 RB=0.56 CJE=1.3e-11 PE=0.75 ME=0.33 CJC=4e-12 PC=0.54 MC=0.33 XCJC=1 CCS=0 PS=0.75 MS=0 FC=0.5 TF=6.4e-10 XTF=0 VTF=0 ITF=0 TR=5.072e-08 KF=0 AF=1 PTF=0 XTB=0 XTI=3 EG=1.11 TNOM=26.85)
+</Model>
+</Component>
+<Component BC548>
+<Description>
+General Purpose Si npn 500mW  30V 200mA 300MHz 
+package: TO-92
+</Description>
+<Parameter>
+</Parameter>
+<Layout>
+[package]
+#for parameter	layout-file	cellname	[portname pinnumber ] (nc for not connected)
+*	pcb/TO92.gds	TO92	port1 2 port2 3 port3 1
+</Layout>
+<Prefix QN>
+<Label>
+$devicename
+BC548
+</Label>
+<Symbol 0>
+<Port -15 0 port1>
+<Port 15 30 port2>
+<Port 15 -30 port3>
+<Line 5 15 5 -15 #0000c0>
+<Line -15 0 5 0 #0000c0>
+<Line 5 5 15 15 #0000c0>
+<Line 15 15 15 30 #0000c0>
+<Line 5 -5 15 -15 #0000c0>
+<Line 15 -15 15 -30 #0000c0>
+<Line 9 -15 15 -15 #0000c0>
+<Line 15 -9 15 -15 #0000c0>
+</Symbol>
+<Offsetlabel -360 22 8>
+<Offsetlabel -270 -7 -22>
+<Offsetlabel -180 0 -3>
+<Offsetlabel -90 8 0>
+<Offsetlabel 0 24 11>
+<Offsetlabel 90 9 0>
+<Offsetlabel 180 0 -6>
+<Offsetlabel 270 -11 -18>
+<Netlist allted>
+$devicename($node(port1),$node(port2),$node(port3),0)=list_BC548;
+</Netlist>
+<Netlist hspice>
+$devicename $node(port2) $node(port1) $node(port3) BC548
+</Netlist>
+<Netlist qucs>
+BJT:$devicename $node(port1) $node(port2) $node(port3) $node(port2) Type=npn Is=1.8e-14 Nf=0.9955 Nr=1.005 Ikf=0.14 Ikr=0.03 Vaf=80 Var=12.5 Ise=5e-14 Ne=1.46 Isc=1.72e-13 Nc=1.27 Bf=400 Br=35.5 Rbm=0 Irb=0 Rc=0.25 Re=0.6 Rb=0.56 Cje=1.3e-11 Vje=0.75 Mje=0.33 Cjc=4e-12 Vjc=0.54 Mjc=0.33 Xcjc=1 Cjs=0 Vjs=0.75 Mjs=0 Fc=0.5 Tf=6.4e-10 Xtf=0 Vtf=0 Itf=0 Tr=5.072e-08 Temp=26.85 Kf=0 Af=1 Ffe=1 Kb=0 Ab=1 Fb=1 Ptf=0 Xtb=0 Xti=3 Eg=1.11 Tnom=26.85 Area=1
+</Netlist>
+<Netlist spice>
+$devicename $node(port2) $node(port1) $node(port3) BC548
+</Netlist>
+<Model allted>
+list list_BC548.npn;
+IS=1.8e-14; NF=0.9955; NR=1.005; IKF=0.14; IKR=0.03; VA=80; VB=12.5; ISE=5e-14; NE=1.46; ISC=1.72e-13; NC=1.27; BF=400; BR=35.5; RBM=0; IRB=0; RC=0.25; RE=0.6; RB=0.56; CJE=1.3e-11; PE=0.75; ME=0.33; CJC=4e-12; PC=0.54; MC=0.33; XCJC=1; CCS=0; PS=0.75; MS=0; FC=0.5; TF=6.4e-10; XTF=0; VTF=0; ITF=0; TR=5.072e-08; KF=0; AF=1; PTF=0; XTB=0; XTI=3; EG=1.11;
+</Model>
+<Model hspice>
+.model BC548 NPN( IS=1.8e-14 NF=0.9955 NR=1.005 IKF=0.14 IKR=0.03 VA=80 VB=12.5 ISE=5e-14 NE=1.46 ISC=1.72e-13 NC=1.27 BF=400 BR=35.5 RBM=0 IRB=0 RC=0.25 RE=0.6 RB=0.56 CJE=1.3e-11 PE=0.75 ME=0.33 CJC=4e-12 PC=0.54 MC=0.33 XCJC=1 CCS=0 FC=0.5 TF=6.4e-10 XTF=0 VTF=0 ITF=0 TR=5.072e-08 KF=0 AF=1 PTF=0 XTB=0 XTI=3 EG=1.11 TNOM=26.85)
+</Model>
+<Model spice>
+.model BC548 NPN( IS=1.8e-14 NF=0.9955 NR=1.005 IKF=0.14 IKR=0.03 VA=80 VB=12.5 ISE=5e-14 NE=1.46 ISC=1.72e-13 NC=1.27 BF=400 BR=35.5 RBM=0 IRB=0 RC=0.25 RE=0.6 RB=0.56 CJE=1.3e-11 PE=0.75 ME=0.33 CJC=4e-12 PC=0.54 MC=0.33 XCJC=1 CCS=0 PS=0.75 MS=0 FC=0.5 TF=6.4e-10 XTF=0 VTF=0 ITF=0 TR=5.072e-08 KF=0 AF=1 PTF=0 XTB=0 XTI=3 EG=1.11 TNOM=26.85)
+</Model>
+</Component>
+<Component BC556>
+<Description>
+General Purpose Si pnp 500mW  65V 200mA 150MHz
+</Description>
+<Parameter>
+</Parameter>
+<Layout>
+[package]
+#for parameter	layout-file	cellname	[portname pinnumber ] (nc for not connected)
+*	pcb/TO92.gds	TO92	port1 2 port2 3 port3 1
+</Layout>
+<Prefix QP>
+<Label>
+$devicename
+BC556
+</Label>
+<Symbol 0>
+<Line 9 10 15 10 #0000c0>
+<Line 9 10 9 16 #0000c0>
+<Line 14 15 14 30 #0000c0>
+<Line 4 5 14 15 #0000c0>
+<Line 14 -15 14 -30 #0000c0>
+<Line 4 -5 14 -15 #0000c0>
+<Line -16 0 4 0 #0000c0>
+<Line 4 -15 4 15 #0000c0>
+<Port 14 30 port3>
+<Port 14 -30 port2>
+<Port -16 0 port1>
+</Symbol>
+<Offsetlabel -360 18 7>
+<Offsetlabel -270 -11 -17>
+<Offsetlabel -180 2 -4>
+<Offsetlabel -90 9 0>
+<Offsetlabel 0 19 4>
+<Offsetlabel 90 13 0>
+<Offsetlabel 180 4 -4>
+<Offsetlabel 270 -12 -18>
+<Netlist hspice>
+$devicename $node(port2) $node(port1) $node(port3) BC556AP
+</Netlist>
+<Netlist qucs>
+BJT:$devicename $node(port1) $node(port2) $node(port3) $node(port2)  Type=pnp Is=1.15e-14 Nf=0.9872 Nr=0.996 Ikf=0.1 Ikr=0.012 Vaf=84.56 Var=8.15 Ise=5e-14 Ne=1.4 Isc=1.43e-14 Nc=1.1 Bf=330 Br=13 Rbm=0 Irb=0 Rc=0.95 Re=0.4 Rb=0.2 Cje=1.6e-11 Vje=0.75 Mje=0.33 Cjc=1.05e-11 Vjc=0.565 Mjc=0.415 Xcjc=1 Cjs=0 Vjs=0.75 Mjs=0 Fc=0.5 Tf=4.93e-10 Xtf=0 Vtf=0 Itf=0 Tr=7.355e-08 Temp=26.85 Kf=0 Af=1 Ffe=1 Kb=0 Ab=1 Fb=1 Ptf=0 Xtb=0 Xti=3 Eg=1.11 Tnom=26.85 Area=1
+</Netlist>
+<Netlist spice>
+$devicename $node(port2) $node(port1) $node(port3) BC556AP
+</Netlist>
+<Model hspice>
+.model BC556AP PNP( IS=1.15e-14 NF=0.9872 NR=0.996 IKF=0.1 IKR=0.012 VA=84.56 VB=8.15 ISE=5e-14 NE=1.4 ISC=1.43e-14 NC=1.1 BF=330 BR=13 RBM=0 IRB=0 RC=0.95 RE=0.4 RB=0.2 CJE=1.6e-11 PE=0.75 ME=0.33 CJC=1.05e-11 PC=0.565 MC=0.415 XCJC=1 CCS=0  FC=0.5 TF=4.93e-10 XTF=0 VTF=0 ITF=0 TR=7.355e-08 KF=0 AF=1 PTF=0 XTB=0 XTI=3 EG=1.11 TNOM=26.85)
+</Model>
+<Model spice>
+.model BC556AP PNP( IS=1.15e-14 NF=0.9872 NR=0.996 IKF=0.1 IKR=0.012 VA=84.56 VB=8.15 ISE=5e-14 NE=1.4 ISC=1.43e-14 NC=1.1 BF=330 BR=13 RBM=0 IRB=0 RC=0.95 RE=0.4 RB=0.2 CJE=1.6e-11 PE=0.75 ME=0.33 CJC=1.05e-11 PC=0.565 MC=0.415 XCJC=1 CCS=0 PS=0.75 MS=0 FC=0.5 TF=4.93e-10 XTF=0 VTF=0 ITF=0 TR=7.355e-08 KF=0 AF=1 PTF=0 XTB=0 XTI=3 EG=1.11 TNOM=26.85)
+</Model>
+</Component>
+<Component IC_template>
+<Description>
+Template for adding own devices
+</Description>
+<Parameter>
+<list package DIP8 >
+pcbPackage=true
+</Parameter>
+<Layout>
+[package]
+#for parameter	layout-file	cellname	[portname pinnumber ] (nc for not connected)
+*	-	$package	pin1 1 nc 2 nc 3 pin2 4 pin3 5 pin4 6 pin5 7 pin6 8
+</Layout>
+<Prefix U>
+<Label>
+$devicename
+$package
+</Label>
+<Symbol 0>
+<Rect -40 -25 40 19 wire>
+<Port -50 -18 pin6>
+<Line -50 -18 -40 -18 wire>
+<Port -50 -3 pin5>
+<Line -50 -3 -40 -3 wire>
+<Port -50 12 pin4>
+<Line -50 12 -40 12 wire>
+<Port 50 12 pin3>
+<Line 50 12 40 12 wire>
+<Port 50 -3 pin2>
+<Line 50 -3 40 -3 wire>
+<Port 50 -18 pin1>
+<Line 50 -18 40 -18 wire>
+</Symbol>
+<Offsetlabel 0 -14 6>
+</Component>
+<Component R>
+<Description>
+Resistor for Printed Circuit Boards
+</Description>
+<Parameter>
+<string R 1>
+unit=Ohm
+info=ohmic resistance
+<string Temp>
+info=simulation temperature in degree Celsius
+<string Tc1>
+info=first order temperature coefficient
+<string Tc2>
+info=second order temperature coefficient
+<string Tnom>
+info=temperature at which parameters were extracted
+<string stype>
+display=false
+<list Package 1206 0805 >
+</Parameter>
+<Layout>
+[macro]
+# device-type        macro-file		pins
+*	        pcb/resistor.layout		pin1 pin2
+</Layout>
+<Prefix R>
+<Label>
+$devicename
+$R
+</Label>
+<Symbol 0>
+<Port 30 0 pin2>
+<Port -30 0 pin1>
+<Line 18 0 30 0 #0000c0>
+<Line -30 0 -18 0 #0000c0>
+<Line -18 -9 18 -9 18 9 -18 9 -18 -9 #0000c0>
+</Symbol>
+<Offsetlabel -360 -5 -12>
+<Offsetlabel -270 14 6>
+<Offsetlabel -180 -7 -10>
+<Offsetlabel -90 13 4>
+<Offsetlabel 0 -10 -10>
+<Offsetlabel 90 14 10>
+<Offsetlabel 180 -6 -12>
+<Offsetlabel 270 14 11>
+<Netlist allted>
+$devicename($node(pin1),$node(pin2))=$addspace(R);
+</Netlist>
+<Netlist hspice>
+$devicename $node(pin1) $node(pin2) $R $notEmpty($Tc1;TC1=$Tc1) $notEmpty($Tc2;TC2=$Tc2) $notEmpty($Tnom;TNOM=$Tnom)
+</Netlist>
+<Netlist qucs>
+R:$devicename $node(pin1) $node(pin2)  R="$R" Temp="$Temp" Tc1="$Tc1" Tc2="$Tc2" Tnom="$Tnom"
+</Netlist>
+<Netlist spice>
+$devicename $node(pin1) $node(pin2) $R $notEmpty($Tc1;TC1=$Tc1) $notEmpty($Tc2;TC2=$Tc2) $notEmpty($Tnom;TNOM=$Tnom)
+</Netlist>
+</Component>
+<Component C>
+<Description>
+Cap for Printed Circuit Boards
+</Description>
+<Parameter>
+<string C 1p>
+unit=F
+info=capacitance
+<string V>
+unit=V
+info=initial voltage for transient simulation
+<string stype>
+display=false
+<list Package 1206 0805 >
+</Parameter>
+<Layout>
+[macro]
+# device-type        macro-file		pins
+*	        pcb/capacitor.layout		pin1 pin2
+</Layout>
+<Prefix C>
+<Label>
+$devicename
+$C
+</Label>
+<Symbol 0>
+<Port 30 0 pin1>
+<Port -30 0 pin2>
+<Line 4 0 30 0 #0000c0>
+<Line -30 0 -4 0 #0000c0>
+<Line 4 -11 4 11 #0000c0>
+<Line -4 -11 -4 11 #0000c0>
+</Symbol>
+<Offsetlabel 0 -10 -16>
+<Offsetlabel 90 19 13>
+<Offsetlabel 180 -12 -14>
+<Offsetlabel 270 17 10>
+<Netlist allted>
+$devicename($node(pin1),$node(pin2))=$addspace(C);
+</Netlist>
+<Netlist hspice>
+$devicename $node(pin2) $node(pin1)  $C $notEmpty($V;IC=$V)
+</Netlist>
+<Netlist qucs>
+C:$devicename $node(pin2) $node(pin1) C="$C" V="$V"
+</Netlist>
+<Netlist spice>
+$devicename $node(pin2) $node(pin1)  $C $notEmpty($V;IC=$V)
+</Netlist>
+</Component>
+
+
+<Component Info>
+<Description>
+This library contains thousands of footprints of common PCB packages and some PCB devices as an example for creation of new own PCB devices. Ready to use libraries in the eagle-lbr and the kicad-lib format can be downloaded at different location in the internet. e.g. 
+www.snapeda.com/ www.element14.com/community/community/cadsoft_eagle/eagle_cad_libraries or www.kicad-pcb.org/libraries/download/
+</Description>
+<Parameter>
+</Parameter>
+<Layout>
+[ignore]
+# ignored for parameter
+*
+</Layout>
+<Prefix info>
+<Label>
+$devicename
+</Label>
+<Symbol 0>
+<Text 0 21 #c00000 Example&sp;Devices&sp;Only!>
+<Text 0 4 #646464 This&sp;library&sp;contains&sp;thousands&sp;of&sp;footprints&sp;of&sp;common&sp;>
+<Text 0 -9 #646464 PCB&sp;packages&sp;and&sp;some&sp;PCB&sp;devices&sp;as&sp;an&sp;example&sp;for>
+<Text 0 -21 #646464 creation&sp;of&sp;new&sp;own&sp;PCB&sp;devices.&sp;Ready&sp;to&sp;use&sp;libraries&sp;>
+<Text 0 -33 #646464 in&sp;the&sp;eagle-lbr&sp;and&sp;the&sp;kicad-lib&sp;format&sp;can&sp;be&sp;downloaded>
+<Text 0 -46 #646464 at&sp;different&sp;location&sp;in&sp;the&sp;internet.&sp;e.g.&sp;>
+<Text 0 -58 #646464 www.element14.com/community/community/cadsoft_eagle/eagle_cad_libraries>
+<Text 1 -70 #646464 www.snapeda.com>
+<Text 1 -83 #666666 www.kicad-pcb.org/libraries/download/>
+</Symbol>
+<Offsetlabel 0 11 -96>
+</Component>

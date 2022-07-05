@@ -1,0 +1,13 @@
+#!/usr/bin/layout
+#name=Execute Macro
+#help=Starts a Macro in a LayoutEditor Window
+
+string temp;
+
+
+int main(){
+if (text->drawing->modified())text->save();
+text->needLayoutEditor();
+layout->executeMacro(text->drawing->fileName);
+layout->drawing->scaleFull();
+}

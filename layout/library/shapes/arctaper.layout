@@ -1,0 +1,52 @@
+#!/usr/bin/layout
+#name=rectangle
+#help=generate a rectangle
+
+//parameter with default value
+#parameter width1 "60µm"
+#parameter width2 "80µm"
+#parameter length "100µm"
+#parameterDouble shape "0.5"
+#parameter layer "1"
+
+#include "shapelib.layout"
+
+int main(){
+int width1=databaseunits(iPar("width1"));
+int width2=databaseunits(iPar("width2"));
+int length=databaseunits(iPar("length"));
+double shape=iPar("shape");
+int sh=shape*length;
+int layer=getLayer(iPar("layer"));
+string cellname="arctaper"+userunits(width1)+"_"+userunits(width2)+"_"+userunits(length)+"_"+iPar("shape")+"_"+layer;
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=layer;
+layout->drawing->point(0,width1/2);
+layout->drawing->point(length,width2/2);
+layout->drawing->point(sh,width1/2);
+layout->drawing->point(length-sh,width2/2);
+layout->drawing->bezier3();
+layout->drawing->point(0,width1/2-width1);
+layout->drawing->point(length,width2/2-width2);
+layout->drawing->point(sh,width1/2-width1);
+layout->drawing->point(length-sh,width2/2-width2);
+layout->drawing->bezier3();
+layout->drawing->point(0,width1/2);
+layout->drawing->point(0,width1/2-width1);
+layout->drawing->path();
+layout->drawing->point(length,width2/2);
+layout->drawing->point(length,width2/2-width2);
+layout->drawing->path();
+layout->drawing->selectAll();
+layout->drawing->mergeSelect();
+layout->drawing->closeToPolygon();
+layout->drawing->deselectAll();
+}
+
+

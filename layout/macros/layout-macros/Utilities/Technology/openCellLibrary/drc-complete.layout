@@ -1,0 +1,28 @@
+#!/usr/bin/layout
+#name=DRC (complete)
+#help=runs a complete DRC with all rules
+
+#include "drc.layout"
+
+int main(){
+checkSetup();
+if (!checkUnits()) {
+	layout->showMessage("Unit check","Incorrect Units!");
+ 	return 1;
+	}
+prepareDRC();
+
+wellDRC();
+polyDRC();
+activeAreaDRC();
+implantDRC();
+contactDRC();
+metal1DRC();
+metal2DRC();
+metal3DRC();
+metal4DRC();
+metal5DRC();
+metal6DRC();
+gridDRC();
+finalDRC();
+}

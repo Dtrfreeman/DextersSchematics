@@ -1,0 +1,11 @@
+#!/usr/bin/layout
+#name=TCL
+#help=Highligh the current file for TCL
+
+string temp;
+
+
+int main(){
+
+text->setLexer("tcl");
+}

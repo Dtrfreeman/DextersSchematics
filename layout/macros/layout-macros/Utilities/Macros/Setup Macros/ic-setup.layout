@@ -1,0 +1,61 @@
+#!/usr/bin/layout
+#name=ic view default
+#help=A default setup for design of IC.
+
+int main() {
+layers::enableAllLayer();
+layers::displayedLayers=256;
+setup::setBackgroundColor(0, 0,0);
+setup::setMouseColor(255, 255, 255);
+setup::setGridColor(100,100, 100);
+setup::setZeroColor(200, 200, 200);
+setup::setSelectColor(255, 255,255);
+setup::setHighlightColor(230,255,255);
+setup::mouseView=1;
+setup::showReport=1;
+setup::showGrid=true;
+setup::fontIteration=3;
+setup::displayCellName=false;
+setup::displayCells=true;
+setup::depthOfCellrefs=0;
+setup::circularDefault=5.0;
+setup::defaultPathWidth=0;
+setup::defaultPathCap=0;
+setup::defaultTextPresentation=0;
+setup::defaultTextWidth= 1000;
+setup::defaultBezierIteration=4;
+setup::cifSaveCircle=true;
+setup::dxfSaveCircle=true;
+setup::gdsMaxPoints=8191;
+setup::gdsMultiXYRecord=false;
+setup::gdsPad2048=false;
+setup::gdsAutoMapDatatypes=true;
+setup::oasisAutoMapDatatypes=true;
+setup::oasisSaveCircle=true;
+setup::oasisSaveCtrapezoid=true;
+setup::oasisSaveTrapezoid=true;
+setup::oasisSaveCBlock=false;
+setup::apLamda=0.2;
+setup::scrollDirection=true;
+setup::defaultPolygonRemoveNotNeededPoints=false;
+setup::defaultPolygonFixSelfintersectingPolygons=false;
+setup::paintEngine=1;
+setup::csvFieldDelimiter=",";
+setup::gdsBoxToPolygon=true;
+setup::gdsMapLayer=false;
+setup::lefCellBoundaryLayer=0;
+setup::netlistGlobalNodes="^.{1,50}!$";
+setup::netlistUnnamedNodes="Node_";
+setup::oasisMapLayer=false;
+setup::pixelLayerMap=128;
+setup::tldLamda=0.2;
+setup::pixelResolution=0;
+setup::epsEndOfLine=0;
+setup::epsScale=1.0;
+setup::svgEndOfLine=0;
+setup::setWireColor(128,128,128);
+setup::setBusColor(44,30,199);
+setup::autoDisableUnusedLayers=true;
+setup::updateCheck=true;
+setup::placeModeForPCB=false;
+};

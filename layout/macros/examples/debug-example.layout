@@ -1,0 +1,18 @@
+#!/usr/bin/layout
+#name=debug example
+#help=example for using the debug features
+
+
+int main(){
+  debug("first debug text");
+
+  debug.clear(); // remove previous debug output
+  debug("lists numbers 1 to 10");
+  int i;
+  for(i=1;i<=10;i++){
+    debug("i=",i);
+  }
+  debug.show(); // open a text editor with debug report
+
+  debug.saveTo("/home/me/debug.txt"); // saves the debug data to file
+}

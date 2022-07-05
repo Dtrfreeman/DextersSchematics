@@ -1,0 +1,31 @@
+#!/usr/bin/layout
+#name=euler spiral
+#help=creates an euler spiral
+
+void drawEulerSpiral(double  T,  int N,  double scale) {
+      pointArray pArray;
+      double dx=0, dy=0, t=0;
+      double xp=0,yp=0;
+      double yc=0,xc=0;
+      double dt = T/N;
+      while (N--) {
+         dx = math::cos(t*t) * dt;
+         dy = math::sin(t*t) * dt;
+         t += dt;
+         xc=xp+dx;
+         yc=yp+dy;
+         pArray.attach(xc*scale,yc*scale);
+         xp=xc;yp=yc;
+      };
+      layout->drawing->currentCell->addPath(pArray,1);
+}
+
+
+int main(){
+
+
+drawEulerSpiral(5,10000,10000000);
+
+layout->drawing->scaleFull();
+}
+

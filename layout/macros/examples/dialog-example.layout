@@ -1,0 +1,30 @@
+#!/usr/bin/layout
+#name=dialog example
+#help=example for a entry dialog from a macro
+
+int  main() {
+     dialog d;
+     d.setWindowTitle("Window Title");
+     d.addLabel("My text can be entered here!");
+     d.addLabel("Next line of text....");
+     stringList sl;sl.append("item1");sl.append("item2");sl.append("item3");
+     int cb=d.addComboBox(sl,"item3");
+     d.addLabel("Please enter a number");
+     int sb=d.addSpinBox(10,2,30);
+      d.addLabel("Please enter a text:");
+     int le=d.addLineEdit("text");   
+     int ret=  d.exec();
+     
+     debug.clear();
+     debug("comboBox selection was:");
+     debug(d.getString(cb));    
+     debug("spinBox number was:");
+     debug(d.getInt(sb));    
+     debug("lineEdit text was:");
+     debug(d.getString(le));       
+
+     debug("dialog closed with button:");
+     debug(ret);
+     debug.show();
+
+}

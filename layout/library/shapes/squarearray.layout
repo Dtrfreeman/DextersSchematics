@@ -1,0 +1,92 @@
+#!/usr/bin/layout
+#name=rectangle
+#help=generate a rectangle
+
+//parameter with default value
+#parameter size "2µm"
+#parameter space "1.8µm"
+#parameterInt ny 8
+#parameterInt nx 9
+#parameter layer "1"
+
+#include "shapelib.layout"
+
+int main(){
+int size=databaseunits(iPar("size"));
+int space=databaseunits(iPar("space"));
+int nx=iPar("nx");
+int ny=iPar("ny");
+int layer=getLayer(iPar("layer"));
+string cellname="sqarray"+userunits(size)+"_"+userunits(space)+"_" +iPar("nx")+"_"+iPar("ny")+"_"+layer;
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+int step=size+space;
+string dotCell="square"+userunits(size)+"_"+layer;
+if (!layout->drawing->existCellname(dotCell)) {
+	cellList *cl=layout->drawing->addCell();
+	cl->thisCell->cellName=dotCell;
+	layout->drawing->setCell(dotCell);
+	layout->drawing->activeLayer=layer;
+	layout->drawing->point(0,0);
+	layout->drawing->point(size,size);
+	layout->drawing->box();
+	}
+int subSize=10000;
+bool needSub=false;
+string subCell="sqarray"+userunits(size)+"_"+userunits(space)+"_"+layer;
+if ((nx>=subSize)&&(ny>=subSize)) {
+	needSub=true;
+	if (!layout->drawing->existCellname(subCell)) {
+		cellList *cl=layout->drawing->addCell();
+		cl->thisCell->cellName=subCell;
+		layout->drawing->setCell(subCell);
+		layout->drawing->point(0,0);
+		layout->drawing->point(step,step);
+		layout->drawing->cellrefarray(dotCell,subSize,subSize);
+		}
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+if (!needSub){
+	layout->drawing->point(0,0);
+	layout->drawing->point(step,step);
+	layout->drawing->cellrefarray(dotCell,nx,ny);
+	return 0;
+	}
+int sx,sy;
+sx=nx/subSize;
+sy=ny/subSize;
+layout->drawing->point(0,0);
+layout->drawing->point(step*subSize,step*subSize);
+layout->drawing->cellrefarray(subCell,sx,sy);
+int ix=sx*subSize;
+int iy=sy*subSize;
+if ((nx-ix>0)&&(ny-iy>0)){
+	layout->drawing->point(ix*step,iy*step);
+	layout->drawing->point(ix*step+step,iy*step+step);
+	layout->drawing->cellrefarray(dotCell,nx-ix,ny-iy);
+	}
+if (nx-ix>0){
+	int k=0;
+	while (k<iy){
+		layout->drawing->point(ix*step,k*step);
+		layout->drawing->point(ix*step+step,k*step+step);
+		layout->drawing->cellrefarray(dotCell,nx-ix,subSize);
+		k+=subSize;
+	}
+	}
+if (ny-iy>0){
+	int k=0;
+	while (k<ix){
+		layout->drawing->point(k*step,iy*step);
+		layout->drawing->point(k*step+step,iy*step+step);
+		layout->drawing->cellrefarray(dotCell,subSize,ny-iy);
+		k+=subSize;
+	}
+	}
+}
+
+

@@ -1,0 +1,28 @@
+#!/usr/bin/layout
+#name=circle
+#help=generate a circle
+
+//parameter with default value
+#parameter radius "100µm"
+#parameter layer "1"
+
+#include "shapelib.layout"
+
+int main(){
+int radius=databaseunits(iPar("radius"));
+int layer=getLayer(iPar("layer"));
+string cellname="circle"+userunits(radius)+"_"+layer;
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=layer;
+layout->drawing->point(0,0);
+layout->drawing->point(radius,0);
+layout->drawing->circle();
+}
+
+

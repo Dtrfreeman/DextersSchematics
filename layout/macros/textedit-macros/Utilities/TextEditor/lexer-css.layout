@@ -1,0 +1,11 @@
+#!/usr/bin/layout
+#name=CSS
+#help=Highligh the current file for CSS
+
+string temp;
+
+
+int main(){
+
+text->setLexer("CSS");
+}

@@ -1,0 +1,21 @@
+#!/usr/bin/layout
+#name=thumbnail
+#help=creates a thumbnail
+
+int main()
+{ 
+        
+point min=layout->drawing->currentCell->minimum();
+point max=layout->drawing->currentCell->maximum();
+int size =max.x()-min.x();
+int size2=max.y()-min.y();
+if (size2>size) size=size2;
+double realsize=1000.0/layout->drawing->databaseunits/size;  // for thumbnail with 1000 pixel
+setup::pixelResolution=realsize;
+
+layers::hideAllLayer(); 
+layers::num[7].visible=true;   // show only layer 7
+
+layout->drawing->saveFile(file::homePath()+"/thumbnail.png"); // write png to disk
+
+}

@@ -1,0 +1,35 @@
+#!/usr/bin/layout
+#name=gard
+#help=generate a gard
+
+#include "oclCore.layout"
+
+#parameter width ".13"
+#parameter length "1"
+#parameter type "p"
+
+int main(){
+checkSetup();
+int width=databaseunits(iPDK_getParameterValue("width"));
+int length=databaseunits(iPDK_getParameterValue("length"));
+string type=iPDK_getParameterValue("type");
+string cellname="gard_"+iPDK_getParameterHash();
+if (layout->drawing->existCellname(cellname)) {
+        layout->drawing->setCell(cellname);
+        return 0;
+        }
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cl->thisCell);
+layout->drawing->activeLayer=m1Layer;
+layout->drawing->point(0,0);
+layout->drawing->text("gard");
+point p;
+p.set(0,0);
+if (type=="p") {
+  pGard(p,length,width,0);
+}
+else if (type=="n") {
+ nGard(p,length,width,0);
+}
+}

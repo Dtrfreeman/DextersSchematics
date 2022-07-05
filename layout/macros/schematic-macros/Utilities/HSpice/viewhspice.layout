@@ -1,0 +1,36 @@
+#!/usr/bin/layout
+#name=View Netlist
+#help=Displays all defined netlists
+
+void setupHSpice(){
+  //string license=process::getEnv("SNPSLMD_LICENSE_FILE");
+
+  //adjust this line to the correct license server
+  //if (license=="") process::setEnv("SNPSLMD_LICENSE_FILE","27000@licenseServer");
+}
+
+void showNetlist(string net){
+  string s=schematic->generateNetList(net);
+  textEdit *te=project::getCentralTextEditor();
+  te->newDoc();
+  te->drawing->setText(s);
+  te->drawing->setLexer("spice");
+  te->drawing->title=net+" netlist";
+}
+
+int main(){
+  setupHSpice();
+  setup::checkNetlistSetup("hspice");
+  showNetlist("hspice");
+
+  /*stringList types=setup::netlistFormats();
+  int i;
+  for (i=0;i<types.size();i++){
+     showNetlist(types.at(i));
+  }*/
+  
+  return 0;
+}
+
+
+ 

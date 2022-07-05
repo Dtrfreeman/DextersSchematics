@@ -1,0 +1,181 @@
+#!/usr/bin/layout
+#name=RTL to GDS for X-Fab
+#help=complete RTL to GDS flow for X-Fab with openROAD
+
+#include "../../../callback/lib/openroad-tools.layout"
+
+int main(){
+layout->showStatus("RTL to GDS started");
+
+// search callback macro to be called after completing openROAD
+file f;
+string callbackDir=f.currentPath()+"/../../../callback/";
+if (!f.isDir(callbackDir)) return showError("Library files not found. Please make sure that the 'callback/lib' folder exists at the correct place.");
+
+if (text->drawing->modified())text->save();
+string verilogFile=text->filename;
+
+if (verilogFile.right(2)!=".v") return showError("This file does not look like a Verilog file. Please store the file with the extension '.v'");
+
+// loads project settings from the "ProjectSettings.tcl" file
+process::executeTcl("if {[llength [namespace which ProjectSettings]]} {} else {\nsource "+file::projectPath()+"/ProjectSettings.tcl \n}\nif {[info exists Project]} { } else {ProjectSettings}\n");
+// read project setting data
+string technology=process::executeTcl("set i 0\nforeach j $Project {\nset value [lindex $j 0]\nif { $value==\"Technology\" } { puts [lindex $j 1] }\nincr i\n}\n").trimmed();
+string PRIMLIB=process::executeTcl("set i 0\nforeach j $Project {\nset value [lindex $j 0]\nif { $value==\"PRIMLIB\" } { puts [lindex $j 1] }\nincr i\n}\n").trimmed();
+string libCode=process::executeTcl("set i 0\nforeach j $Project {\nset value [lindex $j 0]\nif { $value==\"libCode\" } { puts [lindex $j 1] }\nincr i\n}\n").trimmed();
+stringList digitalLibs=process::executeTcl("set i 0\nforeach j $Project {\nset value [lindex $j 0]\nif { $value==\"DigitalLibs\" } { puts [lindex $j 1] }\nincr i\n}\n").trimmed().remove("\"").split(" ");
+if (technology.size()<1) return showError("Settings from the ProjectSetting.tcl file cannot be read. Make sure that it exists and you have started the LayoutEditor from your project folder.");
+if (digitalLibs.at(0).size()<1) return showError("No digital library defined. Please set it inside the ProjectSettings.tcl file in your project folder.");
+
+cout("your project settings:\n");
+cout("technology: "+technology+"\n");
+cout("digital library: ");
+for (int i=0;i<digitalLibs.size();++i){
+    if (i>0) cout(", ");
+    cout(digitalLibs.at(i));
+    if (i==0) cout("(will be used)");
+}
+cout("\n");
+
+// search library path from loaded lib in the SchematicEditor
+stringList sl=components::getLibs();
+int i;
+string path="";
+string lib="";
+for(i=0; i<sl.size();i++){
+    int pos=sl.at(i).indexOf(digitalLibs.at(0),0);
+    //cout(sl.at(i)+"\n");
+    if (pos>=0) {
+        path=components::getPath(sl.at(i));
+        lib=digitalLibs.at(0);
+        }
+}
+//cout(path+"\n");
+if (!f.isDir(path)) return showError("Digital Library "+digitalLibs.at(0)+" not found. Please add it to the library in the SchematicEditor.");
+
+// search required PDK files
+
+string root=path;
+int pos=root.indexOf(technology,0);
+if (pos>0) root=root.left(pos+technology.size());
+string digiPath=path;
+pos=digiPath.indexOf(digitalLibs.at(0),0);
+if (pos>0) digiPath=digiPath.left(pos+digitalLibs.at(0).size());
+
+string techpath=searchPath(root+"/cadence","MAX(v*);techLEF;MAX(v*)");
+string add="";
+if(digitalLibs.at(0).contains("_HD")) add="_HD";
+//f.find(techpath,technology+"_xx"+libCode.mid(2)+add+"*");
+process::setEnv("LEF_TECH",getTLEF(techpath,technology,libCode,add));
+string libpath=searchPath(digiPath,"MAX(v*);LEF;MAX(v*)");
+f.find(libpath,technology+"_"+digitalLibs.at(0)+".lef");
+process::setEnv("LEF_LIB",f.filename);
+libpath=searchPath(digiPath,"MAX(v*);MAX(liberty*);MAX(v*);MAX(*)");
+f.find(libpath,"*.lib");
+process::setEnv("LIBERTY",f.filename);
+
+// set environment data to forward it to openroad
+
+f.filename=verilogFile;
+string design=f.baseName();
+
+process::setEnv("PDK_ROOT",root);
+process::setEnv("PDK",technology);
+process::setEnv("STD_CELL_LIBRARY",lib);
+process::setEnv("STD_CELL_PATH",path);
+process::setEnv("DESIGN",design);
+process::setEnv("LIBCODE",libCode);
+process::setEnv("TEMP_DIR",file::tempPath());
+process::setEnv("VERILOG_FILE",verilogFile);
+process::setEnv("LIBCODE",libCode);
+process::setEnv("LCODE",getLetterCode(lib));
+
+setup::defExtraLibs.clear();
+setup::defExtraLibs.append(lib);
+setup::defExtraLibs.append("TECH_"+technology.toUpper());
+
+stringList oaLibs=components::getOaLibs();
+if (!oaLibs.contains("TECH_"+technology.toUpper())) return showError("library "+"TECH_"+technology.toUpper()+" is missing in your libs.def file.");
+if (!oaLibs.contains(lib)) return showError("library '"+lib+"' is missing in your libs.def file.");
+if (add!="") {
+ if (!oaLibs.contains("TECH_"+technology.toUpper()+add)) return showError("library '"+"TECH_"+technology.toUpper()+add+"' is missing in your libs.def file.");
+}
+
+string wpath=f.path();
+if (wpath==".") wpath=f.tempPath();
+if (!file::isDir(wpath)) wpath=f.tempPath();
+if (wpath.contains(" ")) {
+    if (process::isWindows()){
+      wpath=process::getEnv("TEMP");
+    } else {
+       wpath=f.tempPath();
+    }
+}
+
+string run; run.setDateTime("yyyyMMdd-hhmmss");
+if (wpath.right(1)=="/") workPath=wpath+run;
+else workPath=wpath+"/"+run;
+
+if (!file::isDir(wpath+"/"+run)) file::mkDir(wpath,run);
+process::setEnv("WORK_ROOT",workPath);
+
+string sdcFile=f.path()+"/"+design+".sdc";
+f.filename=sdcFile;
+if (!f.exists()){
+   layout->showStatus("create SDC file");
+   string sdc="create_clock clk -period 10\n";
+   f.open(false);
+   f.write(sdc);
+   f.close();
+}
+
+process::setEnv("SDC_FILE",sdcFile);
+
+// create target cell
+cell *c=layout->drawing->findCell(design);
+if (c==NULL) {
+   c=layout->drawing->addCell()->thisCell;
+   c->cellName=design;
+   layout->drawing->setCell(c);
+}
+
+//  openroad bugs:
+
+mergeLEF(process::getEnv("LEF_TECH"),process::getEnv("LEF_LIB"));
+string scriptPath=getScriptPath("rtl2gds-xfab",callbackDir);
+process::setEnv("SCRIPT_DIR",scriptPath);
+if (scriptPath=="") return showError("OpenROAD script not found.");
+
+process::setEnv("POSTPROCESSOR","");
+
+layout->showProgress("start OpenROAD");
+// starting openroad
+if (process::isWindows()) {  // use WIndows subsystem for Linux
+    // mapping for wsl required
+    process::setEnv("WINDOWSPATHMAPPING",layout->getVersion());
+    // forward environment to WSL
+    process::setEnv("WSLENV","WORK_ROOT/p:TEMP_DIR/p:VERILOG_FILE/p:PDK_ROOT/p:LEF_LIB/p:LIBERTY/p:SCRIPT_DIR/p:PDK/u:STD_CELL_LIBRARY/u:LIBCODE/u:LCODE/u:DESIGN/u:WINDOWSPATHMAPPING/u:SDC_FILE/p:LEF_MERGED/p:LEF_TECH/p:LD_LIBRARY_PATH/p");
+    bool b;
+    stringList sl;
+    sl.append("openroad");
+    sl.append("-exit");
+    string fn=filenameToWsl(scriptPath+"/rtl2gds-xfab.tcl");
+    sl.append("\""+fn+"\"");
+    b=process::externalTool("/usr/local/bin/","wsl",sl,callbackDir+"rtl2gds.layout",true);
+    if (!b) b=process::externalTool("/usr/bin/","wsl",sl,callbackDir+"rtl2gds.layout",true);
+    if (!b) layout->showMessage("","Windows Subsystem for Linux (WSL) ist not installed on your system.\nPlease activate and install it. See manuel ( www.layouteditor.org ) for more details.");
+    else layout->showStatus("OpenROAD started");
+}
+else {
+    bool b;
+    stringList sl;
+    sl.append("-exit");
+    sl.append("\""+scriptPath+"/rtl2gds-xfab.tcl\"");
+    //sl.append("-gui");
+    b=process::externalTool("/usr/local/bin/","openroad",sl,callbackDir+"rtl2gds.layout",true);
+    if (!b)  b=process::externalTool("/usr/bin/","openroad",sl,callbackDir+"rtl2gds.layout",true);
+    if (!b) layout->showMessage("","'OpenROAD' was not found on your system.\nPlease download and install it ( /https://theopenroadproject.org/ )\nor adjust the path of it in this macro.");
+    else layout->showStatus("OpenROAD started");
+    }
+
+}

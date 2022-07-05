@@ -1,0 +1,126 @@
+#!/usr/bin/layout
+#name=Simulate + Probe
+#help=Starts a simulation with ngspice
+
+
+string toWindows(string file){
+  //file.replace(" ","\\ ");
+  file.replace("/","\\");
+  if (!file.contains(":")) file="z:"+file;
+  return file;
+}
+
+string wine(){
+  file f;
+  f.filename="/usr/bin/wine";
+  if (f.exists()) return f.filename;
+  f.filename="/bin/wine";
+  if (f.exists()) return f.filename;
+  f.filename="/usr/local/bin/wine";
+  if (f.exists()) return f.filename;
+
+  //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  // adjust and uncomment the next two lines if wine is not automaticlay found on your system (only for Linux)
+
+  //f.filename="/your/wine/path";
+  //if (f.exists()) return f.filename;
+
+  layout->showMessage("Error","Wine not found!\nPlease set path manual!");
+  string s=layout->getOpenFilename();
+  return s;
+}
+
+string LTspiceBase(){
+  if (process::isMac()) return "/Applications/LTspice.app/Contents/MacOS/LTspice";
+  file f,fi;
+  string path,file;
+  if (process::isWindows()) path="c:/";
+  else path= f.homePath()+"/.wine/drive_c/";
+  f.findDir(path,"*");
+  file=f.filename;
+  while (file!=""){
+    string s;
+    fi.find( (f.filename+"/LTC/LTspiceXVII"),"XVIIx64.exe");
+    if (fi.filename!=""){
+        return fi.filename;
+        }
+    fi.find( (f.filename+"/LTC/LTspiceXVII"),"XVIIx86.exe");
+        if (fi.filename!=""){
+            return fi.filename;
+            }
+    f.findNext();
+    file=f.filename;
+  }
+  f.findDir(path,"*");
+  file=f.filename;
+  while (file!=""){
+    string s;
+    fi.find( (f.filename+"/LTC/LTspiceIV") ,"scad3.exe");
+    if (fi.filename!=""){
+        return fi.filename;
+        }
+    f.findNext();
+    file=f.filename;
+  }
+  //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  // adjust and uncomment the next two lines if wine is not automaticlay found on your system
+
+  f.filename="C:\Program Files\LTC\LTspiceXVII\XVIIx64.exe";
+  if (f.exists()) return f.filename;
+
+  layout->showMessage("Error","LTspice not found!\nPlease install it or adjust macro manual!");
+  string s="scad3.exe";
+  //s=layout->getOpenFilename();
+  return s;
+}
+
+
+int main(){
+  file f;
+  string callbackDir=f.currentPath()+"/../../../callback/";
+  file f;
+  string temp=f.tempPath()+"/ltspice-netlist.net";
+  f.filename=temp;
+  f.open(false);
+  f.setCodec("ISO-8859-13");
+  f.write(text->drawing->text());
+  f.close();
+  f.filename=f.tempPath()+"/ltspice-netlist.raw";
+  f.remove();
+  f.filename=f.tempPath()+"/ltspice-netlist.op.raw";
+  f.remove();
+  f.filename=f.tempPath()+"/ltspice-netlist.log";
+  f.remove();
+
+  bool b;
+  stringList sl;
+  if (process::isWindows()) {
+    sl.append(toWindows(temp));
+    sl.append("-b");
+    sl.append("-Run");
+    sl.append("-ascii");
+    b=process::externalTool("LTC/LTspiceXVII","XVIIx64",sl,callbackDir+"ltspice-sim.layout");
+    if (!b )b=process::externalTool("LTC/LTspiceXVII","XVIIx86",sl,callbackDir+"ltspice-sim.layout");
+    if (!b) b=process::externalTool("LTC/LTspiceIV","scad3",sl,callbackDir+"ltspice-sim.layout");
+    if (!b) b=process::startDetached(LTspiceBase(),sl);
+    }
+  else if (process::isMac()) {
+      sl.append("-b");
+      sl.append(temp);
+      b=process::externalTool("LTspice","LTspice",sl,callbackDir+"ltspice-sim.layout");
+      if (!b) b=process::startDetached(LTspiceBase(),sl);
+  }
+  else { //Linux
+    sl.append(LTspiceBase());
+    sl.append(toWindows(temp));
+    sl.append("-b");
+    sl.append("-Run");
+    sl.append("-ascii");
+    b=process::externalTool("","wine",sl,callbackDir+"ltspice-sim.layout");
+    if (!b) b=process::startDetached(wine(),sl);
+    }
+  return 0;
+}
+
+
+ 

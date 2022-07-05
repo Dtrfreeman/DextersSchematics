@@ -1,0 +1,8 @@
+#!/usr/bin/layout
+#name=set datatype select
+#help=the datatype of all selected element will be set
+
+int  main() {
+ int i=layout->getInteger("Set Datatype","Set datatype of selected elements to:");
+ layout->drawing->currentCell->setDatatypeSelect (i);
+}

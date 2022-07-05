@@ -1,0 +1,42 @@
+#!/usr/bin/layout
+#name=donut
+#help=generate a donut
+
+//parameter with default value
+#parameter radiusinner "30µm"
+#parameter radiusouter "50µm"
+#parameter layer "1"
+
+#include "shapelib.layout"
+
+int main(){
+int radius1=databaseunits(iPar("radiusinner"));
+int radius2=databaseunits(iPar("radiusouter"));
+int layer=getLayer(iPar("layer"));
+string cellname="donut"+userunits(radius1)+"_"+userunits(radius2)+"_"+layer;
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=layer;
+layout->drawing->point(0,0);
+layout->drawing->point(radius1,0);
+layout->drawing->point(radius1,0);
+layout->drawing->spiral();
+layout->drawing->point(0,0);
+layout->drawing->point(radius2,0);
+layout->drawing->point(radius2,0);
+layout->drawing->spiral();
+layout->drawing->point(radius1,0);
+layout->drawing->point(radius2,0);
+layout->drawing->path();
+layout->drawing->selectAll();
+layout->drawing->mergeSelect();
+layout->drawing->closeToPolygon();
+layout->drawing->deselectAll();
+}
+
+

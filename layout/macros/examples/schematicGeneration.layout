@@ -1,0 +1,77 @@
+#!/usr/bin/layout
+#name=schematic generation
+#help=generates a schematic by a macro
+
+
+int row(int num){
+return num/3;
+}
+
+int col(int num){
+return num % 3;
+
+}
+
+int main(){
+// generate schematic
+component *c=components::findComponent("BC107","PCB");
+if (c==NULL) return 2; // component not found
+
+pointArray emitter;   // to save emitter position for later use
+
+// place transistor
+for (int i=0;i<9;++i){
+	point p;
+	p.set(col(i)*100,-row(i)*200);
+	strans tr;
+       sElement *sel=schematic->drawing->currentSheet->addPlacement(c,p,tr);
+       string dname=schematic->drawing->currentSheet->getUnusedDevicename(c->prefix);
+       sel->addParameter("devicename",dname);
+	point  pEmitter=sel->getPortPos("port3");
+       emitter.attachPoint(pEmitter);
+}
+
+//place resistor
+c=components::findComponent("R","PCB");
+if (c==NULL) return 2; // component not found
+for (int i=0;i<9;++i){
+	point p;
+	p.set(col(i)*100+20,-row(i)*200-80);
+	strans tr;
+       tr.rotate(90);
+       sElement *sel=schematic->drawing->currentSheet->addPlacement(c,p,tr);
+       string dname=schematic->drawing->currentSheet->getUnusedDevicename(c->prefix);
+       sel->addParameter("devicename",dname);
+
+       // resister connection to ground
+       point  pa=sel->getPortPos("pin1");
+       schematic->drawing->currentSheet->addGround(pa);
+
+       // resister to emitter conection
+       pointArray emitterToR;
+       emitterToR.attachPoint(emitter.point(i));
+       pa=sel->getPortPos("pin2");
+       emitterToR.attach(pa.x(),emitter.point(i).y());
+       emitterToR.attachPoint(pa);
+       schematic->drawing->currentSheet->addWire(emitterToR);
+}
+
+// update view and netlist
+schematic->drawing->updateCurrentNetlist();
+schematic->drawing->scaleFull();
+
+// generate layout
+for (int i=0;i<9;++i){
+	point p;
+	p.set(col(i)*9000000,-row(i)*9000000);
+	strans tr;
+        layout->netlistTool->placeDevice("QN"+(i+1),p,tr);
+	p.set(col(i)*9000000+3800000,-row(i)*9000000+3000000);
+	tr.rotate(270);
+        layout->netlistTool->placeDevice("R"+(i+1),p,tr);
+}
+layout->drawing->scaleFull();
+
+// autorouter can be used to generate the connections
+
+}

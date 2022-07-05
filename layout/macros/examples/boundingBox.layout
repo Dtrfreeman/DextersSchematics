@@ -1,0 +1,19 @@
+#!/usr/bin/layout
+#name=bounding box
+#help=adds a bounding box to each element
+
+int  main() {
+        // first element of the current cell
+        elementList *l=layout->drawing->currentCell->firstElement;
+       // loop over all elements
+       while (l!=NULL) {
+           if (l->thisElement!=NULL) {
+                   // get bounding box info
+                   rect r=l->thisElement->getBoundingBox();
+                   if (l->thisElement->layerNum!=0)
+                        // create a box on layer 0
+                        layout->drawing->currentCell->addBox(r,0);
+			}
+         l=l->nextElement;
+     }
+}

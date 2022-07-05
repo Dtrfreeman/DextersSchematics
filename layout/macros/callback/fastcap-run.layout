@@ -1,0 +1,25 @@
+#!/usr/bin/layout
+#name=callback fastcap
+#help=callback macro called after completing of fastcap
+
+
+
+string temp;
+
+int main(){
+  string s=process::toolResult();
+  if (s.size()>1){
+      textEdit *te=project::getCentralTextEditor();
+      if (te->drawing->text()!="") {
+            te->newFile();
+            te->setFile(te->countFiles()-1);
+            }
+      te->setText(s);
+      te->drawing->title="FastCap results";
+      te->drawing->setModifySaved();
+  }
+  return 0;
+}
+
+
+ 

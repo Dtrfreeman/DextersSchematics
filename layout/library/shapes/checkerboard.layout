@@ -1,0 +1,48 @@
+#!/usr/bin/layout
+#name=checkerboard
+#help=generate a checkerboard
+
+//parameter with default value
+#parameter size "1µm"
+#parameterInt nx 10
+#parameterInt ny 12
+#parameter layer "1"
+
+#include "shapelib.layout"
+
+int main(){
+
+int size=databaseunits(iPar("size"));
+int nx=iPar("nx");
+int ny=iPar("ny");
+int layer=getLayer(iPar("layer"));
+string cellname="checkerboard"+userunits(size)+"_" +iPar("nx")+"_"+iPar("ny")+"_"+layer;
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+string dotCell="square"+userunits(size)+"_"+layer;
+if (!layout->drawing->existCellname(dotCell)) {
+	cellList *cl=layout->drawing->addCell();
+	cl->thisCell->cellName=dotCell;
+	layout->drawing->setCell(dotCell);
+	layout->drawing->activeLayer=layer;
+	layout->drawing->point(0,0);
+	layout->drawing->point(size,size);
+	layout->drawing->box();
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+layout->drawing->point(0,0);
+layout->drawing->point(size*2,size*2);
+layout->drawing->cellrefarray(dotCell,(nx+1)/2,(ny+1)/2);
+layout->drawing->setCell(cellname);
+layout->drawing->point(size,size);
+layout->drawing->point(size*3,size*3);
+layout->drawing->cellrefarray(dotCell,(nx)/2,(ny)/2);
+return 0;
+
+}
+
+

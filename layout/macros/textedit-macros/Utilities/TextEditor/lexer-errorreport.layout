@@ -1,0 +1,11 @@
+#!/usr/bin/layout
+#name=Error-Report
+#help=Highligh the current file for Error-Report
+
+string temp;
+
+
+int main(){
+
+text->setLexer("errorreport");
+}

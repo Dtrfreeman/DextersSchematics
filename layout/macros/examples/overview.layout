@@ -1,0 +1,37 @@
+#!/usr/bin/layout
+#name=overview
+#help=generate an overview of all cells
+
+int  main() {
+ stringList cellNames;
+ // get first cell
+ cellList *cells=layout->drawing->firstCell;
+ point min; min.set(0,0);
+ point max; max.set(0,0);
+ // loop over all cells to detect size
+  while (cells!=NULL){  
+   if (cells->thisCell!=NULL){
+       cells->thisCell->minimum(&min);
+       cells->thisCell->maximum(&max);
+       cellNames.append(cells->thisCell->cellName);
+   }
+   cells=cells->nextCell;
+  }
+  int spaceX=max.x()-min.x();
+  int spaceY=max.y()-min.y();
+  int num = cellNames.size();
+  int row= math::sqrt(num);
+  int x=0;
+  int y=0;
+  int i;
+  layout->drawing->newCell();
+  // place cells
+  for (i=0;i<num;i++){
+      layout->drawing->point(x*spaceX,y*spaceY);
+      layout->drawing->cellRef(cellNames.at(i));
+      x=x+1;
+      if (x>row) { x=0; y++;}
+  }
+ layout->drawing->scaleFull();
+}
+ 

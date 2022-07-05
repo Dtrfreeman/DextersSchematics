@@ -1,0 +1,29 @@
+#!/usr/bin/layout
+#name=View AllTed Netlist
+#help=Displays all defined netlists
+
+void setupAllted(){
+
+  setup::setNetlistFormat("allted","CIRCUIT $filename_export_from_LayoutEditor_(www.LayoutEditor.net);\n\n$netlist(allted)\n\n$model(allted)\n\n");
+  setup::setNetlistSubFormat("allted","X$devicename($ports($node($portname);,))=$sheetname;");
+  setup::setNetlistSubModelFormat("allted","MODEL $sheetname($ports($portname;,));\n$netlist(allted)\n$model(allted)\n");
+}
+
+void showNetlist(string net){
+  string s=schematic->generateNetList(net);
+  textEdit *te=project::getCentralTextEditor();
+  te->newDoc();
+  te->drawing->setText(s);
+  te->drawing->setLexer("spice");
+  te->drawing->title=net+" netlist";
+}
+
+int main(){
+  setupAllted();
+  showNetlist("allted");
+  
+  return 0;
+}
+
+
+ 

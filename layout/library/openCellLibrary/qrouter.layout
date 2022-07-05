@@ -1,0 +1,68 @@
+#!/usr/bin/layout
+#name=openCellLibrary routing with qrouter
+#help=openCellLibrary routing for digital cells with qrouter
+
+#include "oclCore.layout"
+
+int main(){
+
+
+    layerSetup();
+
+    layout->netlistTool->technologyLayerAdd(9,0); // norouting on poly layer
+    setup::defSpecialnets.clear();
+    setup::defSpecialnets.append("VDD");
+    setup::defSpecialnets.append("VSS");
+    setup::lefPitchHorizontal=280;
+    setup::lefPitchVertical=380;
+    setup::lefExtra="";
+    setup::defExtra="";
+    point max=layout->drawing->currentCell->maximum();
+    int tx=max.x()/380+2;
+    int ty=max.y()/280+2;
+    string sx,sy; sx.setNum(tx); sy.setNum(ty);
+    setup::defExtra="TRACKS Y -140 DO "+sy+" STEP 280 LAYER metal1 ;\n"+
+            "TRACKS X -190 DO "+sx+" STEP 380 LAYER metal2 ;\n"+
+            "TRACKS Y -140 DO "+sy+" STEP 280 LAYER metal3 ;\n"+
+            "TRACKS X -190 DO "+sx+" STEP 380 LAYER metal4 ;\n"+
+            "TRACKS Y -140 DO "+sy+" STEP 280 LAYER metal5 ;";
+    file f;
+    string tempPath=f.tempPath();
+    layout->drawing->saveFile(tempPath+"/router.lef");
+    layout->drawing->saveFile(tempPath+"/router.def");
+    string cfg;
+    cfg+="# routing setup for the openCellLibrary\n";
+    cfg+="# for the qrouter ( http://opencircuitdesign.com/qrouter ) \n";
+    cfg+="\n";
+    cfg+="verbose 1\n";
+    cfg+="read_lef \""+tempPath+"/router.lef\"\n";
+    //cfg+="ignore vss vdd\n";
+    //cfg+="via stack 1\n";
+    //cfg+="vdd vdd\n";
+    //cfg+="gnd vss\n";
+    cfg+="Num Passes		100\n";
+    //cfg+="read_def "+tempPath+"/router.def\n";
+    cfg+="\n";
+    //cfg+="stage1\n";
+    //cfg+="stage2 mask none\n";
+    f.filename=tempPath+"/router.cfg";
+    bool b=false;
+    f.open(b);
+    f.write(cfg);
+    f.close();
+
+    stringList sl;
+    //sl.append("-noc");
+    sl.append("-c");
+    sl.append(tempPath+"/router.cfg");
+    sl.append(tempPath+"/router");
+    b=process::externalTool("/usr/local/bin/","qrouter",sl,"qrouter-completed.layout");
+    if (!b)  b=process::externalTool("/usr/bin/","qrouter",sl,"qrouter-completed.layout");
+    if (!b)  b=process::externalTool("/opt/layout/bin/","qrouter",sl,"qrouter-completed.layout");
+    if (!b) layout->showMessage("","The required autorouter 'QRouter' was not found on your system.\nPlease download and install it ( http://opencircuitdesign.com/qrouter )\nor adjust the path of it in this macro.");
+    else layout->showStatus("qrouter started");
+    layerSetup();
+
+
+
+} 

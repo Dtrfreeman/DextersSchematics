@@ -1,0 +1,261 @@
+#!/usr/bin/layout
+#name=RTL to GDS for sky130A
+#help=complete RTL to GDS flow for sky130A with openROAD
+
+string workPath;
+
+void fixMissingBoundingBox(string cells){
+ // checks all std-libcell on a bounding box and add one if missing
+ cellList *cl=layout->drawing->firstCell;
+ int sLen=cells.length();
+ while (cl!=NULL) {
+    if (cl->thisCell!=NULL) {
+        if (cl->thisCell->cellName.left(sLen)==cells){
+            cl->thisCell->deselectAll();
+            cl->thisCell->selectLayer(setup::lefCellBoundaryLayer);
+            point max=cl->thisCell->maximumSelect();
+            if (max.y()<=0) {
+                cl->thisCell->selectLayer(78);
+                point m=cl->thisCell->maximumSelect();
+                if (m.y()>0) cl->thisCell->addBox(0,0,m.x(),m.y(),setup::lefCellBoundaryLayer);
+            }
+
+        }
+    }
+    cl=cl->nextCell;
+ }
+}
+
+
+void mergeLEF(string tech,string path){
+file f;
+bool needTechCopy=false;
+f.filename=path+"/libs.ref/"+tech+"/techlef/"+tech+"_tech.tlef";
+if (!f.exists()){
+    needTechCopy=true;
+    f.filename=path+"/libs.ref/"+tech+"/techlef/"+tech+".tlef";
+    if (!f.exists()) {
+         process::setEnv("LEF_MERGED",path+"/libs.ref/"+tech+"/lef/"+tech+".lef");
+         return;
+         }
+} else {
+   process::setEnv("LEF_TECH",f.filename);
+}
+if (layout->drawing->findCell("L1M1_PR")==NULL)  {
+   layout->drawing->importViaFile(f.filename);  // load missing via cells
+   // set datatype of metal layers
+   cellList *cl=layout->drawing->firstCell;
+   while (cl!=NULL) {
+     if (cl->thisCell!=NULL){
+       bool adjust=false;
+       if (cl->thisCell->cellName.contains("_PR")) adjust=true;
+       else if (cl->thisCell->cellName.left(4)=="VIA_") adjust=true;
+       if (adjust){
+        elementList *el=cl->thisCell->firstElement;
+        while (el!=NULL) {
+           if (el->thisElement!=NULL) if (el->thisElement->datatype==0) {
+               int layer=el->thisElement->layerNum;
+               if ((layer>66)&&(layer<73)){
+                 if (el->thisElement->isText())el->thisElement->datatype=16;
+                 else if (el->thisElement->isShape())el->thisElement->datatype=20;
+               }
+           }
+           el=el->nextElement;
+        }
+       }
+     }
+     cl=cl->nextCell;
+   }
+
+   }
+
+f.open(true);
+string lefTech=f.read();
+f.close();
+string techFile=f.filename;
+f.filename=path+"/libs.ref/"+tech+"/lef/"+tech+".lef";
+if (!f.exists()){
+    process::setEnv("LEF_MERGED",techFile);
+    return;
+}
+f.open(true);
+string lefLib=f.read();
+f.close();
+
+if (needTechCopy){
+    f.filename=workPath+"/tech.lef"; // write copy of tech.tlef as openroad cannot handle two lef with same basename
+    f.open(false);
+    f.write(lefTech);
+    f.close();
+    process::setEnv("LEF_TECH",f.filename);
+}
+
+int pos=lefLib.indexOf("MACRO");
+lefTech=lefTech.replace("END LIBRARY",lefLib.mid(pos));
+
+f.filename=workPath+"/merge.lef";  // store merged LEF
+f.open(false);
+f.write(lefTech);
+f.close();
+
+process::setEnv("LEF_MERGED",f.filename);
+}
+
+string filenameToWsl(string fn){
+       // converts a filename to Windows Subsystem for Linux namespace to run openroad (Linux) under windows
+        fn=fn.replace("\\","/");
+        fn=fn.replace("c:","/mnt/c");
+        fn=fn.replace("d:","/mnt/d");
+        fn=fn.replace("e:","/mnt/e");
+        fn=fn.replace("f:","/mnt/f");
+        fn=fn.replace("C:","/mnt/c");
+        fn=fn.replace("D:","/mnt/d");
+        fn=fn.replace("E:","/mnt/e");
+        fn=fn.replace("F:","/mnt/f");
+        fn=fn.replace(" ","\\ ");
+        fn=fn.replace("(","\\(");
+        fn=fn.replace(")","\\)");
+        return fn;
+}
+
+
+int main(){
+layout->showStatus("RTL to GDS started");
+if (text->drawing->modified())text->save();
+string verilogFile=text->filename;
+
+if (verilogFile.right(2)!=".v") {
+    layout->showMessage("Error","This file does not look like a Verilog file. Please store the file with the extension '.v'");
+    return 0;
+}
+
+// search callback macro to be called after completing openROAD
+file f;
+string callbackDir=f.currentPath()+"/../../../../../callback/";
+if (!f.isDir(callbackDir)) callbackDir=f.currentPath()+"/../../../../callback/";
+if (!f.isDir(callbackDir)) callbackDir=f.currentPath()+"/../../../callback/";
+if (!f.isDir(callbackDir)) callbackDir=f.currentPath()+"/../../callback/";
+if (!f.isDir(callbackDir)) callbackDir=f.currentPath()+"/../callback/";
+if (!f.isDir(callbackDir)) callbackDir=f.currentPath()+"/callback/";
+
+// search skywater library path from loaded lib in the SchematicEditor
+stringList sl=components::getLibs();
+int i;
+string path="";
+string lib="";
+for(i=0; i<sl.size();i++){
+    int pos=sl.at(i).indexOf("sky130",0);
+    if (pos>=0) {
+        path=components::getPath(sl.at(i));
+        path=path.left(path.indexOf("sky130")-1);
+        int p2=sl.at(i).indexOf("_sc_",0);
+        if (p2>0) {
+               if (lib=="") lib=sl.at(i);
+               else {
+                 layout->showMessage(sl.at(i),"It seems that more than one library is in use, synth abort. \nPlease remove any not required skyWater library from the component list in the Schematiceditor.");
+                 return 0;
+               }
+
+            }
+        }
+}
+
+if (!f.isDir(path)) {
+        layout->showMessage("","Skywater PDK not found, please add it to the libraries in the SchematicEditor");
+        return 0;
+}
+
+// set environment data to forward it to openraod
+
+
+process::setEnv("PDK_ROOT",path);
+process::setEnv("PDK","sky130A");
+process::setEnv("STD_CELL_LIBRARY",lib);
+process::setEnv("TEMP_DIR",file::tempPath());
+
+file f; f.filename=verilogFile;
+string design=f.baseName();
+process::setEnv("DESIGN",design);
+process::setEnv("VERILOG_FILE",verilogFile);
+
+string wpath=f.path();
+if (wpath==".") wpath=f.tempPath();
+if (!file::isDir(wpath)) wpath=f.tempPath();
+if (wpath.contains(" ")) {
+    if (process::isWindows()){
+      wpath=process::getEnv("TEMP");
+    } else {
+       wpath=f.tempPath();
+    }
+}
+
+string run; run.setDateTime("yyyyMMdd-hhmmss");
+if (wpath.right(1)=="/") workPath=wpath+run;
+else workPath=wpath+"/"+run;
+
+if (!file::isDir(wpath+"/"+run)) file::mkDir(wpath,run);
+process::setEnv("WORK_ROOT",workPath);
+
+string sdcFile=f.path()+"/"+design+".sdc";
+f.filename=sdcFile;
+if (!f.exists()){
+   layout->showStatus("create SDC file");
+   string sdc="create_clock clk -period 10\n";
+   f.open(false);
+   f.write(sdc);
+   f.close();
+}
+
+process::setEnv("SDC_FILE",sdcFile);
+
+
+// check std cell are loaded
+cell *c=layout->drawing->findCell(lib+"__nand3_1");
+if (c==NULL) {
+   layout->drawing->importFile(path+"/sky130A/libs.ref/"+lib+"/gds/"+lib+".gds");
+}
+
+// create target cell
+c=layout->drawing->findCell(design);
+if (c==NULL) {
+   c=layout->drawing->addCell()->thisCell;
+   c->cellName=design;
+}
+
+// work-around of skywater / openroad bugs:
+
+fixMissingBoundingBox(lib);
+mergeLEF(lib,path+"/sky130A");  // also import via cell from tlef and copy tlef to tmp with different name
+
+process::setEnv("POSTPROCESSOR","sky130a");
+
+// starting openroad
+if (process::isWindows()) {  // use WIndows subsystem for Linux
+    // mapping for wsl required
+    process::setEnv("WINDOWSPATHMAPPING",layout->getVersion());
+    // forward environment to WSL
+    process::setEnv("WSLENV","WORK_ROOT/p:TEMP_DIR/p:VERILOG_FILE/p:PDK_ROOT/p:PDK/u:STD_CELL_LIBRARY/u:DESIGN/u:WINDOWSPATHMAPPING/u:SDC_FILE/p:LEF_MERGED/p:LEF_TECH/p:LD_LIBRARY_PATH/p");
+    bool b;
+    stringList sl;
+    sl.append("openroad");
+    sl.append("-exit");
+    string fn=filenameToWsl(path+"/sky130A/libs.tech/LayoutEditor/rtl2gds.tcl");
+    sl.append("\""+fn+"\"");
+    b=process::externalTool("/usr/local/bin/","wsl",sl,callbackDir+"rtl2gds.layout",true);
+    if (!b) b=process::externalTool("/usr/bin/","wsl",sl,callbackDir+"rtl2gds.layout",true);
+    if (!b) layout->showMessage("","Windows Subsystem for Linux (WSL) ist not installed on your system.\nPlease activate and install it. See manuel ( www.layouteditor.org ) for more details.");
+    else layout->showStatus("OpenROAD started");
+}
+else {
+    bool b;
+    stringList sl;
+    sl.append("-exit");
+    sl.append("\""+path+"/sky130A/libs.tech/LayoutEditor/rtl2gds.tcl\"");
+    //sl.append("-gui");
+    b=process::externalTool("/usr/local/bin/","openroad",sl,callbackDir+"rtl2gds.layout",true);
+    if (!b)  b=process::externalTool("/usr/bin/","openroad",sl,callbackDir+"rtl2gds.layout",true);
+    if (!b) layout->showMessage("","'OpenROAD' was not found on your system.\nPlease download and install it ( /https://theopenroadproject.org/ )\nor adjust the path of it in this macro.");
+    else layout->showStatus("OpenROAD started");
+    }
+
+}

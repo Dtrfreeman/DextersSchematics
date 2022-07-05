@@ -1,0 +1,23 @@
+#!/usr/bin/layout
+#name=View Netlist
+#help=Displays the Qucs Netlist in a TextEditor
+
+
+
+void showNetlist(string net){
+  string s=schematic->generateNetList(net);
+  textEdit *te=project::getCentralTextEditor();
+  te->newDoc();
+  te->drawing->setText(s);
+  te->drawing->setLexer("spice");
+  te->drawing->title=net+" netlist";
+}
+
+int main(){
+  setup::checkNetlistSetup("qucs");
+  showNetlist("qucs"); 
+  return 0;
+}
+
+
+ 

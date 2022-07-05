@@ -1,0 +1,67 @@
+#!/usr/bin/layout
+#name=S-bend
+#help=generate S-Bend
+
+//parameter with default value
+#parameter length "10µm"
+#parameter width "0.3µm"
+#parameter step "3.5µm"
+#parameter layer "1"
+
+#include "shapelib.layout"
+
+int main(){
+int width=databaseunits(iPar("width"));
+int step=databaseunits(iPar("step"));
+int length=databaseunits(iPar("length"));
+
+int layer=getLayer(iPar("layer"));
+string cellname="sbend_arc_"+userunits(width)+"_"+userunits(step)+"_"+userunits(length)+"_"+layer;
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=layer;
+double dLength=length;
+double dStep=step;
+double X1=0;
+double Y1=0;
+double X2=length;
+double Y2=step;
+if (Y2<0) Y2=-step;
+double dX=X2-X1;
+double dY=Y2-Y1;
+if (dY==0) {
+   layout->drawing->point(0,-width*0.5);
+   layout->drawing->point(X2,width*0.5);
+   layout->drawing->box();
+   return 0;
+}
+double R=(math::pow(0.5*dX,2)+math::pow(0.5*dY,2))/dY;
+double angle=math::asin(0.5*dX/R);
+
+layout->drawing->point(X1,Y1+R);
+layout->drawing->point(X1,Y1-0.5*width);
+layout->drawing->point(0.5*(X1+X2)+0.5*width*math::sin(-angle),0.5*(Y1+Y2) +0.5*width*math::cos(-angle));
+layout->drawing->polygonArc();
+
+layout->drawing->point(X2,Y2-R);
+layout->drawing->point(X2,Y2-0.5*width);
+layout->drawing->point(0.5*(X1+X2)+0.5*width*math::sin(-angle),0.5*(Y1+Y2) +0.5*width*math::cos(-angle));
+layout->drawing->polygonArc();
+layout->drawing->selectAll();
+layout->drawing->mergeSelect();
+if (step<0)  {
+   layout->drawing->point(0,0);
+   layout->drawing->point(1000,0);
+   layout->drawing->mirror();
+}
+layout->drawing->deselectAll();
+
+
+}
+
+

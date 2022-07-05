@@ -1,0 +1,51 @@
+#!/usr/bin/layout
+#name=Simulate + Probe
+#help=Starts a simulation with ngspice
+
+string temp;
+
+int main(){
+
+  file f;
+  temp=f.tempPath()+"/";
+  f.filename=temp+"ng-data.txt";
+  f.remove();
+  string callbackDir=f.currentPath()+"/../../../callback/";
+
+  f.filename=temp+"ng-netlist.cir";
+  f.open(false);
+  f.setCodec("ISO-8859-13");
+  f.write(text->drawing->text());
+  f.close();
+
+  stringList sl;
+  if (temp.contains(":")) {
+    //windows
+    sl.append("-i");
+    }
+  else {
+    sl.append("-b");
+    }
+  sl.append(temp+"ng-netlist.cir");
+  sl.append("-r");
+  sl.append(temp+"ng-data.raw");
+  bool b=process::externalTool("ngspice","ngspice",sl,callbackDir+"ngspice-sim1.layout");
+  if (!b) b=process::externalTool("ngspice/bin","ngspice",sl,callbackDir+"ngspice-sim1.layout");
+  if (!b) b=process::externalTool("spice","ngspice",sl,callbackDir+"ngspice-sim1.layout");
+  if (!b) b=process::externalTool("spice_c","ngspice",sl,callbackDir+"ngspice-sim1.layout");
+  if (!b) b=process::externalTool("ngspice/spice","ngspice",sl,callbackDir+"ngspice-sim1.layout");
+  if (!b) b=process::externalTool("ngspice23_110605-2/spice","ngspice",sl,callbackDir+"ngspice-sim1.layout");
+  if (!b) {
+      string s1="**************************************************\n* ngspice was not found on your system!\n* Install it ( http://ngspice.sourceforge.net ) or \n* adjust this macro to start the simulation with the text editor!\n**************************************************\n\n\n";
+      text->newFile();
+      text->setFile(text->countFiles()-1);
+      text->drawing->setText(s1);
+      text->drawing->setLexer("spice");
+      text->drawing->title="ng-spice problem";
+  }
+  return 0;
+
+}
+
+
+ 

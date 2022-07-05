@@ -1,0 +1,33 @@
+#!/usr/bin/layout
+#name=microstrip generator
+#help=generate microstrip cells
+
+#include "microwavelib.layout"
+
+int main(){
+//layout->showMessage("parameter","NETLIST_PARAMETER");
+setMicrowave();
+string s="NETLIST_PARAMETER";
+int d=databaseunits(s.parameter("D"));
+int space=databaseunits("100 um");
+string cellname="MVIA"+userunits(d);
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+int dh=d/2;
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=28;
+layout->drawing->point(0,0);
+layout->drawing->text("NETLIST_PIN1_NAME");
+layout->drawing->activeLayer=27;
+layout->drawing->point(0,dh);
+layout->drawing->point(d,-d+dh);
+layout->drawing->circleBox();
+layout->drawing->activeLayer=25;
+layout->drawing->point(dh,0);
+layout->drawing->point(-space,0);
+layout->drawing->circle();
+}  

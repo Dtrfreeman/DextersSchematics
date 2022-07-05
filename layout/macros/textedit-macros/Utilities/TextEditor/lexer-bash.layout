@@ -1,0 +1,11 @@
+#!/usr/bin/layout
+#name=Bash
+#help=Highligh the current file for Bash
+
+string temp;
+
+
+int main(){
+
+text->setLexer("bash");
+}

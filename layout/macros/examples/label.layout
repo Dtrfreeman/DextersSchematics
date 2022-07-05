@@ -1,0 +1,21 @@
+#!/usr/bin/layout
+#name=label macro
+#help=automatic labeling 
+
+
+int main(){
+int x,y;
+for (x=0;x<10;x++){
+  for (y=0;y<10;y++){
+        string s1,s2;
+        s1.setNum(x);
+        s2.setNum(y);
+	layout->drawing->point(x*1800,y*800);
+	layout->drawing->text("#"+s1+"/"+s2);
+       }
+}
+layout->drawing->selectAll();
+layout->drawing->setWidth(400);
+layout->drawing->toPolygon();
+layout->drawing->deselectAll();
+}

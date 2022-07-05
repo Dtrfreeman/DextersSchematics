@@ -1,0 +1,71 @@
+#!/usr/bin/layout
+#name=callback qucs simulation
+#help=callback macro called after completing the qucs simualtion
+
+
+
+string temp;
+
+void showNetlist(string net){
+  string s=schematic->generateNetList(net);
+  textEdit *te=project::getCentralTextEditor();
+  te->newDoc();
+  te->drawing->setText(s);
+  te->drawing->setLexer("spice");
+}
+
+int main(){
+  string splot="<Qucs Schematic 0.0.15>\n"+
+       "<Properties>\n"+
+       "<View=-53,0,800,800,1,53,0>\n"+
+       "<Grid=10,10,0>\n"+
+       "<DataSet=qucs-data.dat>\n"+
+       "<DataDisplay=qucs.sch>\n"+
+       "<OpenDisplay=1>\n"+
+       "<showFrame=0>\n"+
+       "<FrameText0=Titel>\n"+
+       "<FrameText1=Gezeichnet von:>\n"+
+       "<FrameText2=Datum:>\n"+
+       "<FrameText3=Revision:>\n"+
+       "</Properties>\n"+
+       "<Symbol>\n"+
+       "</Symbol>\n"+
+       "<Components>\n"+
+       "</Components>\n"+
+       "<Wires>\n"+
+       "</Wires>\n"+
+       "<Diagrams>\n"+
+       "  <Rect 40 632 687 592 3 #c0c0c0 1 00 1 0 0.2 1 1 -0.1 0.5 1.1 1 -0.1 0.5 1.1 315 0 225 \"\" \"\" \"\">\n"+
+       "  </Rect>\n"+
+       "</Diagrams>\n"+
+       "<Paintings>\n"+
+       "</Paintings>\n";
+
+  file f;
+  temp=f.tempPath()+"/";
+  f.filename=temp+"qucs-data.dpl";
+  f.open(false);
+  f.write(splot);
+  f.close();
+  string s=process::toolResult();
+  textEdit *te=project::getCentralTextEditor();
+  te->newDoc();
+  te->drawing->setText(s);
+  f.filename=temp+"qucs-data.dat";
+  if (f.exists()){
+    bool b;
+    stringList sl;
+    sl.append("-i");
+    sl.append(temp+"qucs-data.dpl");
+    b=process::externalTool("Qucs","qucs",sl,"");
+    textEdit *te2=project::getCentralTextEditor();
+    te2->newDoc();
+    te2->drawing->openFile(temp+"qucs-data.dat");
+    te2->drawing->setLexer("XML");
+    te2->filename=temp+"qucs-data.dat";
+  }
+  return 0;
+}
+
+
+ 

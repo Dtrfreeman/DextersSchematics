@@ -1,0 +1,66 @@
+#!/usr/bin/layout
+#name=meander
+#help=generate a meander
+
+//parameter with default value
+#parameter length "30µm"
+#parameter width "5µm"
+#parameter space "2µm"
+#parameter layer "1"
+#parameterDouble turns 8
+
+#include "shapelib.layout"
+
+int main(){
+int sp=databaseunits(iPar("space"));
+int w=databaseunits(iPar("width"));
+int l=databaseunits(iPar("length"));
+double turns=iPar("turns");
+int layer=getLayer(iPar("layer"));
+string cellname="meander"+userunits(w)+"_"+userunits(sp)+"_"+userunits(l)+"_"+iPar("turns")+"_"+layer;
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=layer;
+int pos=0;
+bool dir=true;
+while (turns>=1) {
+	layout->drawing->point(pos,0);
+	layout->drawing->point(pos+w,l);
+	layout->drawing->box();
+	turns-=1;
+	if (turns>0) {
+		int y=0;
+		if (dir) {
+			y=l-w;
+			}
+		layout->drawing->point(pos+w,y);
+		layout->drawing->point(pos+w+sp,y+w);
+		layout->drawing->box();
+		pos+=w+sp;
+		dir = !dir;
+		}
+	}
+if (turns>0){
+	int l2=turns*l;
+	if (dir) {
+		layout->drawing->point(pos,0);
+		layout->drawing->point(pos+w,l2);
+		}
+	else {
+		layout->drawing->point(pos,l);
+		layout->drawing->point(pos+w,l-l2);
+		}
+	layout->drawing->box();
+	}
+layout->drawing->selectAll();
+layout->drawing->point(0,0);
+layout->drawing->centerXY();
+layout->drawing->deselectAll();
+}
+
+

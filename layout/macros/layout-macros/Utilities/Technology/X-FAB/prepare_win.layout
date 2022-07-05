@@ -1,0 +1,168 @@
+#!/usr/bin/layout
+#name=PDK Preparation for Windows
+#help=prepare PDKs packages supplied by X-FAB to use with windows
+
+
+string result;
+string baseDir;
+stringList oaLibs;
+string processName;
+bool restartRequired=false;
+
+bool windows(){
+     if (process::isWindows()) return true;
+     return false; 
+}
+
+void showResult(){
+ textEdit *te=project::getCentralTextEditor();
+ te->newDoc();
+ te->drawing->setText(result);
+ te->drawing->setLexer("ERRORREPORT");
+ te->drawing->title="Result PDK Installation";
+}
+
+
+bool createDir(string dir,string name){
+ if (!file::isDir(dir+"/"+name)){
+    file::mkDir(dir,name);
+    if (!file::isDir(dir+"/"+name)){
+        result+="Folder '"+name+"'could not be created\n";
+        showResult();
+        return false;
+    }
+    result+="folder "+dir+"/"+name+" created\n";
+    }
+  return true;
+}
+
+bool makeDir(string dir){
+   stringList sl=dir.split("/");
+   string name=sl.at(sl.size()-1);
+   sl.removeAt(sl.size()-1);
+   dir=sl.join("/");
+   if (!file::isDir(dir)) makeDir(dir);
+   createDir(dir,name);
+}
+
+
+
+bool removeDir(string dir,string name){
+ if (dir.length()<16) return false;
+ if (name=="") return true;  
+layout->showStatus("remove folder "+name);
+ bool rmResult=true;
+ if (file::isDir(dir+"/"+name)){
+    file f;
+    f.findDir(dir+"/"+name,"*");
+    while (f.filename!=""){
+          if (f.filename.right(1)!=".")
+            removeDir(dir+"/"+name,f.fileName());
+          f.findNext();
+    }
+    f.find(dir+"/"+name,"*");
+    while (f.filename!=""){
+            f.remove();
+            f.findNext();
+    }
+    if (!file::rmDir(dir,name)){
+          file f;
+          f.filename=dir+"/"+name;
+          f.remove();
+    }
+    return rmResult;
+    }
+  else {
+          file f;
+          f.filename=dir+"/"+name;
+          f.remove();
+  }
+  return rmResult;
+}
+
+bool unpack(string file){
+         layout->showProgress("extract files");
+         stringList sl;
+         sl.append("-xzf");
+         sl.append(file);
+         sl.append("-C");
+         sl.append(baseDir+"/unpack");
+         if (process::execute("/bin/tar",sl)!=0)
+           if (process::execute("/usr/bin/tar",sl)!=0) {
+               result+="extraction of file '"+file+"' failed\n";
+               showResult();
+                   //debug.show();
+               return false;
+           }
+         return true;
+}
+
+
+bool checkBaseDir(){
+        baseDir="";
+        //Linux
+        baseDir=file::homePath()+"/LayoutEditor";
+        if (!createDir(file::homePath(),"LayoutEditor")) {
+                 result+="error accassing "+baseDir+". Please check file permissions!\n";
+                 return false;
+        }
+        if (!createDir(baseDir,"unpack")) {
+                 result+="error accassing "+baseDir+". Please check file permissions!\n";
+                 showResult();
+                 return false;
+        }
+        return true;
+}
+
+
+
+
+
+int main(){
+         file f;
+         result="";
+         result+="****************************************************************\n";
+         result+="*  \n";
+         result+="*  Conversion of X-Fab packages to use with Windows\n";
+         result+="*  \n";
+         result+="*  \n";
+         result+="*  Please download required PDK from https://my.xfab.com \n";
+         result+="*  This script will repack the packages for a installation on Windows systems\n";
+         result+="*  \n";
+         result+="*  This script is still beta, please repoart any problems\n";
+         if (windows()) {
+                     result+="*  \n";
+                     result+="*  This script run on linux only!\n";
+                     result+="*  The created packages can than be used on Windows\n";
+                     result+="*  \n";
+         }
+         result+="****************************************************************\n";
+         result+="Installation log: (add this log to any iPDK related bug report)\n";
+         if (!process::isLinux()) { showResult(); return 0;}
+         if (!checkBaseDir()) return 0;
+         string package=layout->getOpenFilename("X-Fab package (*.tar.gz)",f.homePath());
+         if (package=="") {
+                 result+="No package selected, installation terminated\n"; 
+                 showResult();
+                 return 0;
+         } else {
+                  result+="Installation package "+package+"\n"; 
+         }
+         //if (!unpack(package)) return 0;
+         layout->showProgress("convert package");
+         stringList sl;
+         sl.append(f.currentPath()+"/prepare-win");
+         sl.append(package);
+         if (process::execute("/bin/bash",sl)!=0)
+           if (process::execute("/usr/bin/bash",sl)!=0) {
+               result+="execution failed\n";
+               showResult();
+           }
+
+         layout->showStatus("clean up");
+         if (!removeDir(baseDir,"unpack")) {showResult();return 0;}
+         layout->showStatus("convertion completed");
+         result+="\nconvertion completed!\n";
+         result+="A WZIP package was generated next to the existing package.\n";
+         showResult();
+}

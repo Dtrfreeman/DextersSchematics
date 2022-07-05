@@ -1,0 +1,86 @@
+#!/usr/bin/layout
+#name=rectangle
+#help=generate a rectangle
+
+//parameter with default value
+#parameter width "50µm"
+#parameter height "50µm"
+#parameter radius1 "100µm"
+#parameter radius2 "50µm"
+#parameter layer "1"
+#parameterInt points 100
+
+#include "shapelib.layout"
+
+int main(){
+int width=databaseunits(iPar("width"));
+int height=databaseunits(iPar("height"));
+int radius1=databaseunits(iPar("radius1"));
+int radius2=databaseunits(iPar("radius2"));
+double points=iPar("points");
+/* 
+	example: how to change device parameter:
+	sElement *se=schematic->drawing->currentSheet->getDevice("NETLIST_DEVICENAME");
+	if (se!=NULL) se->addParameter("R","12 Ohm");
+*/
+int layer=getLayer(iPar("layer"));
+string cellname="circularlens"+userunits(width)+"_"+userunits(height)+"_"+ userunits(radius1)+"_"+userunits(radius2)+"_"+iPar("points")+"_"+layer;
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=layer;
+layout->drawing->point(0,-height/2);
+if ((radius1>0)&&(radius1<(height/2))) radius1=0;
+if ((radius1<0)&&(radius1>(-height/2))) radius1=0;
+if (radius1==0){
+	layout->drawing->point(width,-height/2);
+	layout->drawing->point(width,height/2);
+	}
+else {
+	
+	double d=(0.5*height)/radius1;
+	double arc1= math::asin(d);
+	if (arc1<0) arc1= -arc1;
+	double step= arc1/points*2.0;
+	int off=math::cos(arc1)*radius1;
+	int i;
+	int radius1a=radius1;
+	if (radius1a<0) radius1a= -radius1;
+	for (i=0;i<=points;i++){
+		double arc=-arc1+step*i;
+		if (i==points) arc=arc1;
+		layout->drawing->point(width+math::cos(arc)*radius1-off,math::sin(arc)*radius1a);
+	}
+}
+if ((radius2>0)&&(radius2<(height/2))) radius2=0;
+if ((radius2<0)&&(radius2>(-height/2))) radius2=0;
+if (radius2==0){
+	layout->drawing->point(0,height/2);
+	layout->drawing->point(0,-height/2);
+	}
+
+else {
+	
+	double d=(0.5*height)/radius2;
+	double arc1= math::asin(d);
+	if (arc1<0) arc1= -arc1;
+	double step= arc1/points*2.0;
+	int off=math::cos(arc1)*radius2;
+	int i;
+	int radius2a=radius2;
+	if (radius2a<0) radius2a= -radius2;
+	for (i=0;i<=points;i++){
+		double arc=-arc1+step*i;
+		if (i==points) arc=arc1;
+		layout->drawing->point(-math::cos(arc)*radius2+off,-math::sin(arc)*radius2a);
+	}
+}
+layout->drawing->point(0,-height/2);
+layout->drawing->polygon();
+}
+
+

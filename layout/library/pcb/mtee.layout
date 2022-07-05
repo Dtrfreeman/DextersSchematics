@@ -1,0 +1,36 @@
+#!/usr/bin/layout
+#name=microstrip tee generator
+#help=generate microstrip cells
+
+#include "microwavelib.layout"
+
+int main(){
+//layout->showMessage("parameter","NETLIST_PARAMETER");
+setMicrowave();
+string s="NETLIST_PARAMETER";
+int width1=databaseunits(s.parameter("W1"));
+int width2=databaseunits(s.parameter("W2"));
+int width3=databaseunits(s.parameter("W3"));
+string cellname="MTEE"+userunits(width1)+"_"+userunits(width2)+"_"+userunits(width3);
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+int height=width1;
+if (width2>width1) height=width2;
+int hh=height/2;
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=28;
+layout->drawing->point(0,0);
+layout->drawing->text("NETLIST_PIN1_NAME");
+layout->drawing->point(width3,0);
+layout->drawing->text("NETLIST_PIN2_NAME");
+layout->drawing->point(width3/2,hh);
+layout->drawing->text("NETLIST_PIN3_NAME");
+layout->drawing->activeLayer=25;
+layout->drawing->point(0,hh);
+layout->drawing->point(width3,-height+hh);
+layout->drawing->box();
+}  

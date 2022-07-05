@@ -1,0 +1,29 @@
+#!/usr/bin/layout
+#name=#2: Layers
+#help=Handling of layers
+
+int main(){
+
+  layers::num[10].visible=false;
+
+  int i;
+  i = 6;
+  string s="Layer ";
+  string layerNum6=layers::num[i].name;
+  layers::num[i].name= s+i;
+
+  int k;
+  k=layers::findLayer("Layer 6");
+  layers::num[k].name= layerNum6;
+
+  for (k=1; k<=3 ; k++){
+	layers::num[k+1].visible=false;
+  }
+
+  layers::num[1].setColor(255,100,0);
+  layers::num[1].setStyle(5);
+  return 0;
+}
+
+
+ 

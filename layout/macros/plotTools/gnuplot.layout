@@ -1,0 +1,47 @@
+#!/usr/bin/layout
+#name=gnuplot
+#help=probe macro with gnuplot (noMac)
+
+
+int main(){
+if (!console::exists("gnuplot")) {
+	stringList sl;
+	sl.append("-p");
+        console::openConsole("gnuplot","gnuplot",sl);
+}
+if (!console::exists("gnuplot")) {
+        plotData *pd=iPlot();
+        pd->setError("gnuplot not found, download under www.gnuplot.info");
+        return 0;
+}
+
+plotData *pd=iPlot();
+if (pd->items()==0) pd->readSource();
+int it=pd->findItem();
+if (it<0) {
+    int i=0;
+    stringList sl;
+    for (i=0;i<pd->items();i++){
+      sl.append(pd->itemNativeTitle(i));
+    }
+    string plot=layout->getItem("Plot","Plot item for "+pd->deviceName()+":"+pd->portName()+" not found. Please choose from list:",sl);
+    for (i=0;i<pd->items();i++){
+      if (plot==sl.at(i)) it=i;
+    }
+}
+if (it>=0){
+    int dep=pd->itemDependsOn(it);
+    if (dep<0) dep=0;
+    intList il;
+    il.append(dep);
+    il.append(it);
+    file f;
+    string tempFile;
+    tempFile=f.tempPath()+"/"+"gnuplotdata.txt";
+    pd->writeData(tempFile,"array",il);
+    string title=pd->itemNativeTitle(it);
+    console::send("gnuplot","plot \""+tempFile+"\" using 1:2 title '"+title+"' with lines" );
+}
+//else pd->setError("no data found");
+
+}

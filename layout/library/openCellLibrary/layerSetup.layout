@@ -1,0 +1,10 @@
+#!/usr/bin/layout
+#name=layer setup
+#help=layer setup for the open cell library
+
+#include "oclCore.layout"
+
+int main(){
+layerSetup();
+}
+ 

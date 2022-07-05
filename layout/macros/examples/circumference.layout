@@ -1,0 +1,45 @@
+#!/usr/bin/layout
+#name=circumference
+#help=add circles around the circumference of any selected shape
+
+int main() {
+  double step=1000; // distance between circles in database units
+  double radius=400; // radius in database units
+  int onLayer=3;
+  cell *cells=layout->drawing->currentCell;
+  //convert anything to polygon
+  cells->toPolygonSelect();
+  elementList *l=cells->firstElement;
+  // loop over all elements
+  while (l!=NULL) {
+     if (l->thisElement!=NULL) {
+      if (l->thisElement->isPolygon()&&(l->thisElement->select) ){
+	 //process any selected polygon
+         pointArray pa=l->thisElement->getPoints();
+         point last=pa.point(0);
+         point current;
+         int k;
+	 double way=0;
+         //going around the polygon
+	 for (k=1;k<pa.size();k++){
+	  current=pa.point(k);
+	  double length=element::distance(current,last);
+	  // processing one side
+	  while ( length-way >= step){
+	      double pos= (step+way)/length;
+	      double ext = radius/length;
+	      point p=(current-last);
+	      point pc;
+              pc.setX(pos*p.x()+ext*p.y());
+	      pc.setY(pos*p.y()-ext*p.x());
+	      cells->addCircle(onLayer,last+pc,radius);
+	      way=way+step;
+	  }
+	  //calculation of the remaining way
+	  way=way-length;
+	  last=current;
+	  }
+      }}
+      l=l->nextElement;
+  }
+}

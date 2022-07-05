@@ -1,0 +1,11 @@
+#!/usr/bin/layout
+#name=C#
+#help=Highligh the current file for C#
+
+string temp;
+
+
+int main(){
+
+text->setLexer("csharp");
+}

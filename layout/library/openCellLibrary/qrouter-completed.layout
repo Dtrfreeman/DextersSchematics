@@ -1,0 +1,51 @@
+#!/usr/bin/layout
+#name=openCellLibrary routing with qrouter
+#help=openCellLibrary routing for digital cells with qrouter
+
+#include "oclCore.layout"
+
+
+textEdit* findLog(){
+textEdit *cte=project::getCentralTextEditor();
+bool found=false;
+if (cte->drawing->title=="qrouter report") return cte;
+int i;
+int files=cte->countFiles();
+for(i=0;i<files;i++){
+  cte->setFile(i);
+  if (cte->drawing->title=="qrouter report") return cte;
+}
+if (files==1){
+  if (cte->drawing->text()==""){
+    cte->drawing->title="qrouter report";
+    return cte;
+  }
+}
+cte->newFile();
+cte->setFile(cte->countFiles()-1);
+cte->drawing->title="qrouter report";
+return cte;
+}
+
+void addToLog(string s){
+textEdit *td=findLog();
+string t=td->drawing->text()+"\n"+s;
+td->setText(t);
+}
+
+int main(){
+
+
+    file f;
+    string tempPath=f.tempPath();
+
+    layout->drawing->updateFile(tempPath+"/router_route.def");
+
+    layerSetup();
+    addToLog("Result of the digital router QROUTER:\n\n");
+    layout->showStatus("qrouter competed");
+
+    addToLog(process::toolResult() );
+    layout->drawing->scaleFull();
+
+} 

@@ -1,0 +1,70 @@
+
+// library for microwave circuits
+
+void setMicrowave(){
+layers::num[25].enable();
+layers::num[25].name="microwave";
+layers::num[25].setStyle(27);
+layers::num[25].setColor(153,65,47);
+layers::num[25].shortkey="m";
+}
+
+int databaseunits(string s){
+// return database units of the string s
+int i;
+double convert=0.001; //default mm if no units;
+if (s.contains("mm")){
+	convert=0.001;
+	s.remove("mm");
+	}
+if (s.contains("um")){
+	convert=0.000001;
+	s.remove("um");
+	}
+if (s.contains("µm")){
+	convert=0.000001;
+	s.remove("µm");
+	}
+if (s.contains("nm")){
+	convert=0.000000001;
+	s.remove("nm");
+	}
+if (s.contains("cm")){
+	convert=0.01;
+	s.remove("cm");
+	}
+if (s.contains("dm")){
+	convert=0.1;
+	s.remove("dm");
+	}
+if (s.contains("m")){
+	convert=1;
+	s.remove("m");
+	}
+double d=s.toDouble()*convert/layout->drawing->databaseunits;
+i = element::round(d);
+return i;
+}
+
+string userunits(int i){
+double d=layout->drawing->userunits*i;
+string s;
+s.setNum(d);
+return s;
+}
+
+int CPWsize(int width, int slot){
+int s=width+2*slot;
+int p1=1;
+int p2=2;
+int p3=5;
+while (p3<1000000000){
+	if (s<=p1) return p1;
+	if (s<=p2) return p2;
+	if (s<=p3) return p3;
+	p1=p1*10;
+	p2=p2*10;
+	p3=p3*10;
+}
+return 1000000;
+}

@@ -1,0 +1,15 @@
+#!/usr/bin/layout
+#name=Add Macro to Menu
+#help=Adds a macro to the menu of the LayoutEditor
+
+string temp;
+
+
+int main(){
+if (text->drawing->modified())text->save();
+text->needLayoutEditor();
+stringList sl;
+sl.append("My-Macros");
+layout->addMacroMenuEntry(text->drawing->fileName,sl);
+layout->drawing->scaleFull();
+}

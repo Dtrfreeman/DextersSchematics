@@ -1,0 +1,3729 @@
+
+<Component Pac>
+<Description>
+ac power source for qucs import
+</Description>
+<Parameter>
+<string Num>
+<string Z>
+<string P>
+<string f>
+<string Temp>
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix P>
+<Label>
+$devicename
+$Num
+$Z
+</Label>
+<Symbol>
+<Line -22 -11 22 -11 #101010>
+<Line -22 11 22 11 #101010>
+<Line -22 -11 -22 11 #101010>
+<Line 22 -11 22 11 #101010>
+<Line -30 0 -19 0 #0000c0>
+<Line 30 0 19 0 #0000c0>
+<Line -1 0 3 0 #0000c0>
+<Line 3 -5 19 -5 #0000c0>
+<Line 3 5 19 5 #0000c0>
+<Line 3 -5 3 5 #0000c0>
+<Line 19 -5 19 5 #0000c0>
+<Line 25 5 25 11 #800000>
+<Line 28 8 22 8 #800000>
+<Line -25 5 -25 11 wire>
+<Circle -1 9 -19 -9 #0000c0>
+<Arc -10 -3 -10 -6 -10 0 #0000c0>
+<Arc -10 3 -10 6 -10 0 #0000c0>
+<Port -30 0 port1>
+<Port 30 0 port2>
+</Symbol>
+<Model qucs>
+</Model>
+<Netlist qucs>
+Pac:$devicename $node(port2) $node(port1) Num="$Num" Z="$Z" P="$P" f="$f" Temp="$Temp"
+</Netlist>
+</Component>
+<Component MLIN>
+<Description>
+msline for qucs import
+</Description>
+<Parameter>
+<string Subst>
+<string W>
+<string L>
+<list Model Hammerstad Wheeler Schneider >
+<list DispModel Kirschning Kobayashi Yamashita Hammerstad Getsinger Schneider Pramanick >
+<string Temp>
+</Parameter>
+<Layout>
+[macro]
+# device-type	macro-file		pins
+*		pcb/mlin.layout	port1 port2
+</Layout>
+<Prefix MS>
+<Label>
+$devicename
+$Subst
+$W/$L
+</Label>
+<Symbol>
+<Port 30 0 port2>
+<Port -30 0 port1>
+<Line 23 -8 13 8 #0000c0>
+<Line -13 -8 -23 8 #0000c0>
+<Line -23 8 13 8 #0000c0>
+<Line -13 -8 23 -8 #0000c0>
+<Line 18 0 30 0 #0000c0>
+<Line -30 0 -18 0 #0000c0>
+</Symbol>
+<Offsetlabel 0 -13 -9>
+<Netlist qucs>
+MLIN:$devicename $node(port1) $node(port2) Subst="$Subst" W="$W" L="$L" Model="$Model" DispModel="$DispModel" Temp="$Temp"
+</Netlist>
+</Component>
+<Component MSTEP>
+<Description>
+microstrip impedance step for qucs import
+</Description>
+<Parameter>
+<string Subst>
+<string W1>
+<string W2>
+<list Model Hammerstad Wheeler Schneider >
+<list DispModel Kirschning Kobayashi Yamashita Hammerstad Getsinger Schneider Pramanick >
+</Parameter>
+<Layout>
+[macro]
+# device-type	macro-file		pins
+*		pcb/mstep.layout	port1 port2
+</Layout>
+<Prefix MS>
+<Label>
+$devicename
+$Subst
+$W1
+$W2
+</Label>
+<Symbol>
+<Line -30 0 -18 0 #0000c0>
+<Line 18 0 30 0 #0000c0>
+<Line -18 -12 0 -12 #0000c0>
+<Line -18 12 0 12 #0000c0>
+<Line -18 -12 -18 12 #0000c0>
+<Line 0 -7 18 -7 #0000c0>
+<Line 0 7 18 7 #0000c0>
+<Line 18 -7 18 7 #0000c0>
+<Line 0 -12 0 -7 #0000c0>
+<Line 0 7 0 12 #0000c0>
+<Line -22 -4 -26 4 #0000c0>
+<Port -30 0 port1>
+<Port 30 0 port2>
+</Symbol>
+<Offsetlabel 0 -12 -16>
+<Netlist qucs>
+MSTEP:$devicename $node(port2) $node(port1) Subst="$Subst" W1="$W1" W2="$W2" MSModel="$Model" MSDispModel="$DispModel"
+</Netlist>
+</Component>
+<Component MTEE>
+<Description>
+Microstrip Tee for qucs import
+</Description>
+<Parameter>
+<string Subst>
+<string W1>
+<string W2>
+<string W3>
+<list MSModel Hammerstad Wheeler Schneider >
+<list MSDispModel Kirschning Kobayashi Yamashita Hammerstad Getsinger Schneider Pramanick >
+<string Temp>
+</Parameter>
+<Layout>
+[macro]
+# device-type	macro-file		pins
+*		pcb/mtee.layout	port1 port2 port3
+</Layout>
+<Prefix MS>
+<Label>
+$devicename
+$Subst
+$W1
+$W2
+$W3
+</Label>
+<Symbol>
+<Line -30 0 -18 0 #0000c0>
+<Line 18 0 30 0 #0000c0>
+<Line 0 18 0 30 #0000c0>
+<Line -18 -8 18 -8 18 8 #0000c0>
+<Line -18 8 -8 8 -8 18 8 18 #0000c0>
+<Line 18 8 8 8 8 18 #0000c0>
+<Line -18 -8 -18 8 #0000c0>
+<Text -26 3 #303030 1>
+<Text 21 3 #303030 2>
+<Text 4 18 #303030 3>
+<Port -30 0 port1>
+<Port 30 0 port2>
+<Port 0 30 port3>
+</Symbol>
+<Offsetlabel 0 -9 -14>
+<Netlist qucs>
+MTEE:$devicename $node(port1) $node(port2) $node(port3) Subst="$Subst" W1="$W1" W2="$W2" W3="$W3" MSModel="$MSModel" MSDispModel="$MSDispModel" Temp="$Temp"
+</Netlist>
+</Component>
+<Component MOPEN>
+<Description>
+microstrip open for qucs import
+</Description>
+<Parameter>
+<string Subst>
+<string W>
+<list MSModel Hammerstad Wheeler Schneider >
+<list MSDispModel Kirschning Kobayashi Yamashita Hammerstad Getsinger Schneider Pramanick >
+<list Model Hammerstad Wheeler Schneider >
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix MS>
+<Label>
+$devicename
+$Subst
+$W
+</Label>
+<Symbol>
+<Port -30 0 port1>
+<Line 13 -8 3 8 #0000c0>
+<Line -13 -8 -23 8 #0000c0>
+<Line -23 8 3 8 #0000c0>
+<Line -13 -8 13 -8 #0000c0>
+<Line -30 0 -18 0 #0000c0>
+</Symbol>
+<Offsetlabel 0 -14 -13>
+<Netlist qucs>
+MOPEN:$devicename $node(port1) Subst="$Subst" W="$W" MSModel="$MSModel" MSDispModel="$MSDispModel" Model="$Model"
+</Netlist>
+</Component>
+<Component CGAP>
+<Description>
+coplanar gap for qucs import
+</Description>
+<Parameter>
+<string subst>
+<string W>
+<string S>
+<string G>
+<list Approx yes no >
+</Parameter>
+<Layout>
+[macro]
+# device-type	macro-file		pins
+*		pcb/cgap.layout	port1 port2
+</Layout>
+<Prefix CL>
+<Label>
+$devicename
+$subst
+W=$W
+S=$S
+G=$G
+</Label>
+<Symbol>
+<Line 16 13 24 21 #0000c0>
+<Line 8 13 16 21 #0000c0>
+<Line 0 13 8 21 #0000c0>
+<Line -8 13 0 21 #0000c0>
+<Line -16 13 -8 21 #0000c0>
+<Line -24 13 -16 21 #0000c0>
+<Line -25 13 25 13 #0000c0>
+<Line -24 -21 -16 -13 #0000c0>
+<Line -16 -21 -8 -13 #0000c0>
+<Line -8 -21 0 -13 #0000c0>
+<Line 0 -21 8 -13 #0000c0>
+<Line 8 -21 16 -13 #0000c0>
+<Line 16 -21 24 -13 #0000c0>
+<Line -25 -13 25 -13 #0000c0>
+<Line 23 -8 13 8 #0000c0>
+<Line 8 -8 -2 8 #0000c0>
+<Line 2 -8 -8 8 #0000c0>
+<Line -13 -8 -23 8 #0000c0>
+<Line -2 8 13 8 #0000c0>
+<Line -23 8 -8 8 #0000c0>
+<Line 8 -8 23 -8 #0000c0>
+<Line -13 -8 2 -8 #0000c0>
+<Line 18 0 30 0 #0000c0>
+<Line -30 0 -18 0 #0000c0>
+<Port 30 0 port2>
+<Port -30 0 port1>
+</Symbol>
+<Offsetlabel 0 -12 -24>
+<Netlist qucs>
+CGAP:$devicename $node(port1) $node(port2) Subst="$subst" W="$W" S="$S" G="$G"
+</Netlist>
+</Component>
+<Component CLIN>
+<Description>
+coplanar line for qucs import
+</Description>
+<Parameter>
+<string subst>
+<string W>
+<string S>
+<string L>
+<string Backside>
+<list Approx yes no >
+</Parameter>
+<Layout>
+[macro]
+# device-type	macro-file		pins
+*		pcb/clin.layout	port1 port2
+</Layout>
+<Prefix CL>
+<Label>
+$devicename
+$subst
+W=$W
+S=$S
+L=$L
+</Label>
+<Symbol>
+<Line 16 13 24 21 #0000c0>
+<Line 8 13 16 21 #0000c0>
+<Line 0 13 8 21 #0000c0>
+<Line -8 13 0 21 #0000c0>
+<Line -16 13 -8 21 #0000c0>
+<Line -24 13 -16 21 #0000c0>
+<Line -25 13 25 13 #0000c0>
+<Line -24 -21 -16 -13 #0000c0>
+<Line -16 -21 -8 -13 #0000c0>
+<Line -8 -21 0 -13 #0000c0>
+<Line 0 -21 8 -13 #0000c0>
+<Line 8 -21 16 -13 #0000c0>
+<Line 16 -21 24 -13 #0000c0>
+<Line -25 -13 25 -13 #0000c0>
+<Line 23 -8 13 8 #0000c0>
+<Line -13 -8 -23 8 #0000c0>
+<Line -23 8 13 8 #0000c0>
+<Line -13 -8 23 -8 #0000c0>
+<Line 18 0 30 0 #0000c0>
+<Line -30 0 -18 0 #0000c0>
+<Port 30 0 port2>
+<Port -30 0 port1>
+</Symbol>
+<Offsetlabel 0 -13 -24>
+<Netlist qucs>
+CLIN:$devicename $node(port1) $node(port2) Subst="$subst" W="$W" S="$S" L="$L" Backside=$Backside Approx="$Approx"
+</Netlist>
+</Component>
+<Component COPEN>
+<Description>
+coplanar open for qucs import
+</Description>
+<Parameter>
+<string subst>
+<string W>
+<string S>
+<string G>
+<string Backside>
+</Parameter>
+<Layout>
+[macro]
+# device-type	macro-file		pins
+*		pcb/copen.layout	port1
+</Layout>
+<Prefix CL>
+<Label>
+$devicename
+$subst
+W=$W
+S=$S
+G=$G
+</Label>
+<Symbol>
+<Line -6 13 2 21 #0000c0>
+<Line -14 13 -6 21 #0000c0>
+<Line -2 9 10 21 #0000c0>
+<Line -22 13 -14 21 #0000c0>
+<Line -25 18 -22 21 #0000c0>
+<Line 1 4 15 18 #0000c0>
+<Line 4 -1 15 10 #0000c0>
+<Line 7 -6 15 2 #0000c0>
+<Line 10 -11 15 -6 #0000c0>
+<Line 8 -21 15 -14 #0000c0>
+<Line 0 -21 8 -13 #0000c0>
+<Line -8 -21 0 -13 #0000c0>
+<Line -16 -21 -8 -13 #0000c0>
+<Line -24 -21 -16 -13 #0000c0>
+<Line 11 -13 -5 13 #0000c0>
+<Line -25 13 -5 13 #0000c0>
+<Line -25 -13 11 -13 #0000c0>
+<Line 0 -8 -10 8 #0000c0>
+<Line -13 -8 -23 8 #0000c0>
+<Line -23 8 -10 8 #0000c0>
+<Line -13 -8 0 -8 #0000c0>
+<Line -30 0 -18 0 #0000c0>
+<Port -30 0 port1>
+</Symbol>
+<Offsetlabel 0 -21 -25>
+<Netlist qucs>
+COPEN:$devicename $node(port1) Subst="$subst" W="$W" S="$S" G="$G" Backside=$Backside
+</Netlist>
+</Component>
+<Component CSHORT>
+<Description>
+coplanar short for qucs import
+</Description>
+<Parameter>
+<string subst>
+<string W>
+<string S>
+<string Backside>
+</Parameter>
+<Layout>
+[macro]
+# device-type	macro-file		pins
+*		pcb/cshort.layout	port1
+</Layout>
+<Prefix CL>
+<Label>
+$devicename
+$subst
+W=$W
+S=$S
+</Label>
+<Symbol>
+<Line -5 6 10 21 #0000c0>
+<Line -8 11 2 21 #0000c0>
+<Line -14 13 -6 21 #0000c0>
+<Line -22 13 -14 21 #0000c0>
+<Line -25 18 -22 21 #0000c0>
+<Line -2 1 12 15 #0000c0>
+<Line 1 -4 12 7 #0000c0>
+<Line 4 -9 12 -1 #0000c0>
+<Line 8 -21 12 -17 #0000c0>
+<Line 0 -21 12 -9 #0000c0>
+<Line -8 -21 0 -13 #0000c0>
+<Line -16 -21 -8 -13 #0000c0>
+<Line -24 -21 -16 -13 #0000c0>
+<Line -7 8 -10 13 #0000c0>
+<Line 6 -13 3 -8 #0000c0>
+<Line -25 13 -10 13 #0000c0>
+<Line -25 -13 6 -13 #0000c0>
+<Line -13 -8 -23 8 #0000c0>
+<Line -23 8 -7 8 #0000c0>
+<Line -13 -8 3 -8 #0000c0>
+<Line -30 0 -18 0 #0000c0>
+<Port -30 0 port1>
+</Symbol>
+<Offsetlabel 0 -22 -24>
+<Netlist qucs>
+CSHORT:$devicename $node(port1) Subst="$subst" W="$W" S="$S" Backside=$Backside
+</Netlist>
+</Component>
+<Component MCORN>
+<Description>
+microstrip corner for qucs import
+</Description>
+<Parameter>
+<string Subst substrate>
+<string W>
+</Parameter>
+<Layout>
+[macro]
+# device-type	macro-file		pins
+*		pcb/mcorn.layout	port1 port2
+</Layout>
+<Prefix MS>
+<Label>
+$devicename
+$Subst
+$W
+</Label>
+<Symbol>
+<Line -30 0 -18 0 #0000c0>
+<Line 0 18 0 30 #0000c0>
+<Line -18 -8 8 -8 #0000c0>
+<Line -18 8 -8 8 #0000c0>
+<Line -18 -8 -18 8 #0000c0>
+<Line -8 8 -8 18 #0000c0>
+<Line 8 -8 8 18 #0000c0>
+<Line -8 18 8 18 #0000c0>
+<Port -30 0 port1>
+<Port 0 30 port2>
+</Symbol>
+<Offsetlabel 0 0 -16>
+<Netlist qucs>
+MCORN:$devicename $node(port1) $node(port2) Subst="$Subst" W="$W"
+</Netlist>
+</Component>
+<Component MCOUPLED>
+<Description>
+coupled microstrip line for qucs import
+</Description>
+<Parameter>
+<string subst substrate>
+<string W>
+<string L>
+<string S>
+<list Model Kirschning Hammerstad >
+<list DispModel Kirschning Getsinger>
+<string Temp>
+</Parameter>
+<Layout>
+[macro]
+# device-type	macro-file		pins
+*		pcb/mcoupled.layout	port1 port2 port3 port4
+</Layout>
+<Prefix MS>
+<Label>
+$devicename
+$subst
+$W
+$L
+$S
+</Label>
+<Symbol>
+<Line -30 -12 -16 -12 #0000c0>
+<Line -30 -30 -30 -12 #0000c0>
+<Line 20 -12 30 -12 #0000c0>
+<Line 30 -30 30 -12 #0000c0>
+<Line -11 -20 25 -20 #0000c0>
+<Line -21 -4 15 -4 #0000c0>
+<Line -11 -20 -21 -4 #0000c0>
+<Line 25 -20 15 -4 #0000c0>
+<Line -30 12 -20 12 #0000c0>
+<Line -30 30 -30 12 #0000c0>
+<Line 16 12 30 12 #0000c0>
+<Line 30 30 30 12 #0000c0>
+<Line -15 4 21 4 #0000c0>
+<Line -25 20 11 20 #0000c0>
+<Line -15 4 -25 20 #0000c0>
+<Line 21 4 11 20 #0000c0>
+<Port -30 -30 port1>
+<Port 30 -30 port2>
+<Port 30 30 port3>
+<Port -30 30 port4>
+</Symbol>
+<Offsetlabel 0 0 -16>
+<Netlist qucs>
+MCOUPLED:$devicename $node(port1) $node(port2) $node(port3) $node(port4) Subst="$subst" W="$W" L="$L" S="$S" Model="$Model" DispModel="$DispModel" Temp="$Temp"
+</Netlist>
+</Component>
+<Component MCROSS>
+<Description>
+Microstrip Cross for qucs import
+</Description>
+<Parameter>
+<string subst substrate>
+<string W1>
+<string W2>
+<string W3>
+<string W4>
+<list Model Hammerstad Wheeler Schneider>
+<list DispModel Kirschning Kobayashi Yamashita Hammerstad Getsinger Schneider Pramanick>
+</Parameter>
+<Layout>
+[macro]
+# device-type	macro-file		pins
+*		pcb/mcross.layout	port1 port2 port3 port4
+</Layout>
+<Prefix MS>
+<Label>
+$devicename
+$subst
+$W1
+$W2
+$W3
+$W4
+</Label>
+<Symbol>
+<Line -30 0 -18 0 #0000c0>
+<Line 18 0 30 0 #0000c0>
+<Line 0 18 0 30 #0000c0>
+<Line 0 -30 0 -18 #0000c0>
+<Line -18 -8 -8 -8 #0000c0>
+<Line -18 8 -8 8 #0000c0>
+<Line -18 -8 -18 8 #0000c0>
+<Line 8 -8 18 -8 #0000c0>
+<Line 8 8 18 8 #0000c0>
+<Line 18 -8 18 8 #0000c0>
+<Line -8 8 -8 18 #0000c0>
+<Line 8 8 8 18 #0000c0>
+<Line -8 18 8 18 #0000c0>
+<Line -8 -18 -8 -8 #0000c0>
+<Line 8 -18 8 -8 #0000c0>
+<Line -8 -18 8 -18 #0000c0>
+<Text -26 3 wire 1>
+<Text -10 -30 wire 2>
+<Text 21 -13 wire 3>
+<Text 4 18 wire 4>
+<Port -30 0 port1>
+<Port 0 -30 port2>
+<Port 30 0 port3>
+<Port 0 30 port4>
+</Symbol>
+<Offsetlabel 0 0 -16>
+<Netlist qucs>
+MCROSS:$devicename $node(port1) $node(port2) $node(port3) $node(port4) Subst="$subst" W1="$W1" W2="$W2" W3="$W3" W4="$W4" Model="$Model" DispModel="$DispModel"
+</Netlist>
+</Component>
+<Component MGAP>
+<Description>
+Microstrip Gap for qucs import
+</Description>
+<Parameter>
+<string subst substrate>
+<string W1>
+<string W2>
+<string S>
+<list Model Hammerstad Wheeler Schneider>
+<list DispModel Kirschning Kobayashi Yamashita Hammerstad Getsinger Schneider Pramanick>
+</Parameter>
+<Layout>
+[macro]
+# device-type	macro-file		pins
+*		pcb/mgap.layout	port1 port2
+</Layout>
+<Prefix MS>
+<Label>
+$devicename
+$subst
+$W1
+$W2
+$S
+</Label>
+<Symbol>
+<Line -30 0 -18 -0 #0000c0>
+<Line 18 0 30 0 #0000c0>
+<Line -13 -8 0 -8 #0000c0>
+<Line 10 -8 23 -8 #0000c0>
+<Line -23 8 -10 8 #0000c0>
+<Line 0 8 13 8 #0000c0>
+<Line -13 -8 -23 8 #0000c0>
+<Line 23 -8 13 8 #0000c0>
+<Line 0 -8 -10 8 #0000c0>
+<Line 10 -8 0 8 #0000c0>
+<Line -22 -4 -26 4 #0000c0>
+<Port -30 0 port1>
+<Port 30 0 port2>
+</Symbol>
+<Offsetlabel 0 0 -16>
+<Netlist qucs>
+MGAP:$devicename $node(port1) $node(port2) Subst="$subst" W1="$W1" W2="$W2" S=$S MSModel="$Model" MSDispModel="$DispModel"
+</Netlist>
+</Component>
+<Component MRSTUB>
+<Description>
+microstrip radial stubfor qucs import
+</Description>
+<Parameter>
+<string subst substrate>
+<string ri>
+<string ro>
+<string alpha>
+</Parameter>
+<Layout>
+[macro]
+# device-type	macro-file		pins
+*		pcb/mrstub.layout	port1
+</Layout>
+<Prefix MS>
+<Label>
+$devicename
+$subst
+$ri
+$ro
+$alpha
+</Label>
+<Symbol>
+<Line -5 0 5 0 #0000c0>
+<Line -5 0 -18 -18 #0000c0>
+<Line 5 0 18 -18 #0000c0>
+<Line 0 0 0 10 #0000c0>
+<Arc 13 13 -18 -18 18 -18 #0000c0>
+<Port 0 10 port1>
+</Symbol>
+<Offsetlabel 0 0 -16>
+<Netlist qucs>
+MRSTUB:$devicename $node(port1) Subst="$subst" ri="$ri" ro="$ro" alpha=$alpha
+</Netlist>
+</Component>
+<Component MVIA>
+<Description>
+microstrip radial stubfor qucs import
+</Description>
+<Parameter>
+<string subst substrate>
+<string D>
+<string Temp>
+</Parameter>
+<Layout>
+[macro]
+# device-type	macro-file		pins
+*		pcb/mvia.layout		port1
+</Layout>
+<Prefix MS>
+<Label>
+$devicename
+$subst
+$D
+</Label>
+<Symbol>
+<Line -20 0 -5 0 #0000c0>
+<Line -5 0 -5 14 #0000c0>
+<Line 5 0 5 14 #0000c0>
+<Line -11 14 11 14 #0000c0>
+<Line -7 20 7 20 #0000c0>
+<Line -3 26 3 26 #0000c0>
+<Circle -5 -4 5 3 #0000c0>
+<Port -20 0 port1>
+</Symbol>
+<Offsetlabel 0 0 -16>
+<Netlist qucs>
+MVIA:$devicename $node(port1) Subst="$subst" D="$D" Temp="$Temp"
+</Netlist>
+</Component>
+<Component MMBEND>
+<Description>
+microstrip mitered bend for qucs import
+</Description>
+<Parameter>
+<string subst substrate>
+<string W>
+</Parameter>
+<Layout>
+[macro]
+# device-type	macro-file		pins
+*		pcb/mmbend.layout	port1 port2
+</Layout>
+<Prefix MS>
+<Label>
+$devicename
+$subst
+$W
+</Label>
+<Symbol>
+<Line -30 0 -18 0 #0000c0>
+<Line 0 18 0 30 #0000c0>
+<Line -18 -8 -8 -8 #0000c0>
+<Line -8 -8 8 8 #0000c0>
+<Line -18 8 -8 8 #0000c0>
+<Line -18 -8 -18 8 #0000c0>
+<Line -8 8 -8 18 #0000c0>
+<Line 8 8 8 18 #0000c0>
+<Line -8 18 8 18 #0000c0>
+<Port -30 0 port1>
+<Port 0 30 port2>
+</Symbol>
+<Offsetlabel 0 0 -16>
+<Netlist qucs>
+MMBEND:$devicename $node(port1) $node(port2) Subst="$subst" W="$W"
+</Netlist>
+</Component>
+<Component .SP>
+<Description>
+S-parameter simulation for qucs import
+</Description>
+<Parameter>
+<list type lin log list const >
+<string start 1GHz>
+<string stop 10GHz>
+<string Points 19>
+<string Noise no>
+<string NoiseIP 1>
+<string NoiseOP 2>
+<string saveCVs no>
+<list saveAll no yes >
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix SP>
+<Label>
+$devicename
+Type=$type
+Start=$start
+Stop=$stop
+Points=$Points
+</Label>
+<Offsetlabel 0 0 -15>
+<Symbol>
+<Rect -10 40 90 -10 #0000c0>
+<Text 0 5 #0000c0 Simulation>
+<Text 0 25 #0000c0 S-Parameter>
+</Symbol>
+<Netlist qucs>
+.SP:$devicename Type="$type" Start="$start" Stop="$stop" Points="$Points" Noise="$Noise" NoiseIP="$NoiseIP" NoiseOP="$NoiseOP" saveCVs="$saveCVs" saveAll="$saveAll"
+</Netlist>
+</Component>
+<Component Eqn>
+<Description>
+Eqn for qucs import
+</Description>
+<Parameter>
+<string Export>
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix Eqn>
+<Label>
+</Label>
+<Symbol>
+<Text 0 5 #0000c0 Equation>
+<Line -10 10 -10 -10 50 -10 #0000c0>
+</Symbol>
+<Offsetlabel 0 0 -16>
+<Netlist qucs>
+Eqn:$devicename $parameters($parametername="$parametervalue" )
+</Netlist>
+</Component>
+<Component Vrect>
+<Description>
+Rectangle Voltage for qucs import
+ideal rectangle voltage source
+</Description>
+<Parameter>
+<string U 1V >
+<string TH 1ms >
+<string TL 1ms >
+<string Tr 1ns >
+<string Tf 1ns >
+<string Td 0ns >
+</Parameter>
+<Layout>
+</Layout>
+<Prefix V>
+<Label>
+</Label>
+<Symbol>
+<Circle -12 -12 12 12 #0000c0>
+<Line -30 0 -12 0 #0000c0>
+<Line 30 .0 12 0 #0000c0>
+<Line 18 5 18 11 red >
+<Line 21 8 15 8 red >
+<Line -18 5 -18 11 grey>
+<Line -5 -7 -5 -5 #0000c0>
+<Line -5 -5 5 -5 #0000c0>
+<Line 5 -5 5 0  #0000c0>
+<Line -5 0 5 0 #0000c0>
+<Line -5 0 -5 5 #0000c0>
+<Line -5 5 5 5 #0000c0>
+<Line 5 5 5 7 #0000c0>
+<Port 30 0 port1>
+<Port -30 0 port2>
+</Symbol>
+<Netlist qucs>
+Vrect:$devicename $node(port1) $node(port2) $parameters($parametername="$parametervalue" )
+</Netlist>
+</Component>
+<Component Vpulse>
+<Description>
+Voltage Pulse for qucs import
+ideal voltage pulse source
+</Description>
+<Parameter>
+<string U1 0V >
+<string U2 1V >
+<string T1 0 >
+<string T2 1ms >
+<string Tr 1ns >
+<string Tf 1ns >
+</Parameter>
+<Layout>
+</Layout>
+<Prefix V>
+<Label>
+</Label>
+<Symbol>
+<Circle -12 -12 12 12 #0000c0>
+<Line -30 0 -12 0 #0000c0>
+<Line 30 0 12 0 #0000c0>
+<Line 18 5 18 11 red >
+<Line 21 8 15 8 red >
+<Line -18 5 -18 11 grey>
+<Line 6 -3 6 3 #0000c0>
+<Line -6 -7 -6 -3 #0000c0>
+<Line -6 3 -6 7  #0000c0>
+<Line -6 -3 6 -3 #0000c0>
+<Line -6 -3 6 -3 #0000c0>
+<Line -6 3 6 3 #0000c0>
+<Port 30 0 port1>
+<Port -30 0 port2>
+</Symbol>
+<Netlist qucs>
+Vpulse:$devicename $node(port1) $node(port2) $parameters($parametername="$parametervalue" )
+</Netlist>
+</Component>
+<Component VProbe>
+<Description>
+voltage probe for qucs import
+</Description>
+<Parameter>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix V>
+<Label>
+</Label>
+<Symbol>
+<Line -20 -31 20 -31 #0000c0>
+<Line -20 9 20 9 #0000c0>
+<Line -20 -31 -20 9 #0000c0>
+<Line 20 -31 20 9 #0000c0>
+<Line -16 -27 16 -27 #0000c0>
+<Line -16 -9 16 -9 #0000c0>
+<Line -16 -27 -16 -9 #0000c0>
+<Line 16 -27 16 -9 #0000c0>
+<Arc 0 0 -16 -9 16 -9 #0000c0>
+<Line  -11 -24 -2 -9 #0000c0>
+<Line -10 0 -10 6 red>
+<Line -13 3 -7 3 red>
+<Line 7 3 13 3 grey>
+<Line -10 9 -10 20 #0000c0>
+<Line 10 9 10 20 #0000c0>
+<Port -10 20 port1>
+<Port 10 20 port2>
+</Symbol>
+<Netlist qucs>
+VProbe:$devicename $node(port1) $node(port2) $parameters($parametername="$parametervalue" )
+</Netlist>
+</Component>
+<Component Vnoise>
+<Description>
+noise voltage source for qucs import
+</Description>
+<Parameter>
+<string u 1e-6 >
+<string e 0 >
+<string c 1 >
+<string a 0 >
+</Parameter>
+<Layout>
+</Layout>
+<Prefix V>
+<Label>
+</Label>
+<Symbol>
+<Circle -12 -12 12 12 #0000c0>
+<Line -30 0 -12 0 #0000c0>
+<Line 30 0 12 0 #0000c0>
+<Line -12 1 1 -12 #0000c0>
+<Line -10 6 6 -10 #0000c0>
+<Line -7 10 10 -7 #0000c0>
+<Line -2 12 12 -2 #0000c0>
+<Port 30 0 port1>
+<Port -30 0 port2>
+</Symbol>
+<Netlist qucs>
+Vnoise:$devicename $node(port1) $node(port2) $parameters($parametername="$parametervalue" )
+</Netlist>
+</Component>
+<Component Thyristor>
+<Description>
+silicon controlled rectifier (SCR) for qucs import
+</Description>
+<Parameter>
+<string Vbo 400V >
+<string Igt 50uA >
+<string Cj0 10pF >
+<string Is 1e-10A >
+<string N 2 >
+<string Ri 10Ohm >
+<string Rg 5Ohm >
+<string Temp 26.85 >
+</Parameter>
+<Layout>
+</Layout>
+<Prefix D>
+<Label>
+</Label>
+<Symbol>
+<Line 0 -30 0 30 #0000c0>
+<Line -9 6 9 6 #0000c0>
+<Line -9 -6 9 -6 #0000c0>
+<Line 0 6 -9 -6 #0000c0>
+<Line 0 6 9 -6 #0000c0>
+<Line -9 10 -5 6 #0000c0>
+<Line -20 10 -9 10 #0000c0>
+<Port 0 -30 port1>
+<Port 0 30 port2>
+<Port -20 10 port3>
+</Symbol>
+<Netlist qucs>
+SCR:$devicename $node(port1) $node(port2) $node(port3) $parameters($parametername="$parametervalue" )
+</Netlist>
+</Component>
+<Component Phototransistor>
+<Description>
+Phototransistor verilog device for qucs import
+</Description>
+<Parameter>
+<string Bf 100 >
+<string Br 0.1 >
+<string Is 1e-10 >
+<string Nf 1 >
+<string Nr 1 >
+<string Vaf 100 >
+<string Var 100 >
+<string Mje 0.33 >
+<string Vje 0.75 >
+<string Cje 1e-12 >
+<string Mjc 0.33 >
+<string Vjc 0.75 >
+<string Cjc 2e-12 >
+<string Tr 100n >
+<string Tf 0.1n >
+<string Ikf 10 >
+<string Ikr 10 >
+<string Rc 10 >
+<string Re 1 >
+<string Rb 100 >
+<string Kf 1e-12 >
+<string Ffe 1 >
+<string Af 1 >
+<string Responsivity 1.5 >
+<string P0 2.6122e3 >
+<string P1 -1.489e1 >
+<string P2 3.0332e-2 >
+<string P3 -2.5708e-5 >
+<string P4 7.6923e-9 >
+<string Temp 26.85 >
+</Parameter>
+<Layout>
+</Layout>
+<Prefix PT>
+<Label>
+</Label>
+<Symbol>
+<Circle -25 -20 15 20 #0000c0>
+<Line -10 -15 -10 15 #0000c0>
+<Line -30 0 -10 0 #0000c0>
+<Line -10 -5 0 -15 #0000c0>
+<Line 0 -15 0 -30 #0000c0>
+<Line -10 5 0 15 #0000c0>
+<Line 0 15 0 30 #0000c0>
+<Line -6 15 0 15 #0000c0>
+<Line 0 9 0 15 #0000c0>
+<Line -50 -50 -40 -50 green>
+<Line -40 -50 -40 -30 green>
+<Line -40 -30 -50 -30 green>
+<Line -40 -40 -16 -16 green>
+<Line -16 -16 -16 -23 green>
+<Line -16 -16 -23 -16 green>
+<Line -60 -55 -60 -65 grey>
+<Line -60 -65 -55 -65 grey>
+<Line -55 -65 -55 -60 grey>
+<Line -60 -60 -55 -60 grey>
+<Line -63 -40 -60 -35 grey>
+<Line -60 -35 -57 -40 grey>
+<Line -57 -40 -54 -35 grey>
+<Line -54 -35 -51 -40 grey>
+<Port 0 -30 port1>
+<Port -30 0 port2>
+<Port 0 30 port3>
+<Port -50 -50 port4>
+<Port -50 -30 port5>
+</Symbol>
+<Netlist qucs>
+phototransistor:$devicename $node(port1) $node(port2) $node(port3) $node(port4) $node(port5) $parameters($parametername="$parametervalue" )
+</Netlist>
+</Component>
+<Component MESFET>
+<Description>
+MESFET verilog device for qucs import
+</Description>
+<Parameter>
+<string LEVEL 1 >
+<string Vto -1.8 >
+<string Beta 3e-3 >
+<string Alpha 2.25 >
+<string Lambda 0.05 >
+<string B 0.3 >
+<string Qp 2.1 >
+<string Delta 0.1 >
+<string Vmax 0.5 >
+<string Vdelta1 0.3 >
+<string Vdelta2 0.2 >
+<string Gamma 0.015 >
+<string Nsc 1 >
+<string Is 1e-14 >
+<string N 1 >
+<string Vbi 1.0 >
+<string Bv 60 >
+<string Xti 3.0 >
+<string Fc 0.5 >
+<string Tau 1e-9 >
+<string Rin 1e-3 >
+<string Area 1 >
+<string Eg 1.11 >
+<string M 0.5 >
+<string Cgd 0.2e-12 >
+<string Cgs 1e-12 >
+<string Cds 1e-12 >
+<string Betatc 0 >
+<string Alphatc 0 >
+<string Gammatc 0 >
+<string Ng 2.65 >
+<string Nd -0.19 >
+<string ILEVELS 3 >
+<string ILEVELD 3 >
+<string QLEVELS 2 >
+<string QLEVELD 2 >
+<string QLEVELDS 2 >
+<string Vtotc 0 >
+<string Rg 5.1 >
+<string Rd 1.3 >
+<string Rs 1.3 >
+<string Rgtc 0 >
+<string Rdtc 0 >
+<string Rstc 0 >
+<string Ibv 1e-3 >
+<string Rf 10 >
+<string R1 10 >
+<string Af 1 >
+<string Kf 0 >
+<string Gdsnoi 1 >
+<string Tnom 26.85 >
+<string Temp 26.85 >
+</Parameter>
+<Layout>
+</Layout>
+<Prefix T>
+<Label>
+</Label>
+<Symbol>
+<Line -10 -10 -10 15 #0000c0>
+<Line -30 0 -10 0 #0000c0>
+<Line -10 -10 0 -10 #0000c0>
+<Line 0 -10 0 -30 #0000c0>
+<Line -10 10 0 10 #0000c0>
+<Line 0 10 0 30 #0000c0>
+<Line -4 24 4 20 #0000c0>
+<Port 0 -30 port1>
+<Port -30 0 port2>
+<Port 0 30 port3>
+</Symbol>
+<Netlist qucs>
+MESFET:$devicename $node(port1) $node(port2) $node(port3) $parameters($parametername="$parametervalue" )
+</Netlist>
+</Component>
+<Component .AC>
+<Description>
+ac simulation for qucs import
+</Description>
+<Parameter>
+<list Type lin log list const >
+<string Start 1GHz>
+<string Stop 10GHz>
+<string Points 19>
+<string Noise no>
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix AC>
+<Label>
+$devicename
+Type=$Type
+Start=$Start
+Stop=$Stop
+Points=$Points
+</Label>
+<Offsetlabel 0 0 -15>
+<Symbol>
+<Text 0 0 #0000c0 AC-Simulation>
+</Symbol>
+<Netlist qucs>
+.AC:$devicename $parameters($parametername="$parametervalue" )
+</Netlist>
+</Component>
+<Component Diac>
+<Description>
+diac (bidirectional trigger diode) for qucs import
+</Description>
+<Parameter>
+<string Vbo 30V >
+<string Ibo "50uA >
+<string Cj0 10pF >
+<string Is 1e-10A >
+<string N 2 >
+<string Ri 10Ohm >
+<string Temp 26.85 >
+</Parameter>
+<Layout>
+</Layout>
+<Prefix D>
+<Label>
+</Label>
+<Symbol>
+<Line 0 -30 0 -6 #0000c0>
+<Line 0 30 0 6 #0000c0>
+<Line -18 6 18 6 #0000c0>
+<Line -18 -6 18 -6 #0000c0>
+<Line -9 6 -18 -6 #0000c0>
+<Line -9 6 0 -6 #0000c0>
+<Line 9 -6 0 6 #0000c0>
+<Line 9 -6 18 6 #0000c0>
+<Port 0 -30 port1>
+<Port 0 30 port2>
+</Symbol>
+<Netlist qucs>
+Diac:$devicename $node(port1) $node(port2) $parameters($parametername="$parametervalue" )
+</Netlist>
+</Component>
+<Component Isolator>
+<Description>
+isolator for qucs import
+</Description>
+<Parameter>
+<string Z1 50Ohm >
+<string Z2 50Ohm >
+<string Temp 26.85 >
+</Parameter>
+<Layout>
+</Layout>
+<Prefix X>
+<Label>
+</Label>
+<Symbol>
+<Line -8 0 8 0 #0000c0>
+<Line 8 0 0 -5 #0000c0>
+<Line 8 0 0 5 #0000c0>
+<Line -14 -14 14 -14 #0000c0>
+<Line -14 14 14 14 #0000c0>
+<Line -14 -14 -14 14 #0000c0>
+<Line 14 -14 14 14 #0000c0>
+<Line -30 0 -14 0 #0000c0>
+<Line 14 0 30 0 #0000c0>
+<Port -30 0 port1>
+<Port 30 0 port2>
+</Symbol>
+<Netlist qucs>
+Isolator:$devicename $node(port1) $node(port2) $parameters($parametername="$parametervalue" )
+</Netlist>
+</Component>
+<Component OpAmp>
+<Description>
+operational amplifier for qucs import
+</Description>
+<Parameter>
+<string G 1e6 >
+<string Umax 15V >
+</Parameter>
+<Layout>
+</Layout>
+<Prefix OP>
+<Label>
+</Label>
+<Symbol>
+<Line -30 -20 -20 -20 #0000c0>
+<Line -30 20 -20 20 #0000c0>
+<Line 30 0 40 0 #0000c0>
+<Line -20 -35 -20 35 #0000c0>
+<Line -20 -35 30 0 #0000c0>
+<Line -20 35 30 0 #0000c0>
+<Line -16 19 -9 19 grey>
+<Line -16  -19 -9 -19 red>
+<Line -13 -22 -13 -15 red>
+<Port -30 20 port1>
+<Port -30 -20 port2>
+<Port 40 0 port3>
+</Symbol>
+<Netlist qucs>
+OpAmp:$devicename $node(port1) $node(port2)  $node(port3) $parameters($parametername="$parametervalue" )
+</Netlist>
+</Component>
+<Component Idc>
+<Description>
+ideal dc current source for qucs import
+</Description>
+<Parameter>
+<string I 1mA>
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix I>
+<Label>
+</Label>
+<Symbol>
+<Port -30 0 port2>
+<Port 30 0 port1>
+<Line 6 0 0 4 #0000c0>
+<Line 6 0 0 -4 #0000c0>
+<Line -7 0 7 0 #0000c0>
+<Line 30 0 12 0 #0000c0>
+<Line -30 0 -12 0 #0000c0>
+<Circle -12 -12 12 12 #0000c0>
+</Symbol>
+<Offsetlabel -180 -11 -15>
+<Offsetlabel -90 18 12>
+<Offsetlabel 0 -12 -15>
+<Offsetlabel 90 16 15>
+<Offsetlabel 180 -7 -16>
+<Offsetlabel 270 18 11>
+<Netlist qucs>
+Idc:$devicename $node(port1) $node(port2) $parameters($parametername="$parametervalue" )
+</Netlist>
+</Component>
+<Component Iac>
+<Description>
+ideal ac current source for qucs import
+</Description>
+<Parameter>
+<string I 1mA>
+<string f 1GHz>
+<string Phase 0>
+<string Theta 0>
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix I>
+<Label>
+</Label>
+<Symbol>
+<Port -30 0 port2>
+<Port 30 0 port1>
+<Line 6 0 0 4 #0000c0>
+<Line 6 0 0 -4 #0000c0>
+<Line -7 0 7 0 #0000c0>
+<Line 30 0 12 0 #0000c0>
+<Line -30 0 -12 0 #0000c0>
+<Arc 12 14 12 17 12 11 #0000c0>
+<Arc 12 8 12 5 12 11 #0000c0>
+<Circle -12 -12 12 12 #0000c0>
+</Symbol>
+<Offsetlabel -90 20 17>
+<Offsetlabel 0 -9 -14>
+<Offsetlabel 90 17 12>
+<Netlist qucs>
+Iac:$devicename $node(port1) $node(port2) $parameters($parametername="$parametervalue" )
+</Netlist>
+</Component>
+<Component SUBST>
+<Description>
+substrate definition for qucs import
+</Description>
+<Parameter>
+<string er 9.8>
+<string h 1mm>
+<string t 35um>
+<string tand 2e-4>
+<string rho 0.022e-6>
+<string D 0.15e-6>
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix Subst>
+<Label>
+$devicename
+er=$er
+h=$h
+t=$t
+tand=$tand
+rho=$rho
+D=$D
+</Label>
+<Symbol>
+<Line 66 -30 80 -16 #0000c0>
+<Line 52 -22 66 -8 #0000c0>
+<Line 37 -15 52 0 #0000c0>
+<Line 30 1 37 8 #0000c0>
+<Line 18 12 30 0 #0000c0>
+<Line -2 12 22 -12 #0000c0>
+<Line -22 12 2 -12 #0000c0>
+<Line -30 0 -18 -12 #0000c0>
+<Line 80 -40 80 -12 #0000c0>
+<Line 16 -40 80 -40 #0000c0>
+<Line 30 16 80 -12 #0000c0>
+<Line 30 12 80 -16 #0000c0>
+<Line 30 -12 80 -36 #0000c0>
+<Line 30 -16 80 -40 #0000c0>
+<Line -30 -16 16 -40 #0000c0>
+<Line 30 -16 30 16 #0000c0>
+<Line -30 -16 -30 16 #0000c0>
+<Line -30 12 30 12 #0000c0>
+<Line -30 16 30 16 #0000c0>
+<Line -30 -12 30 -12 #0000c0>
+<Line -30 -16 30 -16 #0000c0>
+</Symbol>
+<Offsetlabel 0 -14 -13>
+<Offsetlabel 180 -63 -18>
+<Netlist qucs>
+SUBST:$devicename er="$er" h="$h" t="$t" tand="$tand" rho="$rho" D="$D"
+</Netlist>
+</Component>
+<Component CSTEP>
+<Description>
+coplanar step for qucs import
+</Description>
+<Parameter>
+<string subst>
+<string W1>
+<string W2>
+<string S>
+<string Backside>
+</Parameter>
+<Layout>
+[macro]
+# device-type	macro-file		pins
+*		pcb/cstep.layout	port1 port2
+</Layout>
+<Prefix CL>
+<Label>
+$devicename
+$subst
+W1=$W1
+W2=$W2
+S=$S
+</Label>
+<Symbol>
+<Port 30 0 port2>
+<Port -30 0 port1>
+<Line -22 -4 -26 4 #0000c0>
+<Line 16 13 24 21 #0000c0>
+<Line 8 13 16 21 #0000c0>
+<Line 0 13 8 21 #0000c0>
+<Line -8 13 0 21 #0000c0>
+<Line -16 13 -8 21 #0000c0>
+<Line -24 13 -16 21 #0000c0>
+<Line -25 13 25 13 #0000c0>
+<Line -24 -21 -16 -13 #0000c0>
+<Line -16 -21 -8 -13 #0000c0>
+<Line -8 -21 0 -13 #0000c0>
+<Line 0 -21 8 -13 #0000c0>
+<Line 8 -21 16 -13 #0000c0>
+<Line 16 -21 24 -13 #0000c0>
+<Line -25 -13 25 -13 #0000c0>
+<Line 24 -10 12 10 #0000c0>
+<Line -14 -6 -22 6 #0000c0>
+<Line -6 10 -4 6 #0000c0>
+<Line 6 -10 4 -6 #0000c0>
+<Line -22 6 -4 6 #0000c0>
+<Line -14 -6 4 -6 #0000c0>
+<Line -6 10 12 10 #0000c0>
+<Line 6 -10 24 -10 #0000c0>
+<Line 18 0 30 0 #0000c0>
+<Line -30 0 -18 0 #0000c0>
+</Symbol>
+<Offsetlabel 0 -13 -24>
+<Netlist qucs>
+CSTEP:$devicename $node(port1) $node(port2) Subst="$subst" W1="$W1" W2="$W2" S="$S" Backside=$Backside
+</Netlist>
+</Component>
+<Component Potentiometer>
+<Description>
+Potentiometer verilog device for qucs import
+</Description>
+<Parameter>
+<string R_pot 1e4>
+<string Rotation 120>
+<string Taper_Coeff 0>
+<string LEVEL 1>
+<string Max_Rotation 240.0>
+<string Conformity 0.2>
+<string Linearity 0.2>
+<string Contact_Res 1>
+<string Temp_Coeff 100>
+<string Tnom 26.85>
+<string Temp 26.85>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix POT>
+<Label>
+</Label>
+<Symbol>
+<Port 40 0 port3>
+<Port 0 -20 port2>
+<Port -40 0 port1>
+<Text 18 0 wire T>
+<Text -23 0 wire B>
+<Line 0 -5 0 -20 #0000c0>
+<Line 4 -9 0 -5 #0000c0>
+<Line -4 -9 0 -5 #0000c0>
+<Line 25 0 40 0 #0000c0>
+<Line 20 -5 25 0 #0000c0>
+<Line 15 0 20 -5 #0000c0>
+<Line 10 -5 15 0 #0000c0>
+<Line 5 0 10 -5 #0000c0>
+<Line 0 -5 5 0 #0000c0>
+<Line -5 0 0 -5 #0000c0>
+<Line -10 -5 -5 0 #0000c0>
+<Line -15 0 -10 -5 #0000c0>
+<Line -20 -5 -15 0 #0000c0>
+<Line -25 0 -20 -5 #0000c0>
+<Line -40 0 -25 0 #0000c0>
+<Line 30 -13 -30 -13 #0000c0>
+<Line 30 10 30 -13 #0000c0>
+<Line -30 10 30 10 #0000c0>
+<Line -30 -13 -30 10 #0000c0>
+</Symbol>
+<Offsetlabel 0 9 -17>
+<Offsetlabel 90 18 -6>
+<Offsetlabel 180 -17 -13>
+<Offsetlabel 270 15 14>
+<Netlist qucs>
+potentiometer:$devicename $node(port1) $node(port2) $node(port3) $parameters($parametername="$parametervalue" )
+</Netlist>
+</Component>
+<Component nJFET>
+<Description>
+junction field-effect transistor for qucs import
+</Description>
+<Parameter>
+<list Type nfet >
+display=false
+<string Vt0 -2.0>
+unit=V
+info=threshold voltage
+<string Beta 1e-4>
+info=transconductance parameter
+<string Lambda 0.0>
+info=channel-length modulation parameter
+<string Rd 0.0>
+unit=Ohm
+info=drain ohmic resistance
+<string Rs 0.0>
+unit=Ohm
+info=source ohmic resistance
+<string Is 1e-14>
+unit=A
+info=gate-junction saturation current
+<string N 1.0>
+info=gate-junction emission coefficient
+<string Isr 1e-14>
+info=gate-junction recombination current parameter
+<string Nr 2.0>
+info=Isr emission coefficient
+<string Cgs 0.0>
+info=zero-bias gate-source junction capacitance
+<string Cgd 0.0>
+info=zero-bias gate-drain junction capacitance
+<string Pb 1.0>
+info=gate-junction potential
+<string Fc 0.5>
+info=forward-bias junction capacitance coefficient
+<string M 0.5>
+info=gate P-N grading coefficient
+<string Kf 0.0>
+info=flicker noise coefficient
+<string Af 1.0>
+info=flicker noise exponent
+<string Ffe 1.0>
+info=flicker noise frequency exponent
+<string Temp 26.85>
+info=simulation temperature in degree Celsius
+<string Xti 3.0>
+info=saturation current temperature exponent
+<string Vt0tc 0.0>
+info=Vt0 temperature coefficient
+<string Betatce 0.0>
+info=Beta exponential temperature coefficient
+<string Tnom 26.85>
+info=parameter measurement temperature
+<string Area 1.0>
+info=default area for JFET
+</Parameter>
+<Layout>
+</Layout>
+<Prefix T>
+<Label>
+</Label>
+<Symbol>
+<Line -10 -15 -10 15 #0000c0>
+<Line -30 0 -10 0 #0000c0>
+<Line -10 -10 0 -10 #0000c0>
+<Line 0 -10 0 -30 #0000c0>
+<Line -10 10 0 10 #0000c0>
+<Line 0 10 0 30 #0000c0>
+<Line -4 24 4 20 #0000c0>
+<Line -16 -5 -11 0 #0000c0>
+<Line -16 5 -11 0 #0000c0>
+<Port -30 0 port1>
+<Port 0 -30 port2>
+<Port 0 30 port3>
+</Symbol>
+<Offsetlabel 0 6 11>
+<Offsetlabel 90 12 -13>
+<Offsetlabel 180 19 -10>
+<Offsetlabel 270 -15 -7>
+<Netlist qucs>
+JFET:$devicename $node(port1) $node(port2) $node(port3) $parameters($parametername="$parametervalue" )
+</Netlist>
+</Component>
+<Component pJFET>
+<Description>
+junction field-effect transistor for qucs import
+</Description>
+<Parameter>
+<list Type pfet >
+display=false
+<string Vt0 -2.0>
+unit=V
+info=threshold voltage
+<string Beta 1e-4>
+info=transconductance parameter
+<string Lambda 0.0>
+info=channel-length modulation parameter
+<string Rd 0.0>
+unit=Ohm
+info=drain ohmic resistance
+<string Rs 0.0>
+unit=Ohm
+info=source ohmic resistance
+<string Is 1e-14>
+unit=A
+info=gate-junction saturation current
+<string N 1.0>
+info=gate-junction emission coefficient
+<string Isr 1e-14>
+info=gate-junction recombination current parameter
+<string Nr 2.0>
+info=Isr emission coefficient
+<string Cgs 0.0>
+info=zero-bias gate-source junction capacitance
+<string Cgd 0.0>
+info=zero-bias gate-drain junction capacitance
+<string Pb 1.0>
+info=gate-junction potential
+<string Fc 0.5>
+info=forward-bias junction capacitance coefficient
+<string M 0.5>
+info=gate P-N grading coefficient
+<string Kf 0.0>
+info=flicker noise coefficient
+<string Af 1.0>
+info=flicker noise exponent
+<string Ffe 1.0>
+info=flicker noise frequency exponent
+<string Temp 26.85>
+info=simulation temperature in degree Celsius
+<string Xti 3.0>
+info=saturation current temperature exponent
+<string Vt0tc 0.0>
+info=Vt0 temperature coefficient
+<string Betatce 0.0>
+info=Beta exponential temperature coefficient
+<string Tnom 26.85>
+info=parameter measurement temperature
+<string Area 1.0>
+info=default area for JFET
+</Parameter>
+<Layout>
+</Layout>
+<Prefix T>
+<Label>
+</Label>
+<Symbol>
+<Line -10 -15 -10 15 #0000c0>
+<Line -30 0 -10 0 #0000c0>
+<Line -10 -10 0 -10 #0000c0>
+<Line 0 -10 0 -30 #0000c0>
+<Line -10 10 0 10 #0000c0>
+<Line 0 10 0 30 #0000c0>
+<Line -4 24 4 20 #0000c0>
+<Line -18 0 -13 5 #0000c0>
+<Line -18 0 -13 -5 #0000c0>
+<Port -30 0 port1>
+<Port 0 -30 port2>
+<Port 0 30 port3>
+</Symbol>
+<Offsetlabel 0 7 11>
+<Offsetlabel 90 13 -15>
+<Offsetlabel 180 17 -9>
+<Offsetlabel 270 -10 -5>
+<Netlist qucs>
+JFET:$devicename $node(port1) $node(port2) $node(port3) $parameters($parametername="$parametervalue" )
+</Netlist>
+</Component>
+<Component photodiode>
+<Description>
+Photodiode verilog device for qucs import
+</Description>
+<Parameter>
+<string N 1.35>
+<string Rseries 1e-3>
+<string Is 0.34e-12>
+<string Bv 60>
+<string Ibv 1e-3>
+<string Vj 0.7>
+<string Cj0 60e-12>
+<string M 0.5>
+<string Area 1.0>
+<string Tnom 26.85>
+<string Fc 0.5>
+<string Tt 10e-9>
+<string Xti 3.0>
+<string Eg 1.16>
+<string Responsivity 0.5>
+<string Rsh 5e8>
+<string QEpercent 80>
+<string Lambda 900>
+<string LEVEL 1>
+<string Kf 1e-12>
+<string Af 1.0>
+<string Ffe 1.0>
+<string Temp 26.85>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix PD>
+<Label>
+</Label>
+<Symbol>
+<Port 0 30 port3>
+<Port -30 0 port2>
+<Port 30 0 port1>
+<Line 0 12 0 30 #0000c0>
+<Line -6 0 6 9 #0000c0>
+<Line -6 0 6 -9 #0000c0>
+<Line 6 -9 #0000c0>
+<Line -6 -9 -6 9 #0000c0>
+<Line -30 0 30 0 #0000c0>
+<Circle -12 -12 12 12 #0000c0>
+</Symbol>
+<Offsetlabel 0 -14 -16>
+<Offsetlabel 90 18 15>
+<Netlist qucs>
+photodiode:$devicename $node(port1) $node(port2) $node(port3) $parameters($parametername="$parametervalue" )
+</Netlist>
+</Component>
+<Component Triac>
+<Description>
+triac (bidirectional thyristor) for qucs import
+</Description>
+<Parameter>
+<string Vbo 400V>
+<string Igt 50uA>
+<string Cj0 10pF>
+<string Is 1e-10A>
+<string N 2>
+<string Ri 10Ohm>
+<string Rg 5Ohm>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix D>
+<Label>
+</Label>
+<Symbol>
+<Line 0 -30 0 -6 #0000c0>
+<Line 0 30 0 6 #0000c0>
+<Line -18 6 18 6 #0000c0>
+<Line -18 -6 18 -6 #0000c0>
+<Line -9 6 -18 -6 #0000c0>
+<Line -9 6 0 -6 #0000c0>
+<Line 9 -6 0 6 #0000c0>
+<Line 9 -6 18 6 #0000c0>
+<Line -13 10 -9 6 #0000c0>
+<Line -30 10 -13 10 #0000c0>
+<Port 0 -30 port1>
+<Port 0 30 port2>
+<Port -30 10 port3>
+</Symbol>
+<Offsetlabel 0 24 12>
+<Netlist qucs>
+Triac:$devicename $node(port1) $node(port2) $node(port3) $parameters($parametername="$parametervalue" )
+</Netlist>
+</Component>
+<Component .TR>
+<Description>
+transient simulation for qucs import
+</Description>
+<Parameter>
+<list Type lin log list const >
+<string Start 0>
+<string Stop 1m>
+unit=s
+<string Points 11>
+<list IntegrationMethod Trapezoidal Euler Gear AdamsMoulton >
+<string Order 2>
+<string InitialStep 1>
+<string MinStep 1e-16>
+<string MaxIter 150>
+<string reltol 0.001>
+<string abstol 1>
+<string vntol 1>
+<string Temp 26.85>
+<string LTEreltol 1e-3>
+<string LTEabstol 1e-6>
+<string LTEfactor 1>
+<list Solver CroutLU DoolittleLU &nbsp; HouseholderQR &nbsp; HouseholderLQ &nbsp; GolubSVD >
+<list relaxTSR no yes >
+<list initialDC yes no >
+<string MaxStep 0>
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix TR>
+<Label>
+$Start s - $Stop s
+</Label>
+<Symbol>
+<Text 0 0 #0000c0 transient-simulation>
+</Symbol>
+<Offsetlabel 0 0 -15>
+<Netlist qucs>
+.TR:$devicename $parameters($parametername="$parametervalue" )
+</Netlist>
+<Netlist spice>
+.tran 2m $Stop
+</Netlist>
+</Component>
+<Component .DC>
+<Description>
+dc simulation for qucs import
+</Description>
+<Parameter>
+<string Temp 26.85>
+<string reltol 0.001>
+<string abstol 1pA>
+<string vntol 1uV>
+<string saveOPs no>
+<string MaxIter 150>
+<list saveAll no yes >
+<list convHelper none gMinStepping SteepestDescent LineSearch Attenuation SourceStepping >
+<list Solver CroutLU DoolittleLU HouseholderQR HouseholderLQ GolubSVD >
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix DC>
+<Label>
+$devicename
+</Label>
+<Symbol>
+<Text 0 0 #0000c0 DC-Simulation>
+</Symbol>
+<Offsetlabel 0 0 -15>
+<Netlist qucs>
+.DC:$devicename $parameters($parametername="$parametervalue" )
+</Netlist>
+</Component>
+<Component Zener>
+<Description>
+Diode for qucs import
+</Description>
+<Parameter>
+<string Is 1e-15>
+unit=A
+info=saturation current
+<string N 1>
+info=emission coefficient
+<string Cj0 10f>
+unit=F
+info=zero-bias junction capacitance
+<string M 0.5>
+info=grading coefficient
+<string Vj 0.7>
+unit=V
+info=junction potential
+<string Fc 0.5>
+info=forward-bias depletion capacitance coefficient
+<string Cp 0.0f>
+unit=F
+info=linear capacitance
+<string Isr 0.0>
+info=recombination current parameter
+<string Nr 2.0>
+info=emission coefficient for Isr
+<string Rs 0.0>
+unit=Ohm
+info=ohmic series resistance
+<string Tt 0.0p>
+unit=s
+info=transit time
+<string Ikf 0>
+info=high-injection knee current (0=infinity)
+<string Kf 0.0>
+info=flicker noise coefficient
+<string Af 1.0>
+info=flicker noise exponent
+<string Ffe 1.0>
+info=flicker noise frequency exponent
+<string Bv 0>
+info=reverse breakdown voltage
+<string Ibv 1m>
+unit=A
+info=current at reverse breakdown voltage
+<string Temp 26.85>
+info=simulation temperature in degree Celsius
+<string Xti 3.0>
+info=saturation current temperature exponent
+<string Eg 1.11>
+info=energy bandgap in eV
+<string Tbv 0.0>
+info=Bv linear temperature coefficient
+<string Trs 0.0>
+info=Rs linear temperature coefficient
+<string Ttt1 0.0>
+info=Tt linear temperature coefficient
+<string Ttt2 0.0>
+info=Tt quadratic temperature coefficient
+<string Tm1 0.0>
+info=M linear temperature coefficient
+<string Tm2 0.0>
+info=M quadratic temperature coefficient
+<string Tnom 26.85>
+info=temperature at which parameters were extracted
+<string Area 1.0>
+info=default area for diode
+<list Symbol Zener >
+info=schematic symbol
+</Parameter>
+<Layout>
+</Layout>
+<Prefix D>
+<Label>
+</Label>
+<Symbol>
+<Line -30 0 30 0 #0000c0>
+<Line -6 -9 -6 9 #0000c0>
+<Line 6 -9 6 9 #0000c0>
+<Line -6 0 6 -9 #0000c0>
+<Line -6 0 6 9 #0000c0>
+<Line -6 9 -1 9 #0000c0>
+<Port -30 0 port1>
+<Port 30 0 port2>
+</Symbol>
+<Offsetlabel 0 -13 -10>
+<Offsetlabel 90 15 11>
+<Offsetlabel 180 -12 -13>
+<Offsetlabel 270 13 10>
+<Netlist qucs>
+Diode:$devicename $node(port1) $node(port2) Is="$Is" N="$N" Cj0="$Cj0" M="$M" Vj="$Vj" Fc="$Fc" Cp="$Cp" Isr="$Isr" Nr="$Nr" Rs="$Rs" Tt="$Tt" Ikf="$Ikf" Kf="$Kf" Af="1$Af" Ffe="$Ffe" Bv="$Bv" Ibv="$Ibv" Temp="$Temp" Xti="$Xti" 
+</Netlist>
+</Component>
+<Component Vdc>
+<Description>
+Vdc for qucs import
+</Description>
+<Parameter>
+<string U 1V>
+</Parameter>
+<Layout>
+[ignore]
+# ignored for parameter
+*
+</Layout>
+<Prefix V>
+<Label>
+$devicename
+U=$U
+</Label>
+<Symbol>
+<Port -30 0 port2>
+<Port 30 0 port1>
+<Line -11 5 -11 11 wire>
+<Line 14 8 8 8 #ff0000>
+<Line 11 5 11 11 #ff0000>
+<Line -4 0 -30 0 #0000c0>
+<Line 30 0 4 0 #0000c0>
+<Line -4 -6 -4 6 #0000c0>
+<Line 4 -13 4 13 #0000c0>
+</Symbol>
+<Offsetlabel -360 -9 -16>
+<Offsetlabel -270 17 9>
+<Offsetlabel -180 -12 -17>
+<Offsetlabel -90 17 10>
+<Offsetlabel 0 -9 -15>
+<Offsetlabel 90 16 10>
+<Offsetlabel 180 -13 -14>
+<Offsetlabel 270 19 9>
+<Netlist hspice>
+$devicename $node(port1) $node(port2)  $U
+</Netlist>
+<Netlist qucs>
+Vdc:$devicename $node(port1) $node(port2) $parameters($parametername="$parametervalue" )
+</Netlist>
+<Netlist spice>
+$devicename $node(port1) $node(port2)  $U
+</Netlist>
+</Component>
+<Component L>
+<Description>
+inductor for qucs import
+</Description>
+<Parameter>
+<string L 1nH>
+<string I>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix L>
+<Label>
+$devicename
+$L
+</Label>
+<Symbol>
+<Port 30 0 port2>
+<Port -30 0 port1>
+<Line 18 0 30 0 #0000c0>
+<Line -30 0 -18 0 #0000c0>
+<Arc 12 0 6 0 18 0 #0000c0>
+<Arc 0 0 6 0 -6 0 #0000c0>
+<Arc -12 0 -18 0 -6 0 #0000c0>
+</Symbol>
+<Offsetlabel 0 -11 -9>
+<Offsetlabel 90 10 12>
+<Offsetlabel 180 -7 -10>
+<Offsetlabel 270 11 10>
+<Netlist hspice>
+$devicename $node(port1) $node(port2) $L
+</Netlist>
+<Netlist qucs>
+L:$devicename $node(port1) $node(port2) $parameters($parametername="$parametervalue" )
+</Netlist>
+<Netlist spice>
+$devicename $node(port1) $node(port2) $L
+</Netlist>
+</Component>
+<Component Vac>
+<Description>
+ideal ac voltage source for qucs import
+</Description>
+<Parameter>
+<string U 1V>
+<string f 1GHz>
+<string Phase 0>
+<string Theta 0>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix V>
+<Label>
+$devicename
+$U
+$f
+</Label>
+<Symbol>
+<Port -30 0 port2>
+<Port 30 0 port1>
+<Line -18 5 -18 11 wire>
+<Line 21 8 15 8 #ff0000>
+<Line 18 5 18 11 #ff0000>
+<Line 30 0 12 0 #0000c0>
+<Line -30 0 -12 0 #0000c0>
+<Arc 4 0 0 0 8 0 #0000c0>
+<Arc -4 0 0 0 -8 0 #0000c0>
+<Circle -12 -12 12 12 #0000c0>
+</Symbol>
+<Offsetlabel 0 -12 -15>
+<Offsetlabel 90 16 13>
+<Offsetlabel 180 -11 -16>
+<Offsetlabel 270 17 11>
+<Netlist hspice>
+$devicename $node(port1) $node(port2) $U
+</Netlist>
+<Netlist qucs>
+Vac:$devicename $node(port1) $node(port2) $parameters($parametername="$parametervalue" )
+</Netlist>
+<Netlist spice>
+$devicename $node(port1) $node(port2) $U
+</Netlist>
+</Component>
+<Component BJT_npn>
+<Description>
+bipolar junction transistor for qucs import
+</Description>
+<Parameter>
+<list Type npn >
+display=false
+<string Is 1e-16>
+info=saturation current
+<string Nf 1>
+info=forward emission coefficient
+<string Nr 1>
+info=reverse emission coefficient
+<string Ikf 0>
+info=high current corner for forward beta
+<string Ikr 0>
+info=high current corner for reverse beta
+<string Vaf 0>
+info=forward early voltage
+<string Var 0>
+info=reverse early voltage
+<string Ise 0>
+info=base-emitter leakage saturation current
+<string Ne 1.5>
+info=base-emitter leakage emission coefficient
+<string Isc 0>
+info=base-collector leakage saturation current
+<string Nc 2>
+info=base-collector leakage emission coefficient
+<string Bf 100>
+info=forward beta
+<string Br 1>
+info=reverse beta
+<string Rbm 0>
+info=minimum base resistance for high currents
+<string Irb 0>
+info=current for base resistance midpoint
+<string Rc 0>
+info=collector ohmic resistance
+<string Re 0>
+info=emitter ohmic resistance
+<string Rb 0>
+info=zero-bias base resistance (may be high-current dependent)
+<string Cje 0>
+info=base-emitter zero-bias depletion capacitance
+<string Vje 0.75>
+info=base-emitter junction built-in potential
+<string Mje 0.33>
+info=base-emitter junction exponential factor
+<string Cjc 0>
+info=base-collector zero-bias depletion capacitance
+<string Vjc 0.75>
+info=base-collector junction built-in potential
+<string Mjc 0.33>
+info=base-collector junction exponential factor
+<string Xcjc 1.0>
+info=fraction of Cjc that goes to internal base pin
+<string Cjs 0>
+info="zero-bias collector-substrate capacitance
+<string Vjs 0.75>
+info=substrate junction built-in potential
+<string Mjs 0>
+info=substrate junction exponential factor
+<string Fc 0.5>
+info=forward-bias depletion capacitance coefficient
+<string Tf 0.0>
+info=ideal forward transit time
+<string Xtf 0.0>
+info=coefficient of bias-dependence for Tf
+<string Vtf 0.0>
+info=voltage dependence of Tf on base-collector voltage
+<string Itf 0.0>
+info=high-current effect on Tf
+<string Tr 0.0>
+info=ideal reverse transit time
+<string Temp 26.85>
+info=simulation temperature in degree Celsius
+<string Kf 0.0>
+info=flicker noise coefficient
+<string Af 1.0>
+info=flicker noise exponent
+<string Ffe 1.0>
+info=flicker noise frequency exponent
+<string Kb 0.0>
+info=burst noise coefficient
+<string Ab 1.0>
+info=burst noise exponent
+<string Fb 1.0>
+info=burst noise corner frequency in Hertz
+<string Ptf 0.0>
+info=excess phase in degrees
+<string Xtb 0.0>
+info=temperature exponent for forward- and reverse beta
+<string Xti 3.0>
+info=saturation current temperature exponent
+<string Eg 1.11>
+info=energy bandgap in eV
+<string Tnom 26.85>
+info=temperature at which parameters were extracted
+<string Area 1.0>
+info=default area for bipolar transistor
+</Parameter>
+<Layout>
+</Layout>
+<Prefix T>
+<Label>
+</Label>
+<Symbol>
+<Line -10 -15 -10 15 #0000c0>
+<Line -30 0 -10 0 #0000c0>
+<Line -10 -5 0 -15 #0000c0>
+<Line 0 -15 0 -30 #0000c0>
+<Line -10 5 0 15 #0000c0>
+<Line 0 15 0 30 #0000c0>
+<Line 9 0 30 0 #0000c0>
+<Line 9 -7 9 7 #0000c0>
+<Line -6 15 0 15 #0000c0>
+<Line 0 9 0 15 #0000c0>
+<Port -30 0 port1>
+<Port 0 -30 port2>
+<Port 0 30 port3>
+<Port 30 0 port4>
+</Symbol>
+<Offsetlabel 0 9 -9>
+<Offsetlabel 90 11 -13>
+<Offsetlabel 180 16 -7>
+<Offsetlabel 270 11 -6>
+<Netlist hspice>
+Q$devicename $node(port2) $node(port1) $node(port3) $node(port4) model_$devicename
+</Netlist>
+<Netlist qucs>
+BJT:$devicename $node(port1) $node(port2) $node(port3) $node(port4) $parameters($parametername="$parametervalue" )
+</Netlist>
+<Netlist spice>
+Q$devicename $node(port2) $node(port1) $node(port3) $node(port4) model_$devicename
+</Netlist>
+<Model hspice>
+.model model_$devicename NPN( IS=$Is NF=$Nf NR=$Nr IKF=$Ikf IKR=$Ikr VA=$Vaf VB=$Var ISE=$Ise NE=$Ne ISC=$Isc NC=$Nc BF=$Bf BR=$Br RBM=$Rbm IRB=$Irb RC=$Rc RE=$Re RB=$Rb CJE=$Cje PE=$Vje ME=$Mje CJC=$Cjc PC=$Vjc MC=$Mjc XCJC=$Xcjc CCS=$Cjs FC=$Fc TF=$Tf XTF=$Xtf VTF=$Vtf ITF=$Itf TR=$Tr KF=$Kf AF=$Af PTF=$Ptf XTB=$Xtb XTI=$Xti EG=$Eg TNOM=$Tnom )
+ 
+</Model>
+<Model spice>
+.model model_$devicename NPN( IS=$Is NF=$Nf NR=$Nr IKF=$Ikf IKR=$Ikr VA=$Vaf VB=$Var ISE=$Ise NE=$Ne ISC=$Isc NC=$Nc BF=$Bf BR=$Br RBM=$Rbm IRB=$Irb RC=$Rc RE=$Re RB=$Rb CJE=$Cje PE=$Vje ME=$Mje CJC=$Cjc PC=$Vjc MC=$Mjc XCJC=$Xcjc CCS=$Cjs PS=$Vjs MS=$Mjs FC=$Fc TF=$Tf XTF=$Xtf VTF=$Vtf ITF=$Itf TR=$Tr KF=$Kf AF=$Af PTF=$Ptf XTB=$Xtb XTI=$Xti EG=$Eg TNOM=$Tnom )
+ 
+</Model>
+</Component>
+<Component BJT_pnp>
+<Description>
+bipolar junction transistor for qucs import
+</Description>
+<Parameter>
+<list Type pnp >
+display=false
+<string Is 1e-16>
+info=saturation current
+<string Nf 1>
+info=forward emission coefficient
+<string Nr 1>
+info=reverse emission coefficient
+<string Ikf 0>
+info=high current corner for forward beta
+<string Ikr 0>
+info=high current corner for reverse beta
+<string Vaf 0>
+info=forward early voltage
+<string Var 0>
+info=reverse early voltage
+<string Ise 0>
+info=base-emitter leakage saturation current
+<string Ne 1.5>
+info=base-emitter leakage emission coefficient
+<string Isc 0>
+info=base-collector leakage saturation current
+<string Nc 2>
+info=base-collector leakage emission coefficient
+<string Bf 100>
+info=forward beta
+<string Br 1>
+info=reverse beta
+<string Rbm 0>
+info=minimum base resistance for high currents
+<string Irb 0>
+info=current for base resistance midpoint
+<string Rc 0>
+info=collector ohmic resistance
+<string Re 0>
+info=emitter ohmic resistance
+<string Rb 0>
+info=zero-bias base resistance (may be high-current dependent)
+<string Cje 0>
+info=base-emitter zero-bias depletion capacitance
+<string Vje 0.75>
+info=base-emitter junction built-in potential
+<string Mje 0.33>
+info=base-emitter junction exponential factor
+<string Cjc 0>
+info=base-collector zero-bias depletion capacitance
+<string Vjc 0.75>
+info=base-collector junction built-in potential
+<string Mjc 0.33>
+info=base-collector junction exponential factor
+<string Xcjc 1.0>
+info=fraction of Cjc that goes to internal base pin
+<string Cjs 0>
+info="zero-bias collector-substrate capacitance
+<string Vjs 0.75>
+info=substrate junction built-in potential
+<string Mjs 0>
+info=substrate junction exponential factor
+<string Fc 0.5>
+info=forward-bias depletion capacitance coefficient
+<string Tf 0.0>
+info=ideal forward transit time
+<string Xtf 0.0>
+info=coefficient of bias-dependence for Tf
+<string Vtf 0.0>
+info=voltage dependence of Tf on base-collector voltage
+<string Itf 0.0>
+info=high-current effect on Tf
+<string Tr 0.0>
+info=ideal reverse transit time
+<string Temp 26.85>
+info=simulation temperature in degree Celsius
+<string Kf 0.0>
+info=flicker noise coefficient
+<string Af 1.0>
+info=flicker noise exponent
+<string Ffe 1.0>
+info=flicker noise frequency exponent
+<string Kb 0.0>
+info=burst noise coefficient
+<string Ab 1.0>
+info=burst noise exponent
+<string Fb 1.0>
+info=burst noise corner frequency in Hertz
+<string Ptf 0.0>
+info=excess phase in degrees
+<string Xtb 0.0>
+info=temperature exponent for forward- and reverse beta
+<string Xti 3.0>
+info=saturation current temperature exponent
+<string Eg 1.11>
+info=energy bandgap in eV
+<string Tnom 26.85>
+info=temperature at which parameters were extracted
+<string Area 1.0>
+info=default area for bipolar transistor
+</Parameter>
+<Layout>
+</Layout>
+<Prefix T>
+<Label>
+</Label>
+<Symbol>
+<Line -10 -15 -10 15 #0000c0>
+<Line -30 0 -10 0 #0000c0>
+<Line -10 -5 0 -15 #0000c0>
+<Line 0 -15 0 -30 #0000c0>
+<Line -10 5 0 15 #0000c0>
+<Line 0 15 0 30 #0000c0>
+<Line 9 0 30 0 #0000c0>
+<Line 9 -7 9 7 #0000c0>
+<Line -5 10 -5 16 #0000c0>
+<Line -5 10 1 10 #0000c0>
+<Port -30 0 port1>
+<Port 0 -30 port2>
+<Port 0 30 port3>
+<Port 30 0 port4>
+</Symbol>
+<Offsetlabel 0 6 -10>
+<Offsetlabel 90 19 -6>
+<Offsetlabel 180 16 -6>
+<Offsetlabel 270 14 -4>
+<Netlist hspice>
+Q$devicename $node(port2) $node(port1) $node(port3) $node(port4) model_$devicename
+</Netlist>
+<Netlist qucs>
+BJT:$devicename $node(port1) $node(port2) $node(port3) $node(port4) $parameters($parametername="$parametervalue" )
+</Netlist>
+<Netlist spice>
+Q$devicename $node(port2) $node(port1) $node(port3) $node(port4) model_$devicename
+</Netlist>
+<Model hspice>
+.model model_$devicename NPN( IS=$Is NF=$Nf NR=$Nr IKF=$Ikf IKR=$Ikr VA=$Vaf VB=$Var ISE=$Ise NE=$Ne ISC=$Isc NC=$Nc BF=$Bf BR=$Br RBM=$Rbm IRB=$Irb RC=$Rc RE=$Re RB=$Rb CJE=$Cje PE=$Vje ME=$Mje CJC=$Cjc PC=$Vjc MC=$Mjc XCJC=$Xcjc CCS=$Cjs FC=$Fc TF=$Tf XTF=$Xtf VTF=$Vtf ITF=$Itf TR=$Tr KF=$Kf AF=$Af PTF=$Ptf XTB=$Xtb XTI=$Xti EG=$Eg TNOM=$Tnom )
+ 
+</Model>
+<Model spice>
+.model model_$devicename NPN( IS=$Is NF=$Nf NR=$Nr IKF=$Ikf IKR=$Ikr VA=$Vaf VB=$Var ISE=$Ise NE=$Ne ISC=$Isc NC=$Nc BF=$Bf BR=$Br RBM=$Rbm IRB=$Irb RC=$Rc RE=$Re RB=$Rb CJE=$Cje PE=$Vje ME=$Mje CJC=$Cjc PC=$Vjc MC=$Mjc XCJC=$Xcjc CCS=$Cjs PS=$Vjs MS=$Mjs FC=$Fc TF=$Tf XTF=$Xtf VTF=$Vtf ITF=$Itf TR=$Tr KF=$Kf AF=$Af PTF=$Ptf XTB=$Xtb XTI=$Xti EG=$Eg TNOM=$Tnom )
+ 
+</Model>
+</Component>
+<Component _BJT_npn>
+<Description>
+bipolar junction transistor for qucs import
+</Description>
+<Parameter>
+<list Type npn >
+display=false
+<string Is 1e-16>
+info=saturation current
+<string Nf 1>
+info=forward emission coefficient
+<string Nr 1>
+info=reverse emission coefficient
+<string Ikf 0>
+info=high current corner for forward beta
+<string Ikr 0>
+info=high current corner for reverse beta
+<string Vaf 0>
+info=forward early voltage
+<string Var 0>
+info=reverse early voltage
+<string Ise 0>
+info=base-emitter leakage saturation current
+<string Ne 1.5>
+info=base-emitter leakage emission coefficient
+<string Isc 0>
+info=base-collector leakage saturation current
+<string Nc 2>
+info=base-collector leakage emission coefficient
+<string Bf 100>
+info=forward beta
+<string Br 1>
+info=reverse beta
+<string Rbm 0>
+info=minimum base resistance for high currents
+<string Irb 0>
+info=current for base resistance midpoint
+<string Rc 0>
+info=collector ohmic resistance
+<string Re 0>
+info=emitter ohmic resistance
+<string Rb 0>
+info=zero-bias base resistance (may be high-current dependent)
+<string Cje 0>
+info=base-emitter zero-bias depletion capacitance
+<string Vje 0.75>
+info=base-emitter junction built-in potential
+<string Mje 0.33>
+info=base-emitter junction exponential factor
+<string Cjc 0>
+info=base-collector zero-bias depletion capacitance
+<string Vjc 0.75>
+info=base-collector junction built-in potential
+<string Mjc 0.33>
+info=base-collector junction exponential factor
+<string Xcjc 1.0>
+info=fraction of Cjc that goes to internal base pin
+<string Cjs 0>
+info="zero-bias collector-substrate capacitance
+<string Vjs 0.75>
+info=substrate junction built-in potential
+<string Mjs 0>
+info=substrate junction exponential factor
+<string Fc 0.5>
+info=forward-bias depletion capacitance coefficient
+<string Tf 0.0>
+info=ideal forward transit time
+<string Xtf 0.0>
+info=coefficient of bias-dependence for Tf
+<string Vtf 0.0>
+info=voltage dependence of Tf on base-collector voltage
+<string Itf 0.0>
+info=high-current effect on Tf
+<string Tr 0.0>
+info=ideal reverse transit time
+<string Temp 26.85>
+info=simulation temperature in degree Celsius
+<string Kf 0.0>
+info=flicker noise coefficient
+<string Af 1.0>
+info=flicker noise exponent
+<string Ffe 1.0>
+info=flicker noise frequency exponent
+<string Kb 0.0>
+info=burst noise coefficient
+<string Ab 1.0>
+info=burst noise exponent
+<string Fb 1.0>
+info=burst noise corner frequency in Hertz
+<string Ptf 0.0>
+info=excess phase in degrees
+<string Xtb 0.0>
+info=temperature exponent for forward- and reverse beta
+<string Xti 3.0>
+info=saturation current temperature exponent
+<string Eg 1.11>
+info=energy bandgap in eV
+<string Tnom 26.85>
+info=temperature at which parameters were extracted
+<string Area 1.0>
+info=default area for bipolar transistor
+</Parameter>
+<Layout>
+</Layout>
+<Prefix T>
+<Label>
+</Label>
+<Symbol>
+<Port 0 30 port3>
+<Port 0 -30 port2>
+<Port -30 0 port1>
+<Line 0 9 0 15 #0000c0>
+<Line -6 15 0 15 #0000c0>
+<Line 0 15 0 30 #0000c0>
+<Line -10 5 0 15 #0000c0>
+<Line 0 -15 0 -30 #0000c0>
+<Line -10 -5 0 -15 #0000c0>
+<Line -30 0 -10 0 #0000c0>
+<Line -10 -15 -10 15 #0000c0>
+</Symbol>
+<Offsetlabel -360 6 12>
+<Offsetlabel -180 15 -6>
+<Offsetlabel -90 12 -14>
+<Offsetlabel 0 5 6>
+<Offsetlabel 90 8 -14>
+<Offsetlabel 180 15 -5>
+<Offsetlabel 270 -11 -5>
+<Netlist hspice>
+Q$devicename $node(port2) $node(port1) $node(port3) model_$devicename
+</Netlist>
+<Netlist qucs>
+BJT:$devicename $node(port1) $node(port2) $node(port3) $node(port2) $parameters($parametername="$parametervalue" )
+</Netlist>
+<Netlist spice>
+Q$devicename $node(port2) $node(port1) $node(port3) model_$devicename
+</Netlist>
+<Model hspice>
+.model model_$devicename NPN( IS=$Is NF=$Nf NR=$Nr IKF=$Ikf IKR=$Ikr VA=$Vaf VB=$Var ISE=$Ise NE=$Ne ISC=$Isc NC=$Nc BF=$Bf BR=$Br RBM=$Rbm IRB=$Irb RC=$Rc RE=$Re RB=$Rb CJE=$Cje PE=$Vje ME=$Mje CJC=$Cjc PC=$Vjc MC=$Mjc XCJC=$Xcjc CCS=$Cjs FC=$Fc TF=$Tf XTF=$Xtf VTF=$Vtf ITF=$Itf TR=$Tr KF=$Kf AF=$Af PTF=$Ptf XTB=$Xtb XTI=$Xti EG=$Eg TNOM=$Tnom )
+ 
+</Model>
+<Model spice>
+.model model_$devicename NPN( IS=$Is NF=$Nf NR=$Nr IKF=$Ikf IKR=$Ikr VA=$Vaf VB=$Var ISE=$Ise NE=$Ne ISC=$Isc NC=$Nc BF=$Bf BR=$Br RBM=$Rbm IRB=$Irb RC=$Rc RE=$Re RB=$Rb CJE=$Cje PE=$Vje ME=$Mje CJC=$Cjc PC=$Vjc MC=$Mjc XCJC=$Xcjc CCS=$Cjs PS=$Vjs MS=$Mjs FC=$Fc TF=$Tf XTF=$Xtf VTF=$Vtf ITF=$Itf TR=$Tr KF=$Kf AF=$Af PTF=$Ptf XTB=$Xtb XTI=$Xti EG=$Eg TNOM=$Tnom )
+ 
+</Model>
+</Component>
+<Component Diode>
+<Description>
+Diode for qucs import
+</Description>
+<Parameter>
+<string Is 1e-15>
+unit=A
+info=saturation current
+<string N 1>
+info=emission coefficient
+<string Cj0 10f>
+unit=F
+info=zero-bias junction capacitance
+<string M 0.5>
+info=grading coefficient
+<string Vj 0.7>
+unit=V
+info=junction potential
+<string Fc 0.5>
+info=forward-bias depletion capacitance coefficient
+<string Cp 0.0f>
+unit=F
+info=linear capacitance
+<string Isr 0.0>
+info=recombination current parameter
+<string Nr 2.0>
+info=emission coefficient for Isr
+<string Rs 0.0>
+unit=Ohm
+info=ohmic series resistance
+<string Tt 0.0p>
+unit=s
+info=transit time
+<string Ikf 0>
+info=high-injection knee current (0=infinity)
+<string Kf 0.0>
+info=flicker noise coefficient
+<string Af 1.0>
+info=flicker noise exponent
+<string Ffe 1.0>
+info=flicker noise frequency exponent
+<string Bv 0>
+info=reverse breakdown voltage
+<string Ibv 1m>
+unit=A
+info=current at reverse breakdown voltage
+<string Temp 26.85>
+info=simulation temperature in degree Celsius
+<string Xti 3.0>
+info=saturation current temperature exponent
+<string Eg 1.11>
+info=energy bandgap in eV
+<string Tbv 0.0>
+info=Bv linear temperature coefficient
+<string Trs 0.0>
+info=Rs linear temperature coefficient
+<string Ttt1 0.0>
+info=Tt linear temperature coefficient
+<string Ttt2 0.0>
+info=Tt quadratic temperature coefficient
+<string Tm1 0.0>
+info=M linear temperature coefficient
+<string Tm2 0.0>
+info=M quadratic temperature coefficient
+<string Tnom 26.85>
+info=temperature at which parameters were extracted
+<string Area 1.0>
+info=default area for diode
+<list Symbol normal >
+info=schematic symbol
+display=false
+</Parameter>
+<Layout>
+</Layout>
+<Prefix D>
+<Label>
+</Label>
+<Symbol>
+<Line -30 0 30 0 #0000c0>
+<Line -6 -9 -6 9 #0000c0>
+<Line 6 -9 6 9 #0000c0>
+<Line -6 0 6 -9 #0000c0>
+<Line -6 0 6 9 #0000c0>
+<Port -30 0 port1>
+<Port 30 0 port2>
+</Symbol>
+<Offsetlabel 0 -8 -12>
+<Offsetlabel 90 14 10>
+<Offsetlabel 180 -9 -11>
+<Offsetlabel 270 13 11>
+<Netlist hspice>
+$devicename $node(port2) $node(port1) model_$devicename
+</Netlist>
+<Netlist qucs>
+Diode:$devicename $node(port1) $node(port2) Is="$Is" N="$N" Cj0="$Cj0" M="$M" Vj="$Vj" Fc="$Fc" Cp="$Cp" Isr="$Isr" Nr="$Nr" Rs="$Rs" Tt="$Tt" Ikf="$Ikf" Kf="$Kf" Af="1$Af" Ffe="$Ffe" Bv="$Bv" Ibv="$Ibv" Temp="$Temp" Xti="$Xti"
+</Netlist>
+<Netlist spice>
+$devicename $node(port2) $node(port1) model_$devicename
+</Netlist>
+<Model hspice>
+.model model_$devicename D( IS=$Is N=$N CJO=$Cj0 M=$M VJ=$Vj FC=$Fc RS=$Rs TT=$Tt  KF=$Kf AF=$Af BV=$Bv IBV=$Ibv XTI=$Xti EG=$Eg  )
+</Model>
+<Model spice>
+.model model_$devicename D( IS=$Is N=$N CJO=$Cj0 M=$M VJ=$Vj FC=$Fc RS=$Rs TT=$Tt IKF=$Ikf KF=$Kf AF=$Af BV=$Bv IBV=$Ibv XTI=$Xti EG=$Eg TNOM=$Tnom )
+</Model>
+</Component>
+<Component _BJT_pnp>
+<Description>
+bipolar junction transistor for qucs import
+</Description>
+<Parameter>
+<list Type pnp >
+display=false
+<string Is 1e-16>
+info=saturation current
+<string Nf 1>
+info=forward emission coefficient
+<string Nr 1>
+info=reverse emission coefficient
+<string Ikf 0>
+info=high current corner for forward beta
+<string Ikr 0>
+info=high current corner for reverse beta
+<string Vaf 0>
+info=forward early voltage
+<string Var 0>
+info=reverse early voltage
+<string Ise 0>
+info=base-emitter leakage saturation current
+<string Ne 1.5>
+info=base-emitter leakage emission coefficient
+<string Isc 0>
+info=base-collector leakage saturation current
+<string Nc 2>
+info=base-collector leakage emission coefficient
+<string Bf 100>
+info=forward beta
+<string Br 1>
+info=reverse beta
+<string Rbm 0>
+info=minimum base resistance for high currents
+<string Irb 0>
+info=current for base resistance midpoint
+<string Rc 0>
+info=collector ohmic resistance
+<string Re 0>
+info=emitter ohmic resistance
+<string Rb 0>
+info=zero-bias base resistance (may be high-current dependent)
+<string Cje 0>
+info=base-emitter zero-bias depletion capacitance
+<string Vje 0.75>
+info=base-emitter junction built-in potential
+<string Mje 0.33>
+info=base-emitter junction exponential factor
+<string Cjc 0>
+info=base-collector zero-bias depletion capacitance
+<string Vjc 0.75>
+info=base-collector junction built-in potential
+<string Mjc 0.33>
+info=base-collector junction exponential factor
+<string Xcjc 1.0>
+info=fraction of Cjc that goes to internal base pin
+<string Cjs 0>
+info="zero-bias collector-substrate capacitance
+<string Vjs 0.75>
+info=substrate junction built-in potential
+<string Mjs 0>
+info=substrate junction exponential factor
+<string Fc 0.5>
+info=forward-bias depletion capacitance coefficient
+<string Tf 0.0>
+info=ideal forward transit time
+<string Xtf 0.0>
+info=coefficient of bias-dependence for Tf
+<string Vtf 0.0>
+info=voltage dependence of Tf on base-collector voltage
+<string Itf 0.0>
+info=high-current effect on Tf
+<string Tr 0.0>
+info=ideal reverse transit time
+<string Temp 26.85>
+info=simulation temperature in degree Celsius
+<string Kf 0.0>
+info=flicker noise coefficient
+<string Af 1.0>
+info=flicker noise exponent
+<string Ffe 1.0>
+info=flicker noise frequency exponent
+<string Kb 0.0>
+info=burst noise coefficient
+<string Ab 1.0>
+info=burst noise exponent
+<string Fb 1.0>
+info=burst noise corner frequency in Hertz
+<string Ptf 0.0>
+info=excess phase in degrees
+<string Xtb 0.0>
+info=temperature exponent for forward- and reverse beta
+<string Xti 3.0>
+info=saturation current temperature exponent
+<string Eg 1.11>
+info=energy bandgap in eV
+<string Tnom 26.85>
+info=temperature at which parameters were extracted
+<string Area 1.0>
+info=default area for bipolar transistor
+</Parameter>
+<Layout>
+</Layout>
+<Prefix T>
+<Label>
+</Label>
+<Symbol>
+<Line -10 -15 -10 15 #0000c0>
+<Line -30 0 -10 0 #0000c0>
+<Line -10 -5 0 -15 #0000c0>
+<Line 0 -15 0 -30 #0000c0>
+<Line -10 5 0 15 #0000c0>
+<Line 0 15 0 30 #0000c0>
+<Line -5 10 -5 16 #0000c0>
+<Line -5 10 1 10 #0000c0>
+<Port -30 0 port1>
+<Port 0 -30 port2>
+<Port 0 30 port3>
+</Symbol>
+<Netlist hspice>
+Q$devicename $node(port2) $node(port1) $node(port3) model_$devicename
+</Netlist>
+<Netlist qucs>
+BJT:$devicename $node(port1) $node(port2) $node(port3) $node(port2) $parameters($parametername="$parametervalue" )
+</Netlist>
+<Netlist spice>
+Q$devicename $node(port2) $node(port1) $node(port3) model_$devicename
+</Netlist>
+<Model hspice>
+.model model_$devicename NPN( IS=$Is NF=$Nf NR=$Nr IKF=$Ikf IKR=$Ikr VA=$Vaf VB=$Var ISE=$Ise NE=$Ne ISC=$Isc NC=$Nc BF=$Bf BR=$Br RBM=$Rbm IRB=$Irb RC=$Rc RE=$Re RB=$Rb CJE=$Cje PE=$Vje ME=$Mje CJC=$Cjc PC=$Vjc MC=$Mjc XCJC=$Xcjc CCS=$Cjs  FC=$Fc TF=$Tf XTF=$Xtf VTF=$Vtf ITF=$Itf TR=$Tr KF=$Kf AF=$Af PTF=$Ptf XTB=$Xtb XTI=$Xti EG=$Eg TNOM=$Tnom )
+ 
+</Model>
+<Model spice>
+.model model_$devicename NPN( IS=$Is NF=$Nf NR=$Nr IKF=$Ikf IKR=$Ikr VA=$Vaf VB=$Var ISE=$Ise NE=$Ne ISC=$Isc NC=$Nc BF=$Bf BR=$Br RBM=$Rbm IRB=$Irb RC=$Rc RE=$Re RB=$Rb CJE=$Cje PE=$Vje ME=$Mje CJC=$Cjc PC=$Vjc MC=$Mjc XCJC=$Xcjc CCS=$Cjs PS=$Vjs MS=$Mjs FC=$Fc TF=$Tf XTF=$Xtf VTF=$Vtf ITF=$Itf TR=$Tr KF=$Kf AF=$Af PTF=$Ptf XTB=$Xtb XTI=$Xti EG=$Eg TNOM=$Tnom )
+ 
+</Model>
+</Component>
+<Component Schottky>
+<Description>
+Diode for qucs import
+</Description>
+<Parameter>
+<string Is 1e-15>
+unit=A
+info=saturation current
+<string N 1>
+info=emission coefficient
+<string Cj0 10f>
+unit=F
+info=zero-bias junction capacitance
+<string M 0.5>
+info=grading coefficient
+<string Vj 0.7>
+unit=V
+info=junction potential
+<string Fc 0.5>
+info=forward-bias depletion capacitance coefficient
+<string Cp 0.0f>
+unit=F
+info=linear capacitance
+<string Isr 0.0>
+info=recombination current parameter
+<string Nr 2.0>
+info=emission coefficient for Isr
+<string Rs 0.0>
+unit=Ohm
+info=ohmic series resistance
+<string Tt 0.0p>
+unit=s
+info=transit time
+<string Ikf 0>
+info=high-injection knee current (0=infinity)
+<string Kf 0.0>
+info=flicker noise coefficient
+<string Af 1.0>
+info=flicker noise exponent
+<string Ffe 1.0>
+info=flicker noise frequency exponent
+<string Bv 0>
+info=reverse breakdown voltage
+<string Ibv 1m>
+unit=A
+info=current at reverse breakdown voltage
+<string Temp 26.85>
+info=simulation temperature in degree Celsius
+<string Xti 3.0>
+info=saturation current temperature exponent
+<string Eg 1.11>
+info=energy bandgap in eV
+<string Tbv 0.0>
+info=Bv linear temperature coefficient
+<string Trs 0.0>
+info=Rs linear temperature coefficient
+<string Ttt1 0.0>
+info=Tt linear temperature coefficient
+<string Ttt2 0.0>
+info=Tt quadratic temperature coefficient
+<string Tm1 0.0>
+info=M linear temperature coefficient
+<string Tm2 0.0>
+info=M quadratic temperature coefficient
+<string Tnom 26.85>
+info=temperature at which parameters were extracted
+<string Area 1.0>
+info=default area for diode
+<list Symbol Schottkyl >
+info=schematic symbol
+</Parameter>
+<Layout>
+</Layout>
+<Prefix D>
+<Label>
+</Label>
+<Symbol>
+<Port 30 0 port2>
+<Port -30 0 port1>
+<Line -6 9 0 12 #0000c0>
+<Line -6 -9 -12 -12 #0000c0>
+<Line -6 0 6 9 #0000c0>
+<Line -6 0 6 -9 #0000c0>
+<Line 6 -9 6 9 #0000c0>
+<Line -6 -9 -6 9 #0000c0>
+<Line -30 0 30 0 #0000c0>
+</Symbol>
+<Offsetlabel 0 -16 -14>
+<Netlist hspice>
+$devicename $node(port2) $node(port1) model_$devicename
+</Netlist>
+<Netlist qucs>
+Diode:$devicename $node(port1) $node(port2) Is="$Is" N="$N" Cj0="$Cj0" M="$M" Vj="$Vj" Fc="$Fc" Cp="$Cp" Isr="$Isr" Nr="$Nr" Rs="$Rs" Tt="$Tt" Ikf="$Ikf" Kf="$Kf" Af="1$Af" Ffe="$Ffe" Bv="$Bv" Ibv="$Ibv" Temp="$Temp" Xti="$Xti"
+</Netlist>
+<Netlist spice>
+$devicename $node(port2) $node(port1) model_$devicename
+</Netlist>
+<Model hspice>
+.model model_$devicename D( IS=$Is N=$N CJO=$Cj0 M=$M VJ=$Vj FC=$Fc RS=$Rs TT=$Tt  KF=$Kf AF=1$Af BV=$Bv IBV=$Ibv XTI=$Xti )
+ 
+</Model>
+<Model spice>
+.model model_$devicename D( IS=$Is N=$N CJO=$Cj0 M=$M VJ=$Vj FC=$Fc RS=$Rs TT=$Tt IKF=$Ikf KF=$Kf AF=1$Af BV=$Bv IBV=$Ibv XTI=$Xti )
+ 
+</Model>
+</Component>
+<Component Varactor>
+<Description>
+Diode for qucs import
+</Description>
+<Parameter>
+<string Is 1e-15>
+unit=A
+info=saturation current
+<string N 1>
+info=emission coefficient
+<string Cj0 10f>
+unit=F
+info=zero-bias junction capacitance
+<string M 0.5>
+info=grading coefficient
+<string Vj 0.7>
+unit=V
+info=junction potential
+<string Fc 0.5>
+info=forward-bias depletion capacitance coefficient
+<string Cp 0.0f>
+unit=F
+info=linear capacitance
+<string Isr 0.0>
+info=recombination current parameter
+<string Nr 2.0>
+info=emission coefficient for Isr
+<string Rs 0.0>
+unit=Ohm
+info=ohmic series resistance
+<string Tt 0.0p>
+unit=s
+info=transit time
+<string Ikf 0>
+info=high-injection knee current (0=infinity)
+<string Kf 0.0>
+info=flicker noise coefficient
+<string Af 1.0>
+info=flicker noise exponent
+<string Ffe 1.0>
+info=flicker noise frequency exponent
+<string Bv 0>
+info=reverse breakdown voltage
+<string Ibv 1m>
+unit=A
+info=current at reverse breakdown voltage
+<string Temp 26.85>
+info=simulation temperature in degree Celsius
+<string Xti 3.0>
+info=saturation current temperature exponent
+<string Eg 1.11>
+info=energy bandgap in eV
+<string Tbv 0.0>
+info=Bv linear temperature coefficient
+<string Trs 0.0>
+info=Rs linear temperature coefficient
+<string Ttt1 0.0>
+info=Tt linear temperature coefficient
+<string Ttt2 0.0>
+info=Tt quadratic temperature coefficient
+<string Tm1 0.0>
+info=M linear temperature coefficient
+<string Tm2 0.0>
+info=M quadratic temperature coefficient
+<string Tnom 26.85>
+info=temperature at which parameters were extracted
+<string Area 1.0>
+info=default area for diode
+<list Symbol Varactor >
+info=schematic symbol
+</Parameter>
+<Layout>
+</Layout>
+<Prefix D>
+<Label>
+</Label>
+<Symbol>
+<Line -30 0 -9 0 #0000c0>
+<Line -6 0 30 0 #0000c0>
+<Line -9 -9 -9 9 #0000c0>
+<Line -6 -9 -6 9 #0000c0>
+<Line 6 -9 6 9 #0000c0>
+<Line -6 0 6 -9 #0000c0>
+<Line -6 0 6 9 #0000c0>
+<Port -30 0 port1>
+<Port 30 0 port2>
+</Symbol>
+<Netlist hspice>
+$devicename $node(port2) $node(port1) model_$devicename
+</Netlist>
+<Netlist qucs>
+Diode:$devicename $node(port1) $node(port2) Is="$Is" N="$N" Cj0="$Cj0" M="$M" Vj="$Vj" Fc="$Fc" Cp="$Cp" Isr="$Isr" Nr="$Nr" Rs="$Rs" Tt="$Tt" Ikf="$Ikf" Kf="$Kf" Af="1$Af" Ffe="$Ffe" Bv="$Bv" Ibv="$Ibv" Temp="$Temp" Xti="$Xti"
+</Netlist>
+<Netlist spice>
+$devicename $node(port2) $node(port1) model_$devicename
+</Netlist>
+<Model hspice>
+.model model_$devicename D( IS=$Is N=$N CJO=$Cj0 M=$M VJ=$Vj FC=$Fc RS=$Rs TT=$Tt  KF=$Kf AF=1$Af BV=$Bv IBV=$Ibv XTI=$Xti )
+ 
+</Model>
+<Model spice>
+.model model_$devicename D( IS=$Is N=$N CJO=$Cj0 M=$M VJ=$Vj FC=$Fc RS=$Rs TT=$Tt IKF=$Ikf KF=$Kf AF=1$Af BV=$Bv IBV=$Ibv XTI=$Xti )
+ 
+</Model>
+</Component>
+<Component C_polar>
+<Description>
+capacitor (polar) for qucs import
+</Description>
+<Parameter>
+<string C>
+<string V>
+<string stype>
+<list Package 1206 0805 >
+</Parameter>
+<Layout>
+[macro]
+# device-type        macro-file		pins
+*	        pcb/capacitor.layout		pin1 pin2
+</Layout>
+<Prefix C>
+<Label>
+$devicename
+$C
+</Label>
+<Symbol>
+<Line -4 -11 -4 11 #0000c0>
+<Arc 22 0 8 11 8 -11 #0000c0>
+<Line -11 -5 -11 -11 #ff0000>
+<Line -14 -8 -8 -8 #ff0000>
+<Line -30 0 -4 0 #0000c0>
+<Line 4 0 30 0 #0000c0>
+<Port -30 0 pin2>
+<Port 30 0 pin1>
+</Symbol>
+<Offsetlabel 0 -10 -16>
+<Netlist hspice>
+$devicename $node(pin2) $node(pin1)  $C $notEmpty($V;IC=$V)
+</Netlist>
+<Netlist qucs>
+C:$devicename $node(pin2) $node(pin1) C="$C" V="$V"
+</Netlist>
+<Netlist spice>
+$devicename $node(pin2) $node(pin1)  $C $notEmpty($V;IC=$V)
+</Netlist>
+</Component>
+<Component R_US>
+<Description>
+Resistor for qucs import
+</Description>
+<Parameter>
+<string R>
+<string Temp>
+<string Tc1>
+<string Tc2>
+<string Tnom>
+<string stype>
+<list Package 1206 0805 >
+</Parameter>
+<Layout>
+[macro]
+# device-type        macro-file		pins
+*	        pcb/resistor.layout		pin1 pin2
+</Layout>
+<Prefix R>
+<Label>
+$devicename
+$R
+</Label>
+<Symbol>
+<Line -30 0 -18 0 -15 -7 -9 7 -3 -7 3 7 9 -7 15 7 18 0 30 0 #0000c0>
+<Port -30 0 pin1>
+<Port 30 0 pin2>
+</Symbol>
+<Offsetlabel -360 -5 -12>
+<Offsetlabel -270 14 6>
+<Offsetlabel -180 -7 -10>
+<Offsetlabel -90 13 4>
+<Offsetlabel 0 -10 -10>
+<Offsetlabel 90 14 5>
+<Offsetlabel 180 -6 -12>
+<Offsetlabel 270 12 5>
+<Netlist hspice>
+$devicename $node(pin1) $node(pin2) model_$devicename
+</Netlist>
+<Netlist qucs>
+R:$devicename $node(pin1) $node(pin2) R="$R" Temp="$Temp" Tc1="$Tc1" Tc2="$Tc2" Tnom="$Tnom"
+</Netlist>
+<Netlist spice>
+$devicename $node(pin1) $node(pin2) $R $notEmpty($Tc1;TC1=$Tc1) $notEmpty($Tc2;TC2=$Tc2) $notEmpty($Tnom;TNOM=$Tnom)
+</Netlist>
+<Model hspice>
+.model model_$devicename R( R=$R TC1=$Tc1 TC2=$Tc2 TNOM=$Tnom )
+ 
+</Model>
+</Component>
+<Component p_MOSFET>
+<Description>
+MOS field-effect transistor for qucs import
+</Description>
+<Parameter>
+<list Type pfet >
+<string Vt0 1V>
+unit=V
+info=zero-bias threshold voltage
+<string Kp 2e-5>
+info=transconductance coefficient in A/V^2
+<string Gamma 0.0>
+info=bulk threshold in sqrt(V)
+<string Phi 0.6V>
+info=surface potential
+<string Lambda 0.0>
+info=channel-length modulation parameter in 1/V
+<string Rd 0.0>
+unit=Ohm
+info=drain ohmic resistance
+<string Rs 0.0>
+unit=Ohm
+info=source ohmic resistance
+<string Rg 0.0>
+unit=Ohm
+info=gate ohmic resistance
+<string Is 1e-14>
+unit=A
+info=bulk junction saturation current
+<string N 1.0>
+info=bulk junction emission coefficient
+<string W 1u>
+unit=m
+info=channel width
+<string L 1u>
+unit=m
+info=channel length
+<string Ld 0.0>
+info=lateral diffusion length
+<string Tox 0.1u>
+unit=m
+info=oxide thickness
+<string Cgso 0.0>
+info=gate-source overlap capacitance per meter of channel width in F/m
+<string Cgdo 0.0>
+info=gate-drain overlap capacitance per meter of channel width in F/m
+<string Cgbo 0.0>
+info=gate-bulk overlap capacitance per meter of channel length in F/m
+<string Cbd 0.0>
+unit=F
+info=zero-bias bulk-drain junction capacitance
+<string Cbs 0.0>
+unit=F
+info=zero-bias bulk-source junction capacitance
+<string Pb 0.8>
+unit=V
+info=bulk junction potential
+<string Mj 0.5>
+info=bulk junction bottom grading coefficient
+<string Fc 0.5>
+info=bulk junction forward-bias depletion capacitance coefficient
+<string Cjsw 0.0>
+info=zero-bias bulk junction periphery capacitance per meter of junction perimeter in F/m
+<string Mjsw 0.33>
+info=bulk junction periphery grading coefficient
+<string Tt 0.0p>
+unit=s
+info=bulk transit time
+<string Nsub 1e15>
+info=substrate bulk doping density in 1/cm^3
+<string Nss 0.0>
+info=surface state density in 1/cm^2
+<string Tpg 1>
+info=gate material type: 0 = alumina; -1 = same as bulk; 1 = opposite to bulk
+<string Uo 600.0>
+info=surface mobility in cm^2/Vs
+<string Rsh 0.0>
+info=drain and source diffusion sheet resistance in Ohms/square
+<string Nrd 1>
+info=number of equivalent drain squares
+<string Nrs 1>
+info=number of equivalent source squares
+<string Cj 0.0>
+info=zero-bias bulk junction bottom capacitance per square meter of junction area in F/m^2
+<string Js 0.0>
+info=bulk junction saturation current per square meter of junction area in A/m^2
+<string Ad 0.0>
+info=drain diffusion area in m^2
+<string As 0.0>
+info=source diffusion area in m^2
+<string Pd 0.0>
+info=drain junction perimeter
+<string Ps 0.0>
+info=source junction perimeter
+<string Kf 0.0>
+info=flicker noise coefficient
+<string Af 1.0>
+info=flicker noise exponent
+<string Ffe 1.0>
+info=flicker noise frequency exponent
+<string Temp 26.85>
+info=simulation temperature in degree Celsius
+<string Tnom 26.85>
+info=parameter measurement temperature
+</Parameter>
+<Layout>
+</Layout>
+<Prefix T>
+<Label>
+</Label>
+<Symbol>
+<Line -14 -13 -14 13 #0000c0>
+<Line -30 0 -14 0 #0000c0>
+<Line -10 -11 0 -11 #0000c0>
+<Line 0 -11 0 -30 #0000c0>
+<Line -10 11 0 11 #0000c0>
+<Line 0 11 0 30 #0000c0>
+<Line -10 0 0 0 #0000c0>
+<Line -10 -16 -10 7 #0000c0>
+<Line -10 7 -10 16 #0000c0>
+<Line -1 0 -6 -5 #0000c0>
+<Line -1 0 -6 5 #0000c0>
+<Port -30 0 port1>
+<Port 0 -30 port2>
+<Port 0 30 port3>
+</Symbol>
+<Offsetlabel 0 7 11>
+<Offsetlabel 90 14 -19>
+<Offsetlabel 180 21 -7>
+<Offsetlabel 270 -14 -5>
+<Netlist hspice>
+M$devicename $node(port1) $node(port2) $node(port3) model_$devicename
+</Netlist>
+<Netlist qucs>
+MOSFET:$devicename $node(port1) $node(port2) $node(port3) $node(port3) $parameters($parametername="$parametervalue" )
+</Netlist>
+<Netlist spice>
+M$devicename $node(port1) $node(port2) $node(port3) model_$devicename
+</Netlist>
+<Model hspice>
+.model model_$devicename NMOS( VTO=$Vt0 KP=$Kp GAMMA=$Gamma PHI=$Phi LAMBDA=$Lambda RD=$Rd RS=$Rs RG=$Rg IS=$Is N=$N W=$W L=$L LD=$Ld TOX=$Tox CGSO=$Cgso CGDO=$Cgdo CGBO=$Cgbo CBD=$Cbd CBS=$Cbs PB=$Pb MJ=$Mj FC=$Fc CJSW=$Cjsw MJSW=$Mjsw TT=$Tt NSUB=$Nsub NSS=$Nss TPG=$Tpg U0=$Uo RSH=$Rsh NRD=$Nrd NRS=$Nrs CJ=$Cj JS=$Js AD=$Ad AS=$As PD=$Pd PS=$Ps KF=$Kf AF=$Af TNOM=$Tnom )
+ 
+</Model>
+<Model spice>
+.model model_$devicename NMOS( VTO=$Vt0 KP=$Kp GAMMA=$Gamma PHI=$Phi LAMBDA=$Lambda RD=$Rd RS=$Rs RG=$Rg IS=$Is N=$N W=$W L=$L LD=$Ld TOX=$Tox CGSO=$Cgso CGDO=$Cgdo CGBO=$Cgbo CBD=$Cbd CBS=$Cbs PB=$Pb MJ=$Mj FC=$Fc CJSW=$Cjsw MJSW=$Mjsw TT=$Tt NSUB=$Nsub NSS=$Nss TPG=$Tpg U0=$Uo RSH=$Rsh NRD=$Nrd NRS=$Nrs CJ=$Cj JS=$Js AD=$Ad AS=$As PD=$Pd PS=$Ps KF=$Kf AF=$Af TNOM=$Tnom )
+ 
+</Model>
+</Component>
+<Component pMOSFET>
+<Description>
+MOS field-effect transistor for qucs import
+</Description>
+<Parameter>
+<list Type pfet >
+<string Vt0 1V>
+unit=V
+info=zero-bias threshold voltage
+<string Kp 2e-5>
+info=transconductance coefficient in A/V^2
+<string Gamma 0.0>
+info=bulk threshold in sqrt(V)
+<string Phi 0.6V>
+info=surface potential
+<string Lambda 0.0>
+info=channel-length modulation parameter in 1/V
+<string Rd 0.0>
+unit=Ohm
+info=drain ohmic resistance
+<string Rs 0.0>
+unit=Ohm
+info=source ohmic resistance
+<string Rg 0.0>
+unit=Ohm
+info=gate ohmic resistance
+<string Is 1e-14>
+unit=A
+info=bulk junction saturation current
+<string N 1.0>
+info=bulk junction emission coefficient
+<string W 1u>
+unit=m
+info=channel width
+<string L 1u>
+unit=m
+info=channel length
+<string Ld 0.0>
+info=lateral diffusion length
+<string Tox 0.1u>
+unit=m
+info=oxide thickness
+<string Cgso 0.0>
+info=gate-source overlap capacitance per meter of channel width in F/m
+<string Cgdo 0.0>
+info=gate-drain overlap capacitance per meter of channel width in F/m
+<string Cgbo 0.0>
+info=gate-bulk overlap capacitance per meter of channel length in F/m
+<string Cbd 0.0>
+unit=F
+info=zero-bias bulk-drain junction capacitance
+<string Cbs 0.0>
+unit=F
+info=zero-bias bulk-source junction capacitance
+<string Pb 0.8>
+unit=V
+info=bulk junction potential
+<string Mj 0.5>
+info=bulk junction bottom grading coefficient
+<string Fc 0.5>
+info=bulk junction forward-bias depletion capacitance coefficient
+<string Cjsw 0.0>
+info=zero-bias bulk junction periphery capacitance per meter of junction perimeter in F/m
+<string Mjsw 0.33>
+info=bulk junction periphery grading coefficient
+<string Tt 0.0p>
+unit=s
+info=bulk transit time
+<string Nsub 1e15>
+info=substrate bulk doping density in 1/cm^3
+<string Nss 0.0>
+info=surface state density in 1/cm^2
+<string Tpg 1>
+info=gate material type: 0 = alumina; -1 = same as bulk; 1 = opposite to bulk
+<string Uo 600.0>
+info=surface mobility in cm^2/Vs
+<string Rsh 0.0>
+info=drain and source diffusion sheet resistance in Ohms/square
+<string Nrd 1>
+info=number of equivalent drain squares
+<string Nrs 1>
+info=number of equivalent source squares
+<string Cj 0.0>
+info=zero-bias bulk junction bottom capacitance per square meter of junction area in F/m^2
+<string Js 0.0>
+info=bulk junction saturation current per square meter of junction area in A/m^2
+<string Ad 0.0>
+info=drain diffusion area in m^2
+<string As 0.0>
+info=source diffusion area in m^2
+<string Pd 0.0>
+info=drain junction perimeter
+<string Ps 0.0>
+info=source junction perimeter
+<string Kf 0.0>
+info=flicker noise coefficient
+<string Af 1.0>
+info=flicker noise exponent
+<string Ffe 1.0>
+info=flicker noise frequency exponent
+<string Temp 26.85>
+info=simulation temperature in degree Celsius
+<string Tnom 26.85>
+info=parameter measurement temperature
+</Parameter>
+<Layout>
+</Layout>
+<Prefix T>
+<Label>
+</Label>
+<Symbol>
+<Line -14 -13 -14 13 #0000c0>
+<Line -30 0 -14 0 #0000c0>
+<Line -10 -11 0 -11 #0000c0>
+<Line 0 -11 0 -30 #0000c0>
+<Line -10 11 0 11 #0000c0>
+<Line 0 11 0 30 #0000c0>
+<Line -10 0 20 0 #0000c0>
+<Line -10 -16 -10 7 #0000c0>
+<Line -10 7 -10 16 #0000c0>
+<Line -4 24 4 20 #0000c0>
+<Line -1 0 -6 -5 #0000c0>
+<Line -1 0 -6 5 #0000c0>
+<Port -30 0 port1>
+<Port 0 -30 port2>
+<Port 0 30 port3>
+<Port 20 0 port4>
+</Symbol>
+<Offsetlabel 0 10 -6>
+<Offsetlabel 90 22 -6>
+<Offsetlabel 180 20 -5>
+<Offsetlabel 270 9 -5>
+<Netlist hspice>
+M$devicename $node(port1) $node(port2) $node(port3) $node(port4) model_$devicename
+</Netlist>
+<Netlist qucs>
+MOSFET:$devicename $node(port1) $node(port2) $node(port3) $node(port4) $parameters($parametername="$parametervalue" )
+</Netlist>
+<Netlist spice>
+M$devicename $node(port1) $node(port2) $node(port3) $node(port4) model_$devicename
+</Netlist>
+<Model hspice>
+.model model_$devicename NMOS( VTO=$Vt0 KP=$Kp GAMMA=$Gamma PHI=$Phi LAMBDA=$Lambda RD=$Rd RS=$Rs RG=$Rg IS=$Is N=$N W=$W L=$L LD=$Ld TOX=$Tox CGSO=$Cgso CGDO=$Cgdo CGBO=$Cgbo CBD=$Cbd CBS=$Cbs PB=$Pb MJ=$Mj FC=$Fc CJSW=$Cjsw MJSW=$Mjsw TT=$Tt NSUB=$Nsub NSS=$Nss TPG=$Tpg U0=$Uo RSH=$Rsh NRD=$Nrd NRS=$Nrs CJ=$Cj JS=$Js AD=$Ad AS=$As PD=$Pd PS=$Ps KF=$Kf AF=$Af TNOM=$Tnom )
+ 
+</Model>
+<Model spice>
+.model model_$devicename NMOS( VTO=$Vt0 KP=$Kp GAMMA=$Gamma PHI=$Phi LAMBDA=$Lambda RD=$Rd RS=$Rs RG=$Rg IS=$Is N=$N W=$W L=$L LD=$Ld TOX=$Tox CGSO=$Cgso CGDO=$Cgdo CGBO=$Cgbo CBD=$Cbd CBS=$Cbs PB=$Pb MJ=$Mj FC=$Fc CJSW=$Cjsw MJSW=$Mjsw TT=$Tt NSUB=$Nsub NSS=$Nss TPG=$Tpg U0=$Uo RSH=$Rsh NRD=$Nrd NRS=$Nrs CJ=$Cj JS=$Js AD=$Ad AS=$As PD=$Pd PS=$Ps KF=$Kf AF=$Af TNOM=$Tnom )
+ 
+</Model>
+</Component>
+<Component n_MOSFET>
+<Description>
+MOS field-effect transistor for qucs import
+</Description>
+<Parameter>
+<list Type nfet >
+<string Vt0 1V>
+unit=V
+info=zero-bias threshold voltage
+<string Kp 2e-5>
+info=transconductance coefficient in A/V^2
+<string Gamma 0.0>
+info=bulk threshold in sqrt(V)
+<string Phi 0.6V>
+info=surface potential
+<string Lambda 0.0>
+info=channel-length modulation parameter in 1/V
+<string Rd 0.0>
+unit=Ohm
+info=drain ohmic resistance
+<string Rs 0.0>
+unit=Ohm
+info=source ohmic resistance
+<string Rg 0.0>
+unit=Ohm
+info=gate ohmic resistance
+<string Is 1e-14>
+unit=A
+info=bulk junction saturation current
+<string N 1.0>
+info=bulk junction emission coefficient
+<string W 1u>
+unit=m
+info=channel width
+<string L 1u>
+unit=m
+info=channel length
+<string Ld 0.0>
+info=lateral diffusion length
+<string Tox 0.1u>
+unit=m
+info=oxide thickness
+<string Cgso 0.0>
+info=gate-source overlap capacitance per meter of channel width in F/m
+<string Cgdo 0.0>
+info=gate-drain overlap capacitance per meter of channel width in F/m
+<string Cgbo 0.0>
+info=gate-bulk overlap capacitance per meter of channel length in F/m
+<string Cbd 0.0>
+unit=F
+info=zero-bias bulk-drain junction capacitance
+<string Cbs 0.0>
+unit=F
+info=zero-bias bulk-source junction capacitance
+<string Pb 0.8>
+unit=V
+info=bulk junction potential
+<string Mj 0.5>
+info=bulk junction bottom grading coefficient
+<string Fc 0.5>
+info=bulk junction forward-bias depletion capacitance coefficient
+<string Cjsw 0.0>
+info=zero-bias bulk junction periphery capacitance per meter of junction perimeter in F/m
+<string Mjsw 0.33>
+info=bulk junction periphery grading coefficient
+<string Tt 0.0p>
+unit=s
+info=bulk transit time
+<string Nsub 1e15>
+info=substrate bulk doping density in 1/cm^3
+<string Nss 0.0>
+info=surface state density in 1/cm^2
+<string Tpg 1>
+info=gate material type: 0 = alumina; -1 = same as bulk; 1 = opposite to bulk
+<string Uo 600.0>
+info=surface mobility in cm^2/Vs
+<string Rsh 0.0>
+info=drain and source diffusion sheet resistance in Ohms/square
+<string Nrd 1>
+info=number of equivalent drain squares
+<string Nrs 1>
+info=number of equivalent source squares
+<string Cj 0.0>
+info=zero-bias bulk junction bottom capacitance per square meter of junction area in F/m^2
+<string Js 0.0>
+info=bulk junction saturation current per square meter of junction area in A/m^2
+<string Ad 0.0>
+info=drain diffusion area in m^2
+<string As 0.0>
+info=source diffusion area in m^2
+<string Pd 0.0>
+info=drain junction perimeter
+<string Ps 0.0>
+info=source junction perimeter
+<string Kf 0.0>
+info=flicker noise coefficient
+<string Af 1.0>
+info=flicker noise exponent
+<string Ffe 1.0>
+info=flicker noise frequency exponent
+<string Temp 26.85>
+info=simulation temperature in degree Celsius
+<string Tnom 26.85>
+info=parameter measurement temperature
+</Parameter>
+<Layout>
+</Layout>
+<Prefix T>
+<Label>
+</Label>
+<Symbol>
+<Port 0 30 port3>
+<Port 0 -30 port2>
+<Port -30 0 port1>
+<Line -9 0 -4 5 #0000c0>
+<Line -9 0 -4 -5 #0000c0>
+<Line -10 7 -10 16 #0000c0>
+<Line -10 -16 -10 7 #0000c0>
+<Line -10 0 0 0 #0000c0>
+<Line 0 11 0 30 #0000c0>
+<Line -10 11 0 11 #0000c0>
+<Line 0 -11 0 -30 #0000c0>
+<Line -10 -11 0 -11 #0000c0>
+<Line -30 0 -14 0 #0000c0>
+<Line -14 -13 -14 13 #0000c0>
+</Symbol>
+<Offsetlabel 0 7 11>
+<Offsetlabel 90 22 -7>
+<Offsetlabel 180 19 -4>
+<Offsetlabel 270 -7 -5>
+<Netlist hspice>
+M$devicename $node(port1) $node(port2) $node(port3) model_$devicename
+</Netlist>
+<Netlist qucs>
+MOSFET:$devicename $node(port1) $node(port2) $node(port3) $node(port3) $parameters($parametername="$parametervalue" )
+</Netlist>
+<Netlist spice>
+M$devicename $node(port1) $node(port2) $node(port3) $node(port3) model_$devicename
+</Netlist>
+<Model hspice>
+.model model_$devicename NMOS( VTO=$Vt0 KP=$Kp GAMMA=$Gamma PHI=$Phi LAMBDA=$Lambda RD=$Rd RS=$Rs RG=$Rg IS=$Is N=$N W=$W L=$L LD=$Ld TOX=$Tox CGSO=$Cgso CGDO=$Cgdo CGBO=$Cgbo CBD=$Cbd CBS=$Cbs PB=$Pb MJ=$Mj FC=$Fc CJSW=$Cjsw MJSW=$Mjsw TT=$Tt NSUB=$Nsub NSS=$Nss TPG=$Tpg U0=$Uo RSH=$Rsh NRD=$Nrd NRS=$Nrs CJ=$Cj JS=$Js AD=$Ad AS=$As PD=$Pd PS=$Ps KF=$Kf AF=$Af TNOM=$Tnom )
+ 
+</Model>
+<Model spice>
+.model model_$devicename NMOS( VTO=$Vt0 KP=$Kp GAMMA=$Gamma PHI=$Phi LAMBDA=$Lambda RD=$Rd RS=$Rs RG=$Rg IS=$Is N=$N W=$W L=$L LD=$Ld TOX=$Tox CGSO=$Cgso CGDO=$Cgdo CGBO=$Cgbo CBD=$Cbd CBS=$Cbs PB=$Pb MJ=$Mj FC=$Fc CJSW=$Cjsw MJSW=$Mjsw TT=$Tt NSUB=$Nsub NSS=$Nss TPG=$Tpg U0=$Uo RSH=$Rsh NRD=$Nrd NRS=$Nrs CJ=$Cj JS=$Js AD=$Ad AS=$As PD=$Pd PS=$Ps KF=$Kf AF=$Af TNOM=$Tnom )
+ 
+</Model>
+</Component>
+<Component nMOSFET>
+<Description>
+MOS field-effect transistor for qucs import
+</Description>
+<Parameter>
+<list Type nfet >
+display=false
+<string Vt0 1>
+unit=V
+info=zero-bias threshold voltage
+<string Kp 2e-5>
+info=transconductance coefficient in A/V^2
+<string Gamma 0.0>
+info=bulk threshold in sqrt(V)
+<string Phi 0.6V>
+info=surface potential
+<string Lambda 0.0>
+info=channel-length modulation parameter in 1/V
+<string Rd 0.0>
+unit=Ohm
+info=drain ohmic resistance
+<string Rs 0.0>
+unit=Ohm
+info=source ohmic resistance
+<string Rg 0.0>
+unit=Ohm
+info=gate ohmic resistance
+<string Is 1e-14>
+unit=A
+info=bulk junction saturation current
+<string N 1.0>
+info=bulk junction emission coefficient
+<string W 1u>
+unit=m
+info=channel width
+<string L 1u>
+unit=m
+info=channel length
+<string Ld 0.0>
+info=lateral diffusion length
+<string Tox 0.1u>
+unit=m
+info=oxide thickness
+<string Cgso 0.0>
+info=gate-source overlap capacitance per meter of channel width in F/m
+<string Cgdo 0.0>
+info=gate-drain overlap capacitance per meter of channel width in F/m
+<string Cgbo 0.0>
+info=gate-bulk overlap capacitance per meter of channel length in F/m
+<string Cbd 0.0>
+unit=F
+info=zero-bias bulk-drain junction capacitance
+<string Cbs 0.0>
+unit=F
+info=zero-bias bulk-source junction capacitance
+<string Pb 0.8>
+unit=V
+info=bulk junction potential
+<string Mj 0.5>
+info=bulk junction bottom grading coefficient
+<string Fc 0.5>
+info=bulk junction forward-bias depletion capacitance coefficient
+<string Cjsw 0.0>
+info=zero-bias bulk junction periphery capacitance per meter of junction perimeter in F/m
+<string Mjsw 0.33>
+info=bulk junction periphery grading coefficient
+<string Tt 0.0p>
+unit=s
+info=bulk transit time
+<string Nsub 1e15>
+info=substrate bulk doping density in 1/cm^3
+<string Nss 0.0>
+info=surface state density in 1/cm^2
+<string Tpg 1>
+info=gate material type: 0 = alumina; -1 = same as bulk; 1 = opposite to bulk
+<string Uo 600.0>
+info=surface mobility in cm^2/Vs
+<string Rsh 0.0>
+info=drain and source diffusion sheet resistance in Ohms/square
+<string Nrd 1>
+info=number of equivalent drain squares
+<string Nrs 1>
+info=number of equivalent source squares
+<string Cj 0.0>
+info=zero-bias bulk junction bottom capacitance per square meter of junction area in F/m^2
+<string Js 0.0>
+info=bulk junction saturation current per square meter of junction area in A/m^2
+<string Ad 0.0>
+info=drain diffusion area in m^2
+<string As 0.0>
+info=source diffusion area in m^2
+<string Pd 0.0>
+info=drain junction perimeter
+<string Ps 0.0>
+info=source junction perimeter
+<string Kf 0.0>
+info=flicker noise coefficient
+<string Af 1.0>
+info=flicker noise exponent
+<string Ffe 1.0>
+info=flicker noise frequency exponent
+<string Temp 26.85>
+info=simulation temperature in degree Celsius
+<string Tnom 26.85>
+info=parameter measurement temperature
+</Parameter>
+<Layout>
+</Layout>
+<Prefix T>
+<Label>
+</Label>
+<Symbol>
+<Port 20 0 port4>
+<Port 0 30 port3>
+<Port 0 -30 port2>
+<Port -30 0 port1>
+<Line -9 0 -4 5 #0000c0>
+<Line -9 0 -4 -5 #0000c0>
+<Line -4 24 4 20 #0000c0>
+<Line -10 7 -10 16 #0000c0>
+<Line -10 -16 -10 7 #0000c0>
+<Line -10 0 20 0 #0000c0>
+<Line 0 11 0 30 #0000c0>
+<Line -10 11 0 11 #0000c0>
+<Line 0 -11 0 -30 #0000c0>
+<Line -10 -11 0 -11 #0000c0>
+<Line -30 0 -14 0 #0000c0>
+<Line -14 -13 -14 13 #0000c0>
+</Symbol>
+<Offsetlabel 0 9 -7>
+<Offsetlabel 90 22 -9>
+<Offsetlabel 180 20 -5>
+<Offsetlabel 270 6 -6>
+<Netlist hspice>
+M$devicename $node(port1) $node(port2) $node(port3) $node(port4) model_$devicename
+</Netlist>
+<Netlist qucs>
+MOSFET:$devicename $node(port1) $node(port2) $node(port3) $node(port4) $parameters($parametername="$parametervalue" )
+</Netlist>
+<Netlist spice>
+M$devicename $node(port1) $node(port2) $node(port3) $node(port4) model_$devicename
+</Netlist>
+<Model hspice>
+.model model_$devicename NMOS( VTO=$Vt0 KP=$Kp GAMMA=$Gamma PHI=$Phi LAMBDA=$Lambda RD=$Rd RS=$Rs RG=$Rg IS=$Is N=$N W=$W L=$L LD=$Ld TOX=$Tox CGSO=$Cgso CGDO=$Cgdo CGBO=$Cgbo CBD=$Cbd CBS=$Cbs PB=$Pb MJ=$Mj FC=$Fc CJSW=$Cjsw MJSW=$Mjsw TT=$Tt NSUB=$Nsub NSS=$Nss TPG=$Tpg U0=$Uo RSH=$Rsh NRD=$Nrd NRS=$Nrs CJ=$Cj JS=$Js AD=$Ad AS=$As PD=$Pd PS=$Ps KF=$Kf AF=$Af TNOM=$Tnom )
+ 
+</Model>
+<Model spice>
+.model model_$devicename NMOS( VTO=$Vt0 KP=$Kp GAMMA=$Gamma PHI=$Phi LAMBDA=$Lambda RD=$Rd RS=$Rs RG=$Rg IS=$Is N=$N W=$W L=$L LD=$Ld TOX=$Tox CGSO=$Cgso CGDO=$Cgdo CGBO=$Cgbo CBD=$Cbd CBS=$Cbs PB=$Pb MJ=$Mj FC=$Fc CJSW=$Cjsw MJSW=$Mjsw TT=$Tt NSUB=$Nsub NSS=$Nss TPG=$Tpg U0=$Uo RSH=$Rsh NRD=$Nrd NRS=$Nrs CJ=$Cj JS=$Js AD=$Ad AS=$As PD=$Pd PS=$Ps KF=$Kf AF=$Af TNOM=$Tnom )
+ 
+</Model>
+</Component>
+<Component R>
+<Description>
+Resistor for qucs import
+</Description>
+<Parameter>
+<string R 1>
+unit=Ohm
+info=ohmic resistance
+<string Temp>
+info=simulation temperature in degree Celsius
+<string Tc1>
+info=first order temperature coefficient
+<string Tc2>
+info=second order temperature coefficient
+<string Tnom>
+info=temperature at which parameters were extracted
+<string stype>
+display=false
+<list Package 1206 0805 >
+</Parameter>
+<Layout>
+[macro]
+# device-type        macro-file		pins
+*	        pcb/resistor.layout		pin1 pin2
+</Layout>
+<Prefix R>
+<Label>
+$devicename
+$R
+</Label>
+<Symbol>
+<Line -18 -9 18 -9 18 9 -18 9 -18 -9 #0000c0>
+<Line -30 0 -18 0 #0000c0>
+<Line 18 0 30 0 #0000c0>
+<Port -30 0 pin1>
+<Port 30 0 pin2>
+</Symbol>
+<Offsetlabel -360 -5 -12>
+<Offsetlabel -270 14 6>
+<Offsetlabel -180 -7 -10>
+<Offsetlabel -90 13 4>
+<Offsetlabel 0 -10 -10>
+<Offsetlabel 90 14 10>
+<Offsetlabel 180 -6 -12>
+<Offsetlabel 270 14 11>
+<Netlist allted>
+$devicename($node(pin1),$node(pin2))=$R;
+</Netlist>
+<Netlist hspice>
+$devicename $node(pin1) $node(pin2) $R $notEmpty($Tc1;TC1=$Tc1) $notEmpty($Tc2;TC2=$Tc2) $notEmpty($Tnom;TNOM=$Tnom)
+</Netlist>
+<Netlist qucs>
+R:$devicename $node(pin1) $node(pin2)  R="$R" Temp="$Temp" Tc1="$Tc1" Tc2="$Tc2" Tnom="$Tnom"
+</Netlist>
+<Netlist spice>
+$devicename $node(pin1) $node(pin2) $R $notEmpty($Tc1;TC1=$Tc1) $notEmpty($Tc2;TC2=$Tc2) $notEmpty($Tnom;TNOM=$Tnom)
+</Netlist>
+</Component>
+
+
+<Component C>
+<Description>
+capacitor for qucs import
+</Description>
+<Parameter>
+<string C 1p>
+unit=F
+info=capacitance
+<string V>
+unit=V
+info=initial voltage for transient simulation
+<string stype>
+display=false
+<list Package 1206 0805 >
+</Parameter>
+<Layout>
+[macro]
+# device-type        macro-file		pins
+*	        pcb/capacitor.layout		pin1 pin2
+</Layout>
+<Prefix C>
+<Label>
+$devicename
+$C
+</Label>
+<Symbol>
+<Line -4 -11 -4 11 #0000c0>
+<Line 4 -11 4 11 #0000c0>
+<Line -30 0 -4 0 #0000c0>
+<Line 4 0 30 0 #0000c0>
+<Port -30 0 pin2>
+<Port 30 0 pin1>
+</Symbol>
+<Offsetlabel 0 -10 -16>
+<Offsetlabel 90 19 13>
+<Offsetlabel 180 -12 -14>
+<Offsetlabel 270 17 10>
+<Netlist allted>
+$devicename($node(pin1),$node(pin2))=$C;
+</Netlist>
+<Netlist hspice>
+$devicename $node(pin2) $node(pin1)  $C $notEmpty($V;IC=$V)
+</Netlist>
+<Netlist qucs>
+C:$devicename $node(pin2) $node(pin1) C="$C" V="$V"
+</Netlist>
+<Netlist spice>
+$devicename $node(pin2) $node(pin1)  $C $notEmpty($V;IC=$V)
+</Netlist>
+</Component>

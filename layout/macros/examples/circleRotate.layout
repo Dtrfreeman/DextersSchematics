@@ -1,0 +1,48 @@
+#!/usr/bin/layout
+#name=circle rotate
+#help=rotate any circle in the design to an upright edge
+
+int main()
+{
+ // get first cell
+  cellList *cells=layout->drawing->firstCell;
+  point pCenter;
+  int radius;
+  // loop over all cells
+  while (cells!=NULL){  
+     if (cells->thisCell!=NULL){
+       // get first Element of this cell
+        elementList *l=cells->thisCell->firstElement;
+        cells->thisCell->deselectAll();
+
+        // loop over all elements
+        while (l!=NULL) {
+                if (l->thisElement!=NULL) {
+		        // find circles (regular polygons with >8 vertices)
+                        if ( l->thisElement->isCircle(&pCenter,&radius) ){
+                                pointArray pa=l->thisElement->getPoints();
+                                int max=-1e10;
+                                int pos=-1;
+                                //find maximum x coordinate
+                                for (int i=0;i<pa.size()-1;++i){
+                                        if (pa.point(i).x()>max)) {
+                                                pos=i; max=pa.point(i).x();
+                                        }
+                                }
+                                // calculate angle of maximal x-edge
+                                double angle= l->thisElement->angle(pa.point(pos),pa.point(pos+1));
+                                if (angle!=90){
+                                        // rotate if not upright
+                                        l->thisElement->selectAll();
+                                        cells->thisCell->rotateSelect(90-angle,pCenter);
+                                        l->thisElement->deselectAll();
+                                }   
+                        }
+                }
+                l=l->nextElement;
+        }
+       }
+     cells=cells->nextCell;
+ }
+
+}

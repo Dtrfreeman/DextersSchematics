@@ -1,0 +1,61 @@
+#!/usr/bin/layout
+#name=link to SMD resistor
+#help=link to SMD resistor
+
+int main(){
+string s="NETLIST_PARAMETER";
+//layout->showMessage("",s);
+string package=s.parameter("Package");
+if (package=="") package="1206";
+string para=s.parameter("value");
+if (para=="") para=s.parameter("C");
+if (para=="") {
+	para=s;
+	para.remove("C");
+	para.remove("cap");
+	} 
+s=para;
+s.remove("F");
+s.remove("p");
+double f=1;
+if (s.contains("n")) {
+	s.remove("n");
+	f*=1000;
+	}
+if (s.contains("µ")) {
+	s.remove("µ");
+	f*=1000000;
+	}
+if (s.contains("u")) {
+	s.remove("u");
+	f*=1000000;
+	}
+if (s.contains("m")) {
+	s.remove("m");
+	f*=1000000000;
+	}
+double v=s.toDouble()*f;
+double v1=s.toDouble()*f;
+int c=0;
+while (v>=100) {
+	c++;
+	v=v/10;
+	}
+string val;
+val.setNum(v,0);
+string st;
+st.setNum(c);
+s=val+st;
+string cellname="C"+s+"-"+package+"-NETLIST_DEVICENAME";
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+layout->drawing->importFile("NETLIST_MACROPATH/"+package+".gds");
+layout->drawing->setCell(package);
+layout->drawing->currentCell->cellName=cellname;
+layout->drawing->currentCell->replaceText("devicename","NETLIST_DEVICENAME");
+layout->drawing->currentCell->replaceText("1","NETLIST_PIN1_NAME");
+layout->drawing->currentCell->replaceText("2","NETLIST_PIN2_NAME");
+layout->drawing->currentCell->replaceText("type",s);
+} 

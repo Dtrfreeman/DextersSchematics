@@ -1,0 +1,48 @@
+#!/usr/bin/layout
+#name=random array
+#help=generates a random array of boxes
+
+int main(){
+//++++++++++++++++++++++++++++++++++++++
+// enter values here:
+  int sizeX=1000;
+  int sizeY=1000;
+  int width=12;
+  int height=16;
+  int count=1000;
+  int layer =11;
+  int space=5;
+//++++++++++++++++++++++++++++++++++++++
+// the macro requires a empty cell to find the nearest element correctly
+  layout->drawing->newCell();
+  int wh=width/2+space;
+  int hh=height/2+space;
+  int i;
+  for ( i=count;i>0;i--){
+   bool found=false;
+   int x;
+   int y;
+   int try=0;
+   while (!found){
+    try++;
+    x=stdlib::rand()%sizeX;
+    y=stdlib::rand()%sizeY;
+    point p; p.set(x,y);
+    elementList *e=layout->drawing->currentCell->nearestElement(p);
+    if (e==NULL) found=true;
+    else {
+      // checks, if conflicts with existing box
+      pointArray pa=e->thisElement->getPoints();
+      if (pa.point(0).x()>(x+wh)) found=true;
+      else if (pa.point(1).x()<(x-wh)) found=true;
+      else if (pa.point(0).y()<(y-hh)) found=true;
+      else if (pa.point(1).y()>(y+hh)) found=true;
+    }
+     // no free space found
+     if (try>1000) return 1;
+    }
+    layout->drawing->currentCell->addBox(x-width/2,y-height/2,width,height,layer);
+  }
+ layout->drawing->scaleFull();
+}
+ 

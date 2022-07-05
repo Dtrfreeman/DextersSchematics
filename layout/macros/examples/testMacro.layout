@@ -1,0 +1,35 @@
+#!/usr/bin/layout
+#name= test LayoutEditor Macro
+#help=test LayoutEditor Macro
+
+point myfunc(class point p){
+point p2(2500,15000);
+return p2+p;
+}
+
+
+int main(){
+// macro content
+class layout *l=layout;  //project::newLayout();
+
+layers::num[6].name="new text";
+string point;
+cell *c=l->drawing->currentCell;
+c->cellName="test-cell-c++-macro";
+for (int i=0;i<30;++i)
+c->addBox(0,0,5000,7000,5);
+c->addRoundedBox(10000,0,5000,7000,500,5);
+c->addChamferedBox(20000,0,5000,7000,500,5);
+c->addCircleBox(class point(0,10000),class point(5000,17000),5);
+class point p(12500,15000);
+c->addEllipse(5,p,2500,3500);
+class point newPoint=myfunc(class point(20000,0));
+c->addPolygonArc(newPoint,2500,3500,0,340,5);
+element *e=c->addText(5,class point(25,25000),layers::num[6].name);
+e->setWidth(1000);
+l->drawing->saveFile("/home/user/testout.gds");
+
+l->showMessage("Result","Macro test completed");
+l->drawing->scaleFull();
+}
+

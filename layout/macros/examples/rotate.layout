@@ -1,0 +1,29 @@
+#!/usr/bin/layout
+#name=rotate shapes/references
+#help=rotate
+
+int main(){
+ cell *c=layout->drawing->findCell("shapeCell"); 
+ if (c==NULL) { // create cell
+   c=layout->drawing->addCell()->thisCell;
+   c->cellName="shapeCell");
+   pointArray pa; pa.attach(0,0); pa.attach(10000,0);
+   c->addPath(pa,1);
+ }
+ for (int r=0;r<360;r+=5){  //loop from 0 to 360 in 5 deg steps
+   element *e=layout->drawing->currentCell->addCellref(c,point(0,0)); // place reference
+   e->rotate(r); // rotate reference
+ }
+ 
+ layout->drawing->currentCell->selectAll();
+ layout->drawing->currentCell->moveSelect(point(25000,0));
+ layout->drawing->currentCell->deselectAll();
+ 
+ // alternative way creating path elements instead of references
+ for (int r=0;r<360;r+=5){  //loop from 0 to 360 in 5 deg steps
+   pointArray pa;pa.attach(0,0);pa.attach(10000*math::cos(r/180*math::pi),10000*math::sin(r/180*math::pi));
+   element *e=layout->drawing->currentCell->addPath(pa,3); // place path
+ }
+ 
+layout->drawing->scaleFull();
+}

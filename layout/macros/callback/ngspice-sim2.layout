@@ -1,0 +1,26 @@
+#!/usr/bin/layout
+#name=callback ngspice simulation
+#help=callback macro called after completing the ngspice simualtion
+
+
+
+string temp;
+
+int main(){
+  file f;
+  temp=f.tempPath()+"/";
+  f.filename=temp+"ng-data.txt";
+  if (f.exists()){
+    textEdit *te=project::getCentralTextEditor();
+    te->open(temp+"ng-data.txt");
+    te->drawing->title="NGSpice simulation results";
+    te->drawing->setModifySaved();
+    plotData pd;
+    pd.setSource(temp+"ng-data.txt","ngspice");
+    schematic->drawing->setProbeMode(&pd);
+  }
+  return 0;
+}
+
+
+ 

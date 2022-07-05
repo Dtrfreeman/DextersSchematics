@@ -1,0 +1,28 @@
+#!/usr/bin/layout
+#name=OBD++-Export
+#help=Export PCB to ODB++
+
+#include "../pcbcore.layout"
+
+
+int main(){
+    clearGeneratedLayer();
+    layers::num[10].disable();
+    layers::num[11].disable();
+    layers::num[12].disable();
+    layers::num[13].disable();
+    layers::num[14].disable();
+    layers::num[15].disable();
+    layers::num[72].disable();
+    layers::num[73].disable();
+    layers::num[74].disable();
+    layers::num[75].disable();
+    layers::num[76].disable();
+    layers::num[77].disable();
+    string fn=layout->filename;
+    file f; f.filename=fn;
+    string base;
+    base=f.path()+"/"+f.baseName();
+    if (base.length()<3) base=f.homePath();
+    layout->drawing->saveFile(base+"/matrix/matrix");
+}

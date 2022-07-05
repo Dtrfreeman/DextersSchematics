@@ -1,0 +1,23 @@
+#!/usr/bin/layout
+#name=layer setup
+#help=layer setup for the open cell library
+
+int main(){
+
+stringList sl=components::getLibs();
+int i;
+string path="";
+for(i=0; i<sl.size();i++){
+    int pos=sl.at(i).indexOf("openCellLibrary",0);
+    if (pos>=0) {
+        path=components::getPath(sl.at(i));
+        }
+}
+file f;
+f.filename=path+"/openCellLibrary/layerSetup.layout";
+//layout->showMessage("macrofilename",f.filename);
+if (f.exists())
+  layout->executeMacro(f.filename);
+else layout->showMessage("Layer Setup","openCellLibrary not found!\nPlease add it within the SchematicEditor.");
+
+}

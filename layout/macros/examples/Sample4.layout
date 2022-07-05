@@ -1,0 +1,36 @@
+#!/usr/bin/layout
+#name=#4: Cells
+#help=duplicate current cell
+
+int  main() {
+
+  // get current Cellname and add "_copy"
+  string cellname=layout->drawing->currentCell->cellName+"_copy";
+
+  // get pointer to current cell
+  cell *cellToCopy=layout->drawing->currentCell;
+
+  // add new empty cell
+  cellList *cl=layout->drawing->addCell();
+
+  // set new cellname
+  cl->thisCell->cellName = cellname;
+
+  // set new cell to current cell
+  layout->drawing->setCell(cellname);
+
+  // add cellref to orginal cell
+  point p;
+  p.setX(0);
+  p.setY(0);
+  element *e=cl->thisCell->addCellref(cellToCopy,p);
+
+  // flat celref
+  cl->thisCell->selectAll();
+  cl->thisCell->flatSelect();
+
+  // adjust scalling
+  layout->drawing->scaleFull();
+
+}
+ 

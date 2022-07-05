@@ -1,0 +1,35 @@
+#!/usr/bin/layout
+#name=callback ngspice simulation
+#help=callback macro called after completing the ngspice simualtion
+
+
+
+string temp;
+
+int main(){
+  file f;
+  temp=f.tempPath()+"/";
+  string callbackDir=f.currentPath()+"/";
+  stringList sl;
+  sl.append("b");
+  sl.append(temp+"ng-data.raw");
+  sl.append("a");
+  sl.append(temp+"ng-data.txt");
+  bool b=process::externalTool("ngspice","ngsconvert",sl,callbackDir+"ngspice-sim2.layout");
+  if (!b) b=process::externalTool("ngspice/bin","ngsconvert",sl,"ngspice-sim2.layout");
+  string s=process::toolResult();
+  if (s.size()>1){
+      textEdit *te=project::getCentralTextEditor();
+      if (te->drawing->text()!="") {
+            te->newFile();
+            te->setFile(te->countFiles()-1);
+            }
+      te->setText(s);
+      te->drawing->title="NGSpice simulation report";
+      te->drawing->setModifySaved();
+  }
+  return 0;
+}
+
+
+ 

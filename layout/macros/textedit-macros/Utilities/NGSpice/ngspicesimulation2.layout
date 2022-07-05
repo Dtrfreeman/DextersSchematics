@@ -1,0 +1,69 @@
+#!/usr/bin/layout
+#name=Simulate + Waveform Viewer
+#help=Starts a simulation with ngspice
+
+string temp;
+
+
+int main(){
+  file f;
+  temp=f.tempPath()+"/";
+  f.filename=temp+"ng-data.txt";
+  f.remove();
+  string callbackDir=f.currentPath()+"/../../../callback/";
+  string t2=temp+"ng-netlist.cir";
+  string s=text->drawing->text();
+  if (!s.contains(".control")) s+=".control\nrun\nplot all\n.endc\n\n";
+  f.filename=t2;
+  f.open(false);
+  f.setCodec("ISO-8859-13");
+  f.write(s);
+  f.close();
+  bool b;
+  stringList sl;
+  if (process::isWindows()) {
+      //windows
+      //sl.append("-i");
+      sl.append(temp+"ng-netlist.cir");
+      sl.append("-r");
+      sl.append(temp+"ng-data.raw");
+      b=process::externalTool("ngspice","ngspice",sl,"");
+      if (!b) b=process::externalTool("spice","ngspice",sl,"");
+      if (!b) b=process::externalTool("spice_c","ngspice",sl,"");
+      if (!b) b=process::externalTool("ngspice/spice","ngspice",sl,"");
+      if (!b) b=process::externalTool("ngspice23_110605-2/spice","ngspice",sl,"");
+  }
+  else if (process::isMac()) {
+      //mac
+      sl.append("-e");
+      sl.append("tell app \"Terminal\" to do script \"/Applications/ngspice/bin/ngspice "
+         +temp+"ng-netlist.cir"
+         +" -r "+temp+"ng-data.raw"
+         +"\" ");
+      b=process::externalTool("/usr/bin","osascript",sl,"");
+  }
+  else { //Linux
+      //linux
+      sl.append("-e");
+      sl.append("ngspice");
+      sl.append(temp+"ng-netlist.cir");
+      sl.append("-r");
+      sl.append(temp+"ng-data.raw");
+      b=process::externalTool("","konsole",sl,"");
+      if (!b) b=process::externalTool("","gnome-terminal",sl,"");
+  }
+  if (!b) {
+      string s1="**************************************************\n* ngspice was not found on your system!\n* Install it ( http://ngspice.sourceforge.net ) or \n* adjust this macro to start the simulation with the text editor!\n**************************************************\n\n\n";
+      text->newFile();
+      text->setFile(text->countFiles()-1);
+      text->drawing->setText(s1);
+      text->drawing->setLexer("spice");
+      text->drawing->title="ng-spice problem";
+  }
+    }
+  return 0;
+
+}
+
+
+ 

@@ -1,0 +1,20 @@
+#!/usr/bin/layout
+#name=callback tran simulation
+#help=calculation number of points
+
+int main(){
+  sElement *e=iPDK_getCurrentInst();
+  double start=e->getParameter("start").toDoubleFromEng();
+  double stop=e->getParameter("stop").toDoubleFromEng();
+  double step=e->getParameter("step").toDoubleFromEng();
+  if (start>stop) {
+      e->setParameter("start",e->getParameter("stop"));
+      start=stop;
+  }
+  int nr=(stop-start)/step+1;
+  string s; s.setNum(nr);
+  e->setParameter("points",s);
+}
+
+
+ 

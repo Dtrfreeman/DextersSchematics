@@ -1,0 +1,90 @@
+#!/usr/bin/layout
+#name=zoneplate
+#help=generate a fresnel zone plate
+
+//parameter with default value
+#parameter radius "100µm"
+#parameter wavelength "800nm"
+#parameter focus "1800µm"
+#parameter startradius "10µm"
+#parameter mode "exact"
+#parameter startWithShape "true"
+#parameter layer "1"
+
+#include "shapelib.layout"
+
+int main(){
+int radius=databaseunits(iPar("radius"));
+double lamda=databaseunits(iPar("wavelength"));
+double focus=databaseunits(iPar("focus"));
+int layer=getLayer(iPar("layer"));
+string mode=iPar("mode");
+string start=iPar("startWithShape");
+int startradius=databaseunits(iPar("startradius"));
+string cellname="zoneplate"+userunits(radius)+"_"+userunits(lamda)+"_"+userunits(focus)+"_"+start+"_"+userunits(startradius)+"_"+mode+"_"+layer;
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=layer;
+int n=0;
+int r=0;
+int rLast=0;
+bool b=true;
+if (start=="false") b=false;
+if (lamda==0) return 0;
+while (r<radius){
+  n++;
+  r=math::sqrt((lamda*focus*n)+(lamda*lamda*n*n)/(4));
+  if (b){
+    if (n==1){
+      if ((startradius>0)&&(mode!="extended")){
+        if ((mode=="exact")&&(startradius<r)){
+        layout->drawing->point(0,0);
+	layout->drawing->point(0,startradius);
+	layout->drawing->point(0,r);
+	layout->drawing->polygonArc();
+	}
+      }
+      else {
+	 if ((mode=="extended")&&(startradius>r)){
+	  }
+	 else {
+	    layout->drawing->point(0,0);
+	    layout->drawing->point(r,0);
+	    layout->drawing->circle();
+	  }
+     }
+    }
+    else {
+      bool display=true;
+      if (r<startradius) display=false;
+      if (mode=="exact"){
+          
+	  if (rLast<startradius) rLast=startradius;
+	  if (r>radius) r=radius;
+      }
+      if (mode=="limited"){
+	  if (rLast<startradius) display=false;
+          if (r>radius) display=false;
+      }
+      if (mode=="extended"){
+      }
+      if ((display)&&(r>rLast)){
+	layout->drawing->point(0,0);
+	layout->drawing->point(0,rLast);
+	layout->drawing->point(0,r);
+	layout->drawing->polygonArc();
+     }
+    }
+  }
+  b= (!b);
+  if (r <= rLast) return 1;
+  rLast=r;
+}
+}
+
+

@@ -1,0 +1,11 @@
+#!/usr/bin/layout
+#name=Verilog
+#help=Highligh the current file for Verilog
+
+string temp;
+
+
+int main(){
+
+text->setLexer("verilog");
+}

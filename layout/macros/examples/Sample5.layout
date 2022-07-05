@@ -1,0 +1,47 @@
+#!/usr/bin/layout
+#name=#5: Elements
+#help=sets the size of text with negative width to -10 and round paths to a grid of 1000
+
+int  main() {
+  // get first cell
+  cellList *cells=layout->drawing->firstCell;
+
+  // loop over all cells
+  while (cells!=NULL){  
+     if (cells->thisCell!=NULL){
+       // get first Element of this cell
+        elementList *l=cells->thisCell->firstElement;
+       cells->thisCell->deselectAll();
+
+       // loop over all elements
+       while (l!=NULL) {
+           if (l->thisElement!=NULL) {
+		// if element is a path with a width less than 0
+              if ( l->thisElement->isPath() ){
+
+		   // setWidth to zero
+                  //l->thisElement->setWidth(0);
+
+
+		   /* to set to userunits use:
+		   l->thisElement->setWidth(60/layout->drawing->userunits);
+		   */
+
+                 // select this element
+		   l->thisElement->selectAll();
+              }
+              if ((l->thisElement->getWidth()< 0) &&
+                             l->thisElement->isText() ){
+			l->thisElement->setWidth(-10);
+			}
+         }
+         l=l->nextElement;
+     }
+
+    //round all selected elements
+    cells->thisCell->roundSelect(1000); 
+    cells->thisCell->deselectAll();
+    }
+    cells=cells->nextCell;
+ }
+}

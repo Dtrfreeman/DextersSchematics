@@ -1,0 +1,355 @@
+ 
+<Component Idc>
+<Description>
+ideal DC current source
+</Description>
+<Parameter>
+<string I 1mA>
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix I>
+<Label>
+$devicename
+I = $I
+</Label>
+<Symbol>
+<Circle -12 -12 12 12 #0000c0>
+<Line -30 0 -12 0 #0000c0>
+<Line 30 0 12 0 #0000c0>
+<Line -7 0 7 0 #0000c0>
+<Line 6 0 0 -4 #0000c0>
+<Line 6 0 0 4 #0000c0>
+<Port 30 0 port1>
+<Port -30 0 port2>
+</Symbol>
+<Offsetlabel -180 -11 -15>
+<Offsetlabel -90 18 12>
+<Netlist qucs>
+Idc:$devicename $node(port1) $node(port2) $parameters($parametername="$parametervalue" )
+</Netlist>
+<Netlist spectre>
+I$devicename ($node(port1) $node(port2)) isource type=dc DC=$I
+</Netlist>
+<Netlist spice>
+$devicename $node(port1) $node(port2) $I
+</Netlist>
+</Component>
+<Component Ipulse>
+<Description>
+ideal pulse current source
+</Description>
+<Parameter>
+<string I1 0V>
+<string I2 3V>
+<string period 1ms>
+<string pulsewidth 0.5ms>
+<string delay 0>
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix I>
+<Label>
+$devicename
+I1 = $I1
+I2 = $I2
+period = $period
+pulsewidth = $pulsewidth
+</Label>
+<Symbol>
+<Line 14 12 14 10 18 10 18 7 14 7 14 5 #0000c0>
+<Port -30 0 port2>
+<Port 30 0 port1>
+<Line 6 0 0 4 #0000c0>
+<Line 6 0 0 -4 #0000c0>
+<Line -7 0 7 0 #0000c0>
+<Line 30 0 12 0 #0000c0>
+<Line -30 0 -12 0 #0000c0>
+<Circle -12 -12 12 12 #0000c0>
+</Symbol>
+<Offsetlabel -180 -11 -15>
+<Offsetlabel -90 20 17>
+<Offsetlabel 0 -9 -14>
+<Offsetlabel 90 17 12>
+<Offsetlabel 180 -7 -16>
+<Netlist spectre>
+V$devicename ($node(port1) $node(port2)) isource type=pulse V1=$I1 V2=$I2 delay=$delay period=$period width=$pulsewidth
+</Netlist>
+<Netlist spice>
+$devicename $node(port1) $node(port2) PULSE(  $I1 $I2 $delay  0  0 $pulsewidth $period )
+</Netlist>
+</Component>
+<Component Isine>
+<Description>
+ideal sine current source
+</Description>
+<Parameter>
+<string I 1mA>
+<string f 1GHz>
+<string Phase 0>
+<string DC 0>
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix I>
+<Label>
+$devicename
+I = $I
+freq = $f
+DC = $DC
+</Label>
+<Symbol>
+<Port -30 0 port2>
+<Port 30 0 port1>
+<Line 6 0 0 4 #0000c0>
+<Line 6 0 0 -4 #0000c0>
+<Line -7 0 7 0 #0000c0>
+<Line 30 0 12 0 #0000c0>
+<Line -30 0 -12 0 #0000c0>
+<Arc 12 14 12 17 12 11 #0000c0>
+<Arc 12 8 12 5 12 11 #0000c0>
+<Circle -12 -12 12 12 #0000c0>
+</Symbol>
+<Offsetlabel -90 20 17>
+<Offsetlabel 0 -9 -14>
+<Offsetlabel 90 17 12>
+<Offsetlabel 180 -7 -16>
+<Netlist spectre>
+I$devicename ($node(port1) $node(port2)) isource type=sine freq=$f ampl=$I sinephase=$Phase sinedc=$DC
+</Netlist>
+<Netlist spice>
+$devicename $node(port1) $node(port2) sin(  $DC $U  $f 0  0 )
+</Netlist>
+</Component>
+<Component Iac>
+<Description>
+ideal AC current source
+</Description>
+<Parameter>
+<string I 1mA>
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix I>
+<Label>
+$devicename
+I = $I
+</Label>
+<Symbol>
+<Circle -12 -12 12 12 #0000c0>
+<Arc 12 8 12 5 12 11 #0000c0>
+<Arc 12 14 12 17 12 11 #0000c0>
+<Line -30 0 -12 0 #0000c0>
+<Line 30 0 12 0 #0000c0>
+<Line -7 0 7 0 #0000c0>
+<Line 6 0 0 -4 #0000c0>
+<Line 6 0 0 4 #0000c0>
+<Port 30 0 port1>
+<Port -30 0 port2>
+</Symbol>
+<Offsetlabel -90 20 17>
+<Offsetlabel 0 -9 -14>
+<Netlist spectre>
+I$devicename ($node(port1) $node(port2)) isource mag=$I
+</Netlist>
+<Netlist spice>
+$devicename $node(port1) $node(port2) sin(  $DC $U  $f 0  0 )
+</Netlist>
+</Component>
+<Component Vsine>
+<Description>
+ideal sine voltage source
+</Description>
+<Parameter>
+<string U 1V>
+<string f 1GHz>
+<string Phase 0>
+<string DC 0>
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix V>
+<Label>
+$devicename
+U = $U
+freq = $f
+DC = $DC
+</Label>
+<Symbol>
+<Port -30 0 port2>
+<Port 30 0 port1>
+<Line 6 0 0 4 #0000c0>
+<Line 6 0 0 -4 #0000c0>
+<Line -7 0 7 0 #0000c0>
+<Line 30 0 12 0 #0000c0>
+<Line -30 0 -12 0 #0000c0>
+<Arc 12 14 12 17 12 11 #0000c0>
+<Arc 12 8 12 5 12 11 #0000c0>
+<Circle -12 -12 12 12 #0000c0>
+</Symbol>
+<Offsetlabel -180 -11 -15>
+<Offsetlabel -90 20 17>
+<Offsetlabel 0 -9 -14>
+<Offsetlabel 90 17 12>
+<Netlist spectre>
+V$devicename ($node(port1) $node(port2)) vsource type=sine freq=$f ampl=$U sinephase=$Phase sinedc=$DC
+</Netlist>
+<Netlist spice>
+$devicename $node(port1) $node(port2)  sin(  $DC $U  $f 0  0 )
+</Netlist>
+</Component>
+<Component Vac>
+<Description>
+ideal ac voltage source
+</Description>
+<Parameter>
+<string U 1V>
+<string f 100k>
+<string DC 0>
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix V>
+<Label>
+$devicename
+U = $U
+</Label>
+<Symbol>
+<Circle -12 -12 12 12 #0000c0>
+<Arc -4 0 0 0 -8 0 #0000c0>
+<Arc 4 0 0 0 8 0 #0000c0>
+<Line -30 0 -12 0 #0000c0>
+<Line 30 0 12 0 #0000c0>
+<Line 18 5 18 11 #ff0000>
+<Line 21 8 15 8 #ff0000>
+<Line -18 5 -18 11 wire>
+<Port 30 0 port1>
+<Port -30 0 port2>
+</Symbol>
+<Offsetlabel 0 -10 -18>
+<Offsetlabel 90 19 27>
+<Netlist spectre>
+V$devicename ($node(port1) $node(port2)) vsource mag=$U
+</Netlist>
+<Netlist spice>
+$devicename $node(port1) $node(port2)  sin(  $DC $U  $f 0  0 )
+</Netlist>
+</Component>
+<Component Vpulse>
+<Description>
+ideal pulse voltage source
+</Description>
+<Parameter>
+<string V1 0V>
+<string V2 3V>
+<string period 1ms>
+<string pulsewidth 0.5ms>
+<string delay 0>
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix V>
+<Label>
+$devicename
+V1 = $V1
+V2 = $V2
+period = $period
+pulsewidth = $pulsewidth
+</Label>
+<Symbol>
+<Port -30 0 port2>
+<Port 30 0 port1>
+<Line 6 0 0 4 #0000c0>
+<Line 6 0 0 -4 #0000c0>
+<Line -7 0 7 0 #0000c0>
+<Line 30 0 12 0 #0000c0>
+<Line -30 0 -12 0 #0000c0>
+<Circle -12 -12 12 12 #0000c0>
+<Line 15 12 15 9 19 9 19 7 15 7 15 3 #0000c0>
+</Symbol>
+<Offsetlabel -180 -11 -15>
+<Offsetlabel -90 20 17>
+<Offsetlabel 0 -9 -14>
+<Offsetlabel 90 17 12>
+<Offsetlabel 270 18 11>
+<Netlist spectre>
+V$devicename ($node(port1) $node(port2)) vsource type=pulse V1=$V1 V2=$V2 delay=$delay period=$period width=$pulsewidth
+</Netlist>
+<Netlist spice>
+$devicename $node(port1) $node(port2) PULSE(  $V1 $V2 $delay  1fs  1fs $pulsewidth $period )
+</Netlist>
+</Component>
+
+
+<Component Vdc>
+<Description>
+ideal DC voltage source
+</Description>
+<Parameter>
+<string U 1V>
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix V>
+<Label>
+$devicename
+U = $U
+</Label>
+<Symbol>
+<Port -30 0 port2>
+<Port 30 0 port1>
+<Line -11 5 -11 11 wire>
+<Line 14 8 8 8 #ff0000>
+<Line 11 5 11 11 #ff0000>
+<Line -4 0 -30 0 #0000c0>
+<Line 30 0 4 0 #0000c0>
+<Line -4 -6 -4 6 #0000c0>
+<Line 4 -13 4 13 #0000c0>
+</Symbol>
+<Offsetlabel 0 -14 -12>
+<Offsetlabel 90 18 17>
+<Netlist allted>
+E$devicename($node(port1),$node(port2))=$addspace(U);
+</Netlist>
+<Netlist hspice>
+$devicename $node(port1) $node(port2)  $U
+</Netlist>
+<Netlist qucs>
+Vdc:$devicename $node(port1) $node(port2) $parameters($parametername="$parametervalue" )
+</Netlist>
+<Netlist spectre>
+V$devicename ($node(port1) $node(port2)) vsource DC=$U
+</Netlist>
+<Netlist spice>
+$devicename $node(port1) $node(port2)  $U
+</Netlist>
+<Netlist verilog>
+VDC #(.dc($eng(U))) $devicename(.p($node(port1)), .n($node(port2)));
+</Netlist>
+<Model verilog>
+module VDC(p, n);
+output p, n;
+electrical p, n;
+parameter real dc=0;
+analog begin
+    V(p,n) <+ dc;
+end
+endmodule
+</Model>
+</Component>

@@ -1,0 +1,263 @@
+#!/usr/bin/layout
+#name=LayerDefinitions
+#help=Save/Load/Reset current layer defintions
+
+//----------------------------------------------------
+// Utility routines to log variables to file
+//----------------------------------------------------
+void log_bool( string tag, bool bl, string eol, file *f ){
+   string s="";
+   if (tag.length()>0) {
+      s=tag;
+      s=s+",";
+   }
+   if (bl) {
+      s=s+"true";
+      }
+   else {
+      s=s+"false";
+      }
+   s=s+",";
+   s=s+eol;
+   f->write(s);
+}
+//----------------------------------------------------
+void log_str( string tag, string str, string eol, file *f ){
+	string s="";
+	if (tag.length()>0) {
+		s=tag;
+		s=s+",";
+	}
+	s=s+str;
+	s=s+",";
+	s=s+eol;
+	f->write(s);
+}
+//----------------------------------------------------
+void log_int( string tag, int i, string eol, file *f ){
+	string s="";
+	if (tag.length()>0) {
+		s=tag;
+		s=s+",";
+	}
+	s=s+i;
+	s=s+",";
+	s=s+eol;
+	f->write(s);
+}
+//----------------------------------------------------
+void log_dbl( string tag, double x, string eol, file *f ){
+	string s="";
+	if (tag.length()>0) {
+		s=tag;
+		s=s+",";
+	}
+	s=s+x;
+	s=s+",";
+	s=s+eol;
+	f->write(s);
+}
+//----------------------------------------------------
+void log_pnt( string tag, point p, string eol, file *f ){
+	string s="";
+	if (tag.length()>0) {
+		s=tag;
+		s=s+",";
+	}
+	s=s+p.x();
+	s=s+","+p.y();
+	s=s+",";
+	s=s+eol;
+	f->write(s);
+}
+//----------------------------------------------------
+void log_pa( string tag, pointArray pa, string eol, file *f ){
+	string s="";
+	if (tag.length()>0) {
+		s=tag;
+		f->write(s);
+	}
+	string s1="";
+	string s2="";
+	int i;
+	for (i=0; i<pa.size(); i++) {
+		s1=s1+","+pa.point(i).x();
+		s2=s2+","+pa.point(i).y();
+	}
+	s1=s1+eol;
+	f->write(s1);
+	s2=s2+eol;
+	f->write(s2);
+}
+//----------------------------------------------------
+// Example usage:
+//----------------------------------------------------
+//void some_function( string aString, file *f){
+//	log_str( "Inside some_function", aString, "\n", f );
+//}
+
+//int main() {
+//	bool bRead=true;
+//	bool bWrite=false;
+//	file f;
+//	string f_name;
+
+	// Open the file
+//	f_name="List.csv";
+//	f.filename=f_name;
+//	f.open(bWrite);		//open file for output
+//	log_str( "At main level", "some-string", "\n", &f );
+
+	// random code
+//	some_function( "another-string", &f);
+	
+//	f.write("Script-finished\n");
+//	layout->showStatus( "Script-finished" );
+//	f.close();			// close file
+//	textEdit *te=project::getCentralTextEditor();
+//      te->newDoc();
+//	te->open(f_name);
+//};
+//----------------------------------------------------
+void saveLayers( ){
+	bool bRead=true;
+	bool bWrite=false;
+	file f;
+	string f_name, s;
+	int layNum, layStyle, layRed, layGreen, layBlue, layMapTo, layDType, lay3Dtop, lay3Dbot;
+	string layName;
+	bool layEnabled;
+	// Open output file
+	f_name="layerDefinitions.csv";
+	f_name=layout->getText("Null Title","Definition file to load => ",f_name);
+	f.filename=f_name;
+	f.open(bWrite);		//open file for output
+	log_str( "Current Layer Definitions:", "", "\n", &f );
+	log_str( "", "layNum,layName,layStyle,layRed,layGreen,layBlue,layMapTo,layDType,layEnabled", "\n", &f );
+
+	for (layNum=0; layNum<layers::displayedLayers; layNum++) {
+		layName  = layers::num[layNum].name;
+		layStyle = layers::num[layNum].getStyle();
+		layRed   = layers::num[layNum].red();
+		layGreen = layers::num[layNum].green();
+		layBlue  = layers::num[layNum].blue();
+		layMapTo = layers::num[layNum].mapToLayer;
+		layDType = layers::num[layNum].mapToDatatype;
+		layEnabled = layers::num[layNum].isEnabled();
+
+		if (layEnabled ) {
+			log_int("", layNum,    "", &f);
+			log_str("", layName,   "", &f);
+			log_int("", layStyle,  "", &f);
+			log_int("", layRed,    "", &f);
+			log_int("", layGreen,  "", &f);
+			log_int("", layBlue,   "", &f);
+			log_int("", layMapTo,   "", &f);
+			log_int("", layDType,   "", &f);
+			log_bool("", layEnabled, "\n", &f);
+		}
+	}
+	
+	f.write("Script-finished\n");
+	layout->showStatus( "Script-finished" );
+	
+	f.close();		// close file
+
+        textEdit *te=project::getCentralTextEditor();
+        te->newDoc();
+	te->open(f_name);
+}
+//----------------------------------------------------
+void loadLayers( ){
+	bool bRead=true;
+	bool bWrite=false;
+	file f;
+	int i;
+	string f_name, s;
+	stringList sl, sl_parms;
+	int layNum, layStyle, layRed, layGreen, layBlue, layMapTo, layDType, lay3Dtop, lay3Dbot;
+	string layName;
+	bool layEnabled;
+	// Read layer definitions from specified file
+	f_name="layerDefinitions.csv";
+	f_name=layout->getText("Null Title","Definition file to load => ",f_name);
+	f.filename=f_name;
+	f.open(bRead);		// open file for input
+	s=f.read();			// read entire file into string
+	f.close();
+	sl=s.split("\n");	// split file into lines
+	for (i=0; i<sl.size(); i++) {
+		sl_parms=sl.at(i).split(",");	// split line into parms
+//		s = "Line "+ i;
+//		s = s+" <"+sl.at(i);
+//		s = s+"> # Parms = "+sl_parms.size();
+//		s = s+"\n";
+//		layout->showMessage("Null Title",s);
+//		layout->showMessage("Null Title","layName  <"+sl_parms.at(1)+"> " + "\n");
+		if ((sl_parms.size()==10) && (sl_parms.at(0)!="layNum")) {
+//			Parm list: layNum,layName,layStyle,layRed,layGreen,layBlue,layMapTo,layDType,layEnabled
+			layNum                     = sl_parms.at(0).toInt();
+			layers::num[layNum].name   = sl_parms.at(1);
+			layers::num[layNum].setStyle(sl_parms.at(2).toInt());
+			layers::num[layNum].setColor(sl_parms.at(3).toInt(),sl_parms.at(4).toInt(),sl_parms.at(5).toInt());
+			layers::num[layNum].mapToLayer    = sl_parms.at(6).toInt();
+			layers::num[layNum].mapToDatatype = sl_parms.at(7).toInt();
+			if ((sl_parms.at(8)=="true") || (sl_parms.at(8)=="TRUE")) {
+				layers::num[layNum].enable();
+				}
+			else {
+				layers::num[layNum].disable();
+				}
+		}
+	}
+}
+//----------------------------------------------------
+void resetLayers( ){
+	bool bRead=true;
+	bool bWrite=false;
+	file f;
+	string f_name, s;
+	int layNum, layStyle, layRed, layGreen, layBlue, layMapTo, layDType, lay3Dtop, lay3Dbot;
+	string layName;
+	bool layEnabled;
+
+	for (layNum=0; layNum<layers::displayedLayers; layNum++) {
+		layers::num[layNum].name   = layNum;
+		layers::num[layNum].mapToLayer    = layNum;
+		layers::num[layNum].mapToDatatype = -1;
+		layers::num[layNum].disable();
+	}
+}
+//----------------------------------------------------
+//----------------------------------------------------
+int main() {
+	bool bRead=true;
+	bool bWrite=false;
+	cell *aCell;
+	cellList *cells;
+	element *el;
+	elementList *els;
+	file f;
+	int i;
+	string cell_name, f_name, s, str;
+	stringList cellNames, parentChild, sl, sl_parms;
+	intList    cellCount;
+	point p;
+	pointArray pa,pb;
+
+	layout->showMessage("Null Title","# of Layers =" + layers::displayedLayers);
+	str=layout->getText("Null Title","Save/Load layer definitions => ","Save/Load/Reset");
+
+	switch (str) {
+	  case "S"   :	
+	  case "Save":	saveLayers( );
+					break;
+	  case "L"   :	
+	  case "Load":	loadLayers( );
+					break;
+	  case "R"    :	
+	  case "Reset":	resetLayers( );
+					break;
+	  default:		break;
+	}
+};

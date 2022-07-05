@@ -1,0 +1,71 @@
+#!/usr/bin/layout
+#name=S-bend
+#help=generate S-Bend
+
+//parameter with default value
+#parameter length "10µm"
+#parameter width "0.3µm"
+#parameter step "3.5µm"
+#parameter pathLength "11.5µm"
+#parameter layer "1"
+
+#include "shapelib.layout"
+
+int main(){
+int width=databaseunits(iPar("width"));
+int step=databaseunits(iPar("step"));
+int length=databaseunits(iPar("length"));
+int pathLength=databaseunits(iPar("pathLength"));
+
+int layer=getLayer(iPar("layer"));
+string cellname="sbend_l_"+userunits(width)+"_"+userunits(step)+"_"+userunits(length)+"_"+userunits(pathLength)+"_"+layer;
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=layer;
+double dLength=length;
+double dStep=step;
+
+if ((pathLength<math::sqrt(dLength*dLength+dStep*dStep))||
+   (pathLength>length+step)) {
+    layout->drawing->point(0,0);
+    layout->drawing->text("invalid parameter");
+    return 0;
+}
+
+int iterations=0;
+double shape;
+double shapeMin=0;
+double shapeMax=1;
+int dif;
+do {
+       ++iterations;
+	shape=(shapeMax+shapeMin)/2;
+	int sh=shape*length;
+	layout->drawing->selectAll();
+	layout->drawing->deleteSelect();
+	layout->drawing->point(0,0);
+	layout->drawing->point(length,step);
+	layout->drawing->point(sh,0);
+	layout->drawing->point(length-sh,step);
+	layout->drawing->bezier3();
+       pointArray pa= layout->drawing->currentCell->firstElement->thisElement->getPoints();
+       double len=0;
+	for (int i=1;i<pa.size();i++){
+		len+=element::distance(pa.point(i-1),pa.point(i));
+		}
+       if (len<pathLength)  shapeMin=shape;
+       else shapeMax=shape;
+       dif=len-pathLength;
+       if (dif<0) dif=-dif;
+} while ((dif>5)  &&(iterations<50));
+layout->drawing->selectAll();
+layout->drawing->setWidth(width);
+layout->drawing->deselectAll();
+}
+
+

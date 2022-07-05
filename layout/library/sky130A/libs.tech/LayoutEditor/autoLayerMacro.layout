@@ -1,0 +1,303 @@
+#!/usr/bin/layout
+#name=Layer setup
+#help=performs as layer and settings setup for sky130A PDK. 
+
+// This macros needs to be run before loading any design
+
+
+
+int licon1Layer=20;
+int mconLayer=21;
+int via1Layer=22;
+int via2Layer=23;
+int via3Layer=24;
+int via4Layer=25;
+
+int met1OtherLayer=31;
+int met2OtherLayer=32;
+int met3OtherLayer=33;
+int met4OtherLayer=34;
+int met5OtherLayer=35;
+
+int main(){ 
+setup::paintEngine=1;
+setup::placeModeForPCB=false;
+setup::lefCellBoundaryLayer=236;
+setup::gdsAutoMapDatatypes=false;
+setup::gdsMapLayer=true;
+setup::oasisAutoMapDatatypes=false;
+setup::oasisMapLayer=true;
+setup::autoLoadLayerFiles=true;
+layers::disableAllLayer();
+string s;
+for( int i=0;i<1023;++i){
+        s.setNum(i);
+        layers::num[i].name="layer_"+s;
+        layers::num[i].mapToLayer=i;
+        layers::num[i].mapToDatatype=-1;
+}
+layers::reset3dView();
+//layers::num[64].set3dView(-300,300);//N/Pwell
+layers::num[66].set3dView(326,180);//poly
+layers::num[licon1Layer].set3dView(326+180,936-326-180);
+layers::num[67].set3dView(936,100);//li
+layers::num[mconLayer].set3dView(1036,1376-1036);
+layers::num[68].set3dView(1376,170);//met1
+layers::num[via1Layer].set3dView(1376+170,2006-1376-170);
+layers::num[69].set3dView(2006,360);//met2
+layers::num[via2Layer].set3dView(2006+360,2786-2006-360);
+layers::num[70].set3dView(2786,845);//met3
+layers::num[via3Layer].set3dView(2786+845,4021-2786-845);
+layers::num[71].set3dView(4021,845);//met4
+layers::num[via4Layer].set3dView(4866,505);
+layers::num[72].set3dView(5371,1260);//met5
+layers::num[0].enable();
+layers::num[0].name="error";
+layers::num[0].setStyle(7);
+layers::num[0].setColor(255,0,0);
+layers::num[0].shortkey="e";
+layers::num[64].enable();
+layers::num[64].name="WELL";
+layers::num[64].setStyle(1);
+layers::num[64].setColor("#ffbff2");
+layers::num[64].shortkey="w";
+layers::num[65].enable();
+layers::num[65].name="DIFF";
+layers::num[65].setStyle(5);
+layers::num[65].setColor("#00ff00");
+layers::num[65].shortkey="d";
+layers::num[66].enable();
+layers::num[66].name="POLY";
+layers::num[66].setStyle(5);
+layers::num[66].setColor("#ff0000");
+layers::num[66].shortkey="p";
+layers::num[licon1Layer].enable();
+layers::num[licon1Layer].name="LICON1";
+layers::num[licon1Layer].setStyle(3);
+layers::num[licon1Layer].setColor("#ffffcc");
+layers::num[licon1Layer].shortkey="k";
+layers::num[licon1Layer].mapToLayer=66;
+layers::num[licon1Layer].mapToDatatype=44;
+layers::num[67].enable();
+layers::num[67].name="LI1";
+layers::num[67].setStyle(5);
+layers::num[67].setColor("#ffe6bf");
+layers::num[67].shortkey="i";
+layers::num[mconLayer].enable();
+layers::num[mconLayer].name="MCON";
+layers::num[mconLayer].setStyle(5);
+layers::num[mconLayer].setColor("#ccccd9");
+layers::num[mconLayer].shortkey="b"; 
+layers::num[mconLayer].mapToLayer=67;
+layers::num[mconLayer].mapToDatatype=44;
+layers::num[68].enable();
+layers::num[68].name="MET1";
+layers::num[68].setStyle(5);
+layers::num[68].setColor("#0000ff");
+layers::num[68].shortkey="1";
+layers::num[via1Layer].enable();
+layers::num[via1Layer].name="VIA";
+layers::num[via1Layer].setStyle(6);
+layers::num[via1Layer].setColor("#5e00e6");
+layers::num[via1Layer].shortkey="v";
+layers::num[via1Layer].mapToLayer=68;
+layers::num[via1Layer].mapToDatatype=44;
+layers::num[69].enable();
+layers::num[69].name="MET2";
+layers::num[69].setStyle(4);
+layers::num[69].setColor("#ff00ff");
+layers::num[69].shortkey="2";   
+layers::num[via2Layer].enable();
+layers::num[via2Layer].name="VIA2";
+layers::num[via2Layer].setStyle(7);
+layers::num[via2Layer].setColor("#ff8000");
+layers::num[via2Layer].shortkey="b"; 
+layers::num[via2Layer].mapToLayer=69;
+layers::num[via2Layer].mapToDatatype=44;
+layers::num[70].enable();
+layers::num[70].name="MET3";
+layers::num[70].setStyle(3);
+layers::num[70].setColor("#00ffff");
+layers::num[70].shortkey="3";
+layers::num[via3Layer].enable();
+layers::num[via3Layer].name="VIA3";
+layers::num[via3Layer].setStyle(5);
+layers::num[via3Layer].setColor("#268c6b");
+layers::num[via3Layer].shortkey="b"; 
+layers::num[via3Layer].mapToLayer=70;
+layers::num[via3Layer].mapToDatatype=44;
+layers::num[71].enable();
+layers::num[71].name="MET4";
+layers::num[71].setStyle(2);
+layers::num[71].setColor("#5e00e6");
+layers::num[71].shortkey="4";
+layers::num[via4Layer].enable();
+layers::num[via4Layer].name="VIA4";
+layers::num[via4Layer].setStyle(5);
+layers::num[via4Layer].setColor("#ffff00");
+layers::num[via4Layer].shortkey="b"; 
+layers::num[via4Layer].mapToLayer=71;
+layers::num[via4Layer].mapToDatatype=44;
+layers::num[72].enable();
+layers::num[72].name="MET5";
+layers::num[72].setStyle(2);
+layers::num[72].setColor("#d9cc00");
+layers::num[72].shortkey="5";  
+layers::num[78].enable();
+layers::num[78].name="HVTP";
+layers::num[78].setStyle(0);
+layers::num[78].setColor("#ff8000");
+layers::num[78].shortkey="";
+layers::num[81].enable();
+layers::num[81].name="areaid";
+layers::num[81].setStyle(0);
+layers::num[81].setColor("#ffbff2");
+layers::num[81].shortkey="";
+layers::num[83].enable();
+layers::num[83].name="text";
+layers::num[83].setStyle(0);
+layers::num[83].setColor("#aaaaaa");
+layers::num[83].shortkey="";
+layers::num[93].enable();
+layers::num[93].name="msdm";
+layers::num[93].setStyle(0);
+layers::num[93].setColor("#e61f0d");
+layers::num[93].shortkey="t";
+layers::num[94].enable();
+layers::num[94].name="cpmm2";
+layers::num[94].setStyle(0);
+layers::num[94].setColor("#bf4026");
+layers::num[94].shortkey="";
+layers::num[95].enable();
+layers::num[95].name="NPC";
+layers::num[95].setStyle(0);
+layers::num[95].setColor("#bf4026");
+layers::num[95].shortkey="";
+layers::num[122].enable();
+layers::num[122].name="pwell";
+layers::num[122].setStyle(0);
+layers::num[122].setColor("#ffbff2");
+layers::num[122].shortkey="";
+layers::num[236].enable();
+layers::num[236].name="prBoundary";
+layers::num[236].setStyle(0);
+layers::num[236].setColor("#ccccd9");
+layers::num[236].shortkey="shift+B";
+
+layers::technologyLayerRemoveAll();
+layers::technologyLayerAdd(298,2); //NWELL
+layers::technologyLayerSetParameter(298,0,0);
+layers::technologyLayerSetParameter(298,1,100);
+layers::technologyLayerSetParameter(298,2,100);
+layers::technologyLayerAdd(299,1);
+layers::technologyLayerSetParameter(299,0,1);
+layers::technologyLayerSetParameter(299,1,100);
+layers::technologyLayerSetParameter(299,2,20);
+layers::technologyLayerSetParameter(299,3,25);
+layers::technologyLayerSetParameter(299,4,100);
+layers::technologyLayerSetParameter(299,5,0);
+layers::technologyLayerAdd(66,2); //POLY
+layers::technologyLayerSetParameter(66,0,2);
+layers::technologyLayerSetParameter(66,1,180);
+layers::technologyLayerSetParameter(66,2,180);
+layers::technologyLayerAdd(licon1Layer,1);
+layers::technologyLayerSetParameter(licon1Layer,0,3);
+layers::technologyLayerSetParameter(licon1Layer,1,180);
+layers::technologyLayerSetParameter(licon1Layer,2,0);
+layers::technologyLayerSetParameter(licon1Layer,3,0);
+layers::technologyLayerSetParameter(licon1Layer,4,180);
+layers::technologyLayerSetParameter(licon1Layer,5,0);
+layers::technologyLayerAdd(67,2); //LI1
+layers::technologyLayerSetParameter(67,0,4);
+layers::technologyLayerSetParameter(67,1,170);
+layers::technologyLayerSetParameter(67,2,170);
+layers::technologyLayerAdd(mconLayer,1);
+layers::technologyLayerSetParameter(mconLayer,0,5);
+layers::technologyLayerSetParameter(mconLayer,1,170);
+layers::technologyLayerSetParameter(mconLayer,2,0);
+layers::technologyLayerSetParameter(mconLayer,3,30);
+layers::technologyLayerSetParameter(mconLayer,4,190);
+layers::technologyLayerSetParameter(mconLayer,5,0);
+layers::technologyLayerAdd(68,2); //MET1
+layers::technologyLayerSetParameter(68,0,6);
+layers::technologyLayerSetParameter(68,1,140);
+layers::technologyLayerSetParameter(68,2,140);
+layers::technologyLayerAdd(via1Layer,1);
+layers::technologyLayerSetParameter(via1Layer,0,7);
+layers::technologyLayerSetParameter(via1Layer,1,150);
+layers::technologyLayerSetParameter(via1Layer,2,55);
+layers::technologyLayerSetParameter(via1Layer,3,55);
+layers::technologyLayerSetParameter(via1Layer,4,170);
+layers::technologyLayerSetParameter(via1Layer,5,0);
+layers::technologyLayerAdd(69,2); //MET2
+layers::technologyLayerSetParameter(69,0,8);
+layers::technologyLayerSetParameter(69,1,140);
+layers::technologyLayerSetParameter(69,2,140);
+layers::technologyLayerAdd(via2Layer,1);
+layers::technologyLayerSetParameter(via2Layer,0,9);
+layers::technologyLayerSetParameter(via2Layer,1,200);
+layers::technologyLayerSetParameter(via2Layer,2,40);
+layers::technologyLayerSetParameter(via2Layer,3,65);
+layers::technologyLayerSetParameter(via2Layer,4,200);
+layers::technologyLayerSetParameter(via2Layer,5,0);
+layers::technologyLayerAdd(70,2); //MET3
+layers::technologyLayerSetParameter(70,0,10);
+layers::technologyLayerSetParameter(70,1,300);
+layers::technologyLayerSetParameter(70,2,300);
+layers::technologyLayerAdd(via3Layer,1);
+layers::technologyLayerSetParameter(via3Layer,0,11);
+layers::technologyLayerSetParameter(via3Layer,1,200);
+layers::technologyLayerSetParameter(via3Layer,2,60);
+layers::technologyLayerSetParameter(via3Layer,3,65);
+layers::technologyLayerSetParameter(via3Layer,4,200);
+layers::technologyLayerSetParameter(via3Layer,5,0);
+layers::technologyLayerAdd(71,2); //MET4
+layers::technologyLayerSetParameter(71,0,12);
+layers::technologyLayerSetParameter(71,1,300);
+layers::technologyLayerSetParameter(71,2,300);
+layers::technologyLayerAdd(via4Layer,1);
+layers::technologyLayerSetParameter(via4Layer,0,13);
+layers::technologyLayerSetParameter(via4Layer,1,800); // width via
+layers::technologyLayerSetParameter(via4Layer,2,310); // space to met5
+layers::technologyLayerSetParameter(via4Layer,3,190); // space to met4
+layers::technologyLayerSetParameter(via4Layer,4,800); // space vias
+layers::technologyLayerSetParameter(via4Layer,5,0);
+layers::technologyLayerAdd(72,2); //MET5
+layers::technologyLayerSetParameter(72,0,14);
+layers::technologyLayerSetParameter(72,1,1600);
+layers::technologyLayerSetParameter(72,2,1600);
+
+// optinal layer for more complete 3d view
+// will be enabled by th setup macro
+
+if ( layers::displayedLayers<300) layers::displayedLayers=300;
+
+layers::num[299].name="liconToZero";
+layers::num[299].setStyle(0);
+layers::num[299].setColor("#ffffcc");
+layers::num[299].set3dView(0,326+180);
+layers::num[298].name="SRCDRN";
+layers::num[298].setStyle(0);
+layers::num[298].setColor("#00ff00");
+layers::num[298].set3dView(-100,100);
+layers::num[297].name="channel";
+layers::num[297].setStyle(0);
+layers::num[297].setColor("#888888");
+layers::num[297].set3dView(-50,50);
+layers::num[296].name="lowPoly";
+layers::num[296].setStyle(0);
+layers::num[296].setColor("#ff0000");
+layers::num[296].set3dView(50,326-50);
+
+if (layout::objectExists()){  // do not execute on autoLayerMacro as a layout object is not yet created
+   layout->showStatus("layer setup complete");
+    if (layout->drawing->currentCell->firstElement!=NULL) layout->showStatus("setup must be performed before loading any design!");
+}
+
+}
+
+
+
+
+
+

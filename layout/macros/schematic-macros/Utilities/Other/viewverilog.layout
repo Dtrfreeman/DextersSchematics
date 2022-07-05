@@ -1,0 +1,22 @@
+#!/usr/bin/layout
+#name=View Verilog Netlist
+#help=Displays all defined netlists
+
+void showNetlist(string net){
+  string s=schematic->generateNetList(net);
+  textEdit *te=project::getCentralTextEditor();
+  te->newDoc();
+  te->drawing->setText(s);
+  te->drawing->setLexer("Verilog");
+  te->drawing->title=net+" netlist";
+}
+
+int main(){
+  setup::checkNetlistSetup("verilog");
+  showNetlist("verilog");
+  
+  return 0;
+}
+
+
+ 

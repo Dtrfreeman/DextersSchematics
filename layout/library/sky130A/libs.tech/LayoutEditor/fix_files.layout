@@ -1,0 +1,70 @@
+#!/usr/bin/layout
+#name=Setup SkyWater PDK for the LayoutEditor
+#help=modifies some (incorrect) files from the skywater PDK
+string result;
+
+void fixMissingBoundingBox(string cells){
+ // checks all std-libcell on a bounding box and add one if missing
+ cellList *cl=layout->drawing->firstCell;
+ int sLen=cells.length();
+ while (cl!=NULL) {
+    if (cl->thisCell!=NULL) {
+        if (cl->thisCell->cellName.left(sLen)==cells){
+            cl->thisCell->deselectAll();
+            cl->thisCell->selectLayer(setup::lefCellBoundaryLayer);
+            point max=cl->thisCell->maximumSelect();
+            if (max.y()<=0) {
+                cl->thisCell->selectLayer(78);
+                point m=cl->thisCell->maximumSelect();
+                if (m.y()>0) cl->thisCell->addBox(0,0,m.x(),m.y(),setup::lefCellBoundaryLayer);
+                cout("add bounding box to "+cl->thisCell->cellName+"\n");
+            }
+
+        }
+    }
+    cl=cl->nextCell;
+ }
+}
+
+
+bool copyFile(string from, string to_){
+    file f;
+    f.filename=from;
+    if (!f.exists()) {return false;}
+    f.open(true);
+    intList content=f.readBinary();
+    f.close();
+    f.filename=to_;
+    if (!f.open(false)) {return false;}
+    f.writeBinary(content);
+    f.close();
+    return true;
+}
+
+int main(){
+    cout("fixing files\n");
+    layout->executeMacro("autoLayerMacro.layout");
+    file f;
+    f.filename="../../libs.ref/sky130_fd_sc_hd/techlef/sky130_fd_sc_hd_tech.tlef";
+    if (!f.exists()) {
+       cout("sky130_fd_sc_hd_tech.tlef is missing\n");
+       file f2; f2.filename="../../libs.ref/sky130_fd_sc_hd/techlef/sky130_fd_sc_hd.tlef";
+       if (f2.exists()) {
+          cout("copy sky130_fd_sc_hd.tlef to sky130_fd_sc_hd_tech.tlef\n");
+          copyFile("../../libs.ref/sky130_fd_sc_hd/techlef/sky130_fd_sc_hd.tlef","../../libs.ref/sky130_fd_sc_hd/techlef/sky130_fd_sc_hd_tech.tlef");
+       }
+    }
+    cout("check sky130_fd_sc_hd.gds\n");
+    layout->filename="../../libs.ref/sky130_fd_sc_hd/gds/sky130_fd_sc_hd.gds";
+    layout->drawing->openFile("../../libs.ref/sky130_fd_sc_hd/gds/sky130_fd_sc_hd.gds");
+    fixMissingBoundingBox("sky130_fd_sc_hd");
+
+    f.filename="../../libs.ref/sky130_fd_sc_hd/techlef/sky130_fd_sc_hd_tech.tlef";
+    if (f.exists()) {
+      layout->drawing->importViaFile(f.filename);
+      cout("add via cells\n");
+    }
+
+    layout->drawing->saveFile("../../libs.ref/sky130_fd_sc_hd/gds/sky130_fd_sc_hd.gds");
+    return 0;
+}

@@ -1,0 +1,42 @@
+#!/usr/bin/layout
+#name=select path width
+#help=select all pathes with a entered width
+
+int  main() {
+  // get required width
+  double d=layout->getDouble("select width","enter width:",0, 3);
+  // width in user units
+  int w=d/layout->drawing->userunits;
+
+  // get first cell
+  cellList *cells=layout->drawing->firstCell;
+
+  // loop over all cells
+  while (cells!=NULL){  
+    if (cells->thisCell!=NULL){
+       cells->thisCell->deselectAll();
+       // get first Element of this cell
+       elementList *l=cells->thisCell->firstElement;
+       cells->thisCell->deselectAll();
+
+       // loop over all elements
+       while (l!=NULL) {
+         if (l->thisElement!=NULL) {
+             // if element is a path and have width of w
+             if ((l->thisElement->getWidth()== w) &&
+                   l->thisElement->isPath() ){
+
+		     //l->thisElement->setWidth(1000); // new width in database units
+
+                   // select this element
+                   l->thisElement->selectAll();
+              }
+        }
+        l=l->nextElement;
+    }
+
+    
+    }
+    cells=cells->nextCell;
+  }
+}

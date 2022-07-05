@@ -1,0 +1,11 @@
+#!/usr/bin/layout
+#name=#3: Dialog
+#help=User Dialog;
+
+int  main() {
+ string s=layout->getText("Hallo","Bitte Text eingeben:","test");
+ int i=layout->getInteger("Hallo","Bitte Int eingeben:", 3 );
+ double d=layout->getDouble("Hallo","Bitte double eingeben:", 4.6 );
+ layout->showMessage("Hallo",s+(i/d));
+}
+ 

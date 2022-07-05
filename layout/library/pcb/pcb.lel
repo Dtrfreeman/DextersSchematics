@@ -1,0 +1,50 @@
+# LayoutEditor Library file
+#
+# This library part contains some package information.
+# It can be used with netlist, which contain package information and
+# the correct pin numbers.
+#
+#Section package: all matching elements are linked to an existing cell, pins are renamed, devicename and type is set, match to all devices containing the package-type 
+[package]
+# package-type 		layout-file 	cellname 	number pins
+SO28W			SO28W.gds	SO28W		28
+SO24W			SO24W.gds	SO24W		24
+SO20W			SO20W.gds	SO20W		20
+SO18W			SO18W.gds	SO18W		18
+SO16W			SO16W.gds	SO16W		16
+TI16SW			SO16W.gds	SO16W		16
+SO16N			SO16N.gds	SO16N		16
+TI16SN			SO16N.gds	SO16N		16
+SO14N			SO14N.gds	SO14N		14
+TI14SN			SO14N.gds	SO14N		14
+SO8N			SO8N.gds	SO8N		8
+SO8			SO8N.gds	SO8N		8
+DIP8			DIP8.gds	DIP8		8
+DIP14			DIP14.gds	DIP14		14
+DIP16			DIP16.gds	DIP16		16
+DIP18			DIP18.gds	DIP18		18
+DB25F			DB25F.gds	DF25F		25
+DIL-16			DIP16.gds	DIP16		16
+SOT23			SOT23.gds	SOT23		3
+0805                    0805.gds        0805            2
+1206                    1206.gds        1206            2
+
+# This library part contains some part from linear technology. 
+# It can be used as a library with LTspice
+# http://www.linear.com/designtools/software/
+#
+
+#Section parts: all matching elements are linked to an existing cell, cellname, pins, devicename is set.
+[parts]
+# part-type 		layout-file 	cellname 	pin name pin number
+LT1028			DIP8.gds	DIP8		in+ 3 in- 2 V+ 7 V- 4 out 6
+LT1001			SO8N.gds	SO8N		in+ 3 in- 2 V+ 7 V- 4 out 6
+
+
+#Section macro: a macro is call, which generates the required cell
+[macro]
+# device-type			macro-file		pins
+R				resistor.layout		pin1 pin2
+
+[ignore]
+V

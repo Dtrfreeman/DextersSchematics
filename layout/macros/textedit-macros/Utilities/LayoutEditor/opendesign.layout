@@ -1,0 +1,12 @@
+#!/usr/bin/layout
+#name=Open As Design
+#help=Opens as Design in a LayoutEditor Window
+
+
+int main(){
+if (text->drawing->modified())text->save();
+text->needLayoutEditor(true);
+layout->drawing->openFile(text->drawing->fileName);
+layout->filename=text->drawing->fileName;
+layout->drawing->scaleFull();
+}

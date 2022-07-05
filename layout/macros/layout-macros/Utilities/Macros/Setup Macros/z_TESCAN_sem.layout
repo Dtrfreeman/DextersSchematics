@@ -1,0 +1,15 @@
+#!/usr/bin/layout
+#name=connect with TESCAN SEM
+#help=connect to a TESCAN SEM to get its image as a background image
+
+
+int main(){
+if (process::isWindows()) {
+        layout->backgroundTool->addBackground("plugintescan.dll");
+} else if (process::isLinux()) {
+        layout->backgroundTool->addBackground("libpluginTescan.so");
+} else {
+        layout->backgroundTool->addBackground("libpluginTescan.dylib");
+}
+
+}

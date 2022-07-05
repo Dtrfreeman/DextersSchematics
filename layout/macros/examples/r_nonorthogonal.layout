@@ -1,0 +1,38 @@
+#!/usr/bin/layout
+#name=remove non orth. arrays
+#help=removes non orthoginal cellref arrays
+
+int  main() {
+  // get first cell
+  cellList *cells=layout->drawing->firstCell;
+
+  // loop over all cells
+  while (cells!=NULL){  
+    if (cells->thisCell!=NULL){
+       // get first Element of this cell
+       elementList *l=cells->thisCell->firstElement;
+       cells->thisCell->deselectAll();
+
+       // loop over all elements
+       while (l!=NULL) {
+           if (l->thisElement!=NULL) {
+		
+		
+               if (l->thisElement->isCellrefArray() ){
+
+		   
+                   pointArray pa= l->thisElement->getPoints();
+		if (pa.point(1).y()!=0) l->thisElement->selectAll();
+		if (pa.point(2).x()!=0) l->thisElement->selectAll();
+		}
+           }
+           l=l->nextElement;
+       }
+
+    //round all selected elements
+    cells->thisCell->flatSelect();
+    cells->thisCell->deselectAll();
+    }
+    cells=cells->nextCell;
+  }
+}

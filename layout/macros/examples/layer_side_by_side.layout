@@ -1,0 +1,34 @@
+#!/usr/bin/layout
+#name=move layer side by side
+#help=move layer side by side
+
+int  main() {
+  point min,max;
+  min.set(100000,100000);
+  max.set(-100000,-100000);
+  layout->drawing->currentCell->minimum(&min);
+  layout->drawing->currentCell->maximum(&max);
+
+  cell *c=layout->drawing->addCell()->thisCell;
+  c->cellName="layer-side-by-side";
+  int count=0;
+  int space=1000;
+  int sizeX=max.x()-min.x()+space;
+  int sizeY=max.y()-min.y()+space;
+  for (int l=0;l<254;l++){  // loop over layer 0 to 128
+              if (layout->drawing->useLayer(l)) {
+                  cell *c2=layout->drawing->copyLayerToCell(l);
+                  if (c2!=NULL){
+			  point p2;
+		         int row=count/3;
+                        int col=count%3;
+			  p2.set(col*sizeX,row*sizeY);
+			  c->addCellref(c2,p2);
+			  count++;
+			}
+              }
+     }
+
+  layout->drawing->setCell(c);
+  layout->drawing->scaleFull();
+}

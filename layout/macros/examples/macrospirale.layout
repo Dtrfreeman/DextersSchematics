@@ -1,0 +1,65 @@
+#!/usr/bin/layout
+#name=Multiturn Spiral
+#help= mai 30 2008 Serge Charlebois
+/*	Creates a new cell and draws a multiturn spiral in it.
+	The spiral is centered on (0,0).
+	Requests from the user the number of turns, trace width and spacing and the termination type.
+	The cell name is forced to "Spiral#" where # is the number of turns.
+*/
+
+int main(){
+int i, nt, cap;
+point origin, start, end;
+double step, gap, width, microns;
+string cellname;
+
+microns = 1/layout->drawing->userunits;
+origin.setX(0*microns);
+origin.setY(0*microns);
+
+nt = layout->getInteger("User entry","Number of turns for the spiral:");
+if (nt==0){
+	layout->showMessage("Error message","The spiral needs at least 1 turn. Macro aborted.");
+	return 0;
+}	
+width = microns * layout->getDouble("User entry","Width of the traces (userunits):");
+gap = microns * layout->getDouble("User entry","Distance between traces (userunits):");
+cap = layout->getInteger("User entry","Termination type: 0 for none, 1 for circle and 2 for square");
+
+step = width + gap;
+cellname.setNum(nt);
+cellname = "Spirale"+cellname;
+
+// add new empty cell
+cellList *cl=layout->drawing->addCell();
+// set new cellname
+cl->thisCell->cellName = cellname;
+// set new cell to current cell
+layout->drawing->setCell(cellname);
+
+
+// loop on all sprial turns
+i=0;
+while (i<nt){
+
+// calculate start point of one turn
+start.set(origin.y(),origin.x() + i*step);
+end.set(origin.y(),origin.x() + (i+1)*step);
+// calculate end point of one turn
+
+// create one spiral "turn"
+layout->drawing->point(origin);
+layout->drawing->point(start);
+layout->drawing->point(end);
+layout->drawing->spiral();
+layout->drawing->currentCell->firstElement->thisElement->setWidth(width); 
+layout->drawing->currentCell->firstElement->thisElement->setCap(cap); 
+
+i++;
+}
+
+// refresh the screen by adjusting the display scale
+layout->drawing->scaleFull();
+
+return 0;
+}

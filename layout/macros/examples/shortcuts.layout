@@ -1,0 +1,47 @@
+#!/usr/bin/layout
+#name=shortcut
+#help=setting alternative shortcuts
+
+/*
+adjusting shortcut similar as used by some other tools
+*/
+
+
+int main(){
+// all feature code can be found here: https://layouteditor.org/info/featurecodes
+// default shortcur are listed here: https://layouteditor.org/info/shortcuts
+// set this macro as autostart macro to have theis alternative mapping as default
+        layout->setShortcut(1003,"I"); // add cellref mode 
+        layout->setShortcut(1006,"Ctrl+D"); // copy mode
+        layout->setShortcut(1008,"Shift+Q"); // move point 
+        layout->setShortcut(1009,"M"); // move by 
+        layout->setShortcut(1010,"R"); //  rotate
+        layout->setShortcut(1011,"H"); //  mirror
+        layout->setShortcut(1013,"A"); // move to layer
+        layout->setShortcut(1014,"Ctrl+J"); // merge 
+        layout->setShortcut(1015,"Ctrl+L"); // cut
+        layout->setShortcut(1016,"Backspace"); // delete selection
+        layout->setShortcut(1017,"Ctrl+F"); // properties 
+        layout->setShortcut(1032,"Ctrl+A"); // select all
+        layout->setShortcut(1034,"Alt+A"); // deselect all  
+        layout->setShortcut(1044,"O"); // choose cell
+        layout->setShortcut(1046,"T"); // cellname 
+        layout->setShortcut(1049,"Ctrl+U"); // flat
+        layout->setShortcut(1041,"Home"); // zoom fit all 
+        layout->setShortcut(1052,"Ctrl+Z"); // undo
+        layout->setShortcut(1053,"Ctrl+Y"); // redo
+        layout->setShortcut(1078,"Shift+V"); // snap point
+        layout->setShortcut(1079,"Shift+E"); // snap line 
+        layout->setShortcut(1080,"Shift+D"); //  snap middle
+        layout->setShortcut(1081,"Shift+C"); // snap center 
+        layout->setShortcut(1122,"C"); //copy current cell 
+        layout->setShortcut(1127,"W"); // zoom fit selection 
+        layout->setShortcut(1164,"Ctrl+G"); // group
+        layout->setShortcut(1189,"L"); // layer manager 
+        layout->setShortcut(1202,"0"); // set origin 
+        layout->setShortcut(1223,"Alt+Z"); // goto xz, may not work on Windows
+        layout->setShortcut(1256,"Ctrl+W"); // close design
+        layout->setShortcut(1267,"B"); // bool on layer 
+//layout->setShortcut(,"Ctrl+"); // 
+
+} 

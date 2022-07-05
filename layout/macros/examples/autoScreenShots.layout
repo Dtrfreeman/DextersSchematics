@@ -1,0 +1,20 @@
+#!/usr/bin/layout
+#name=screen shots
+#help=takes a screenshot of all gds files
+
+
+int main() {
+  string designDir="/home/username/layouts";
+  string outDir="/home/username/screenshots/";
+  file f;
+  int count=600;
+  f.find(designDir,"*.gds");
+  while (f.filename!=""){
+    count++;
+    layout->drawing->openFile(f.filename);
+    string s; s.setNum(count);
+    layout->drawing->saveScreenshot(outDir+s+".png");
+    f.findNext();
+  }
+
+}

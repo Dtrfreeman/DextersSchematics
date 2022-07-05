@@ -1,0 +1,45 @@
+#!/usr/bin/layout
+#name=X-Fab setup
+#help=performs as layer and settings setup for X-FAB PDK.
+
+// This macros needs to be run before loading any design
+
+
+
+int main(){ 
+setup::lefCellBoundaryLayer=62;
+setup::openAccessBoundary=62;
+setup::autoLoadLayerFiles=true;
+setup::openAccessMapLayerNames=true;
+setup::gdsMapLayer=false;
+setup::oasisMapLayer=false;
+setup::placeModeForPCB=false;
+
+stringList oaLibs=components::getOaLibs();
+stringList lib=components::getLibs();
+string techLib="";
+
+// add PRIMLIB and D_CELL library to SchematicEditor, if not already done
+for (int i=0;i<oaLibs.size();++i){
+   if (!lib.contains(oaLibs.at(i))) {
+     string libName=oaLibs.at(i).toUpper();
+     if (libName.left(7)=="PRIMLIB") components::addLib(oaLibs.at(i)+".oa");
+     else if (libName.left(7)=="D_CELLS") components::addLib(oaLibs.at(i)+".oa");
+     else if (libName.left(5)=="TECH_") techLib=oaLibs.at(i)+".oa";
+   }
+}
+// read technology setting like min width, routing layers
+if (techLib!="") layers::importLayerSettings(techLib);
+
+if (layout::objectVisible()){  // do not execute on autoLayerMacro as a layout object is not yet created or not visible
+   layout->showStatus("setup complete");
+    if (layout->drawing->currentCell->firstElement!=NULL) layout->showStatus("This setup must be performed before loading any design!");
+}
+
+}
+
+
+
+
+
+

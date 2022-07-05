@@ -1,0 +1,21 @@
+#!/usr/bin/layout
+#name=count selected elements
+#help=count selected elements
+
+int  main() {
+  // get first cell
+   int count=0;
+   elementList *l=layout->drawing->currentCell->firstElement;
+       // loop over all elements
+       while (l!=NULL) {
+           if (l->thisElement!=NULL) {
+		// if element is selected
+              if ( l->thisElement->select==true ){
+                      // selected
+                      count++;
+              }
+         }
+         l=l->nextElement;
+ }
+ layout->showMessage("selected elements","Selected elements in the current cell: "+count);
+}

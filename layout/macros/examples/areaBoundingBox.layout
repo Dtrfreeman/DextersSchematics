@@ -1,0 +1,16 @@
+#!/usr/bin/layout
+#name=area
+#help=calculates the area of the bounding box of the current cell
+
+int main(){
+point min=layout->drawing->currentCell->minimum();
+point max=layout->drawing->currentCell->maximum();
+double dx=(max.x()-min.x())*layout->drawing->userunits;
+double dy=(max.y()-min.y())*layout->drawing->userunits;
+
+double area=dx*dy;
+string s;s.setNum(area,3);
+
+layout->showMessage("area","bounding box area is "+s+" userunits^2");
+
+}

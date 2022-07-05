@@ -1,0 +1,47 @@
+#!/usr/bin/layout
+#name=star
+#help=generate a star
+
+//parameter with default value
+#parameter radius1 "110µm"
+#parameter radius2 "20µm"
+#parameterInt vertexes 20
+#parameter layer "1"
+
+#include "shapelib.layout"
+
+int main(){
+int radius1=databaseunits(iPar("radius1"));
+int radius2=databaseunits(iPar("radius2"));
+int layer=getLayer(iPar("layer"));
+int vertex=iPar("vertexes");
+string cellname="star_"+userunits(radius1)+"_"+userunits(radius2)+"_"+iPar("vertexes")+"_"+layer;
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+double arc=math::pi/vertex;
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=layer;
+pointArray pa;
+point p;
+point pstart;
+pstart.set(0,radius1);
+pa.attachPoint(pstart);
+int r;
+int n=0;
+double d=arc;
+for (;d<2.0*math::pi;d+=arc){
+         if (n%2==0) r=radius2;
+         else r=radius1;
+	p.set(math::sin(d)*r,math::cos(d)*r);
+         pa.attachPoint(p);
+        n++;
+}
+pa.attachPoint(pstart);
+layout->drawing->currentCell->addPolygon(pa,layer);
+}
+
+

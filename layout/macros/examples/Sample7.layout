@@ -1,0 +1,35 @@
+#!/usr/bin/layout
+#name=Macro: drc example.layout
+#help=example for a drc macro
+
+
+int main(){
+
+layout->drcTool->result="DRC (LayoutEditor example) \r\n";
+
+// setup error layer
+layout->drawing->activeLayer=0;
+layout->drcTool->setErrorLayerToActiveLayer();
+
+// check for layer metal 1
+layout->drcTool->ruleName= "Minimum Size Metal1";
+layout->drcTool->minimumSize(800,6,true);
+layout->drcTool->ruleName= "Minimum Distance Metal1";
+layout->drcTool->minimumElementDistance(800,6,true);
+
+// check for layer metal 2
+layout->drcTool->ruleName= "Minimum Size Metal2";
+layout->drcTool->minimumSize(900,8,true);
+layout->drcTool->ruleName= "Minimum Distance Metal2";
+layout->drcTool->minimumElementDistance(900,8,true);
+
+// check for via1  (metal1 to metal2)
+layout->drcTool->ruleName= "Via in metal1";
+layout->drcTool->inside(50,7,6);
+layout->drcTool->ruleName= "Via in metal2";
+layout->drcTool->inside(60,7,8);
+
+
+layout->drcTool->showReport();
+
+}

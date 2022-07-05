@@ -1,0 +1,154 @@
+
+ 
+<Component small-signal&sp;ac>
+<Description>
+ac simulation
+</Description>
+<Parameter>
+<string type dec>
+<string points 20>
+<string start 1k>
+<string stop 10G>
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix AC>
+<Label>
+$start - $stop
+</Label>
+<Symbol>
+<Text -61 -3 #0000c0 AC-Simulation>
+<Rect -72 12 72 -13 #0000c0>
+</Symbol>
+<Offsetlabel 0 -54 -20>
+<Netlist hspice>
+.option post
+.AC $type $points $start $stop
+</Netlist>
+<Netlist ltspice>
+.AC $type $points $start $stop
+*please set output of source to AC
+</Netlist>
+<Netlist ngspice>
+.AC $type $points $start $stop
+*please set output of source to AC
+</Netlist>
+<Netlist qucs>
+.AC:$devicename Type="$type" Start="$start" Stop="$stop" Points="$points" Noise="no"
+</Netlist>
+<Netlist spectre>
+SIMAC AC type=$type np=$points start=$start stop=$stop
+</Netlist>
+</Component>
+<Component dc&sp;transfer&sp;function>
+<Description>
+DC Simulation
+</Description>
+<Parameter>
+<string source V1>
+info=voltage source
+<string start 0>
+callback=dc_calcpoints.layout
+info=start voltage
+<string stop 1>
+callback=dc_calcpoints.layout
+info=stop voltage
+<string step>
+callback=dc_calcpoints.layout
+info=in steps of
+<string points 256>
+edit=false
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix DC>
+<Label>
+$source
+$startV to $stopV
+</Label>
+<Symbol>
+<Rect -72 12 72 -13 #0000c0>
+<Text -65 -4 #0000c0 DC-Simulation>
+</Symbol>
+<Offsetlabel 0 -61 -21>
+<Netlist hspice>
+.DC $source $start $stop $step
+</Netlist>
+<Netlist ltspice>
+.DC $source $start $stop $step
+</Netlist>
+<Netlist ngspice>
+.DC $source $start $stop $step $empty($step;0.01)
+</Netlist>
+<Netlist qucs>
+# set $source voltage to V$source before run this simulation with qucs
+.DC:DC1
+.SW:SW1 Sim="DC1" Type="lin" Param="V$source" Start="$start" Stop="$stop" Points="$points"
+</Netlist>
+<Netlist spectre>
+SIMDC DC dev=$source start=$start stop=$stop step=$step
+</Netlist>
+</Component>
+
+
+<Component transient>
+<Description>
+transient simulation
+</Description>
+<Parameter>
+<string step 1p>
+callback=tr_calcpoints.layout
+unit=s
+info=plotting increment step size
+<string stop 1n>
+callback=tr_calcpoints.layout
+unit=s
+info=final time
+<string start>
+callback=tr_calcpoints.layout
+unit=s
+info=time the outout starts, simulation always start at 0s
+<string points 1001>
+info=number of points in output
+edit=false
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix TR>
+<Label>
+$start to $stops in $steps steps
+</Label>
+<Symbol>
+<Text -62 -4 #0000c0 transient-simulation>
+<Rect -72 12 72 -13 #0000c0>
+</Symbol>
+<Offsetlabel 0 -58 -19>
+<Offsetlabel 90 3 0>
+<Offsetlabel 180 2 0>
+<Offsetlabel 270 2 0>
+<Netlist allted>
+.tran $step $stop $notEmpty($start;$start)
+</Netlist>
+<Netlist hspice>
+.option post
+.TR $step $stop $notEmpty($start;$start)
+</Netlist>
+<Netlist ltspice>
+.tran $step $stop $notEmpty($start;$start)
+</Netlist>
+<Netlist ngspice>
+.tran $step $stop $notEmpty($start;$start)
+</Netlist>
+<Netlist qucs>
+.TR:$devicename Type="lin" $notEmpty($start;Start="$start")$empty($start;Start="0") Stop="$stop" Points="$points"
+</Netlist>
+<Netlist spectre>
+SIMTRAN tran step=$step start=$start stop=$stop
+</Netlist>
+</Component>

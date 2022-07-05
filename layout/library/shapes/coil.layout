@@ -1,0 +1,53 @@
+#!/usr/bin/layout
+#name=coil
+#help=generate a coil
+
+//parameter with default value
+#parameter radiusinner "30µm"
+#parameter width "5µm"
+#parameter space "3µm"
+#parameter layer "1"
+#parameterDouble turns 3.8
+
+#include "shapelib.layout"
+
+int main(){
+int radius=databaseunits(iPar("radiusinner"));
+int width=databaseunits(iPar("width"));
+int space=databaseunits(iPar("space"));
+double turns=iPar("turns");
+int layer=getLayer(iPar("layer"));
+string cellname="coil"+userunits(radius)+"_"+userunits(width)+"_"+userunits(space)+"_"+ iPar("turns")+"_"+layer;
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+int widthh=width/2;
+int pos=radius+widthh;
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=layer;
+while ( turns >= 1.0 ){
+	layout->drawing->point(0,0);
+	layout->drawing->point(0,pos);
+	pos+=space+width;
+	layout->drawing->point(0,pos);
+	layout->drawing->spiral();
+	turns-=1;
+	}
+if (turns > 0.0){
+	layout->drawing->point(0,0);
+	layout->drawing->point(0,pos);
+	pos+= turns*(space+width));
+	double arc=2.0*3.141*turns;
+	layout->drawing->point(math::sin(arc)*pos*(-1),math::cos(arc)*pos);
+	layout->drawing->spiral();
+	}
+layout->drawing->selectAll();
+layout->drawing->mergeSelect();
+layout->drawing->setWidth(width);
+layout->drawing->deselectAll();
+}
+
+

@@ -1,0 +1,25 @@
+#!/usr/bin/layout
+#name=Macro: cellArray.layout
+#help=non orthogonal cell array
+
+
+int main(){
+string cellname=layout->drawing->currentCell->cellName;
+cell *c=layout->drawing->findCell("baseCell");
+if (c==NULL){
+	layout->newCell();
+	layout->drawing->currentCell->cellName="baseCell";
+	layout->drawing->point(0,0);
+	layout->drawing->point(10000,10000);
+	layout->drawing->box();
+	c=layout->drawing->currentCell;
+        layout->drawing->setCell(cellname);
+}
+pointArray pa;
+pa.resize(3);
+pa.set(0,0,0);
+pa.set(1,200000,10000); //length and dircetion of the x axis including all repetition similar to the GDSII spec.
+pa.set(2,10000,200000); //same for the y axis
+element *e=layout->drawing->currentCell->addCellrefArray(c,pa,10,10);
+layout->drawing->scaleFull();
+}

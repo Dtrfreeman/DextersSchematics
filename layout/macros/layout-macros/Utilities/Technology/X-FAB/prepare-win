@@ -1,0 +1,48 @@
+#!/bin/bash
+echo "convert package $1"
+tarname=$1
+destname=${tarname%.tar.gz}
+
+
+workdir=$HOME"/LayoutEditor/unpack"
+
+cd ~
+if [ ! -d "$workdir" ]; then
+   mkdir $workdir
+fi
+cd $workdir
+curDir=$(pwd)
+if [ "$curDir" == "$workdir" ]; then
+    echo "unpack to $workdir"
+else
+    echo "error processing"
+    exit 1
+fi
+tar -xzf "$tarname"
+maindir=$(find . -name "PRIMLIB_Master" -print)
+if [ -z "$maindir" ]; then
+   maindir=$(find . -name "PRIMLIB_MASTER" -print)
+fi
+if [ -z "$maindir" ]; then
+  echo "primary library folder not found"
+else
+    cd $maindir
+    cd ..
+    parentdir="$(dirname "$maindir")"
+    rm -r qa 2>/dev/null
+    rm scripts/generic/stubs.tcl 2>/dev/null
+    # 'aux' file name not allowed on Window
+    mv scripts/generic/aux.tcl scripts/generic/pdk_support.tcl 2>/dev/null
+    # remove $FTK_KIT_DIR from XFABlib.defs file as it does not work on Windows and set absolute path
+    windowsInstallDir="c\:\/LayoutEditor"
+    #find ckit -name "XFABlib.defs" -exec sed -i -e "s/\$FTK_KIT_DIR/$windowsInstallDir/g" {} \;
+    find ckit -name "XFABlib.defs" -exec echo $parentdir/{} >> $workdir/XFABlibs.txt \;
+fi
+
+cd ~
+cd $workdir
+dest=${destname}".wzip"
+echo "compress to $dest"
+zip -r "$dest" * >/dev/null
+cd ~
+echo "completed"

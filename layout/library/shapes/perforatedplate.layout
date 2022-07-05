@@ -1,0 +1,61 @@
+#!/usr/bin/layout
+#name=perforated plate
+#help=generate a perforated plate
+
+//parameter with default value
+#parameter height "30µm"
+#parameter width "50µm"
+#parameter holespace "0.7µm"
+#parameter holewidth "0.5µm"
+#parameter layer "1"
+
+
+#include "shapelib.layout"
+
+int main(){
+int width=databaseunits(iPar("width"));
+int height=databaseunits(iPar("height"));
+int holewidth=databaseunits(iPar("holewidth"));
+int holespace=databaseunits(iPar("holespace"));
+int layer=getLayer(iPar("layer"));
+string cellname="pplate"+userunits(width)+"_"+userunits(height)+"_"+userunits(holewidth)+"_"+userunits(holespace)+"_"+layer;
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=layer;
+layout->drawing->point(0,0);
+layout->drawing->point(width,height);
+layout->drawing->box();
+layout->drawing->selectAll();
+layout->booleanTool->setA();
+layout->drawing->selectAll();
+layout->drawing->deleteSelect();
+int countx=(width-holespace)/(holespace+holewidth);
+int county=(height-holespace)/(holespace+holewidth);
+int offx=(width+holespace-(holespace+holewidth)*countx)/2;
+int offy=(height+holespace-(holespace+holewidth)*county)/2;
+int x,y;
+for( x=0;x<countx;x++) {
+	for ( y=0 ; y<county ; y++ )
+	{
+	layout->drawing->point(offx+(holespace+holewidth)*x,offy+(holespace+holewidth)*y);
+	layout->drawing->point(holewidth+offx+(holespace+holewidth)*x,holewidth+offy+(holespace+holewidth)*y);
+	layout->drawing->box();
+	}
+}
+layout->drawing->selectAll();
+layout->booleanTool->setB();
+layout->drawing->selectAll();
+layout->drawing->deleteSelect();
+layout->booleanTool->aMinusB();
+layout->drawing->selectAll();
+layout->drawing->point(0,0);
+layout->drawing->centerXY();
+layout->drawing->deselectAll();
+}
+
+

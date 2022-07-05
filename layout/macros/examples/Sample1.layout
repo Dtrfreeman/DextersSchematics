@@ -1,0 +1,61 @@
+#!/usr/bin/layout
+#name=#1: Syntax
+#help=Helptext for Sample 1
+
+int main(){
+
+  // This is a comment
+
+  /* This is 
+  a multiline
+  Comment
+  */
+
+  // possible typ
+  int i;
+  i=6;
+
+  bool b;
+  b=true;
+
+  double d;
+  d=6.2345;
+
+  string s;
+  s= "This is a test!\n";
+
+  point p;
+  p.setX(1000);
+  p.setY(900);
+
+  pointArray pa;
+  pa.resize(1);
+  pa.setPoint(0,p);
+
+
+
+  // if command
+  if (i==6) s+="i is equal to 6";
+  else d+=i;
+  
+  // for loop
+  int k;
+  for (k=1; k<=3 ; k++){
+	i+=k;
+  }
+
+  // while loop
+  while (k<5){
+	k++;
+  }
+
+  // do {} while loop
+  do {
+  	k++;
+  }while (k<10);
+
+  return 0;
+}
+
+
+ 

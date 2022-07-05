@@ -1,0 +1,28 @@
+/*
+units setup is no longer required 
+as default unit setup is used:
+database units 1nm
+user units 1um
+*/
+
+#!/usr/bin/layout
+#name=units setup
+#help=units setup for the open cell library
+
+#include "lib.layout"
+int main(){
+if (!checkUnits()){
+	cellList *cells=layout->drawing->firstCell;
+	double scale=layout->drawing->databaseunits/0.000000001;
+  	// loop over all cells
+  	while (cells!=NULL){  
+    	if (cells->thisCell!=NULL){
+			cells->thisCell->resize(scale);
+		}
+	cells=cells->nextCell;
+	}
+	layout->drawing->databaseunits=0.000000001;
+	layout->drawing->userunits=0.001;
+	layout->drawing->scaleFull();
+	}
+}

@@ -1,0 +1,15 @@
+#!/usr/bin/layout
+#name=dxf load
+#help=loads a file and ask for userunits if it is a DXF file
+
+
+int main(){
+	layout->closeDesign(); // close, if a design is still open
+	file f;
+	string fileName=f.homePath()+"/in.dxf";
+	layout->drawing->userunits=0.001;  //set your user units used in the dwg file here
+	layout->drawing->openFile(fileName);
+	layout->drawing->userunits=0.001;
+	layout->filename=fileName;
+        layout->drawing->scaleFull();
+}

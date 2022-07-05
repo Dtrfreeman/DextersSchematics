@@ -1,0 +1,8 @@
+#!/usr/bin/layout
+#name=select datatype
+#help=all elements with a spezific datatype will be selected
+
+int  main() {
+ int i=layout->getInteger("Select Datatype","Datatype to select:");
+ layout->drawing->currentCell->selectDatatype (i);
+}

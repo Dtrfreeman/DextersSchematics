@@ -1,0 +1,40 @@
+#!/usr/bin/layout
+#name=rectangle
+#help=generate a rectangle
+
+//parameter with default value
+#parameter length "130µm"
+#parameter width "50µm"
+#parameter step "18.5µm"
+#parameterDouble shape "0.5"
+#parameter layer "1"
+
+#include "shapelib.layout"
+
+int main(){
+int width=databaseunits(iPar("width"));
+int step=databaseunits(iPar("step"));
+int length=databaseunits(iPar("length"));
+double shape=iPar("shape");
+int sh=shape*length;
+int layer=getLayer(iPar("layer"));
+string cellname="sbend"+userunits(width)+"_"+userunits(step)+"_"+userunits(length)+"_"+iPar("shape")+"_"+layer;
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=layer;
+layout->drawing->point(0,0);
+layout->drawing->point(length,step);
+layout->drawing->point(sh,0);
+layout->drawing->point(length-sh,step);
+layout->drawing->bezier3();
+layout->drawing->selectAll();
+layout->drawing->setWidth(width);
+layout->drawing->deselectAll();
+}
+
+

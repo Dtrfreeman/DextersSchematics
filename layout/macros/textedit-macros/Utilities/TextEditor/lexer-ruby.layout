@@ -1,0 +1,11 @@
+#!/usr/bin/layout
+#name=Ruby
+#help=Highligh the current file for Ruby
+
+string temp;
+
+
+int main(){
+
+text->setLexer("Ruby");
+}

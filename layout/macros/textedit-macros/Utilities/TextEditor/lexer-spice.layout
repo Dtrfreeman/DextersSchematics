@@ -1,0 +1,11 @@
+#!/usr/bin/layout
+#name=Spice
+#help=Highligh the current file for Spice
+
+string temp;
+
+
+int main(){
+
+text->setLexer("spice");
+}

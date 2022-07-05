@@ -1,0 +1,39 @@
+* C:\Users\User\Documents\LTspiceXVII\Cd4016phaser.asc
+V1 Vdd 0 4.5
+V2 0 Vss 4.5
+XU1 P001 P002 Vdd Vss N007 level.2 Avol=1Meg GBW=10Meg Slew=10Meg ilimit=25m rail=0 Vos=0 phimargin=45 en=0 enk=0 in=0 ink=0 Rin=500Meg
+C1 P001 0 10n
+R1 N007 P002 150k
+R2 P002 N006 150k
+R3 P001 N006 150k
+R5 N008 N007 150k
+XU2 P003 N008 Vdd Vss N009 level.2 Avol=1Meg GBW=10Meg Slew=10Meg ilimit=25m rail=0 Vos=0 phimargin=45 en=0 enk=0 in=0 ink=0 Rin=500Meg
+C2 P003 0 10n
+R7 N009 N008 150k
+R6 P003 N007 150k
+R8 N005 N006 100k
+XU3 P004 N010 Vdd Vss N011 level.2 Avol=1Meg GBW=10Meg Slew=10Meg ilimit=25m rail=0 Vos=0 phimargin=45 en=0 enk=0 in=0 ink=0 Rin=500Meg
+C3 P004 0 10n
+R4 N011 N010 150k
+R9 P005 N011 150k
+XU4 P006 P005 Vdd Vss N012 level.2 Avol=1Meg GBW=10Meg Slew=10Meg ilimit=25m rail=0 Vos=0 phimargin=45 en=0 enk=0 in=0 ink=0 Rin=500Meg
+C4 P006 0 10n
+R10 N012 P005 150k
+R11 P006 N011 150k
+R12 N010 N009 150k
+R13 P004 N009 150k
+R14 N005 N012 100k
+V4 N013 0 AC 1
+XU5 N013 P007 Vdd Vss N006 level.2 Avol=1Meg GBW=10Meg Slew=10Meg ilimit=25m rail=0 Vos=0 phimargin=45 en=0 enk=0 in=0 ink=0 Rin=500Meg
+R15 N006 P007 1000k
+XU6 N002 P008 Vdd Vss N001 level.2 Avol=1Meg GBW=10Meg Slew=10Meg ilimit=25m rail=0 Vos=0 phimargin=45 en=0 enk=0 in=0 ink=0 Rin=500Meg
+R16 N001 P008 150k
+R17 N003 N008 110k
+R18 NC_01 N003 220k
+R19 N004 N010 330k
+R20 N009 N014 100k
+R21 N006 N014 100k
+.ac oct 15 20 20000
+.lib UniversalOpamps2.sub
+.backanno
+.end

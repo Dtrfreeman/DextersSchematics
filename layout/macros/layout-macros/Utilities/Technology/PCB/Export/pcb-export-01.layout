@@ -1,0 +1,58 @@
+#!/usr/bin/layout
+#name=Gerber-Export
+#help=Export PCB layer to gerber
+
+#include "../pcbcore.layout"
+
+
+int main(){
+  string fn=layout->filename;
+  file f; f.filename=fn;
+  string base;
+  if (f.baseName()=="") {
+        layout->saveAs();
+        f.filename=layout->filename;
+        }
+  if (f.baseName()=="") return 1;
+  base=f.path()+"/"+f.baseName();
+  if (base.length()<3) base=f.homePath();
+  int globalVia=layers::globalVia();
+  if (globalVia>=0) {
+        layout->drawing->saveLayer(base+"-plated-vias.gbr",globalVia);
+        layout->drawing->saveLayer(base+"-plated-vias.drd",globalVia);
+        }
+  labelToPolygon(20);
+  labelToPolygon(65);
+  if (layers::num[20].isEnabled()) layout->drawing->saveLayer(base+"-print-top.gbr",20);
+  if (layers::num[22].isEnabled()) layout->drawing->saveLayer(base+"-solderstop-top.gbr",22);
+  if (layers::num[65].isEnabled()) layout->drawing->saveLayer(base+"-print-bottom.gbr",65);
+  if (layers::num[67].isEnabled()) layout->drawing->saveLayer(base+"-solderstop-bottom.gbr",67);
+  if (layers::num[5].isEnabled()) layout->drawing->saveLayer(base+"-outline.gbr",5);
+  if (layers::num[4].isEnabled()) {
+        layout->drawing->saveLayer(base+"-unplated-vias.gbr",4);
+        layout->drawing->saveLayer(base+"-unplated-vias.drd",4);
+        }
+  int max=layers::maxLevel(); // maximal conductor level
+  int k;
+  int count=0;
+  for (k=max;k>=0;k--){
+     int lay=layers::findLevel(k);
+     if (lay>=0){
+         if (layers::num[lay].isConductor()) {
+            count++;
+            string s;s.setNum(count);
+            string s1;
+            if (count==1) s1="-top";
+            else if (k==0) s1="-bottom";
+            layout->drawing->saveLayer(base+"-conductor"+s+s1+".gbr",lay);
+         }
+         if (lay!=globalVia)
+            if (layers::num[lay].isVia()) {
+                string s;s.setNum(count);
+                string s1;s1.setNum(count+1);
+                layout->drawing->saveLayer(base+"-plated-via-"+s+"-"+s1+".gbr",lay);
+                layout->drawing->saveLayer(base+"-plated-via-"+s+"-"+s1+".drd",lay);
+             }
+     }
+  }
+}

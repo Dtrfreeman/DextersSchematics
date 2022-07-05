@@ -1,0 +1,120 @@
+<Component gnd>
+<Link gnd>
+<Parameter>
+</Parameter>
+<Prefix gnd>
+</Component> 
+ 
+ 
+<Component noConn>
+<Description>
+</Description>
+<Parameter>
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix I>
+<Label>
+@(0,0,5)
+</Label>
+<Symbol 0>
+<Rect -8 -8 8 8 #ff1e1e>
+<Line -8 -8 8 8 #ff1e1e>
+<Line -8 8 8 -8 #ff1e1e>
+</Symbol>
+<Offsetlabel 0 0 0>
+</Component>
+<Component inPin>
+<Link port>
+<Parameter>
+<string move_x 0>
+<string symbol inLeft>
+<string type>
+</Parameter>
+<Prefix port>
+</Component>
+<Component ioPin>
+<Link port>
+<Parameter>
+<string move_x 0>
+<string symbol ioLeft>
+<string type>
+</Parameter>
+<Prefix port>
+</Component>
+<Component iopin>
+<Link port>
+<Parameter>
+<string move_x 0>
+<string symbol ioLeft>
+<string type>
+</Parameter>
+<Prefix port>
+</Component>
+<Component pin>
+<Link port>
+<Parameter>
+<string move_x 0>
+<string symbol>
+<string type>
+</Parameter>
+<Prefix port>
+</Component>
+<Component ipin>
+<Link port>
+<Parameter>
+<string move_x 0>
+<string symbol inLeft>
+<string type>
+</Parameter>
+<Prefix port>
+</Component>
+<Component outPin>
+<Link port>
+<Parameter>
+<string move_x 0>
+<string symbol outRight>
+<string type>
+</Parameter>
+<Prefix port>
+</Component>
+<Component powerPin>
+<Link port>
+<Parameter>
+<string move_x 0>
+<string symbol power>
+<string type power>
+</Parameter>
+<Prefix port>
+</Component>
+<Component symbolr@iopin>
+<Link port>
+<Parameter>
+<string move_x 0>
+<string symbol ioLeft>
+<string type>
+</Parameter>
+<Prefix port>
+</Component>
+<Component symboll@iopin>
+<Link port>
+<Parameter>
+<string move_x 0>
+<string symbol ioRight>
+<string type>
+</Parameter>
+<Prefix port>
+</Component>
+
+
+<Component opin>
+<Link port>
+<Parameter>
+<string move_x 0>
+<string symbol outRight>
+<string type>
+</Parameter>
+<Prefix port>
+</Component>

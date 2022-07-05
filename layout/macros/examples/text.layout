@@ -1,0 +1,777 @@
+#!/usr/bin/layout
+#name=add text
+#help=Adds text into the layout, the starting point is given by a selected box;
+/***
+* written by Arun (arun@users.sf.net) 2006-04
+* using layout version 2006-4-01 (cvs)
+*
+* this is just to show what macros can do...
+* it worked for me, but your mileage may vary
+*
+* the font is similar to dotmatrix used by figlet (http://www.figlet.org)
+*
+* TODO: add nicer numbers
+* TODO: antialias a bit.
+*
+* Changelog:
+*  2008-04-09 Arun Persaud
+*             added missing letters,
+*             some better error messages
+*             some antialiasing
+*/
+
+int main()
+{
+  cellList  *cells;
+  elementList *elements;
+  element   *element;
+  cell    *cell;
+
+  int selected = 0; /* was something selected */
+  int layernr;
+  int x,y;
+
+  /* check if something was selected at all */
+  for(cells = layout->drawing->firstCell; cells!=NULL; cells=cells->nextCell)
+    {
+      if(cells->thisCell!=NULL)
+	{
+	  for(elements=cells->thisCell->firstElement; elements!=NULL; elements=elements->nextElement)
+	    {
+	      if(elements->thisElement!=NULL)
+		if(elements->thisElement->select)
+		  {
+		    selected++;
+		    /* save cell and element for later */
+		    element = elements->thisElement;
+		    cell  = cells->thisCell;
+		    /* only change selected boxes */
+		    if(element->isBox())
+		      {
+			/* get layer number */
+			layernr = element->layerNum;
+
+			/* get coordinates */
+			pointArray pa = element->getPoints();
+
+			int x1,y1,x2,y2;
+			point p;
+
+			if(pa.size()==2) /* shouldn't be anything else */
+			  {
+			    p=pa.point(0);
+			    x1=p.x();
+			    y1=p.y();
+
+			    p=pa.point(1);
+			    x2=p.x();
+			    y2=p.y();
+
+			    /* always make x/y the lower left corner */
+			    if(x1>x2)
+			      x=x2;
+			    else
+			      x=x1;
+
+			    if(y1>y2)
+			      y=y2;
+			    else
+			      y=y1;
+			  };
+		      };
+		  }; /* end if element selected */
+	    };
+	};
+    };
+
+  if(selected == 0)
+    {
+      layout->showMessage("Macro Help",
+			  "To use this macro select one box and the macro will add the user specified \n"+
+			  "text \nstarting at the lower left corner of that box (and delete the box).\n");
+    }
+  else if(selected > 1)
+    {
+      layout->showMessage("Macro Help",
+			  "To use this macro select one box and the macro will add the user specified \n"+
+			  "text \nstarting at the lower left corner of that box (and delete the box).\n"+
+			  "At the moment there are "+selected+" selected objects, but the macro needs exactly one selected item.\n");
+    }
+  else
+    {
+      int i;
+      int nonimplemented=0;
+
+      string s=layout->getText("Input",
+			       "Please input the text you want to insert. At the moment\n"+
+			       " only letters and numbers are implemented.");
+
+      double w = layout->getDouble("Input","Please input the line width \n(the font height will be max. nine times the line width):");
+
+      double user_unit = layout->drawing->userunits;
+
+      /* from user units to internal units */
+      w = w / user_unit;
+      for(i=0; i<s.length(); i++)
+	{
+	  string letter;
+	  letter = s.mid(i,1);
+	  if(letter=="a" )
+	    {
+	      cell->addBox(x,     y+w,     w,   w,layernr);
+	      cell->addBox(x+w,   y,     3*w,   w,layernr);
+	      cell->addBox(x+w,   y+2*w, 3*w,   w,layernr);
+	      cell->addBox(x+w,   y+4*w, 3*w,   w,layernr);
+	      cell->addBox(x+4*w, y+w,     w, 3*w,layernr);
+	      cell->addBox(x+5*w, y,       w,   w,layernr);
+	      x=x+w*6;
+	    }
+	  else if(letter=="A" )
+	    {
+	      cell->addBox(x+w*0, y+w*0, 1*w,4*w,layernr);
+	      cell->addBox(x+w*6, y+w*0, 1*w,4*w,layernr);
+	      cell->addBox(x+w*1, y+w*2, 5*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*4, 1*w,1*w,layernr);
+	      cell->addBox(x+w*2, y+w*5, 1*w,1*w,layernr);
+	      cell->addBox(x+w*3, y+w*6, 1*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*5, 1*w,1*w,layernr);
+	      cell->addBox(x+w*5, y+w*4, 1*w,1*w,layernr);
+	      x=x+w*7;
+	    }
+	  else if(letter=="b" )
+	    {
+	      cell->addBox(x,   y,    w,7*w,layernr);
+	      cell->addBox(x+w,  y,   3*w, w,layernr);
+	      cell->addBox(x+w,  y+4*w, 3*w, w,layernr);
+	      cell->addBox(x+4*w, y+w,   w,3*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="B" )
+	    {
+	      cell->addBox(x+w*0, y+w*0, 5*w,1*w,layernr);
+	      cell->addBox(x+w*0, y+w*6, 5*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*1, 1*w,5*w,layernr);
+	      cell->addBox(x+w*2, y+w*3, 3*w,1*w,layernr);
+	      cell->addBox(x+w*5, y+w*1, 1*w,2*w,layernr);
+	      cell->addBox(x+w*5, y+w*4, 1*w,2*w,layernr);
+	      x=x+w*6;
+	    }
+	  else if(letter=="c" )
+	    {
+	      cell->addBox(x,   y+w,   w,3*w,layernr);
+	      cell->addBox(x+w,  y+4*w, 3*w, w,layernr);
+	      cell->addBox(x+w,  y,   3*w, w,layernr);
+	      x=x+w*4;
+	    }
+	  else if(letter=="C" )
+	    {
+	      cell->addBox(x+w*0, y+w*1, 1*w,5*w,layernr);
+	      cell->addBox(x+w*1, y+w*0, 3*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*6, 3*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*1, 1*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*5, 1*w,1*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="d" )
+	    {
+	      cell->addBox(x,   y+w,   w,3*w,layernr);
+	      cell->addBox(x+w,  y+4*w, 3*w, w,layernr);
+	      cell->addBox(x+w,  y,   3*w, w,layernr);
+	      cell->addBox(x+w*4, y,    w,6*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="D" )
+	    {
+	      cell->addBox(x+w*0, y+w*0, 4*w,1*w,layernr);
+	      cell->addBox(x+w*0, y+w*6, 4*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*1, 1*w,5*w,layernr);
+	      cell->addBox(x+w*4, y+w*1, 1*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*5, 1*w,1*w,layernr);
+	      cell->addBox(x+w*5, y+w*2, 1*w,3*w,layernr);
+	      x=x+w*6;
+	    }
+	  else if(letter=="e" )
+	    {
+	      cell->addBox(x,   y+w,   w,3*w,layernr);
+	      cell->addBox(x+w,  y,   4*w, w,layernr);
+	      cell->addBox(x+w,  y+2*w, 4*w, w,layernr);
+	      cell->addBox(x+w,  y+4*w, 4*w, w,layernr);
+	      cell->addBox(x+w*4, y+w*3,  w, w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="E" )
+	    {
+	      cell->addBox(x+w*0, y+w*0, 1*w,7*w,layernr);
+	      cell->addBox(x+w*1, y+w*0, 4*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*3, 2*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*6, 4*w,1*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="f" )
+	    {
+	      cell->addBox(x,   y+4*w, 3*w, w,layernr);
+	      cell->addBox(x+w,  y,    w,6*w,layernr);
+	      cell->addBox(x+w*2, y+6*w, 2*w, w,layernr);
+	      x=x+w*4;
+	    }
+	  else if(letter=="F" )
+	    {
+	      cell->addBox(x+w*0, y+w*0, 1*w,7*w,layernr);
+	      cell->addBox(x+w*1, y+w*3, 2*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*6, 4*w,1*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="g" )
+	    {
+	      cell->addBox(x,   y+w,   w,3*w,layernr);
+	      cell->addBox(x+w,  y,   3*w, w,layernr);
+	      cell->addBox(x+w,  y+4*w, 3*w, w,layernr);
+	      cell->addBox(x+w,  y-2*w, 3*w, w,layernr);
+	      cell->addBox(x+w*4, y-w,   w,6*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="G" )
+	    {
+	      cell->addBox(x+w*0, y+w*1, 1*w,5*w,layernr);
+	      cell->addBox(x+w*1, y+w*0, 4*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*6, 3*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*5, 1*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*1, 1*w,2*w,layernr);
+	      cell->addBox(x+w*2, y+w*3, 3*w,1*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="h" )
+	    {
+	      cell->addBox(x,   y,    w,7*w,layernr);
+	      cell->addBox(x+w,  y+4*w, 3*w, w,layernr);
+	      cell->addBox(x+4*w, y,    w,4*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="H" )
+	    {
+	      cell->addBox(x+w*0, y+w*0, 1*w,7*w,layernr);
+	      cell->addBox(x+w*1, y+w*3, 3*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*0, 1*w,7*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="i" )
+	    {
+	      cell->addBox(x,   y,   3*w, w,layernr);
+	      cell->addBox(x+w,  y+w,   w,4*w,layernr);
+	      cell->addBox(x+w,  y+w*6,  w, w,layernr);
+	      cell->addBox(x+w,  y+4*w,  w, w,layernr);
+	      x=x+w*3;
+	    }
+	  else if(letter=="I" )
+	    {
+	      cell->addBox(x+w*0, y+w*0, 3*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*1, 1*w,5*w,layernr);
+	      cell->addBox(x+w*0, y+w*6, 3*w,1*w,layernr);
+	      x=x+w*3;
+	    }
+	  else if(letter=="j" )
+	    {
+	      cell->addBox(x,   y-w,   w, w,layernr);
+	      cell->addBox(x+w,  y-2*w, 2*w, w,layernr);
+	      cell->addBox(x+w*3, y-w,   w, w,layernr);
+	      cell->addBox(x+w*4, y,    w,5*w,layernr);
+	      cell->addBox(x+w*4, y+w*6,  w, w,layernr);
+	      cell->addBox(x+w*3, y+w*4,  w, w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="J" )
+	    {
+	      cell->addBox(x+w*1, y+w*0, 3*w,1*w,layernr);
+	      cell->addBox(x+w*0, y+w*1, 1*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*1, 1*w,5*w,layernr);
+	      cell->addBox(x+w*3, y+w*6, 3*w,1*w,layernr);
+	      x=x+w*6;
+	    }
+	  else if(letter=="k" )
+	    {
+	      cell->addBox(x,   y,    w,7*w,layernr);
+	      cell->addBox(x+w,  y+2*w,  w, w,layernr);
+	      cell->addBox(x+w*2, y+w,   w, w,layernr);
+	      cell->addBox(x+w*2, y+w*3,  w, w,layernr);
+	      cell->addBox(x+w*3, y,    w, w,layernr);
+	      cell->addBox(x+w*3, y+w*4,  w, w,layernr);
+	      x=x+w*4;
+	    }
+	  else if(letter=="K" )
+	    {
+	      cell->addBox(x,     y,    w,7*w,layernr);
+	      cell->addBox(x+w,   y+3*w,  w, w,layernr);
+	      cell->addBox(x+w*2, y+w*2,  w, w,layernr);
+	      cell->addBox(x+w*2, y+w*4,  w, w,layernr);
+	      cell->addBox(x+w*3, y+w*1,  w, w,layernr);
+	      cell->addBox(x+w*3, y+w*5,  w, w,layernr);
+	      cell->addBox(x+w*4, y+w*0,  w, w,layernr);
+	      cell->addBox(x+w*4, y+w*6,  w, w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="l" )
+	    {
+	      cell->addBox(x,   y,   3*w, w,layernr);
+	      cell->addBox(x+w,  y+w,   w,6*w,layernr);
+	      cell->addBox(x,   y+6*w,  w, w,layernr);
+	      x=x+w*4;
+	    }
+	  else if(letter=="L" )
+	    {
+	      cell->addBox(x,    y,   1*w, 7*w,layernr);
+	      cell->addBox(x+w,  y,   4*w, 1*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="m" )
+	    {
+	      cell->addBox(x,   y,    w,4*w,layernr);
+	      cell->addBox(x+w,  y+4*w, 2*w, w,layernr);
+	      cell->addBox(x+w*3, y,    w,4*w,layernr);
+	      cell->addBox(x+w*4, y+4*w, 2*w, w,layernr);
+	      cell->addBox(x+w*6, y,    w,4*w,layernr);
+	      x=x+w*7;
+	    }
+	  else if(letter=="M" )
+	    {
+	      cell->addBox(x,     y,      w,7*w,layernr);
+	      cell->addBox(x+w,   y+w*5,  w, w,layernr);
+	      cell->addBox(x+w*2, y+w*4,  w, w,layernr);
+	      cell->addBox(x+w*3, y+w*3,  w, w,layernr);
+	      cell->addBox(x+w*4, y+w*4,  w, w,layernr);
+	      cell->addBox(x+w*5, y+w*5,  w, w,layernr);
+	      cell->addBox(x+w*6, y+w*0,  w, 7*w,layernr);
+	      x=x+w*7;
+	    }
+	  else if(letter=="n" )
+	    {
+	      cell->addBox(x,   y,    w,5*w,layernr);
+	      cell->addBox(x+w,  y+4*w, 3*w, w,layernr);
+	      cell->addBox(x+4*w, y,    w,4*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="N" )
+	    {
+	      cell->addBox(x,     y,      w,7*w,layernr);
+	      cell->addBox(x+w,   y+w*5,  w, w,layernr);
+	      cell->addBox(x+w*2, y+w*4,  w, w,layernr);
+	      cell->addBox(x+w*3, y+w*3,  w, w,layernr);
+	      cell->addBox(x+w*4, y+w*2,  w, w,layernr);
+	      cell->addBox(x+w*5, y+w*1,  w, w,layernr);
+	      cell->addBox(x+w*6, y+w*0,  w, 7*w,layernr);
+	      x=x+w*7;
+	    }
+	  else if(letter=="o" )
+	    {
+	      cell->addBox(x,   y+w,   w,3*w,layernr);
+	      cell->addBox(x+w,  y,   3*w, w,layernr);
+	      cell->addBox(x+w,  y+4*w, 3*w, w,layernr);
+	      cell->addBox(x+4*w, y+w,   w,3*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="O" )
+	    {
+	      cell->addBox(x,     y+w*1,  w,5*w,layernr);
+	      cell->addBox(x+w,   y+w*0, 4*w, w,layernr);
+	      cell->addBox(x+w,   y+w*6, 4*w, w,layernr);
+	      cell->addBox(x+w*5, y+w*1,  w, 5*w,layernr);
+	      x=x+w*6;
+	    }
+	  else if(letter=="p" )
+	    {
+	      cell->addBox(x,   y-2*w,  w,7*w,layernr);
+	      cell->addBox(x+w,  y,   3*w, w,layernr);
+	      cell->addBox(x+w,  y+4*w, 3*w, w,layernr);
+	      cell->addBox(x+4*w, y+w,   w,3*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="P" )
+	    {
+	      cell->addBox(x+w*0, y+w*0, 1*w,7*w,layernr);
+	      cell->addBox(x+w*1, y+w*3, 3*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*6, 3*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*4, 1*w,2*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="q" )
+	    {
+	      cell->addBox(x+w*0.00,   y+w,     w,3*w,layernr);
+	      cell->addBox(x+w*0.75,   y,     3.25*w,  w,layernr);
+	      cell->addBox(x+w*0.75,   y+4*w, 3.25*w,  w,layernr);
+	      cell->addBox(x+w*4.00,   y-2*w,   w,6*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="Q" )
+	    {
+	      cell->addBox(x,     y+w*1,  w,5*w,layernr);
+	      cell->addBox(x+w,   y+w*0, 3*w, w,layernr);
+	      cell->addBox(x+w,   y+w*6, 4*w, w,layernr);
+	      cell->addBox(x+w*5, y+w*2,  w, 4*w,layernr);
+	      cell->addBox(x+w*3, y+w*2,  w, w,layernr);
+	      cell->addBox(x+w*4, y+w*1,  w, w,layernr);
+	      cell->addBox(x+w*5, y+w*0,  w, w,layernr);
+	      x=x+w*6;
+	    }
+	  else if(letter=="r" )
+	    {
+	      cell->addBox(x,   y+w*4,  w, w,layernr);
+	      cell->addBox(x+w,  y,    w,4*w,layernr);
+	      cell->addBox(x+w*2, y+3*w,  w, w,layernr);
+	      cell->addBox(x+3*w, y+4*w, 2*w, w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="R" )
+	    {
+	      cell->addBox(x+w*0, y+w*0, 1*w,7*w,layernr);
+	      cell->addBox(x+w*1, y+w*6, 3*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*3, 3*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*4, 1*w,2*w,layernr);
+	      cell->addBox(x+w*2, y+w*2, 1*w,1*w,layernr);
+	      cell->addBox(x+w*3, y+w*1, 1*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*0, 1*w,1*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="s" )
+	    {
+	      cell->addBox(x,   y+3*w,  w, w,layernr);
+	      cell->addBox(x+w,  y,   4*w, w,layernr);
+	      cell->addBox(x+w,  y+2*w, 4*w, w,layernr);
+	      cell->addBox(x+w,  y+4*w, 4*w, w,layernr);
+	      cell->addBox(x+5*w, y+w,   w, w,layernr);
+	      x=x+w*6;
+	    }
+	  else if(letter=="S" )
+	    {
+	      cell->addBox(x+w*0, y+w*1, 1*w,1*w,layernr);
+	      cell->addBox(x+w*0, y+w*4, 1*w,2*w,layernr);
+	      cell->addBox(x+w*1, y+w*0, 4*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*3, 4*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*6, 4*w,1*w,layernr);
+	      cell->addBox(x+w*5, y+w*1, 1*w,2*w,layernr);
+	      cell->addBox(x+w*5, y+w*5, 1*w,1*w,layernr);
+	      x=x+w*6;
+	    }
+	  else if(letter=="t" )
+	    {
+	      cell->addBox(x,   y+w*3, 4*w, w,layernr);
+	      cell->addBox(x+w,  y+w,   w,6*w,layernr);
+	      cell->addBox(x+2*w, y,   2*w, w,layernr);
+	      cell->addBox(x+4*w, y+w,   w, w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="T" )
+	    {
+	      cell->addBox(x+w*0, y+w*6, 5*w,1*w,layernr);
+	      cell->addBox(x+w*2, y+w*0, 1*w,6*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="u" )
+	    {
+	      cell->addBox(x,   y+w,   w,4*w,layernr);
+	      cell->addBox(x+w,  y,   3*w, w,layernr);
+	      cell->addBox(x+4*w, y+w,   w,4*w,layernr);
+	      cell->addBox(x+5*w, y,    w, w,layernr);
+	      x=x+w*6;
+	    }
+	  else if(letter=="U" )
+	    {
+	      cell->addBox(x+w*0, y+w*1, 1*w,6*w,layernr);
+	      cell->addBox(x+w*1, y+w*0, 4*w,1*w,layernr);
+	      cell->addBox(x+w*5, y+w*1, 1*w,6*w,layernr);
+	      x=x+w*6;
+	    }
+	  else if(letter=="v" )
+	    {
+	      cell->addBox(x+w*0.00, y+w*4,  w, w,layernr);
+	      cell->addBox(x+w*0.75, y+w*3,  w, w,layernr);
+	      cell->addBox(x+w*1.50, y+w*2,  w, w,layernr);
+	      cell->addBox(x+w*2.25, y+w*1,  w, w,layernr);
+	      cell->addBox(x+w*3.00, y+w*0,  w, w,layernr);
+	      cell->addBox(x+w*3.75, y+w*1,  w, w,layernr);
+	      cell->addBox(x+w*4.50, y+w*2,  w, w,layernr);
+	      cell->addBox(x+w*5.25, y+w*3,  w, w,layernr);
+	      cell->addBox(x+w*6.00, y+w*4,  w, w,layernr);
+	      x=x+w*7;
+	    }
+	  else if(letter=="V" )
+	    {
+	      cell->addBox(x+w*0,   y+w*4, 1*w,3*w,layernr);
+	      cell->addBox(x+w*0.5, y+w*3, 1*w,1*w,layernr);
+	      cell->addBox(x+w*1.5, y+w*2, 1*w,1*w,layernr);
+	      cell->addBox(x+w*2.0, y+w*1, 2*w,1*w,layernr);
+	      cell->addBox(x+w*2.5, y+w*0, 1*w,1*w,layernr);
+	      cell->addBox(x+w*3.5, y+w*2, 1*w,1*w,layernr);
+	      cell->addBox(x+w*4.5, y+w*3, 1*w,1*w,layernr);
+	      cell->addBox(x+w*5,   y+w*4, 1*w,3*w,layernr);
+	      x=x+w*6;
+	    }
+	  else if(letter=="w" )
+	    {
+	      cell->addBox(x,   y+w*2,  w,3*w,layernr);
+	      cell->addBox(x+w,  y+w*1,  w, w,layernr);
+	      cell->addBox(x+w*2, y+w*0,  w, w,layernr);
+	      cell->addBox(x+w*3, y+w*1,  w, w,layernr);
+	      cell->addBox(x+w*4, y+w*2,  w, w,layernr);
+	      cell->addBox(x+w*5, y+w*1,  w, w,layernr);
+	      cell->addBox(x+w*6, y+w*0,  w, w,layernr);
+	      cell->addBox(x+w*7, y+w*1,  w, w,layernr);
+	      cell->addBox(x+w*8, y+w*2,  w,3*w,layernr);
+	      x=x+w*9;
+	    }
+	  else if(letter=="W" )
+	    {
+	      cell->addBox(x+w*0,   y+w*1, 1*w,6*w,layernr);
+	      cell->addBox(x+w*0.5, y+w*0, 1*w,1*w,layernr);
+	      cell->addBox(x+w*1.0, y+w*1, 1*w,1*w,layernr);
+	      cell->addBox(x+w*1.5, y+w*2, 1*w,1*w,layernr);
+	      cell->addBox(x+w*2.0, y+w*3, 1*w,1*w,layernr);
+	      cell->addBox(x+w*2.5, y+w*2, 1*w,1*w,layernr);
+	      cell->addBox(x+w*3.0, y+w*1, 1*w,1*w,layernr);
+	      cell->addBox(x+w*3.5, y+w*0, 1*w,1*w,layernr);
+	      cell->addBox(x+w*4,   y+w*1, 1*w,6*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="x" )
+	    {
+	      cell->addBox(x,   y+w*4,  w, w,layernr);
+	      cell->addBox(x+w,  y+w*3,  w, w,layernr);
+	      cell->addBox(x+w*2, y+w*2,  w, w,layernr);
+	      cell->addBox(x+w*3, y+w*1,  w, w,layernr);
+	      cell->addBox(x+w*4, y+w*0,  w, w,layernr);
+	      cell->addBox(x,   y+w*0,  w, w,layernr);
+	      cell->addBox(x+w,  y+w*1,  w, w,layernr);
+	      cell->addBox(x+w*3, y+w*3,  w, w,layernr);
+	      cell->addBox(x+w*4, y+w*4,  w, w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="X" )
+	    {
+	      cell->addBox(x+w*0, y+w*0, 1*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*1, 1*w,1*w,layernr);
+	      cell->addBox(x+w*2, y+w*2, 1*w,1*w,layernr);
+	      cell->addBox(x+w*3, y+w*3, 1*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*4, 1*w,1*w,layernr);
+	      cell->addBox(x+w*5, y+w*5, 1*w,1*w,layernr);
+	      cell->addBox(x+w*6, y+w*6, 1*w,1*w,layernr);
+	      cell->addBox(x+w*0, y+w*6, 1*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*5, 1*w,1*w,layernr);
+	      cell->addBox(x+w*2, y+w*4, 1*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*2, 1*w,1*w,layernr);
+	      cell->addBox(x+w*5, y+w*1, 1*w,1*w,layernr);
+	      cell->addBox(x+w*6, y+w*0, 1*w,1*w,layernr);
+	      x=x+w*7;
+	    }
+	  else if(letter=="y" )
+	    {
+	      cell->addBox(x,   y+w*4,  w, w,layernr);
+	      cell->addBox(x+w,  y+w*3,  w, w,layernr);
+	      cell->addBox(x+w*2, y+w*2,  w, w,layernr);
+	      cell->addBox(x+w*3, y+w*1,  w, w,layernr);
+	      cell->addBox(x+w*4, y+w*0,  w, w,layernr);
+	      cell->addBox(x+w*5, y+w*1,  w, w,layernr);
+	      cell->addBox(x+w*6, y+w*2,  w, w,layernr);
+	      cell->addBox(x+w*7, y+w*3,  w, w,layernr);
+	      cell->addBox(x+w*8, y+w*4,  w, w,layernr);
+	      cell->addBox(x+w,  y-w*2, 2*w, w,layernr);
+	      cell->addBox(x+w*3, y-w*1,  w, w,layernr);
+	      x=x+w*9;
+	    }
+	  else if(letter=="Y" )
+	    {
+	      cell->addBox(x+w*3, y+w*0, 1*w,4*w,layernr);
+	      cell->addBox(x+w*4, y+w*4, 1*w,1*w,layernr);
+	      cell->addBox(x+w*5, y+w*5, 1*w,1*w,layernr);
+	      cell->addBox(x+w*6, y+w*6, 1*w,1*w,layernr);
+	      cell->addBox(x+w*0, y+w*6, 1*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*5, 1*w,1*w,layernr);
+	      cell->addBox(x+w*2, y+w*4, 1*w,1*w,layernr);
+	      x=x+w*7;
+	    }
+	  else if(letter=="z" )
+	    {
+	      cell->addBox(x,   y+w*0, 4*w, w,layernr);
+	      cell->addBox(x+w,  y+w*1,  w, w,layernr);
+	      cell->addBox(x+w*2, y+w*2,  w, w,layernr);
+	      cell->addBox(x+w*3, y+w*3,  w, w,layernr);
+	      cell->addBox(x,   y+w*4, 4*w, w,layernr);
+	      x=x+w*4;
+	    }
+	  else if(letter=="Z" )
+	    {
+	      cell->addBox(x+w*0, y+w*0, 6*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*1, 1*w,1*w,layernr);
+	      cell->addBox(x+w*2, y+w*2, 1*w,1*w,layernr);
+	      cell->addBox(x+w*3, y+w*3, 1*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*4, 1*w,1*w,layernr);
+	      cell->addBox(x+w*5, y+w*5, 1*w,1*w,layernr);
+	      cell->addBox(x+w*0, y+w*6, 6*w,1*w,layernr);
+	      x=x+w*6;
+	    }
+	  else if(letter=="1")
+	    {
+	      cell->addBox(x,   y  , 3*w, w,layernr);
+	      cell->addBox(x+w,  y+w*1,  w,6*w,layernr);
+	      cell->addBox(x,   y+w*5,  w, w,layernr);
+	      x=x+w*3;
+	    }
+	  else if(letter=="2")
+	    {
+	      cell->addBox(x,   y+w*0, 5*w, w,layernr);
+	      cell->addBox(x+w,  y+w*1,  w, w,layernr);
+	      cell->addBox(x+w*2, y+w*2,  w, w,layernr);
+	      cell->addBox(x+w*3, y+w*3,  w, w,layernr);
+	      cell->addBox(x+w*4, y+w*4,  w,2*w,layernr);
+	      cell->addBox(x,   y+w*5,  w, w,layernr);
+	      cell->addBox(x+w,  y+w*6, 3*w, w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="3")
+	    {
+	      cell->addBox(x+w*0, y+w*1, 1*w, w,layernr);
+	      cell->addBox(x+w*0, y+w*5, 1*w, w,layernr);
+	      cell->addBox(x+w,  y+w*0, 4*w, w,layernr);
+	      cell->addBox(x+w,  y+w*6, 4*w, w,layernr);
+	      cell->addBox(x+w*3, y+w*3, 2*w, w,layernr);
+	      cell->addBox(x+w*5, y+w*1, 1*w,2*w,layernr);
+	      cell->addBox(x+w*5, y+w*4, 1*w,2*w,layernr);
+	      x=x+w*6;
+	    }
+	  else if(letter=="4")
+	    {
+	      cell->addBox(x+w*0, y+w*2, 5*w,1*w,layernr);
+	      cell->addBox(x+w*0, y+w*3,  w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*4,  w,1*w,layernr);
+	      cell->addBox(x+w*2, y+w*5,  w,1*w,layernr);
+	      cell->addBox(x+w*3, y+w*0,  w,7*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="5")
+	    {
+	      cell->addBox(x+w*0, y+w*1, 1*w,1*w,layernr);
+	      cell->addBox(x+w*0, y+w*4, 1*w,3*w,layernr);
+	      cell->addBox(x+w*1, y+w*0, 3*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*4, 3*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*6, 4*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*1, 1*w,3*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="6")
+	    {
+	      cell->addBox(x+w*0, y+w*1, 1*w,4*w,layernr);
+	      cell->addBox(x+w*1, y+w*0, 3*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*3, 3*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*5, 1*w,1*w,layernr);
+	      cell->addBox(x+w*2, y+w*6, 3*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*1, 1*w,2*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="7")
+	    {
+	      cell->addBox(x+w*0, y+w*6, 6*w,1*w,layernr);
+	      cell->addBox(x+w*0, y+w*0, 1*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*1, 1*w,1*w,layernr);
+	      cell->addBox(x+w*2, y+w*2, 1*w,1*w,layernr);
+	      cell->addBox(x+w*3, y+w*3, 1*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*4, 1*w,1*w,layernr);
+	      cell->addBox(x+w*5, y+w*5, 1*w,1*w,layernr);
+	      x=x+w*6;
+	    }
+	  else if(letter=="8")
+	    {
+	      cell->addBox(x+w*0, y+w*1, 1*w,2*w,layernr);
+	      cell->addBox(x+w*0, y+w*4, 1*w,2*w,layernr);
+	      cell->addBox(x+w*1, y+w*0, 4*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*3, 4*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*6, 4*w,1*w,layernr);
+	      cell->addBox(x+w*5, y+w*1, 1*w,2*w,layernr);
+	      cell->addBox(x+w*5, y+w*4, 1*w,2*w,layernr);
+	      x=x+w*6;
+	    }
+	  else if(letter=="9")
+	    {
+	      cell->addBox(x+w*0, y+w*0, 3*w,1*w,layernr);
+	      cell->addBox(x+w*0, y+w*4, 1*w,2*w,layernr);
+	      cell->addBox(x+w*1, y+w*3, 3*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*6, 3*w,1*w,layernr);
+	      cell->addBox(x+w*3, y+w*1, 1*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*2, 1*w,4*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="0")
+	    {
+	      cell->addBox(x+w*0, y+w*2, 1*w,3*w,layernr);
+	      cell->addBox(x+w*1, y+w*1, 1*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*5, 1*w,1*w,layernr);
+	      cell->addBox(x+w*2, y+w*0, 2*w,1*w,layernr);
+	      cell->addBox(x+w*2, y+w*6, 2*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*1, 1*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*5, 1*w,1*w,layernr);
+	      cell->addBox(x+w*5, y+w*2, 1*w,3*w,layernr);
+	      x=x+w*6;
+	    }
+	  else if(letter=="@")
+	    {
+	      cell->addBox(x+w*0, y+w*2, 1*w,3*w,layernr);
+	      cell->addBox(x+w*1, y+w*1, 1*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*5, 1*w,1*w,layernr);
+	      cell->addBox(x+w*2, y+w*0, 4*w,1*w,layernr);
+	      cell->addBox(x+w*2, y+w*6, 3*w,1*w,layernr);
+	      cell->addBox(x+w*5, y+w*2, 1*w,4*w,layernr);
+	      cell->addBox(x+w*3, y+w*2, 2*w,1*w,layernr);
+	      cell->addBox(x+w*3, y+w*4, 2*w,1*w,layernr);
+	      cell->addBox(x+w*2, y+w*3, 1*w,1*w,layernr);
+	      x=x+w*6;
+	    }
+	  else if(letter=="*")
+	    {
+	      cell->addBox(x+w*0, y+w*3, 7*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*1, 1*w,1*w,layernr);
+	      cell->addBox(x+w*1, y+w*5, 1*w,1*w,layernr);
+	      cell->addBox(x+w*2, y+w*2, 1*w,1*w,layernr);
+	      cell->addBox(x+w*2, y+w*4, 1*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*2, 1*w,1*w,layernr);
+	      cell->addBox(x+w*4, y+w*4, 1*w,1*w,layernr);
+	      cell->addBox(x+w*5, y+w*1, 1*w,1*w,layernr);
+	      cell->addBox(x+w*5, y+w*5, 1*w,1*w,layernr);
+	      x=x+w*7;
+	    }
+	  else if(letter=="-")
+	    {
+	      cell->addBox(x+w*0, y+w*3, 5*w,1*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter=="+")
+	    {
+	      cell->addBox(x+w*0, y+w*3, 5*w,1*w,layernr);
+	      cell->addBox(x+w*2, y+w*1, 1*w,5*w,layernr);
+	      x=x+w*5;
+	    }
+	  else if(letter==".")
+	    {
+	      cell->addBox(x+w*0, y+w*0, 1*w,1*w,layernr);
+	      x=x+w*1;
+	    }
+	  else if(letter==" ")
+	    {
+	      x=x+w*3;
+	    }
+	  else
+	    {
+	      cell->addBox(x,y,w,w,layernr);
+	      x=x+w*2;
+	      nonimplemented=1;
+	    }
+	  x = x+w;
+	};
+
+      cell->deleteElement(element);
+      if(nonimplemented)
+	layout->showMessage("Warning",
+			    "You used some characters that are not implemented yet.\nIt is relatively easy to modify and add other symbols to \n"+
+			    "this macro, either modify the source or email the author of this macro for help.");
+
+
+    }; /* end if selected */
+};
+/* Local Variables:  */
+/* mode: c       */
+/* End:        */

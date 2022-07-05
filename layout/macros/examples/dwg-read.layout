@@ -1,0 +1,31 @@
+#!/usr/bin/layout
+#name=DWG import
+#help=importing DWG file with the help of an external converter
+
+string temp;
+
+int main(){
+  layout->closeDesign(); // close, if a design is still open
+  file f;
+  string inPath=f.homePath()+"/DWG";
+  string outPath=f.homePath();
+  int res=layout->getBool("DWG read","Is the DWG file copied to \""+inPath+"/in.dwg\"?");
+  if (res==0){
+    stringList sl;
+    sl.append(inPath);
+    sl.append(outPath);
+    sl.append("ACAD10");
+    sl.append("DXF");
+    sl.append("0");
+    sl.append("0");
+    bool b=process::externalTool("ODA/Teigha File Converter 3.5.0","TeighaFileConverter",sl,"DWG-read-step2.layout");
+    if (!b) b=process::externalTool("ODA/Teigha File Converter 3.5.1","TeighaFileConverter",sl,"DWG-read-step2.layout");
+    if (!b) b=process::externalTool("ODA/Teigha File Converter 3.5.2","TeighaFileConverter",sl,"DWG-read-step2.layout");
+    if (!b) b=process::externalTool("ODA/Teigha File Converter 3.6.0","TeighaFileConverter",sl,"DWG-read-step2.layout");
+    if (!b) layout->showMessage("Error","Convert software not found! Please download and install it:\nhttp://www.opendesign.com/guestfiles/TeighaFileConverter");
+    return 0;
+    }
+}
+
+
+ 

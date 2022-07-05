@@ -1,0 +1,30 @@
+##############################################################################
+#
+#  translation file for callbacks
+#
+#  if a PDK includes non iPDK syntax or syntax not supported
+#  by the LayoutEditor, a translation file can be used to
+#  replace these phrases with syntax suppoted by the LayoutEditor
+#
+#  A tranlation file needs to be load by a tcl call:
+#
+#  LayoutEditor_loadTranslations "$folder/XFAB.translations"
+#
+#  This file has two sections:
+#  -  translations for 'edit' and 'display' conditions
+#  -  translations for callbacks
+#
+#  each translation consist of two lines:
+#  first line the original phrase
+#  the second line starts with '=> ' followed by its translation
+#
+#
+section: conditions
+
+XfabFormGetParValue( 'showLayout ) || cdfgForm->cellViewId->cellViewType == "maskLayout"
+=> if {[XfabFormGetParValue showLayout ] || [iPDK_isLayout] } { return 1 } else { return 0 }
+
+section: callbacks
+
+#XpcCapCB()
+#=> puts "call disabled"

@@ -1,0 +1,79 @@
+#!/Applications/layout.app/Contents/MacOS/layout
+#name=Maintain Toolbar
+#help=Save and restore the toolbar state
+
+
+/***************************************************************
+Name: 		Toolbar.layout
+Rev:		1
+Recorded: 	April 26, 2016
+By:			Jim Carroll, PhotomaskPORTAL
+
+Change Log:
+	Rev 20160427 - Added error-handling.
+	Rev 20160426 - Initial program.
+
+Summary: 
+	This macro saves the state of the toolbar in a text file in the user's
+	macro directory. The toolbar can be restored to this state.
+
+Notes:
+	1 -	Save macros with UNIX LF and Unicode (UTF-8) encoding
+	2 -	For help with macro commands see http://www.layouteditor.net/wiki/CategoryMacroClass
+	3 - For help with control structures see http://www.layouteditor.net/wiki/pseudoC-C%2B%2B
+	4 - For Linux use #!/usr/bin/layout
+***************************************************************/
+
+int main()
+	{	
+		string desired_function = layout->getText("Question","Do you want to SAVE or RESTORE the toolbar ?","Save");
+			
+		file f;
+		bool b;
+		string s;
+		f.filename = "toolbar_state.txt";
+		
+			
+		if ((desired_function.left(1) == "s") || (desired_function.left(1) == "S")) 
+			{	
+				b = false;
+				f.open(b);
+
+				s = layout->getToolbarState();
+  
+				f.write(s);
+				f.close();
+
+				layout->showMessage("Information","Your toolbar state has been saved as file toolbar_state.txt.");
+			}
+
+		else if (((desired_function.left(1) == "r") || (desired_function.left(1) == "R")) && f.exists()) 
+			{	
+				b = true;
+				f.open(b);
+				s = f.read();
+				f.close();
+
+				layout->setToolbarState(s);
+				layout->showMessage("Information","Your saved toolbar state has been restored.");
+			}
+			
+		else if (((desired_function.left(1) == "r") || (desired_function.left(1) == "R")) && (f.exists() == false)) 
+			{
+				layout->showMessage("Info",		"********** Error **********\n" +
+												"\nThe settings do not exist." +
+												"\n\nPlease first save a toolbar state." +
+												"\n\nProgram terminated.");
+				return 1;		
+			}
+			
+		else
+			{	
+				layout->showMessage("Error",	"********** Error **********\n" +
+												"\nWe did not understand your response: " +	desired_function +
+												"\n\nPlease answer SAVE or RESTORE." +
+												"\n\nProgram terminated.");
+				return 1;
+			}
+			
+	} /* end main program */

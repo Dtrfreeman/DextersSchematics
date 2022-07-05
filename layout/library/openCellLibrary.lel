@@ -1,0 +1,3612 @@
+<Category analog>
+Cmim
+NMOS
+NPN
+NPN-2e
+PMOS
+PNP
+PNP-2c
+R_p-
+</Category>
+<Category flip-flop>
+DFF
+DFFR
+DFFRS
+SDFF
+SDFFRS
+SDFFS
+TBUF
+TINV
+TLAT
+</Category>
+<Category digital>
+AND2
+AND3
+AND4
+AOI21
+AOI211
+AOI22
+AOI221
+AOI222
+BUF
+CLKBUF
+LOGIC0
+LOGIC1
+FA
+HA
+INV
+MUX2
+NAND2
+NAND3
+NAND4
+NOR2
+NOR3
+NOR4
+OAI21
+OAI211
+OAI22
+OAI221
+OAI222
+OAI33
+OR2
+OR3
+XNOR2
+XOR2
+</Category>
+<Category other>
+ANTENNA
+gard
+gardring
+supply
+Cparasitic
+</Category>
+<Component Cparasitic>
+<Description>
+Parasitic capacitance of a node.
+</Description>
+<Parameter>
+<string cap 1.12p>
+</Parameter>
+<Layout>
+[ignore]
+# ignored for parameter
+*
+</Layout>
+<Prefix C>
+<Label>
+$devicename
+$cap
+</Label>
+<Symbol>
+<Line -1 5 -1 2 #646464>
+<Line -1 10 -1 7 #646464>
+<Line -1 15 -1 12 #646464>
+<Line -1 20 -1 17 #646464>
+<Line -1 26 -1 23 #646464>
+<Port -1 26 cnode>
+<Line -17 2 -14 2 #646464>
+<Line -11 2 -8 2 #646464>
+<Line -5 2 -2 2 #646464>
+<Line 1 2 4 2 #646464>
+<Line 7 2 10 2 #646464>
+<Line 13 2 16 2 #646464>
+<Line 13 -5 16 -5 #646464>
+<Line 7 -5 10 -5 #646464>
+<Line 1 -5 4 -5 #646464>
+<Line -11 -5 -8 -5 #646464>
+<Line -17 -5 -14 -5 #646464>
+<Line -1 -5 -1 -8 #646464>
+<Line -1 -10 -1 -13 #646464>
+<Line -1 -15 -1 -18 #646464>
+<Line -1 -20 -1 -23 #646464>
+<Line -5 -5 -2 -5 #646464>
+<Line -6 -24 -3 -24 #646464>
+<Line 1 -24 4 -24 #646464>
+<Line -3 -27 0 -27 #646464>
+</Symbol>
+<Offsetlabel 0 24 13>
+<Offsetlabel 90 -17 -20>
+<Offsetlabel 180 22 12>
+<Offsetlabel 270 -16 -19>
+<Netlist hspice>
+$devicename $node(cnode) 0 $cap
+</Netlist>
+<Netlist spice>
+$devicename $node(cnode) 0 $cap
+</Netlist>
+<Extraction C-nodeToGround>
+<ExtractionParameter>
+# port as used by this component
+ports=cnode
+# area cap and edge cap in F/m2 and F/m for each layer
+areaCap[metal1]=100u
+edgeCap[metal1]=1f
+areaCap[metal2]=60u
+edgeCap[metal2]=0.4f
+areaCap[metal3]=40u
+edgeCap[metal3]=0.2f
+areaCap[metal4]=30u
+edgeCap[metal4]=0.15f
+</ExtractionParameter>
+<ExtractionDeviceParameter>
+# $capSci and $capEng will be set
+cap=$capEng
+</ExtractionDeviceParameter>
+</Extraction>
+</Component>
+<Component R_p->
+<Description>
+resistor using a lightly doped p region in the bipolar well
+</Description>
+<Parameter>
+<string value 200>
+<int meander 1>
+</Parameter>
+<Layout>
+[macro]
+#for parameter	macro-file	pins
+*	openCellLibrary/R_P-.layout	A B
+</Layout>
+<Prefix R>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Line -16 -28 0 -32 wire>
+<Line -16 -28 16 -20 wire>
+<Line -16 -12 16 -20 wire>
+<Line -16 -12 16 -4 wire>
+<Line -16 4 16 -4 wire>
+<Line -16 4 16 12 wire>
+<Line -16 20 16 12 wire>
+<Line -16 20 16 28 wire>
+<Line 0 32 16 28 wire>
+<Port 0 -32 B>
+<Port 0 32 A>
+</Symbol>
+<Offsetlabel 0 23 22>
+<Offsetlabel 90 -15 -20>
+<Offsetlabel 180 26 12>
+<Offsetlabel 270 -13 -18>
+<Netlist spice>
+$devicename $node(A) $node(B) $value
+</Netlist>
+<Netlist verilog>
+respminus #(.r($value)) $devicename(.p($node(A)),.n($node(B)));
+</Netlist>
+<Model verilog>
+module respminus(p, n);
+inout p, n;
+electrical p, n;
+parameter real r=1;
+branch (p, n) resistor;
+analog begin
+    if (r > 1e12*resistor.flow.abstol)
+	I(resistor) <+ V(resistor)/r;
+    else
+	V(resistor) <+ r*I(resistor);
+end
+endmodule
+</Model>
+<Extraction R-thinFilm>
+<ExtractionParameter>
+#used layer
+layerContact=contact
+layerResistance=p(-)-diffusion
+#square resistance in Ohm/square
+rsquare=40
+#resolution of r calculation range: 0..100
+resolution=40
+# ports as used by this component
+ports=A,B
+</ExtractionParameter>
+<ExtractionDeviceParameter>
+# $resSci and $resEng will be set
+value=$resEng
+</ExtractionDeviceParameter>
+</Extraction>
+</Component>
+<Component NPN-2E>
+<Description>
+npn bipolar transistor with twi emitter
+</Description>
+<Parameter>
+<list size 1 2 >
+</Parameter>
+<Layout>
+[cell]
+#for parameter	layout file	cell
+size=1	openCellLibrary/bipolar.gds	npn1-2E
+size=2	openCellLibrary/bipolar.gds	npn2-2E
+</Layout>
+<Prefix Q>
+<Label>
+$devicename
+</Label>
+<Symbol>
+<Port 32 48 C>
+<Port -32 0 B>
+<Port 32 -48 E2>
+<Line 12 -28 4 -36 wire>
+<Line 32 -48 12 -28 wire>
+<Line 32 -48 4 -36 wire>
+<Line 8 -32 -16 -16 wire>
+<Line -16 -32 -16 32 wire>
+<Line -16 16 32 48 wire>
+<Line -16 0 -32 0 wire>
+<Line 33 -29 5 -17 wire>
+<Line 33 -29 13 -9 wire>
+<Line 13 -9 5 -17 wire>
+<Port 33 -29 E1>
+<Line 9 -13 -15 -6 -16 -6 #646464>
+</Symbol>
+<Offsetlabel 0 8 13>
+<Netlist spice>
+$devicename_1 $node(C) $node(B) $node(E1) 0 npn$sizeE2
+$devicename_2 $node(C) $node(B) $node(E2) 0 npn$sizeE2
+</Netlist>
+<Model spice>
+.model npn1E2 NPN( IS=0.5E-7 BF=167 )
+.model npn2E2 NPN( IS=1.1E-7 BF=225 )
+</Model>
+</Component>
+<Component NPN>
+<Description>
+bipolar npn transistor
+</Description>
+<Parameter>
+<string IS 2.5u>
+unit=A
+edit=false
+<string BF 204>
+edit=false
+<string width 5u>
+callback=npn_calc.layout
+<string length 5u>
+callback=npn_calc.layout
+<list design simple ring >
+</Parameter>
+<Layout>
+[macro]
+#for parameter	macro-file	pins
+*	openCellLibrary/npn.layout
+</Layout>
+<Prefix Q>
+<Label>
+$devicename ($design, $width x $length)
+</Label>
+<Symbol>
+<Port 32 -48 E>
+<Port -32 0 B>
+<Port 32 48 C>
+<Line -16 0 -32 0 wire>
+<Line -16 16 32 48 wire>
+<Line -16 -32 -16 32 wire>
+<Line 8 -32 -16 -16 wire>
+<Line 32 -48 4 -36 wire>
+<Line 32 -48 12 -28 wire>
+<Line 12 -28 4 -36 wire>
+</Symbol>
+<Offsetlabel -360 30 23>
+<Offsetlabel 0 31 28>
+<Offsetlabel 90 39 0>
+<Offsetlabel 180 23 -6>
+<Offsetlabel 270 39 28>
+<Netlist spice>
+.model npn_$devicename  NPN( IS=$IS BF=$BF )
+$devicename $node(C) $node(B) $node(E) 0 npn_$devicename
+</Netlist>
+<Extraction BJT-vertical>
+<ExtractionParameter>
+#used layer
+layerBurried=n-buried
+layerContact=contact
+layerDeep=n-deep
+layerWell=p-diffusion
+layerDiffusion=n-diffusion
+# ports as used by this component
+ports=C,B,E
+</ExtractionParameter>
+<ExtractionDeviceParameter>
+</ExtractionDeviceParameter>
+</Extraction>
+</Component>
+<Component PNP>
+<Description>
+bipolar pnp transistor
+</Description>
+<Parameter>
+<list size 1 2 3 >
+</Parameter>
+<Layout>
+[cell]
+#for parameter	layout file	cell
+size=1	openCellLibrary/bipolar.gds	pnp1
+size=2	openCellLibrary/bipolar.gds	pnp2
+size=3	openCellLibrary/bipolar.gds	pnp3
+</Layout>
+<Prefix Q>
+<Label>
+$devicename
+</Label>
+<Symbol>
+<Line -16 16 12 28 wire>
+<Line 12 28 4 36 wire>
+<Line -16 16 4 36 wire>
+<Line 8 32 32 48 wire>
+<Line -16 32 -16 -32 wire>
+<Line -16 -16 32 -48 wire>
+<Line -16 0 -32 0 wire>
+<Port 32 -48 C>
+<Port -32 0 B>
+<Port 32 48 E>
+</Symbol>
+<Offsetlabel -360 15 21>
+<Offsetlabel -180 23 -9>
+<Offsetlabel 0 29 29>
+<Offsetlabel 90 40 0>
+<Offsetlabel 180 23 -7>
+<Offsetlabel 270 45 32>
+<Netlist spice>
+$devicename $node(C) $node(B) $node(E) 0 pnp$size
+</Netlist>
+<Model spice>
+.model pnp1 PNP( IS=1E-7 BF=298 )
+.model pnp2 PNP( IS=2E-7 BF=305 )
+.model pnp3 PNP( IS=3E-7 BF=325 )
+</Model>
+<Extraction BJT-lateral>
+<ExtractionParameter>
+#used layer
+layerBurried=n-buried
+layerContact=contact
+layerDeep=n-deep
+layerWell=p-diffusion
+layerDiffusion=n-diffusion
+# ports as used by this component
+ports=C,B,E
+# maximal emitter-collector distance in m
+maximalEmitterDistance=10000n
+</ExtractionParameter>
+<ExtractionDeviceParameter>
+</ExtractionDeviceParameter>
+</Extraction>
+</Component>
+<Component Cmim>
+<Description>
+C metal insulator metal between metal3 and metal4
+</Description>
+<Parameter>
+<string cap 48f>
+edit=false
+<string width 6u>
+callback=cmim_calc.layout
+<string length 4u>
+callback=cmim_calc.layout
+</Parameter>
+<Layout>
+[macro]
+#for parameter	macro-file	pins
+*	openCellLibrary/cmim.layout
+</Layout>
+<Prefix C>
+<Label>
+$devicename
+c=$cap
+$width/$length
+</Label>
+<Symbol>
+<Port 0 -32 bot>
+<Port 0 32 top>
+<Line -16 -4 16 -4 wire>
+<Line -16 4 16 4 wire>
+<Line 0 -4 0 -32 wire>
+<Line 0 32 0 4 wire>
+</Symbol>
+<Offsetlabel 0 24 13>
+<Offsetlabel 90 -17 -20>
+<Offsetlabel 180 22 12>
+<Offsetlabel 270 -16 -19>
+<Netlist hspice>
+$devicename $node(top) $node(bot) $cap
+</Netlist>
+<Netlist spice>
+$devicename $node(top) $node(bot) $cap
+</Netlist>
+<Netlist verilog>
+cap1 $devicename ($node(top),$node(bot));
+</Netlist>
+<Model verilog>
+module cap1(p, n);
+inout p, n;
+electrical p, n;
+parameter real c=1 from [0:inf);
+analog begin
+    I(p,n) <+ c*ddt(V(p,n));
+end
+endmodule
+</Model>
+<Extraction C-parallelPlate>
+<ExtractionParameter>
+# electrode layers
+layerA=metal3
+layerB=cmim
+# ports as used by this component
+ports=top,bot
+# area cap and edge cap in F/m2 and F/m
+areaCap=1m
+edgeCap=30p
+#uncomment if a different contact layer should be used:
+layerContactA=viamim
+layerPlaceA=metal4
+# layerContactB=0
+</ExtractionParameter>
+<ExtractionDeviceParameter>
+# $capSci and $capEng will be set
+cap=$capEng
+</ExtractionDeviceParameter>
+</Extraction>
+</Component>
+<Component PMOS>
+<Description>
+P-Channel
+</Description>
+<Parameter>
+<string W 1u>
+<string L 1u>
+<int finger 1>
+</Parameter>
+<Layout>
+[macro]
+#for parameter	macro-file	pins
+*	openCellLibrary/pmos.layout
+</Layout>
+<Prefix MP>
+<Label>
+$devicename
+$W/$L
+</Label>
+<Symbol>
+<Line -6 0 -8 0 #646464>
+<Line 24 48 24 32 wire>
+<Line 24 32 -8 32 wire>
+<Line -16 32 -16 -32 wire>
+<Line -24 -32 -16 -32 wire>
+<Line -8 -24 -8 -40 wire>
+<Line -8 8 -8 -8 wire>
+<Line -8 40 -8 24 wire>
+<Line -6 4 -6 -4 wire>
+<Line 10 0 -6 -4 wire>
+<Line 10 0 -6 4 wire>
+<Line -8 -32 24 -32 wire>
+<Line 24 -32 24 -48 #646464>
+<Port 24 -48 S>
+<Port -24 -32 G>
+<Port 24 48 D>
+</Symbol>
+<Offsetlabel 0 20 18>
+<Offsetlabel 90 -16 -20>
+<Offsetlabel 180 24 15>
+<Offsetlabel 270 -19 -15>
+<Netlist hspice>
+M$devicename $node(D) $node(G) $node(S) VDD PMOS_VTL W=$W L=$L
+</Netlist>
+<Netlist spice>
+M$devicename $node(D) $node(G) $node(S) VDD PMOS_VTL W=$W L=$L
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Extraction MOS-default>
+<ExtractionParameter>
+# transitor layers
+layerPoly=poly
+layerActive=active
+layerContact=contact
+# optional layers
+layerRequiredWell=nwell
+layerOutsideWell=pwell
+# ports as used by this component
+ports=S,D,G
+</ExtractionParameter>
+<ExtractionDeviceParameter>
+# $lengthSci and $lengthEng will be channel length
+L=$lengthEng
+# $widthSci and $widthEng will be channel width
+W=$widthEng
+finger=1
+</ExtractionDeviceParameter>
+</Extraction>
+</Component>
+<Component supply>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+</Parameter>
+<Layout>
+[ignore]
+#condition
+*
+</Layout>
+<Prefix p>
+<Label>
+_
+</Label>
+<Symbol>
+<Text -21 -5 #646464 Supply>
+<Rect -40 21 39 -21 #646464>
+<Port -40 21 VSS global>
+<Port 39 21 VDD global>
+<Port -1 -21 gnd_>
+</Symbol>
+<Offsetlabel 0 -15 -5>
+<Netlist hspice>
+X$devicename VSS VDD $node(gnd_)  supply
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(gnd_)  supply
+</Netlist>
+<Netlist verilog>
+vsupply $devicename ($node(VSS),$node(VDD));
+</Netlist>
+<Model hspice>
+.SUBCKT supply VSS VDD gnd_
+V_supply VDD VSS 2V
+R_ground VSS gnd_ 0.0001
+.ENDS
+</Model>
+<Model spice>
+.SUBCKT supply VSS VDD gnd_
+V_supply VDD VSS 2V
+R_ground VSS gnd_ 0.0001
+.ENDS
+</Model>
+<Model verilog>
+module vsupply(p, n);
+output p, n;
+electrical p, n;
+analog begin
+    V(p,n) <+ 2;
+end
+endmodule
+</Model>
+</Component>
+<Component gard>
+<Description>
+a gard in the shape of a line
+</Description>
+<Parameter>
+<list type p n >
+<string length 1>
+unit=µm
+<string width 0.13>
+unit=µm
+</Parameter>
+<Layout>
+[macro]
+#for parameter	macro-file	pins
+*	openCellLibrary/gard.layout
+</Layout>
+<Prefix gard>
+<Label>
+$type
+</Label>
+<Symbol 0>
+<Line 0 18 0 13 #646464>
+<Line 0 7 0 2 #646464>
+<Line 0 -14 0 -19 #646464>
+<Line 0 -3 0 -8 #646464>
+<Port 0 18 gard>
+</Symbol>
+<Offsetlabel 0 4 8>
+<Offsetlabel 90 0 -2>
+<Offsetlabel 180 5 0>
+<Offsetlabel 270 0 -3>
+</Component>
+<Component gardring>
+<Description>
+a grandring with minimal width
+</Description>
+<Parameter>
+<list type p n >
+<string width 1>
+unit=µm
+<string height 1>
+unit=µm
+</Parameter>
+<Layout>
+[macro]
+#for parameter	macro-file	pins
+*	openCellLibrary/gardring.layout
+</Layout>
+<Prefix gard>
+<Label>
+$type
+</Label>
+<Symbol 0>
+<Line 33 3 33 -2 #646464>
+<Line 33 -8 33 -13 #646464>
+<Line 33 13 33 8 #646464>
+<Line 33 24 33 19 #646464>
+<Line 33 -19 33 -24 #646464>
+<Line -28 24 -23 24 #646464>
+<Line -16 24 -10 24 #646464>
+<Line -3 24 2 24 #646464>
+<Line 9 24 15 24 #646464>
+<Line 21 24 28 24 #646464>
+<Line 21 -25 28 -25 #646464>
+<Line 9 -25 15 -25 #646464>
+<Line -3 -25 2 -25 #646464>
+<Line -16 -25 -10 -25 #646464>
+<Line -28 -25 -23 -25 #646464>
+<Line -33 -19 -33 -24 #646464>
+<Line -33 24 -33 19 #646464>
+<Line -33 13 -33 8 #646464>
+<Line -33 -8 -33 -13 #646464>
+<Line -33 3 -33 -2 #646464>
+<Port -33 24 gard>
+</Symbol>
+<Offsetlabel 0 -30 -11>
+</Component>
+<Component NMOS>
+<Description>
+N-Channel
+</Description>
+<Parameter>
+<string W 1u>
+<string L 1u>
+<int finger 1>
+</Parameter>
+<Layout>
+[macro]
+#for parameter	macro-file	pins
+*	openCellLibrary/nmos.layout
+</Layout>
+<Prefix MN>
+<Label>
+$devicename
+$W/$L
+</Label>
+<Symbol 0>
+<Line 24 -32 24 -48 #646464>
+<Line -8 -32 24 -32 wire>
+<Line -8 0 -6 0 wire>
+<Line -6 0 10 4 wire>
+<Line -6 0 10 -4 wire>
+<Line 10 4 10 -4 wire>
+<Line -8 40 -8 24 wire>
+<Line -8 8 -8 -8 wire>
+<Line -8 -24 -8 -40 wire>
+<Line -24 -32 -16 -32 wire>
+<Line -16 32 -16 -32 wire>
+<Line 24 32 -8 32 wire>
+<Line 24 48 24 32 wire>
+<Port 24 48 D>
+<Port -24 -32 G>
+<Port 24 -48 S>
+</Symbol>
+<Offsetlabel 0 20 18>
+<Offsetlabel 90 -16 -20>
+<Offsetlabel 180 24 15>
+<Offsetlabel 270 -19 -15>
+<Netlist hspice>
+M$devicename $node(D) $node(G) $node(S) VSS NMOS_VTL W=$W L=$L
+</Netlist>
+<Netlist spice>
+M$devicename $node(D) $node(G) $node(S) VSS NMOS_VTL W=$W L=$L
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Extraction MOS-default>
+<ExtractionParameter>
+# transitor layers
+layerPoly=poly
+layerActive=active
+layerContact=contact
+# optional layers
+layerRequiredWell=pwell
+layerOutsideWell=nwell
+# ports as used by this component
+ports=S,D,G
+</ExtractionParameter>
+<ExtractionDeviceParameter>
+# $lengthSci and $lengthEng will be channel length
+L=$lengthEng
+# $widthSci and $widthEng will be channel width
+W=$widthEng
+# 
+help=$areaSourceSci/ $perimeterSourceSci / $areaDrainSci / $perimeterDrainSci
+</ExtractionDeviceParameter>
+</Extraction>
+</Component>
+<Component AND2>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type	file		cell
+output=X1	openCellLibrary/AND2_X1.gds	AND2_X1
+output=X2	openCellLibrary/AND2_X2.gds	AND2_X2
+output=X4	openCellLibrary/AND2_X4.gds	AND2_X4
+</Layout>
+<Prefix L>
+<Label>
+AND
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Arc 0 0 0 -30 0 30 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Line -20 -15 -30 -15 wire>
+<Line -20 15 -30 15 wire>
+<Line 30 0 40 0 wire>
+<Port -30 15 A1 local digitalIn>
+<Port -30 -15 A2 local digitalIn>
+<Port 40 0 ZN local digitalOut>
+<Port 0 -50 VSS global>
+<Port 0 -70 VDD global>
+</Symbol>
+<Offsetlabel 0 -15 -39>
+<Offsetlabel 90 36 22>
+<Offsetlabel 180 -24 -37>
+<Offsetlabel 270 43 17>
+<Netlist VHDL>
+$devicename : AND2
+   port map (
+      A1  => $node(A1),
+      A2  => $node(A2),
+      ZN  => $node(ZN),
+      VDD => VDD,
+      VSS => VSS
+   );
+</Netlist>
+<Netlist hspice>
+X$devicename VSS VDD $node(A1) $node(A2) $node(ZN) AND2_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(A1) $node(A2) $node(ZN) AND2_$output
+</Netlist>
+<Netlist verilog>
+AND2gate $devicename ($node(A1),$node(A2), $node(ZN));
+</Netlist>
+<Model VHDL>
+Component AND2
+   port (
+      A1  : in      bit;
+      A2  : in      bit;
+      ZN   : out     bit;
+      VDD : in      bit;
+      VSS : in      bit
+ );
+end component;
+</Model>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model verilog>
+module AND2gate(A, B, F);
+   input A;
+   input B;
+   output F;
+   reg F;
+   always @ (A or B)
+   begin
+      F <= A & B;
+   end
+endmodule
+</Model>
+</Component>
+<Component AND3>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type	file		cell
+output=X1	openCellLibrary/AND3_X1.gds	AND3_X1
+output=X2	openCellLibrary/AND3_X2.gds	AND3_X2
+output=X4	openCellLibrary/AND3_X4.gds	AND3_X4
+</Layout>
+<Prefix L>
+<Label>
+AND
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Arc 0 0 0 -30 0 30 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Line -20 -20 -30 -20 wire>
+<Line -20 0 -30 0 wire>
+<Line -20 20 -30 20 wire>
+<Line 30 0 40 0 wire>
+<Port -30 20 A1 local digitalIn>
+<Port -30 0 A2 local digitalIn>
+<Port -30 -20 A3 local digitalIn>
+<Port 40 0 ZN local digitalOut>
+<Port 0 -50 VSS global>
+<Port 0 -70 VDD global>
+</Symbol>
+<Offsetlabel 0 -25 -40>
+<Netlist VHDL>
+$devicename : AND3
+   port map (
+      A1  => $node(A1),
+      A2  => $node(A2),
+      A3  => $node(A3),
+      ZN  => $node(ZN),
+      VDD => VDD,
+      VSS => VSS
+   );
+</Netlist>
+<Netlist hspice>
+X$devicename VSS VDD $node(A1) $node(A2) $node(A3) $node(ZN) AND3_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(A1) $node(A2) $node(A3) $node(ZN) AND3_$output
+</Netlist>
+<Netlist verilog>
+AND3gate $devicename ($node(A1), $node(A2), $node(A3), $node(ZN));
+</Netlist>
+<Model VHDL>
+Component AND3
+   port (
+      A1  : in      bit;
+      A2  : in      bit;
+      A3  : in      bit;
+      ZN   : out     bit;
+      VDD : in      bit;
+      VSS : in      bit
+ );
+end component;
+</Model>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model verilog>
+module AND3gate(A, B,C, F);
+   input A;
+   input B;
+   input c;
+   output F;
+   reg F;
+   always @ (A or B or C)
+   begin
+      F <= A & B & C;
+   end
+endmodule
+</Model>
+</Component>
+<Component AND4>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type	file		cell
+output=X1	openCellLibrary/AND4_X1.gds	AND4_X1
+output=X2	openCellLibrary/AND4_X2.gds	AND4_X2
+output=X4	openCellLibrary/AND4_X4.gds	AND4_X4
+</Layout>
+<Prefix L>
+<Label>
+AND
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Arc 0 0 0 -30 0 30 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Line -20 -24 -30 -24 wire>
+<Line -20 8 -30 8 wire>
+<Line -20 -8 -30 -8 wire>
+<Line -20 24 -30 24 wire>
+<Line 30 0 40 0 wire>
+<Port -30 24 A1 local digitalIn>
+<Port -30 8 A2 local digitalIn>
+<Port -30 -8 A3 local digitalIn>
+<Port -30 -24 A4 local digitalIn>
+<Port 40 0 ZN local digitalOut>
+<Port 0 -50 VSS global>
+<Port 0 -70 VDD global>
+</Symbol>
+<Offsetlabel 0 -25 -38>
+<Offsetlabel 90 -6 3>
+<Netlist VHDL>
+$devicename : AND4
+   port map (
+      A1  => $node(A1),
+      A2  => $node(A2),
+      A3  => $node(A3),
+      A4  => $node(A4),
+      ZN  => $node(ZN),
+      VDD => VDD,
+      VSS => VSS
+   );
+</Netlist>
+<Netlist hspice>
+X$devicename VSS VDD $node(A1) $node(A2) $node(A3) $node(A4) $node(ZN) AND4_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(A1) $node(A2) $node(A3) $node(A4) $node(ZN) AND4_$output
+</Netlist>
+<Netlist verilog>
+AND4gate $devicename ($node(A1), $node(A2), $node(A3),$node(A3), $node(ZN));
+</Netlist>
+<Model VHDL>
+Component AND4
+   port (
+      A1  : in      bit;
+      A2  : in      bit;
+      A3  : in      bit;
+      A4  : in      bit;
+      ZN   : out     bit;
+      VDD : in      bit;
+      VSS : in      bit
+ );
+end component;
+</Model>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model verilog>
+module AND4gate(A, B,C,D, F);
+   input A;
+   input B;
+   input C;
+   output F;
+   reg F;
+   always @ (A or B or C or D)
+   begin
+      F <= A & B & C & D;
+   end
+endmodule
+</Model>
+</Component>
+<Component ANTENNA>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 >
+</Parameter>
+<Layout>
+[cell]
+#for parameter	layout file	cell
+*	openCellLibrary/ANTENNA_X1.gds	ANTENNA_X1
+</Layout>
+<Prefix L>
+<Label>
+Antenna
+</Label>
+<Symbol 0>
+<Port 0 -70 VDD global>
+<Port 0 -50 VSS global>
+<Port 0 0 A local digitalInOut>
+<Line 0 0 0 30 wire>
+<Line -10 20 0 30 10 20 wire>
+</Symbol>
+<Netlist spice>
+X$devicename VSS VDD $node(A) ANTENNA_$output
+</Netlist>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component AOI211>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type	file		cell
+output=X1	openCellLibrary/AOI211_X1.gds	AOI211_X1
+output=X2	openCellLibrary/AOI211_X2.gds	AOI211_X2
+output=X4	openCellLibrary/AOI211_X4.gds	AOI211_X4
+</Layout>
+<Prefix L>
+<Label>
+AOI
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Arc -45 30 -45 15 -45 45 wire>
+<Line -45 15 -55 15 -55 45 -45 45 wire>
+<Line -55 23 -60 23 wire>
+<Line -55 37 -60 37 wire>
+<Port -60 37 C1 local digitalIn>
+<Port -60 23 C2 local digitalIn>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -22 -15 -60 -15 wire>
+<Line -19 0 -60 0 wire>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Port -60 0 B local digitalIn>
+<Port -60 -15 A local digitalIn>
+<Port 45 0 ZN local digitalOut>
+<Port 0 -50 VSS global>
+<Port 0 -70 VDD global>
+</Symbol>
+<Offsetlabel 0 -29 -40>
+<Netlist VHDL>
+$devicename :AOI211
+   port map (
+      A  => $node(A),
+      B  => $node(B),
+      C1  => $node(C1),
+      C2  => $node(C2),
+      ZN  => $node(ZN),
+      VDD => VDD,
+      VSS => VSS
+   );
+</Netlist>
+<Netlist hspice>
+X$devicename VSS VDD $node(C2) $node(ZN) $node(C1) $node(B) $node(A) AOI211_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(C2) $node(ZN) $node(C1) $node(B) $node(A) AOI211_$output
+</Netlist>
+<Netlist verilog>
+AOI211gate $devicename ($node(A), $node(B), $node(C1), $node(C2) $node(ZN));
+</Netlist>
+<Model VHDL>
+Component AOI211
+   port (
+      A  : in      bit;
+      B  : in      bit;
+      C1  : in      bit;
+      C2  : in      bit;
+      ZN  : out     bit;
+      VDD : in      bit;
+      VSS : in      bit
+ );
+end component;
+</Model>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component AOI221>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type	file		cell
+output=X1	openCellLibrary/AOI221_X1.gds	AOI221_X1
+output=X2	openCellLibrary/AOI221_X2.gds	AOI221_X2
+output=X4	openCellLibrary/AOI221_X4.gds	AOI221_X4
+</Layout>
+<Prefix L>
+<Label>
+AOI
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Port 0 -70 VDD global>
+<Port 0 -50 VSS global>
+<Port 45 0 ZN local digitalOut>
+<Port -60 -20 A local digitalIn>
+<Line 38 0 45 0 wire>
+<Circle 30 4 38 -4 wire>
+<Line -19 0 -30 0 wire>
+<Line -24 -20 -60 -20 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -30 30 0 30 wire>
+<Line 0 -30 -30 -30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Arc -20 -30 30 0 0 30 wire>
+<Port -60 -7 B2 local digitalIn>
+<Port -60 7 B1 local digitalIn>
+<Line -55 7 -60 7 wire>
+<Line -55 -7 -60 -7 wire>
+<Line -45 -15 -55 -15 -55 15 -45 15 wire>
+<Arc -45 0 -45 -15 -45 15 wire>
+<Port -60 23 C2 local digitalIn>
+<Port -60 37 C1 local digitalIn>
+<Line -55 37 -60 37 wire>
+<Line -55 23 -60 23 wire>
+<Line -45 15 -55 15 -55 45 -45 45 wire>
+<Arc -45 30 -45 15 -45 45 wire>
+</Symbol>
+<Offsetlabel 0 -16 10>
+<Netlist hspice>
+X$devicename VSS VDD $node(B2) $node(B1) $node(A) $node(ZN) $node(C2) $node(C1) AOI221_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(B2) $node(B1) $node(A) $node(ZN) $node(C2) $node(C1) AOI221_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component AOI222>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type	file		cell
+output=X1	openCellLibrary/AOI222_X1.gds	AOI222_X1
+output=X2	openCellLibrary/AOI222_X2.gds	AOI222_X2
+output=X4	openCellLibrary/AOI222_X4.gds	AOI222_X4
+</Layout>
+<Prefix L>
+<Label>
+AOI
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Port 0 -70 VDD global>
+<Port 0 -50 VSS global>
+<Port 45 0 ZN local digitalOut>
+<Line 38 0 45 0 wire>
+<Circle 30 4 38 -4 wire>
+<Line -19 0 -30 0 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -30 30 0 30 wire>
+<Line 0 -30 -30 -30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Arc -20 -30 30 0 0 30 wire>
+<Port -60 -23 A1 local digitalIn>
+<Port -60 -37 A2 local digitalIn>
+<Line -55 -37 -60 -37 wire>
+<Line -55 -23 -60 -23 wire>
+<Line -45 -15 -55 -15 -55 -45 -45 -45 wire>
+<Arc -45 -30 -45 -45 -45 -15 wire>
+<Port -60 -7 B2 local digitalIn>
+<Port -60 7 B1 local digitalIn>
+<Line -55 7 -60 7 wire>
+<Line -55 -7 -60 -7 wire>
+<Line -45 -15 -55 -15 -55 15 -45 15 wire>
+<Arc -45 0 -45 -15 -45 15 wire>
+<Port -60 23 C2 local digitalIn>
+<Port -60 37 C1 local digitalIn>
+<Line -55 37 -60 37 wire>
+<Line -55 23 -60 23 wire>
+<Line -45 15 -55 15 -55 45 -45 45 wire>
+<Arc -45 30 -45 15 -45 45 wire>
+</Symbol>
+<Offsetlabel 0 -17 11>
+<Netlist hspice>
+X$devicename VSS VDD $node(B2) $node(C2) $node(C1) $node(ZN) $node(B1) $node(A2) $node(A1) AOI222_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(B2) $node(C2) $node(C1) $node(ZN) $node(B1) $node(A2) $node(A1) AOI222_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component BUF>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 X8 X16 X32 >
+</Parameter>
+<Layout>
+[cell]
+# device-type	file		cell
+output=X1	openCellLibrary/BUF_X1.gds	BUF_X1
+output=X2	openCellLibrary/BUF_X2.gds	BUF_X2
+output=X4	openCellLibrary/BUF_X4.gds	BUF_X4
+output=X8	openCellLibrary/BUF_X8.gds	BUF_X8
+output=X16	openCellLibrary/BUF_X16.gds	BUF_X16
+output=X32	openCellLibrary/BUF_X32.gds	BUF_X32
+</Layout>
+<Prefix L>
+<Label>
+BUF
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Line -20 -20 -20 20 22 0 -20 -20 wire>
+<Line -20 0 -30 0 wire>
+<Line 22 0 30 0 wire>
+<Port -30 0 A local digitalIn>
+<Port 30 0 Z local digitalOut>
+<Port 0 -40 VSS global>
+<Port 0 -60 VDD global>
+</Symbol>
+<Offsetlabel 0 -15 7>
+<Netlist hspice>
+X$devicename VSS VDD $node(A) $node(Z) BUF_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(A) $node(Z) BUF_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component CLKBUF>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X3 >
+</Parameter>
+<Layout>
+[cell]
+# device-type	file		cell
+output=X1	openCellLibrary/CLKBUF_X1.gds	CLKBUF_X1
+output=X2	openCellLibrary/CLKBUF_X2.gds	CLKBUF_X2
+output=X4	openCellLibrary/CLKBUF_X3.gds	CLKBUF_X3
+</Layout>
+<Prefix L>
+<Label>
+CLKBUF
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Port 0 -60 VDD global>
+<Port 0 -40 VSS global>
+<Port 30 0 Z local digitalOut>
+<Port -30 0 A local digitalIn>
+<Line 22 0 30 0 wire>
+<Line -20 0 -30 0 wire>
+<Line -20 -20 -20 20 22 0 -20 -20 wire>
+</Symbol>
+<Offsetlabel 0 -16 -24>
+<Netlist hspice>
+X$devicename VSS VDD $node(A) $node(Z) CLKBUF_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(A) $node(Z) CLKBUF_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component DFF>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 >
+</Parameter>
+<Layout>
+[cell]
+# device-type	file		cell
+output=X1	openCellLibrary/DFF_X1.gds	DFF_X1
+output=X2	openCellLibrary/DFF_X2.gds	DFF_X2
+</Layout>
+<Prefix L>
+<Label>
+DFF
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Port 0 -70 VDD global>
+<Port 0 -50 VSS global>
+<Text -17 6 wire D>
+<Line -20 -6 -15 -10 -20 -15 wire>
+<Port -30 -10 CK>
+<Line -20 -10 -30 -10 wire>
+<Port -30 10 D>
+<Line -20 10 -30 10 wire>
+<Port 35 10 Q>
+<Port 35 -10 QN>
+<Line 28 -10 35 -10 wire>
+<Circle 20 -14 28 -6 wire>
+<Line 20 10 35 10 wire>
+<Rect 20 20 -20 -20 wire>
+</Symbol>
+<Offsetlabel 0 -5 -8>
+<Netlist hspice>
+X$devicename VSS VDD $node(D) $node(CK) $node(Q) $node(QN) DFF_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(D) $node(CK) $node(Q) $node(QN) DFF_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component DFFR>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 >
+</Parameter>
+<Layout>
+[cell]
+# device-type	file		cell
+output=X1	openCellLibrary/DFFR_X1.gds	DFFR_X1
+output=X2	openCellLibrary/DFFR_X2.gds	DFFR_X2
+</Layout>
+<Prefix L>
+<Label>
+DFFR
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Port 0 -70 VDD global>
+<Port 0 -50 VSS global>
+<Text -17 6 wire D>
+<Line -20 -6 -15 -10 -20 -15 wire>
+<Port -30 -10 CK>
+<Line -20 -10 -30 -10 wire>
+<Port -30 10 D>
+<Line -20 10 -30 10 wire>
+<Port 0 -35 RN>
+<Line 0 -28 0 -35 wire>
+<Circle -4 -20 4 -28 wire>
+<Port 35 10 Q>
+<Port 35 -10 QN>
+<Line 28 -10 35 -10 wire>
+<Circle 20 -14 28 -6 wire>
+<Line 20 10 35 10 wire>
+<Rect 20 20 -20 -20 wire>
+</Symbol>
+<Offsetlabel 0 -5 -8>
+<Netlist hspice>
+X$devicename VSS VDD $node(CK) $node(D) $node(RN) $node(QN) $node(Q) DFFR_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(CK) $node(D) $node(RN) $node(QN) $node(Q) DFFR_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component DFFRS>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 >
+</Parameter>
+<Layout>
+[cell]
+# device-type	file		cell
+output=X1	openCellLibrary/DFFRS_X1.gds	DFFRS_X1
+output=X2	openCellLibrary/DFFRS_X2.gds	DFFRS_X2
+</Layout>
+<Prefix L>
+<Label>
+DFFRS
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Port 0 -70 VDD global>
+<Port 0 -50 VSS global>
+<Text -17 6 wire D>
+<Line -20 -6 -15 -10 -20 -15 wire>
+<Port -30 -10 CK>
+<Line -20 -10 -30 -10 wire>
+<Port -30 10 D>
+<Line -20 10 -30 10 wire>
+<Port 0 -35 RN>
+<Line 0 -28 0 -35 wire>
+<Circle -4 -20 4 -28 wire>
+<Port 0 35 SN>
+<Line 0 28 0 35 wire>
+<Circle -4 20 4 28 wire>
+<Port 35 10 Q>
+<Port 35 -10 QN>
+<Line 28 -10 35 -10 wire>
+<Circle 20 -14 28 -6 wire>
+<Line 20 10 35 10 wire>
+<Rect 20 20 -20 -20 wire>
+</Symbol>
+<Offsetlabel 0 -5 -8>
+<Netlist hspice>
+X$devicename VSS VDD $node(Q) $node(QN) $node(SN) $node(CK) $node(RN) $node(D) DFFRS_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(Q) $node(QN) $node(SN) $node(CK) $node(RN) $node(D) DFFRS_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component DFFS>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-libraryF
+</Description>
+<Parameter>
+<list output X1 X2 >
+</Parameter>
+<Layout>
+[cell]
+# device-type	file		cell
+output=X1	openCellLibrary/DFFS_X1.gds	DFFS_X1
+output=X2	openCellLibrary/DFFS_X2.gds	DFFS_X2
+</Layout>
+<Prefix L>
+<Label>
+DFFS
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Port 0 -70 VDD global>
+<Port 0 -50 VSS global>
+<Text -17 6 wire D>
+<Line -20 -6 -15 -10 -20 -15 wire>
+<Port -30 -10 CK>
+<Line -20 -10 -30 -10 wire>
+<Port -30 10 D>
+<Line -20 10 -30 10 wire>
+<Port 0 35 SN>
+<Line 0 28 0 35 wire>
+<Circle -4 20 4 28 wire>
+<Port 35 10 Q>
+<Port 35 -10 QN>
+<Line 28 -10 35 -10 wire>
+<Circle 20 -14 28 -6 wire>
+<Line 20 10 35 10 wire>
+<Rect 20 20 -20 -20 wire>
+</Symbol>
+<Offsetlabel 0 -5 -8>
+<Netlist hspice>
+X$devicename VSS VDD $node(D) $node(CK) $node(SN) $node(QN) $node(Q) DFFS_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(D) $node(CK) $node(SN) $node(QN) $node(Q) DFFS_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component FA>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 >
+</Parameter>
+<Layout>
+[cell]
+# device-type	file		cell
+output=X1	openCellLibrary/FA_X1.gds	FA_X1
+</Layout>
+<Prefix L>
+<Label>
+FA
+$devicename
+</Label>
+<Symbol 0>
+<Port 0 -70 VDD global>
+<Port 0 -50 VSS global>
+<Port 30 -10 CO>
+<Line 20 -10 30 -10 wire>
+<Port 30 10 S>
+<Line 20 10 30 10 wire>
+<Port 0 30 CI>
+<Line 0 20 0 30 wire>
+<Port -30 -10 B local digitalIn>
+<Line -20 -10 -30 -10 wire>
+<Port -30 10 A local digitalIn>
+<Line -20 10 -30 10 wire>
+<Rect 20 20 -20 -20 wire>
+</Symbol>
+<Offsetlabel 0 -9 7>
+<Offsetlabel 90 -6 3>
+<Netlist hspice>
+X$devicename VSS VDD $node(CO) $node(B) $node(A) $node(CI) $node(S) FA_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(CO) $node(B) $node(A) $node(CI) $node(S) FA_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component HA>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 >
+</Parameter>
+<Layout>
+[cell]
+# device-type	file		cell
+output=X1	openCellLibrary/HA_X1.gds	HA_X1
+</Layout>
+<Prefix L>
+<Label>
+HA
+$devicename
+</Label>
+<Symbol 0>
+<Port 0 -70 VDD global>
+<Port 0 -50 VSS global>
+<Port 30 -10 CO>
+<Line 20 -10 30 -10 wire>
+<Port 30 10 S>
+<Line 20 10 30 10 wire>
+<Port -30 -10 B local digitalIn>
+<Line -20 -10 -30 -10 wire>
+<Port -30 10 A local digitalIn>
+<Line -20 10 -30 10 wire>
+<Rect 20 20 -20 -20 wire>
+</Symbol>
+<Offsetlabel 0 -9 7>
+<Offsetlabel 90 -6 3>
+<Netlist hspice>
+X$devicename VSS VDD $node(A) $node(S) $node(B) $node(CO) HA_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(A) $node(S) $node(B) $node(CO) HA_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component INV>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 X8 X16 X32 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/INV_X1.gds	INV_X1
+output=X2	openCellLibrary/INV_X2.gds	INV_X2
+output=X4	openCellLibrary/INV_X4.gds	INV_X4
+output=X8	openCellLibrary/INV_X8.gds	INV_X8
+output=X16	openCellLibrary/INV_X16.gds	INV_X16
+output=X32	openCellLibrary/INV_X32.gds	INV_X32
+</Layout>
+<Prefix L>
+<Label>
+INV
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Port 0 -60 VDD global>
+<Port 0 -40 VSS global>
+<Port 40 0 ZN local digitalOut>
+<Port -30 0 A local digitalIn>
+<Line 30 0 40 0 wire>
+<Circle 22 4 30 -4 wire>
+<Line -20 0 -30 0 wire>
+<Line -20 -20 -20 20 22 0 -20 -20 wire>
+</Symbol>
+<Offsetlabel 0 -15 7>
+<Netlist VHDL>
+$devicename : inv
+   port map (
+      A   => $node(A),
+      ZN  => $node(ZN),
+      VDD => VDD,
+      VSS => VSS
+   );
+</Netlist>
+<Netlist hspice>
+X$devicename VSS VDD $node(A) $node(ZN) INV_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(A) $node(ZN) INV_$output
+</Netlist>
+<Netlist verilog>
+NOTgate $devicename ($node(A),$node(ZN));
+</Netlist>
+<Model VHDL>
+Component inv
+   port (
+      A   : in      bit;
+      ZN  : out     bit;
+      VDD : in      bit;
+      VSS : in      bit
+ );
+end component;
+</Model>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model verilog>
+module NOTgate(A, F);
+   input A;
+   output F;
+   reg F;
+   always @ (A)
+   begin
+      F <= ~A;
+   end
+endmodule
+</Model>
+</Component>
+<Component LOGIC0>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/LOGIC0_X1.gds	LOGIC0_X1
+</Layout>
+<Prefix L>
+<Label>
+$devicename
+</Label>
+<Symbol 0>
+<Rect 15 15 -15 -15 wire>
+<Line 15 0 20 0 wire>
+<Port 20 0 Z local digitalOut>
+<Text -5 -5 wire 0>
+<Port 0 -50 VSS global>
+<Port 0 -70 VDD global>
+</Symbol>
+<Offsetlabel 0 -9 7>
+<Offsetlabel 90 -6 3>
+<Netlist hspice>
+X$devicename VSS VDD $node(Z) LOGIC0_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(Z) LOGIC0_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component LOGIC1>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/LOGIC1_X1.gds	LOGIC1_X1
+</Layout>
+<Prefix L>
+<Label>
+$devicename
+</Label>
+<Symbol 0>
+<Rect 15 15 -15 -15 wire>
+<Line 15 0 20 0 wire>
+<Port 20 0 Z local digitalOut>
+<Text -5 -5 wire 1>
+<Port 0 -50 VSS global>
+<Port 0 -70 VDD global>
+</Symbol>
+<Offsetlabel 0 -9 7>
+<Offsetlabel 90 -6 3>
+<Netlist spice>
+X$devicename VSS VDD $node(Z)  LOGIC1_$output
+</Netlist>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component MUX2>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/MUX2_X1.gds	MUX2_X1
+output=X2	openCellLibrary/MUX2_X2.gds	MUX2_X2
+</Layout>
+<Prefix L>
+<Label>
+MUX
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Line 10 15 10 -15 -10 -30 -10 30 10 15 wire>
+<Line 0 22 0 35 wire>
+<Port 0 35 S>
+<Line 10 0 20 0 wire>
+<Port 20 0 Z local digitalOut>
+<Line -10 20 -20 20 wire>
+<Port -20 20 A local digitalIn>
+<Line -10 -20 -20 -20 wire>
+<Port -20 -20 B local digitalIn>
+<Text -5 8 wire 0>
+<Text -5 -20 wire 1>
+<Port 0 -50 VSS global>
+<Port 0 -70 VDD global>
+</Symbol>
+<Offsetlabel 0 -9 7>
+<Offsetlabel 90 -6 3>
+<Netlist hspice>
+X$devicename VSS VDD $node(S) $node(A) $node(B) $node(Z) MUX2_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(S) $node(A) $node(B) $node(Z) MUX2_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component NAND2>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/NAND2_X1.gds	NAND2_X1
+output=X2	openCellLibrary/NAND2_X2.gds	NAND2_X2
+output=X4	openCellLibrary/NAND2_X4.gds	NAND2_X4
+</Layout>
+<Prefix L>
+<Label>
+NAND
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Arc 0 0 0 -30 0 30 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Line -20 -15 -30 -15 wire>
+<Line -20 15 -30 15 wire>
+<Line 38 0 45 0 wire>
+<Circle 30 4 38 -4 wire>
+<Port -30 15 A1 local digitalIn>
+<Port -30 -15 A2 local digitalIn>
+<Port 45 0 ZN local digitalOut>
+<Port 0 -50 VSS global>
+<Port 0 -70 VDD global>
+</Symbol>
+<Offsetlabel 0 -15 11>
+<Offsetlabel 90 -6 3>
+<Netlist VHDL>
+$devicename : NAND2
+   port map (
+      A1  => $node(A1),
+      A2  => $node(A2),
+      ZN  => $node(ZN),
+      VDD => VDD,
+      VSS => VSS
+   );
+</Netlist>
+<Netlist hspice>
+X$devicename VSS VDD $node(A2) $node(ZN) $node(A1) NAND2_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(A2) $node(ZN) $node(A1) NAND2_$output
+</Netlist>
+<Netlist verilog>
+NAND2gate $devicename ($node(A1),$node(A2), $node(ZN));
+</Netlist>
+<Model VHDL>
+Component NAND2
+   port (
+      A1  : in      bit;
+      A2  : in      bit;
+      ZN   : out     bit;
+      VDD : in      bit;
+      VSS : in      bit
+ );
+end component;
+</Model>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model verilog>
+module NAND2gate(A, B, F);
+   input A;
+   input B;
+   output F;
+   reg F;
+   always @ (A or B)
+   begin
+      F <= ~(A & B);
+   end
+endmodule
+</Model>
+</Component>
+<Component NAND3>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/NAND3_X1.gds	NAND3_X1
+output=X2	openCellLibrary/NAND3_X2.gds	NAND3_X2
+output=X4	openCellLibrary/NAND3_X4.gds	NAND3_X4
+</Layout>
+<Prefix L>
+<Label>
+NAND
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Arc 0 0 0 -30 0 30 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Line -20 -20 -30 -20 wire>
+<Line -20 0 -30 0 wire>
+<Line -20 20 -30 20 wire>
+<Line 38 0 45 0 wire>
+<Circle 30 4 38 -4 wire>
+<Port -30 20 A1 local digitalIn>
+<Port -30 0 A2 local digitalIn>
+<Port -30 -20 A3 local digitalIn>
+<Port 45 0 ZN local digitalOut>
+<Port 0 -50 VSS global>
+<Port 0 -70 VDD global>
+</Symbol>
+<Offsetlabel -360 -10 10>
+<Offsetlabel 0 -16 7>
+<Offsetlabel 90 -24 10>
+<Offsetlabel 180 -24 10>
+<Offsetlabel 270 -21 11>
+<Netlist VHDL>
+$devicename : NAND3
+   port map (
+      A1  => $node(A1),
+      A2  => $node(A2),
+      A3  => $node(A3),
+      ZN  => $node(ZN),
+      VDD => VDD,
+      VSS => VSS
+   );
+</Netlist>
+<Netlist hspice>
+X$devicename VSS VDD $node(A3) $node(ZN) $node(A2) $node(A1) NAND3_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(A3) $node(ZN) $node(A2) $node(A1) NAND3_$output
+</Netlist>
+<Model VHDL>
+Component NAND3
+   port (
+      A1  : in      bit;
+      A2  : in      bit;
+      A3  : in      bit;
+      ZN   : out     bit;
+      VDD : in      bit;
+      VSS : in      bit
+ );
+end component;
+</Model>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component NAND4>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/NAND4_X1.gds	NAND4_X1
+output=X2	openCellLibrary/NAND4_X2.gds	NAND4_X2
+output=X4	openCellLibrary/NAND4_X4.gds	NAND4_X4
+</Layout>
+<Prefix L>
+<Label>
+NAND
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Arc 0 0 0 -30 0 30 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Line -20 -24 -30 -24 wire>
+<Line -20 8 -30 8 wire>
+<Line -20 -8 -30 -8 wire>
+<Line -20 24 -30 24 wire>
+<Line 38 0 45 0 wire>
+<Circle 30 4 38 -4 wire>
+<Port -30 24 A1 local digitalIn>
+<Port -30 8 A2 local digitalIn>
+<Port -30 -8 A3 local digitalIn>
+<Port -30 -24 A4 local digitalIn>
+<Port 45 0 ZN local digitalOut>
+<Port 0 -50 VSS global>
+<Port 0 -70 VDD global>
+</Symbol>
+<Offsetlabel 0 -15 10>
+<Offsetlabel 90 -6 3>
+<Netlist VHDL>
+$devicename : NAND4
+   port map (
+      A1  => $node(A1),
+      A2  => $node(A2),
+      A3  => $node(A3),
+      A4  => $node(A4),
+      ZN  => $node(ZN),
+      VDD => VDD,
+      VSS => VSS
+   );
+</Netlist>
+<Netlist hspice>
+X$devicename VSS VDD $node(A4) $node(ZN) $node(A3) $node(A2) $node(A1) NAND4_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(A4) $node(ZN) $node(A3) $node(A2) $node(A1) NAND4_$output
+</Netlist>
+<Model VHDL>
+Component NAND4
+   port (
+      A1  : in      bit;
+      A2  : in      bit;
+      A3  : in      bit;
+      A4  : in      bit;
+      ZN  : out     bit;
+      VDD : in      bit;
+      VSS : in      bit
+ );
+end component;
+</Model>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component NOR3>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/NOR3_X1.gds	NOR3_X1
+output=X2	openCellLibrary/NOR3_X2.gds	NOR3_X2
+output=X4	openCellLibrary/NOR3_X4.gds	NOR3_X4
+</Layout>
+<Prefix L>
+<Label>
+NOR
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -22 -15 -35 -15 wire>
+<Line -22 15 -35 15 wire>
+<Line -19 0 -35 0 wire>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Port -35 15 A1 local digitalIn>
+<Port -35 0 A2 local digitalIn>
+<Port -35 -15 A3 local digitalIn>
+<Port 45 0 ZN local digitalOut>
+<Port 0 -50 VSS global>
+<Port 0 -70 VDD global>
+</Symbol>
+<Offsetlabel 0 -16 8>
+<Netlist VHDL>
+$devicename : NOR3
+   port map (
+      A1  => $node(A1),
+      A2  => $node(A2),
+      A3  => $node(A3),
+      ZN  => $node(ZN),
+      VDD => VDD,
+      VSS => VSS
+   );
+</Netlist>
+<Netlist hspice>
+X$devicename VSS VDD $node(A3) $node(ZN) $node(A2) $node(A1)  NOR3_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(A3) $node(ZN) $node(A2) $node(A1)  NOR3_$output
+</Netlist>
+<Model VHDL>
+Component NOR3
+   port (
+      A1  : in      bit;
+      A2  : in      bit;
+      A3  : in      bit;
+      ZN   : out     bit;
+      VDD : in      bit;
+      VSS : in      bit
+ );
+end component;
+</Model>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component NOR2>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/NOR2_X1.gds	NOR2_X1
+output=X2	openCellLibrary/NOR2_X2.gds	NOR2_X2
+output=X4	openCellLibrary/NOR2_X4.gds	NOR2_X4
+</Layout>
+<Prefix L>
+<Label>
+NOR
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Port 0 -70 VDD global>
+<Port 0 -50 VSS global>
+<Port 45 0 ZN local digitalOut>
+<Port -35 -15 A2 local digitalIn>
+<Port -35 15 A1 local digitalIn>
+<Line 38 0 45 0 wire>
+<Circle 30 4 38 -4 wire>
+<Line -22 15 -35 15 wire>
+<Line -22 -15 -35 -15 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -30 30 0 30 wire>
+<Line 0 -30 -30 -30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Arc -20 -30 30 0 0 30 wire>
+</Symbol>
+<Offsetlabel 0 -15 9>
+<Netlist VHDL>
+$devicename :NOR2
+   port map (
+      A1  => $node(A1),
+      A2  => $node(A2),
+      ZN  => $node(ZN),
+      VDD => VDD,
+      VSS => VSS
+   );
+</Netlist>
+<Netlist hspice>
+X$devicename VSS VDD $node(A2) $node(ZN) $node(A1) NOR2_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(A2) $node(ZN) $node(A1) NOR2_$output
+</Netlist>
+<Netlist verilog>
+NOR2gate $devicename ($node(A1),$node(A2), $node(ZN));
+</Netlist>
+<Model VHDL>
+Component NOR2
+   port (
+      A1  : in      bit;
+      A2  : in      bit;
+      ZN   : out     bit;
+      VDD : in      bit;
+      VSS : in      bit
+ );
+end component;
+</Model>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model verilog>
+module NOR2gate(A, B, F);
+   input A;
+   input B;
+   output F;
+   reg F;
+   always @ (A or B)
+   begin
+      F <= ~(A | B);
+   end
+endmodule
+</Model>
+</Component>
+<Component NOR4>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/NOR4_X1.gds	NOR4_X1
+output=X2	openCellLibrary/NOR4_X2.gds	NOR4_X2
+output=X4	openCellLibrary/NOR4_X4.gds	NOR4_X4
+</Layout>
+<Prefix L>
+<Label>
+NOR
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -25 -24 -35 -24 wire>
+<Line -20 -8 -35 -8 wire>
+<Line -20 8 -35 8 wire>
+<Line -25 24 -35 24 wire>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Port -35 24 A1 local digitalIn>
+<Port -35 8 A2 local digitalIn>
+<Port -35 -8 A3 local digitalIn>
+<Port -35 -24 A4 local digitalIn>
+<Port 45 0 ZN local digitalOut>
+<Port 0 -50 VSS global>
+<Port 0 -70 VDD global>
+</Symbol>
+<Offsetlabel 0 -16 9>
+<Netlist VHDL>
+$devicename : NOR4
+   port map (
+      A1  => $node(A1),
+      A2  => $node(A2),
+      A3  => $node(A3),
+      A4  => $node(A4),
+      ZN  => $node(ZN),
+      VDD => VDD,
+      VSS => VSS
+   );
+</Netlist>
+<Netlist hspice>
+X$devicename VSS VDD $node(A4) $node(ZN) $node(A3) $node(A2) $node(A1)  NOR4_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(A4) $node(ZN) $node(A3) $node(A2) $node(A1)  NOR4_$output
+</Netlist>
+<Model VHDL>
+Component NOR4
+   port (
+      A1  : in      bit;
+      A2  : in      bit;
+      A3  : in      bit;
+      A4  : in      bit;
+      ZN   : out     bit;
+      VDD : in      bit;
+      VSS : in      bit
+ );
+end component;
+</Model>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component OAI21>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/OAI21_X1.gds	OAI21_X1
+output=X2	openCellLibrary/OAI21_X2.gds	OAI21_X2
+output=X4	openCellLibrary/OAI21_X4.gds	OAI21_X4
+</Layout>
+<Prefix L>
+<Label>
+OAI
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Port 0 -70 VDD global>
+<Port 0 -50 VSS global>
+<Port 45 0 ZN local digitalOut>
+<Port -52 -20 A local digitalIn>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Line -20 -20 -52 -20 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Arc 0 0 0 -30 0 30 wire>
+<Port -52 23 B2 local digitalIn>
+<Port -52 37 B1 local digitalIn>
+<Line -46 37 -52 37 wire>
+<Line -46 23 -52 23 wire>
+<Arc -70 30 -50 15 -50 45 wire>
+<Line -50 45 -35 45 wire>
+<Line -35 15 -50 15 wire>
+<Arc -45 45 -35 15 -20 30 wire>
+<Arc -45 15 -20 30 -35 45 wire>
+</Symbol>
+<Offsetlabel 0 -16 10>
+<Offsetlabel 90 -6 3>
+<Netlist hspice>
+X$devicename VSS VDD $node(B2) $node(ZN) $node(B1) $node(A) OAI21_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(B2) $node(ZN) $node(B1) $node(A) OAI21_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component OAI211>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/OAI211_X1.gds	OAI211_X1
+output=X2	openCellLibrary/OAI211_X2.gds	OAI211_X2
+output=X4	openCellLibrary/OAI211_X4.gds	OAI211_X4
+</Layout>
+<Prefix L>
+<Label>
+OAI
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Port 0 -70 VDD global>
+<Port 0 -50 VSS global>
+<Port 45 0 ZN local digitalOut>
+<Port -52 -20 A local digitalIn>
+<Port -52 0 B local digitalIn>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Line -20 0 -52 0 wire>
+<Line -20 -20 -52 -20 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Arc 0 0 0 -30 0 30 wire>
+<Port -52 23 C2 local digitalIn>
+<Port -52 37 C1 local digitalIn>
+<Line -46 37 -52 37 wire>
+<Line -46 23 -52 23 wire>
+<Arc -70 30 -50 15 -50 45 wire>
+<Line -50 45 -35 45 wire>
+<Line -35 15 -50 15 wire>
+<Arc -45 45 -35 15 -20 30 wire>
+<Arc -45 15 -20 30 -35 45 wire>
+</Symbol>
+<Offsetlabel 0 -15 10>
+<Offsetlabel 90 -6 3>
+<Netlist hspice>
+X$devicename VSS VDD $node(C2) $node(ZN) $node(C1) $node(A) $node(B) OAI211_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(C2) $node(ZN) $node(C1) $node(A) $node(B) OAI211_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component OAI22>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/OAI22_X1.gds	OAI22_X1
+output=X2	openCellLibrary/OAI22_X2.gds	OAI22_X2
+output=X4	openCellLibrary/OAI22_X4.gds	OAI22_X4
+</Layout>
+<Prefix L>
+<Label>
+OAI
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Port 0 -70 VDD global>
+<Port 0 -50 VSS global>
+<Port 45 0 ZN local digitalOut>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Arc 0 0 0 -30 0 30 wire>
+<Port -52 -23 A2 local digitalIn>
+<Port -52 -37 A1 local digitalIn>
+<Line -46 -37 -52 -37 wire>
+<Line -46 -23 -52 -23 wire>
+<Arc -70 -30 -50 -45 -50 -15 wire>
+<Line -50 -45 -35 -45 wire>
+<Line -35 -15 -50 -15 wire>
+<Arc -45 -15 -35 -45 -20 -30 wire>
+<Arc -45 -45 -20 -30 -35 -15 wire>
+<Port -52 23 B2 local digitalIn>
+<Port -52 37 B1 local digitalIn>
+<Line -46 37 -52 37 wire>
+<Line -46 23 -52 23 wire>
+<Arc -70 30 -50 15 -50 45 wire>
+<Line -50 45 -35 45 wire>
+<Line -35 15 -50 15 wire>
+<Arc -45 45 -35 15 -20 30 wire>
+<Arc -45 15 -20 30 -35 45 wire>
+</Symbol>
+<Offsetlabel 0 -15 10>
+<Offsetlabel 90 -6 3>
+<Netlist hspice>
+X$devicename VSS VDD $node(B2) $node(B1) $node(A1) $node(ZN) $node(A2) OAI22_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(B2) $node(B1) $node(A1) $node(ZN) $node(A2) OAI22_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component OAI222>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/OAI222_X1.gds	OAI222_X1
+output=X2	openCellLibrary/OAI222_X2.gds	OAI222_X2
+output=X4	openCellLibrary/OAI222_X4.gds	OAI222_X4
+</Layout>
+<Prefix L>
+<Label>
+OAI
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Port 0 -70 VDD global>
+<Port 0 -50 VSS global>
+<Port 45 0 ZN local digitalOut>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Arc 0 0 0 -30 0 30 wire>
+<Port -52 -23 A2 local digitalIn>
+<Port -52 -37 A1 local digitalIn>
+<Line -46 -37 -52 -37 wire>
+<Line -46 -23 -52 -23 wire>
+<Arc -70 -30 -50 -45 -50 -15 wire>
+<Line -50 -45 -35 -45 wire>
+<Line -35 -15 -50 -15 wire>
+<Arc -45 -15 -35 -45 -20 -30 wire>
+<Arc -45 -45 -20 -30 -35 -15 wire>
+<Port -52 -7 B2 local digitalIn>
+<Port -52 7 B1 local digitalIn>
+<Line -46 7 -52 7 wire>
+<Line -46 -7 -52 -7 wire>
+<Arc -70 0 -50 -15 -50 15 wire>
+<Line -50 15 -35 15 wire>
+<Line -35 -15 -50 -15 wire>
+<Arc -45 15 -35 -15 -20 0 wire>
+<Arc -45 -15 -20 0 -35 15 wire>
+<Port -52 23 C2 local digitalIn>
+<Port -52 37 C1 local digitalIn>
+<Line -46 37 -52 37 wire>
+<Line -46 23 -52 23 wire>
+<Arc -70 30 -50 15 -50 45 wire>
+<Line -50 45 -35 45 wire>
+<Line -35 15 -50 15 wire>
+<Arc -45 45 -35 15 -20 30 wire>
+<Arc -45 15 -20 30 -35 45 wire>
+</Symbol>
+<Offsetlabel 0 -17 9>
+<Offsetlabel 90 -6 3>
+<Netlist hspice>
+X$devicename VSS VDD $node(B2) $node(C2) $node(C1) $node(ZN) $node(B1) $node(A1) $node(A2) OAI222_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(B2) $node(C2) $node(C1) $node(ZN) $node(B1) $node(A1) $node(A2) OAI222_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component OAI221>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/OAI221_X1.gds	OAI221_X1
+output=X2	openCellLibrary/OAI221_X2.gds	OAI221_X2
+output=X4	openCellLibrary/OAI221_X4.gds	OAI221_X4
+</Layout>
+<Prefix L>
+<Label>
+OAI
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Port 0 -70 VDD global>
+<Port 0 -50 VSS global>
+<Port 45 0 ZN local digitalOut>
+<Port -52 -20 A local digitalIn>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Line -20 -20 -52 -20 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Arc 0 0 0 -30 0 30 wire>
+<Port -52 -7 B2 local digitalIn>
+<Port -52 7 B1 local digitalIn>
+<Line -46 7 -52 7 wire>
+<Line -46 -7 -52 -7 wire>
+<Arc -70 0 -50 -15 -50 15 wire>
+<Line -50 15 -35 15 wire>
+<Line -35 -15 -50 -15 wire>
+<Arc -45 15 -35 -15 -20 0 wire>
+<Arc -45 -15 -20 0 -35 15 wire>
+<Port -52 23 C2 local digitalIn>
+<Port -52 37 C1 local digitalIn>
+<Line -46 37 -52 37 wire>
+<Line -46 23 -52 23 wire>
+<Arc -70 30 -50 15 -50 45 wire>
+<Line -50 45 -35 45 wire>
+<Line -35 15 -50 15 wire>
+<Arc -45 45 -35 15 -20 30 wire>
+<Arc -45 15 -20 30 -35 45 wire>
+</Symbol>
+<Offsetlabel 0 -15 9>
+<Offsetlabel 90 -6 3>
+<Netlist hspice>
+X$devicename VSS VDD $node(B2) $node(B1) $node(ZN) $node(A) $node(C2) $node(C1) OAI221_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(B2) $node(B1) $node(ZN) $node(A) $node(C2) $node(C1) OAI221_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component OAI33>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/OAI33_X1.gds	OAI33_X1
+</Layout>
+<Prefix L>
+<Label>
+OAI
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Port 0 -70 VDD global>
+<Port 0 -50 VSS global>
+<Port 45 0 ZN local digitalOut>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Line 0 -30 -20 -30 -20 30 0 30 wire>
+<Arc 0 0 0 -30 0 30 wire>
+<Port -52 20 B3 local digitalIn>
+<Port -52 30 B2 local digitalIn>
+<Port -52 40 B1 local digitalIn>
+<Line -46 40 -52 40 wire>
+<Line -46 30 -52 30 wire>
+<Line -46 20 -52 20 wire>
+<Arc -70 -30 -50 -45 -50 -15 wire>
+<Line -50 -45 -35 -45 wire>
+<Line -35 -15 -50 -15 wire>
+<Arc -45 -15 -35 -45 -20 -30 wire>
+<Arc -45 -45 -20 -30 -35 -15 wire>
+<Port -52 -20 A1 local digitalIn>
+<Port -52 -30 A2 local digitalIn>
+<Port -52 -40 A3 local digitalIn>
+<Line -46 -40 -52 -40 wire>
+<Line -46 -30 -52 -30 wire>
+<Line -46 -20 -52 -20 wire>
+<Arc -70 30 -50 15 -50 45 wire>
+<Line -50 45 -35 45 wire>
+<Line -35 15 -50 15 wire>
+<Arc -45 45 -35 15 -20 30 wire>
+<Arc -45 15 -20 30 -35 45 wire>
+</Symbol>
+<Offsetlabel 0 -15 9>
+<Offsetlabel 90 -6 3>
+<Netlist hspice>
+X$devicename VSS VDD $node(B3) $node(B2) $node(B1) $node(ZN) $node(A1) $node(A2) $node(A3) OAI33_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(B3) $node(B2) $node(B1) $node(ZN) $node(A1) $node(A2) $node(A3) OAI33_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component OR2>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/OR2_X1.gds	OR2_X1
+output=X2	openCellLibrary/OR2_X2.gds	OR2_X2
+output=X4	openCellLibrary/OR2_X4.gds	OR2_X4
+</Layout>
+<Prefix L>
+<Label>
+OR
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Port 0 -70 VDD global>
+<Port 0 -50 VSS global>
+<Port 40 0 ZN local digitalOut>
+<Port -35 -15 A2 local digitalIn>
+<Port -35 15 A1 local digitalIn>
+<Line 30 0 40 0 wire>
+<Line -22 15 -35 15 wire>
+<Line -22 -15 -35 -15 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -30 30 0 30 wire>
+<Line 0 -30 -30 -30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Arc -20 -30 30 0 0 30 wire>
+</Symbol>
+<Offsetlabel 0 -15 9>
+<Netlist VHDL>
+$devicename : OR2
+   port map (
+      A1  => $node(A1),
+      A2  => $node(A2),
+      Z  => $node(Z),
+      VDD => VDD,
+      VSS => VSS
+   );
+</Netlist>
+<Netlist hspice>
+X$devicename VSS VDD $node(A1) $node(A2) $node(ZN) OR2_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(A1) $node(A2) $node(ZN) OR2_$output
+</Netlist>
+<Netlist verilog>
+OR2gate $devicename ($node(A1),$node(A2), $node(ZN));
+</Netlist>
+<Model VHDL>
+Component OR2
+   port (
+      A1  : in      bit;
+      A2  : in      bit;
+      Z   : out     bit;
+      VDD : in      bit;
+      VSS : in      bit
+ );
+end component;
+</Model>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model verilog>
+module OR2gate(A, B, F);
+   input A;
+   input B;
+   output F;
+   reg F;
+   always @ (A or B)
+   begin
+      F <= A | B;
+   end
+endmodule
+</Model>
+</Component>
+<Component OR3>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/OR3_X1.gds	OR3_X1
+output=X2	openCellLibrary/OR3_X2.gds	OR3_X2
+output=X4	openCellLibrary/OR3_X4.gds	OR3_X4
+</Layout>
+<Prefix L>
+<Label>
+OR
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -22 -15 -35 -15 wire>
+<Line -22 15 -35 15 wire>
+<Line -19 0 -35 0 wire>
+<Line 30 0 40 0 wire>
+<Port -35 15 A1 local digitalIn>
+<Port -35 0 A2 local digitalIn>
+<Port -35 -15 A3 local digitalIn>
+<Port 40 0 ZN local digitalOut>
+<Port 0 -50 VSS global>
+<Port 0 -70 VDD global>
+</Symbol>
+<Offsetlabel 0 -14 8>
+<Netlist VHDL>
+$devicename : OR3
+   port map (
+      A1  => $node(A1),
+      A2  => $node(A2),
+      A3  => $node(A3),
+      Z  => $node(Z),
+      VDD => VDD,
+      VSS => VSS
+   );
+</Netlist>
+<Netlist hspice>
+X$devicename VSS VDD $node(A1) $node(A2) $node(A3) $node(ZN) OR3_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(A1) $node(A2) $node(A3) $node(ZN) OR3_$output
+</Netlist>
+<Model VHDL>
+Component OR3
+   port (
+      A1  : in      bit;
+      A2  : in      bit;
+      A3  : in      bit;
+      Z   : out     bit;
+      VDD : in      bit;
+      VSS : in      bit
+ );
+end component;
+</Model>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component OR4>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/OR4_X1.gds	OR4_X1
+output=X2	openCellLibrary/OR4_X2.gds	OR4_X2
+output=X4	openCellLibrary/OR4_X4.gds	OR4_X4
+</Layout>
+<Prefix L>
+<Label>
+OR
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -25 -24 -35 -24 wire>
+<Line -20 -8 -35 -8 wire>
+<Line -20 8 -35 8 wire>
+<Line -25 24 -35 24 wire>
+<Line 30 0 40 0 wire>
+<Port -35 24 A1 local digitalIn>
+<Port -35 8 A2 local digitalIn>
+<Port -35 -8 A3 local digitalIn>
+<Port -35 -24 A4 local digitalIn>
+<Port 40 0 ZN local digitalOut>
+<Port 0 -50 VSS global>
+<Port 0 -70 VDD global>
+</Symbol>
+<Offsetlabel 0 -16 11>
+<Netlist VHDL>
+$devicename : OR4
+   port map (
+      A1  => $node(A1),
+      A2  => $node(A2),
+      A3  => $node(A3),
+      A4  => $node(A4),
+      Z  => $node(Z),
+      VDD => VDD,
+      VSS => VSS
+   );
+</Netlist>
+<Netlist hspice>
+X$devicename VSS VDD $node(A1) $node(A2) $node(A3) $node(A4) $node(ZN) OR4_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(A1) $node(A2) $node(A3) $node(A4) $node(ZN) OR4_$output
+</Netlist>
+<Model VHDL>
+Component OR4
+   port (
+      A1  : in      bit;
+      A2  : in      bit;
+      A3  : in      bit;
+      A4  : in      bit;
+      Z   : out     bit;
+      VDD : in      bit;
+      VSS : in      bit
+ );
+end component;
+</Model>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component SDFF>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/SDFF_X1.gds	SDFF_X1
+output=X2	openCellLibrary/SDFF_X2.gds	SDFF_X2
+</Layout>
+<Prefix L>
+<Label>
+SDFF
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Rect 20 35 -20 -35 wire>
+<Line 20 21 35 21 wire>
+<Circle 20 3 28 11 wire>
+<Line 28 7 35 7 wire>
+<Port 35 7 QN>
+<Port 35 21 Q>
+<Line -20 21 -30 21 wire>
+<Port -30 21 D>
+<Line -20 7 -30 7 wire>
+<Port -30 7 SI>
+<Line -20 -7 -30 -7 wire>
+<Port -30 -7 SE>
+<Line -20 -21 -30 -21 wire>
+<Port -30 -21 CK>
+<Line -20 -16 -15 -21 -20 -26 wire>
+<Text -17 20 wire D>
+<Text -17 6 wire SI>
+<Text -17 -8 wire SE>
+<Port 0 -70 VSS global>
+<Port 0 -80 VDD global>
+</Symbol>
+<Offsetlabel 0 -5 -18>
+<Netlist hspice>
+X$devicename VSS VDD $node(Q) $node(QN) $node(CK) $node(SI) $node(D) $node(SE) SDFF_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(Q) $node(QN) $node(CK) $node(SI) $node(D) $node(SE) SDFF_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component SDFFR>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/SDFFR_X1.gds	SDFFR_X1
+output=X2	openCellLibrary/SDFFR_X2.gds	SDFFR_X2
+</Layout>
+<Prefix L>
+<Label>
+SDFFR
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Rect 20 35 -20 -35 wire>
+<Line 20 21 35 21 wire>
+<Circle 20 3 28 11 wire>
+<Line 28 7 35 7 wire>
+<Port 35 7 QN>
+<Port 35 21 Q>
+<Circle -4 -35 4 -43 wire>
+<Line 0 -43 0 -50 wire>
+<Port 0 -50 RN>
+<Line -20 21 -30 21 wire>
+<Port -30 21 D>
+<Line -20 7 -30 7 wire>
+<Port -30 7 SI>
+<Line -20 -7 -30 -7 wire>
+<Port -30 -7 SE>
+<Line -20 -21 -30 -21 wire>
+<Port -30 -21 CK>
+<Line -20 -16 -15 -21 -20 -26 wire>
+<Text -17 20 wire D>
+<Text -17 6 wire SI>
+<Text -17 -8 wire SE>
+<Port 0 -70 VSS global>
+<Port 0 -80 VDD global>
+</Symbol>
+<Offsetlabel 0 -5 -18>
+<Netlist hspice>
+X$devicename VSS VDD $node(QN) $node(Q) $node(RN) $node(CK) $node(D) $node(SE) $node(SI) SDFFR_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(QN) $node(Q) $node(RN) $node(CK) $node(D) $node(SE) $node(SI) SDFFR_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component SDFFRS>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/SDFFRS_X1.gds	SDFFRS_X1
+output=X2	openCellLibrary/SDFFRS_X2.gds	SDFFRS_X2
+</Layout>
+<Prefix L>
+<Label>
+SDFFRS
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Rect 20 35 -20 -35 wire>
+<Line 20 21 35 21 wire>
+<Circle 20 3 28 11 wire>
+<Line 28 7 35 7 wire>
+<Port 35 7 QN>
+<Port 35 21 Q>
+<Circle -4 35 4 43 wire>
+<Line 0 43 0 50 wire>
+<Port 0 50 SN>
+<Circle -4 -35 4 -43 wire>
+<Line 0 -43 0 -50 wire>
+<Port 0 -50 RN>
+<Line -20 21 -30 21 wire>
+<Port -30 21 D>
+<Line -20 7 -30 7 wire>
+<Port -30 7 SI>
+<Line -20 -7 -30 -7 wire>
+<Port -30 -7 SE>
+<Line -20 -21 -30 -21 wire>
+<Port -30 -21 CK>
+<Line -20 -16 -15 -21 -20 -26 wire>
+<Text -17 20 wire D>
+<Text -17 6 wire SI>
+<Text -17 -8 wire SE>
+<Port 0 -70 VSS global>
+<Port 0 -80 VDD global>
+</Symbol>
+<Offsetlabel 0 -5 -18>
+<Netlist hspice>
+X$devicename VSS VDD $node(SE) $node(SI) $node(D) $node(CK) $node(SN) $node(RN) $node(QN) $node(Q) SDFFRS_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(SE) $node(SI) $node(D) $node(CK) $node(SN) $node(RN) $node(QN) $node(Q) SDFFRS_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component SDFFS>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/SDFFS_X1.gds	SDFFS_X1
+output=X2	openCellLibrary/SDFFS_X2.gds	SDFFS_X2
+</Layout>
+<Prefix L>
+<Label>
+SDFFS
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Rect 20 35 -20 -35 wire>
+<Line 20 21 35 21 wire>
+<Circle 20 3 28 11 wire>
+<Line 28 7 35 7 wire>
+<Port 35 7 QN>
+<Port 35 21 Q>
+<Circle -4 35 4 43 wire>
+<Line 0 43 0 50 wire>
+<Port 0 50 SN>
+<Line -20 21 -30 21 wire>
+<Port -30 21 D>
+<Line -20 7 -30 7 wire>
+<Port -30 7 SI>
+<Line -20 -7 -30 -7 wire>
+<Port -30 -7 SE>
+<Line -20 -21 -30 -21 wire>
+<Port -30 -21 CK>
+<Line -20 -16 -15 -21 -20 -26 wire>
+<Text -17 20 wire D>
+<Text -17 6 wire SI>
+<Text -17 -8 wire SE>
+<Port 0 -70 VSS global>
+<Port 0 -80 VDD global>
+</Symbol>
+<Offsetlabel 0 -5 -18>
+<Netlist hspice>
+X$devicename VSS VDD $node(SE) $node(D) $node(SI) $node(CK) $node(SN) $node(QN) $node(Q) SDFFS_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(SE) $node(D) $node(SI) $node(CK) $node(SN) $node(QN) $node(Q) SDFFS_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component TINV>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/TINV_X1.gds	TINV_X1
+</Layout>
+<Prefix L>
+<Label>
+TINV
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Circle 20 4 28 -4 wire>
+<Line 28 0 35 0 wire>
+<Port 35 0 ZN local digitalOut>
+<Line 20 0 -10 20 -10 -20 20 0 wire>
+<Line -10 0 -20 0 wire>
+<Port -20 0 I>
+<Line 5 -10 5 -25 wire>
+<Port 5 -25 EN>
+<Port 0 -50 VSS global>
+<Port 0 -70 VDD global>
+</Symbol>
+<Offsetlabel 0 -8 8>
+<Netlist hspice>
+X$devicename VSS VDD $node(EN) $node(I) $node(ZN) TINV_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(EN) $node(I) $node(ZN) TINV_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component TLAT>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 >
+</Parameter>
+<Layout>
+[cell]
+# device-type	file		cell
+output=X1	openCellLibrary/TLAT_X1.gds	TLAT_X1
+</Layout>
+<Prefix L>
+<Label>
+TLAT
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Port 0 -70 VDD global>
+<Port 0 -50 VSS global>
+<Text -17 5 wire D>
+<Port 0 -35 OE>
+<Line 0 -20 0 -35 wire>
+<Port 30 10 Q>
+<Line 20 10 30 10 wire>
+<Port -30 -10 G>
+<Line -20 -10 -30 -10 wire>
+<Port -30 10 D>
+<Line -20 10 -30 10 wire>
+<Rect 20 20 -20 -20 wire>
+</Symbol>
+<Offsetlabel 0 -5 -8>
+<Netlist hspice>
+X$devicename VSS VDD $node(G) $node(D) $node(OE) $node(Q) TLAT_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(G) $node(D) $node(OE) $node(Q) TLAT_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component XNOR2>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/XNOR2_X1.gds	XNOR2_X1
+output=X2	openCellLibrary/XNOR2_X2.gds	XNOR2_X2
+</Layout>
+<Prefix L>
+<Label>
+XNOR
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Port 15 -50 VDD global>
+<Port 15 -30 VSS global>
+<Port 60 20 ZN local digitalOut>
+<Port -20 5 B local digitalIn>
+<Port -20 35 A local digitalIn>
+<Line 53 20 60 20 wire>
+<Line -7 35 -20 35 wire>
+<Line -7 5 -20 5 wire>
+<Line -15 50 15 50 wire>
+<Line 15 -10 -15 -10 wire>
+<Circle 45 24 53 16 wire>
+<Arc -60 20 -20 -10 -20 50 wire>
+<Arc -55 20 -15 -10 -15 50 wire>
+<Arc -5 50 15 -10 45 20 wire>
+<Arc -5 -10 45 20 15 50 wire>
+</Symbol>
+<Offsetlabel 0 -4 30>
+<Netlist hspice>
+X$devicename VSS VDD $node(A) $node(B) $node(ZN) XNOR2_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(A) $node(B) $node(ZN) XNOR2_$output
+</Netlist>
+<Netlist verilog>
+XNOR2gate $devicename ($node(A),$node(B), $node(ZN));
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model verilog>
+module XNOR2gate(A, B, F);
+   input A;
+   input B;
+   output F;
+   reg F;
+   always @ (A or B)
+   begin
+      F <= A ~^ B;
+   end
+endmodule
+</Model>
+</Component>
+<Component XOR2>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/XOR2_X1.gds	XOR2_X1
+output=X2	openCellLibrary/XOR2_X2.gds	XOR2_X2
+</Layout>
+<Prefix L>
+<Label>
+XOR
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Port -18 35 A local digitalIn>
+<Port -18 5 B local digitalIn>
+<Port 57 20 Z local digitalOut>
+<Port 17 -30 VSS global>
+<Port 17 -50 VDD global>
+<Line 17 -10 -13 -10 wire>
+<Line -13 50 17 50 wire>
+<Line -5 5 -18 5 wire>
+<Line -5 35 -18 35 wire>
+<Line 47 20 57 20 wire>
+<Arc -3 -10 47 20 17 50 wire>
+<Arc -3 50 17 -10 47 20 wire>
+<Arc -53 20 -13 -10 -13 50 wire>
+<Arc -58 20 -18 -10 -18 50 wire>
+</Symbol>
+<Offsetlabel 0 -2 34>
+<Netlist hspice>
+X$devicename VSS VDD $node(A) $node(B) $node(Z) XOR2_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(A) $node(B) $node(Z) XOR2_$output
+</Netlist>
+<Netlist verilog>
+XOR2gate $devicename ($node(A),$node(A), $node(Z));
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model verilog>
+module XOR2gate(A, B, F);
+   input A;
+   input B;
+   output F;
+   reg F;
+   always @ (A or B)
+   begin
+      F <= A ^ B;
+   end
+endmodule
+</Model>
+</Component>
+<Component AOI22>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type	file		cell
+output=X1	openCellLibrary/AOI22_X1.gds	AOI22_X1
+output=X2	openCellLibrary/AOI22_X2.gds	AOI22_X2
+output=X4	openCellLibrary/AOI22_X4.gds	AOI22_X4
+</Layout>
+<Prefix L>
+<Label>
+AOI
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Arc -45 30 -45 15 -45 45 wire>
+<Line -45 15 -55 15 -55 45 -45 45 wire>
+<Line -55 23 -60 23 wire>
+<Line -55 37 -60 37 wire>
+<Port -60 37 B1 local digitalIn>
+<Port -60 23 B2 local digitalIn>
+<Arc -45 -30 -45 -45 -45 -15 wire>
+<Line -45 -15 -55 -15 -55 -45 -45 -45 wire>
+<Line -55 -23 -60 -23 wire>
+<Line -55 -37 -60 -37 wire>
+<Port -60 -37 A2 local digitalIn>
+<Port -60 -23 A1 local digitalIn>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Port 45 0 ZN local digitalOut>
+<Port 0 -50 VSS global>
+<Port 0 -70 VDD global>
+</Symbol>
+<Offsetlabel 0 -17 9>
+<Netlist VHDL>
+$devicename :AOI22
+   port map (
+      A1  => $node(A1),
+      A2  => $node(A2),
+      B1  => $node(B1),
+      B2  => $node(B2),
+      ZN  => $node(ZN),
+      VDD => VDD,
+      VSS => VSS
+   );
+</Netlist>
+<Netlist hspice>
+X$devicename VSS VDD $node(B2) $node(B1) $node(ZN) $node(A1) $node(A2) AOI22_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(B2) $node(B1) $node(ZN) $node(A1) $node(A2) AOI22_$output
+</Netlist>
+<Netlist verilog>
+AOI22gate $devicename ($node(A1), $node(A2),  $node(B1), $node(B2), $node(ZN));
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component AOI21>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 >
+</Parameter>
+<Layout>
+[cell]
+# device-type	file		cell
+output=X1	openCellLibrary/AOI21_X1.gds	AOI21_X1
+output=X2	openCellLibrary/AOI21_X2.gds	AOI21_X2
+output=X4	openCellLibrary/AOI21_X4.gds	AOI21_X4
+</Layout>
+<Prefix L>
+<Label>
+AOI
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Arc -45 30 -45 15 -45 45 wire>
+<Line -45 15 -55 15 -55 45 -45 45 wire>
+<Line -55 23 -60 23 wire>
+<Line -55 37 -60 37 wire>
+<Port -60 37 B1 local digitalIn>
+<Port -60 23 B2 local digitalIn>
+<Arc -20 -30 30 0 0 30 wire>
+<Arc -20 30 0 -30 30 0 wire>
+<Line 0 -30 -30 -30 wire>
+<Line -30 30 0 30 wire>
+<Arc -70 0 -30 -30 -30 30 wire>
+<Line -22 -15 -60 -15 wire>
+<Circle 30 4 38 -4 wire>
+<Line 38 0 45 0 wire>
+<Port -60 -15 A local digitalIn>
+<Port 45 0 ZN local digitalOut>
+<Port 0 -50 VSS global>
+<Port 0 -70 VDD global>
+</Symbol>
+<Offsetlabel 0 -23 -40>
+<Netlist VHDL>
+$devicename :AOI21
+   port map (
+      A  => $node(A),
+      B1  => $node(B1),
+      B2  => $node(B2),
+      ZN  => $node(ZN),
+      VDD => VDD,
+      VSS => VSS
+   );
+</Netlist>
+<Netlist hspice>
+X$devicename VSS VDD $node(B2) $node(ZN) $node(B1) $node(A) AOI21_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(B2) $node(ZN) $node(B1) $node(A) AOI21_$output
+</Netlist>
+<Netlist verilog>
+AOI21gate $devicename ($node(A), $node(B1), $node(B2), $node(ZN));
+</Netlist>
+<Model VHDL>
+Component AOI21
+   port (
+      A  : in      bit;
+      B1  : in      bit;
+      B2  : in      bit;
+      ZN  : out     bit;
+      VDD : in      bit;
+      VSS : in      bit
+ );
+end component;
+</Model>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+<Component TBUF>
+<Description>
+https://layouteditor.org/schematiceditor/libraries/open-cell-library
+</Description>
+<Parameter>
+<list output X1 X2 X4 X8 X16 >
+</Parameter>
+<Layout>
+[cell]
+# device-type			file		cell
+output=X1	openCellLibrary/TBUF_X1.gds	TBUF_X1
+output=X2	openCellLibrary/TBUF_X2.gds	TBUF_X2
+output=X4	openCellLibrary/TBUF_X4.gds	TBUF_X4
+output=X8	openCellLibrary/TBUF_X8.gds	TBUF_X8
+output=X16	openCellLibrary/TBUF_X16.gds	TBUF_X16
+</Layout>
+<Prefix L>
+<Label>
+TBUF
+$devicename
+$output
+</Label>
+<Symbol 0>
+<Port 30 0 Z local digitalInOut>
+<Port -20 0 A local digitalIn>
+<Port 5 -25 EN>
+<Port 0 -50 VSS global>
+<Port 0 -70 VDD global>
+<Line 20 0 30 0 wire>
+<Line 20 0 -10 20 -10 -20 20 0 wire>
+<Line -10 0 -20 0 wire>
+<Line 5 -10 5 -25 wire>
+</Symbol>
+<Offsetlabel 0 -8 8>
+<Netlist hspice>
+X$devicename VSS VDD $node(A) $node(Z) $node(EN) TBUF_$output
+</Netlist>
+<Netlist spice>
+X$devicename VSS VDD $node(A) $node(Z) $node(EN) TBUF_$output
+</Netlist>
+<Model hspice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+<Model spice>
+.include $librarypath/openCellLibrary/spicemodel.sp
+</Model>
+</Component>
+
+<Component PNP-2C>
+<Description>
+pnp bipolar transistor with two collectors
+</Description>
+<Parameter>
+<list size 1 2 3 >
+</Parameter>
+<Layout>
+[cell]
+#for parameter	layout file	cell
+size=1	openCellLibrary/bipolar.gds	pnp1C2
+size=2	openCellLibrary/bipolar.gds	pnp2C2
+size=3	openCellLibrary/bipolar.gds	pnp3C2
+</Layout>
+<Prefix Q>
+<Label>
+$devicename
+</Label>
+<Symbol 0>
+<Port 32 48 E>
+<Port -32 0 B>
+<Port 32 -48 C2>
+<Line -16 0 -32 0 wire>
+<Line -16 -16 32 -48 wire>
+<Line -16 32 -16 -32 wire>
+<Line 8 32 32 48 wire>
+<Line -16 16 4 36 wire>
+<Line 12 28 4 36 wire>
+<Line -16 16 12 28 wire>
+<Line -16 -3 32 -32 #646464>
+<Port 32 -32 C1>
+</Symbol>
+<Offsetlabel -270 9 39>
+<Offsetlabel -180 21 -12>
+<Offsetlabel -90 12 -25>
+<Offsetlabel 0 6 9>
+<Offsetlabel 90 13 -28>
+<Offsetlabel 180 26 -18>
+<Offsetlabel 270 8 41>
+<Netlist spice>
+$devicename_1 $node(C1) $node(B) $node(E) 0 pnp$sizeC2
+$devicename_2 $node(C2) $node(B) $node(E) 0 pnp$sizeC2
+</Netlist>
+<Model spice>
+.model pnp1C2 PNP( IS=0.5E-7 BF=167 )
+.model pnp2C2 PNP( IS=1.1E-7 BF=225 )
+.model pnp3C2 PNP( IS=1.7E-7 BF=255 )
+</Model>
+</Component>

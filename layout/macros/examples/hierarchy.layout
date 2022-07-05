@@ -1,0 +1,36 @@
+#!/usr/bin/layout
+#name=print hierarchy
+#help=print cellrefs with hierarchy of the current displayed cell
+
+string result="";
+
+void printCellHierarchy(cell *c,int level){
+        elementList *el=c->firstElement;  
+  // loop over all elements in call "c"
+        while (el!=NULL){
+                 if (el->thisElement!=NULL)
+                         if (el->thisElement->isCellref())  { // add element to result string if it is a cellref
+                                 for (int i=0; i<level; ++i) result+= "  ";
+                                 result+=el->thisElement->depend()->cellName+"\n";
+                                 // desent on referred cell
+                                 printCellHierarchy(el->thisElement->depend(),level+1);
+                 }
+                 el=el->nextElement;
+        }
+}
+
+
+int main(){
+  printCellHierarchy(layout->drawing->currentCell,0);
+ 
+
+       // display the results in the text editor 
+      textEdit *te=project::getCentralTextEditor();
+      if (te->drawing->text()!="") {
+            te->newFile();
+            te->setFile(te->countFiles()-1);
+            }
+      te->setText(result);
+      te->drawing->title="Hierarchy of the design";
+      te->drawing->setModifySaved();
+} 

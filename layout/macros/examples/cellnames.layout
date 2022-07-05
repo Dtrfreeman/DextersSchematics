@@ -1,0 +1,24 @@
+#!/usr/bin/layout
+#name=#4: cut cellnames
+#help=cut the length of cellnames
+
+int  main() {
+  layout->drawing->libname="libname";
+  // get first cell
+  cellList *cells=layout->drawing->firstCell;
+ 
+  int num = 0 ;
+
+  // loop over all cells
+  while (cells!=NULL){  
+     if (cells->thisCell!=NULL){
+       // get first Element of this cell
+     if (cells->thisCell->cellName.length()>1) {
+	  num++;
+	  cells->thisCell->cellName="c"+num;
+	  }
+       }
+    cells=cells->nextCell;
+  }
+}
+ 

@@ -1,0 +1,48 @@
+#!/usr/bin/layout
+#name=gard
+#help=generate a gard
+
+#include "oclCore.layout"
+
+#parameter width "2"
+#parameter height "2"
+#parameter type "p"
+
+int main(){
+checkSetup();
+int width=databaseunits(iPDK_getParameterValue("width"));
+int height=databaseunits(iPDK_getParameterValue("height"));
+string type=iPDK_getParameterValue("type");
+string cellname="gardring_"+iPDK_getParameterHash();
+if (layout->drawing->existCellname(cellname)) {
+        layout->drawing->setCell(cellname);
+        return 0;
+        }
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cl->thisCell);
+layout->drawing->activeLayer=m1Layer;
+layout->drawing->point(0,0);
+layout->drawing->text("gard");
+int widthMin=contSpace+2*contEdge;
+point p;
+p.set(0,0);
+if (type=="p") {
+    pGard(p,height+2*widthMin,widthMin,0);
+    p.set(0,0);
+    pGard(p,width+2*widthMin,widthMin,1);
+    p.set(width+widthMin,0);
+    pGard(p,height+2*widthMin,widthMin,0);
+    p.set(0,-height-widthMin);
+    pGard(p,width+2*widthMin,widthMin,1);
+}
+else if (type=="n") {
+    nGard(p,height+2*widthMin,widthMin,0);
+    p.set(0,0);
+    nGard(p,width+2*widthMin,widthMin,1);
+    p.set(width+widthMin,0);
+    nGard(p,height+2*widthMin,widthMin,0);
+    p.set(0,-height-widthMin);
+    nGard(p,width+2*widthMin,widthMin,1);
+}
+}

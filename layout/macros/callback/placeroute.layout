@@ -1,0 +1,43 @@
+#!/usr/bin/layout
+#name=callback place & route
+#help=callback macro called after completing the place & route
+
+string temp;
+string workDir;
+
+
+int main(){
+  if (process::trigger()=="output") {
+     layout->showProgress("place & route running");
+     cout(process::toolData());
+     return 0;
+     }
+  layout->showStatus("place & route loading result");
+  file f;
+  temp=f.tempPath()+"/";
+  workDir=process::getEnv("WORK_ROOT");
+  string s=process::toolResult();
+  if (s.size()>3){
+    textEdit *te=project::getCentralTextEditor();
+    if (te->filename!="") te->newDoc();
+    else if (te->drawing->title!="") te->newDoc();
+    te->drawing->title="OpenROAD results";
+    te->drawing->setText(s);
+    te->drawing->setModifySaved();
+  }
+  f.filename=workDir+"/placedrouted.def";
+  if (f.exists()){
+    layout->drawing->updateFile(workDir+"/placedrouted.def");
+    string post=process::getEnv("POSTPROCESSOR");
+    if (post=="sky130a") {
+        cout("proprocessing: "+f.currentPath()+"/lib/sky130a.layout"+"\n");
+        layout->executeMacro(f.currentPath()+"/lib/sky130a.layout");
+    }
+    layout->showStatus("place & route completed");
+  } else
+    layout->showStatus("place & route finished without a result file");
+  return 0;
+}
+
+
+ 

@@ -1,0 +1,33 @@
+#!/usr/bin/layout
+#name=polygon
+#help=generate a regular polygon
+
+//parameter with default value
+#parameter radius "100µm"
+#parameter layer "1"
+#parameterInt vertexes 100
+
+#include "shapelib.layout"
+
+int main(){
+int radius=databaseunits(iPar("radius"));
+int vertex=iPar("vertexes");
+int layer=getLayer(iPar("layer"));
+string cellname="reg_poly_"+userunits(radius)+"_"+iPar("layer")+"_"+iPar("vertexes");
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+double cd=setup::circularDefault;
+setup::circularDefault=(360/vertex);
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=layer;
+layout->drawing->point(0,0);
+layout->drawing->point(radius,0);
+layout->drawing->circle();
+setup::circularDefault=cd;
+}
+
+

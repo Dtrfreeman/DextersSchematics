@@ -1,0 +1,43 @@
+#!/usr/bin/layout
+#name=barcode
+#help=generate barcodes
+
+//parameter with default value
+#parameter width "60µm"
+#parameter height "80µm"
+#parameter text "LayoutEditor"
+#parameter code "QR"
+#parameter layer "1"
+
+#include "shapelib.layout"
+
+int main(){
+int width=databaseunits(iPar("width"));
+int height=databaseunits(iPar("height"));
+string text=iPar("text");
+string code=iPar("code");
+int layer=getLayer(iPar("layer"));
+string cellname="barcode"+userunits(width)+"_"+userunits(height)+"_"+code+"_"+text+"_"+layer;
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=layer;
+layout->drawing->point(0,0);
+layout->drawing->point(width,height);
+if (code=="code39") layout->barcodeTool->setCode39();
+if (code=="code39mod43") layout->barcodeTool->setCode39Mod43();
+if (code=="code128") layout->barcodeTool->setCode128();
+if (code=="datamatix") layout->barcodeTool->setDatamatrix();
+if (code=="QR") layout->barcodeTool->setQrCode();
+layout->barcodeTool->addBarcode(text);
+layout->drawing->selectAll();
+layout->drawing->point(0,0);
+layout->drawing->centerXY();
+layout->drawing->deselectAll();
+}
+
+

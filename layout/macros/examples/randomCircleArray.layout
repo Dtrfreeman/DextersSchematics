@@ -1,0 +1,56 @@
+#!/usr/bin/layout
+#name=random array circle
+#help=generates a random array of circle
+
+int main(){
+//++++++++++++++++++++++++++++++++++++++
+// enter values here:
+  int sizeX=10000; //array width
+  int sizeY=10000; //array height
+  int diameter=100; //circle diameter
+  int count=2000; //number circles
+  int layer =9; //layer for array
+  int space=50; //minimum circle to circle distance
+//++++++++++++++++++++++++++++++++++++++
+// the macro requires a empty cell to find the nearest element correctly
+layout->newCell();
+
+  int ds=diameter+space;
+  int i;
+  for ( i=count;i>0;i--){
+   bool found=false;
+   int x;
+   int y;
+   int try=0;
+   while (!found){
+    try++;
+    //use this variant, if the random generator is limited to 16 bit
+    //x=(stdlib::rand()%1000+stdlib::rand()*1000)%sizeX;
+    //y=(stdlib::rand()%1000+stdlib::rand()*1000)%sizeY;
+    //use this variant, if the random generator is 32 bit
+    x=stdlib::rand()%sizeX;
+    y=stdlib::rand()%sizeY;
+    point p; p.set(x,y);
+    elementList *e=layout->drawing->currentCell->nearestElement(p);
+    if (e==NULL) found=true;
+    else {
+      // checks, if conflicts with existing circles
+      point p2;
+      int radius;
+      if (e->thisElement->isCircle(&p2,&radius)){
+	      if (p2.x()>(x+ds)) found=true;
+	      else if (p2.x()<(x-ds)) found=true;
+	      else if (p2.y()<(y-ds)) found=true;
+	      else if (p2.y()>(y+ds)) found=true;
+	}
+    }
+     // no free space found
+     if (try>1000) return 1;
+    }
+    point p;
+    p.set(x,y);
+    layout->drawing->currentCell->addCircle(layer,p,diameter/2);
+  }
+ layout->drawing->scaleFull();
+}
+ 

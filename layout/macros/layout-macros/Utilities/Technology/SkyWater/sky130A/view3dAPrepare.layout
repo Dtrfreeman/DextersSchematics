@@ -1,0 +1,18 @@
+#!/usr/bin/layout
+#name=3d view: create derived layers
+#help=create the layer required for a more complete 3d view from the existing layers
+
+int main(){
+   layers::num[299].enable();
+   layout->drawing->deleteLayer(299);
+   layout->drawing->derivedLayer(20,66,299,"outside");
+   layers::num[298].enable();
+   layout->drawing->deleteLayer(298);
+   layout->booleanTool->boolOnLayer(65,66,298,"A-B");
+   layers::num[297].enable();
+   layout->drawing->deleteLayer(297);
+   layout->booleanTool->boolOnLayer(65,66,297,"A*B");
+   layers::num[296].enable();
+   layout->drawing->deleteLayer(296);
+   layout->booleanTool->boolOnLayer(66,95,296,"A-B");
+}

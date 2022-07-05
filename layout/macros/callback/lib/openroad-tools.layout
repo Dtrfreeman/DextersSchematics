@@ -1,0 +1,200 @@
+
+string workPath;
+
+string searchPath(string path,string search){
+ stringList list=search.split(";");
+ for(int pos=0;pos<list.size();++pos){
+   if (list.at(pos).left(4)=="MAX("){
+      int end=list.at(pos).indexOf(")");
+      string s=list.at(pos).mid(4,end-4);
+      file fs;
+      fs.findDir(path,s);
+      string best="";
+      while (fs.filename!=""){
+         if (fs.baseName()>best) best=fs.baseName();
+         fs.findNext();
+      }
+      path+="/"+best;
+   } else {
+      path+="/"+list.at(pos);
+   }
+ }
+ if (!file::isDir(path)) return "";
+ return path;
+}
+
+
+void mergeLEF(string tech,string path){
+file f;
+f.filename=tech;
+if (!f.exists()) return;
+f.open(true);
+string lefTech=f.read();
+f.close();
+f.filename=path;
+if (!f.exists()) return;
+f.open(true);
+string lefLib=f.read();
+f.close();
+f.filename=path+"_no_poly_pin";
+if (f.exists()){
+    f.open(true);
+    lefLib=f.read();
+    f.close();
+    f.filename=path;
+} else {
+    // fix TritonRoute cannot handle POLYGON PIN and POLYGON OBS shapes, so polygons are fractured and stored as boxes
+    layout->showProgress("prepare LEF");
+    cell *helpCell=layout->drawing->addCell()->thisCell;
+    helpCell->cellName="helperCell__";
+    int pos=0;
+    int procent=0;
+    do {
+        pos=lefLib.indexOf("POLYGON",pos);
+        if (pos>0) {
+            //int obs=lefLib.lastIndexOf("OBS",pos);
+            //int pin=lefLib.lastIndexOf("PIN",pos);
+            //if (pin>obs)
+               {
+                int end=lefLib.indexOf(";",pos);
+                string polygon=lefLib.mid(pos,end-pos);
+                polygon=polygon.remove("POLYGON").remove("\n");
+                stringList coord=polygon.split(" ");
+                for (int i=coord.size()-1;i>=0;--i){
+                  if (coord.at(i).trimmed()=="") coord.removeAt(i);
+                }
+                pointArray pa;
+                int pPos=0;
+                while (pPos+1<coord.size()){
+                    int x=coord.at(pPos).toDouble()*1000;
+                    int y=coord.at(pPos+1).toDouble()*1000;
+                    pa.attach(x,y);
+                    pPos+=2;
+                }
+                helpCell->addPolygon(pa,0);
+                helpCell->selectAll();
+                helpCell->fractureBoxSelect(200000000);
+                helpCell->toBox();
+                string insert="";
+                elementList *el=helpCell->firstElement;
+                while( el!=NULL) {
+                   if (el->thisElement->isBox()){
+                      pa=el->thisElement->getPoints();
+                      string sx,sy; sx.setNum(0.001*pa.point(0).x(),3);sy.setNum(0.001*pa.point(0).y(),3);
+                      insert+="RECT "+sx+" "+sy+" ";
+                      sx.setNum(0.001*pa.point(1).x(),3);sy.setNum(0.001*pa.point(1).y(),3);
+                      insert+=sx+" "+sy+" ;\n";
+                   }
+                   el=el->nextElement;
+                }
+                helpCell->selectAll();
+                helpCell->deleteSelect();
+                lefLib=lefLib.left(pos)+insert+lefLib.mid(end+2);
+            } //else pos+=8;
+        }
+        int p=100.0*pos/lefLib.size();
+        if (p>procent) {
+            procent=p;
+            //cout(procent+"%\n");
+            layout->showProgress("prepare LEF   "+procent+"%");
+        }
+    } while (pos>0);
+    layout->drawing->deleteCell(helpCell);
+    //cell *cc=layout->drawing->currentCell;
+    //layout->drawing->setCell(helpCell);
+    //layout->drawing->deleteCurrentCell();
+    //layout->drawing->setCell(cc);
+    f.open(false);
+    f.write(lefLib);
+    f.close();
+}
+
+int pos1=lefLib.indexOf("MACRO");
+int pos2=lefLib.indexOf("SITE");
+if (pos1<0) pos1=10000000;
+if (pos2<pos1) {
+   if (pos2<0) return;
+   pos1=pos2;
+}
+
+lefTech=lefTech.replace("END LIBRARY",lefLib.mid(pos1));
+
+f.filename=workPath+"/merge.lef";  // store merged LEF
+f.open(false);
+f.write(lefTech);
+f.close();
+process::setEnv("LEF_MERGED",f.filename);
+}
+
+string getLetterCode(string lib){
+    stringList cells=components::getOaCellNames(lib);
+    for (int i=0;i<cells.size();++i){
+       if (cells.at(i).left(5)=="FEED1") {
+           string code=cells.at(i).mid(5);
+           if (code.left(1)=="0") code=code.mid(1);
+           if (code.left(1).toInt()!=0) code=code.mid(1);
+           return code;
+       }
+    }
+    retrun "???";
+}
+
+string getTLEF(string techpath,string technology,string libcode,string add){
+ file f;
+ f.find(techpath,technology+"_*");
+ while (f.filename!=""){
+     string name=f.baseName();
+     int pos1=name.indexOf("_");
+     int pos2=name.indexOf("_",pos1+1);
+     string code=name.mid(pos1+1,pos2-pos1-1);
+     if (libcode.size()==code.size()){
+          for (int k=0;k<code.size();++k){
+             string letter=code.mid(k,1);
+             if (letter!="x") {
+                 string c=libcode.mid(k,1);
+                 if (c!=letter) break;
+             }
+             if (add!="") if (!name.contains(add)) break;
+             if (k+1==code.size()) return f.filename;
+          }
+     }
+     f.findNext();
+ }
+ return "not found";
+}
+
+string getScriptPath(string tool,string callbackpath){
+ string libPath=process::getEnv("STD_CELL_PATH");
+ file f;
+ for (int i=0;i<5;++i){
+     f.filename=libPath+"/openroad/"+tool+".tcl";
+     if (f.exists()) return f.canonicalPath();
+     libPath+="/..";
+ }
+ f.filename=callbackpath+"/lib/"+tool+".tcl";
+ if (f.exists()) return f.canonicalPath();
+ return "";
+}
+
+
+string filenameToWsl(string fn){
+       // converts a filename to Windows Subsystem for Linux namespace to run openroad (Linux) under windows
+        fn=fn.replace("\\","/");
+        fn=fn.replace("c:","/mnt/c");
+        fn=fn.replace("d:","/mnt/d");
+        fn=fn.replace("e:","/mnt/e");
+        fn=fn.replace("f:","/mnt/f");
+        fn=fn.replace("C:","/mnt/c");
+        fn=fn.replace("D:","/mnt/d");
+        fn=fn.replace("E:","/mnt/e");
+        fn=fn.replace("F:","/mnt/f");
+        fn=fn.replace(" ","\\ ");
+        fn=fn.replace("(","\\(");
+        fn=fn.replace(")","\\)");
+        return fn;
+}
+
+int showError(string message) {
+   layout->showMessage("OpenRoad-Integration",message+" Execution terminated!");
+   return 0;
+}

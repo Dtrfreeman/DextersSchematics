@@ -1,0 +1,79 @@
+#!/usr/bin/layout
+#name=nonius
+#help=generate a nonius
+
+//parameter with default value
+#parameter size "2µm"
+#parameter nonius "0.1µm"
+#parameter space "1µm"
+#parameterInt steps 10
+#parameter layer_1 "1"
+#parameter layer_2 "2"
+
+#include "shapelib.layout"
+
+int main(){
+int size=databaseunits(iPar("size"));
+int nonius=databaseunits(iPar("nonius"));
+int space=databaseunits(iPar("space"));
+int steps=iPar("steps");
+int layer1=getLayer(iPar("layer_1"));
+int layer2=getLayer(iPar("layer_2"));
+string cellname="nonius"+userunits(size)+"_"+userunits(space)+"_" +userunits(nonius)+"_"+iPar("steps")+"_"+iPar("layer_1")+"_"+iPar("layer_2");
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+int size2=size/2;
+layout->drawing->activeLayer=layer1;
+layout->drawing->point(0,size2);
+layout->drawing->point(-5*size2,size2);
+layout->drawing->point(-5*size2,-size2);
+layout->drawing->point(0,-size2);
+layout->drawing->point(0,size2);
+layout->drawing->polygon();
+layout->drawing->activeLayer=layer2;
+layout->drawing->point(0,size2);
+layout->drawing->point(5*size2,size2);
+layout->drawing->point(5*size2,-size2);
+layout->drawing->point(0,-size2);
+layout->drawing->point(0,size2);
+layout->drawing->polygon();
+int i;
+for (i=0;i<steps;i++){
+  layout->drawing->activeLayer=layer1;
+  layout->drawing->point(0,size2+space+i*(size+space));
+  layout->drawing->point(-3*size2,size2+space+i*(size+space));
+  layout->drawing->point(-3*size2,size2+(i+1)*(size+space));
+  layout->drawing->point(0,size2+(i+1)*(size+space));
+  layout->drawing->point(0,size2+space+i*(size+space));
+  layout->drawing->polygon();
+  layout->drawing->activeLayer=layer2;
+  layout->drawing->point(0,size2+space+nonius+i*(size+space+nonius));
+  layout->drawing->point(3*size2,size2+space+nonius+i*(size+space+nonius));
+  layout->drawing->point(3*size2,size2+(i+1)*(size+space+nonius));
+  layout->drawing->point(0,size2+(i+1)*(size+space+nonius));
+  layout->drawing->point(0,size2+space+nonius+i*(size+space+nonius));
+  layout->drawing->polygon();
+  layout->drawing->activeLayer=layer1;
+  layout->drawing->point(0,-(size2+space+i*(size+space)));
+  layout->drawing->point(-3*size2,-(size2+space+i*(size+space)));
+  layout->drawing->point(-3*size2,-(size2+(i+1)*(size+space)));
+  layout->drawing->point(0,-(size2+(i+1)*(size+space)));
+  layout->drawing->point(0,-(size2+space+i*(size+space)));
+  layout->drawing->polygon();
+  layout->drawing->activeLayer=layer2;
+  layout->drawing->point(0,-(size2+space+nonius+i*(size+space+nonius)));
+  layout->drawing->point(3*size2,-(size2+space+nonius+i*(size+space+nonius)));
+  layout->drawing->point(3*size2,-(size2+(i+1)*(size+space+nonius)));
+  layout->drawing->point(0,-(size2+(i+1)*(size+space+nonius)));
+  layout->drawing->point(0,-(size2+space+nonius+i*(size+space+nonius)));
+  layout->drawing->polygon();
+}
+}
+
+

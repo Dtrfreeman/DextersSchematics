@@ -1,0 +1,45 @@
+#!/usr/bin/layout
+#name=excel (Europe)
+#help=probe macro with excel  ()
+
+
+int main(){
+
+
+plotData *pd=iPlot();
+if (pd->items()==0) pd->readSource();
+int it=pd->findItem();
+if (it<0) {
+    int i=0;
+    stringList sl;
+    for (i=0;i<pd->items();i++){
+      sl.append(pd->itemNativeTitle(i));
+    }
+    string plot=layout->getItem("Plot","Plot item for "+pd->deviceName()+":"+pd->portName()+" not found. Please choose from list:",sl);
+    for (i=0;i<pd->items();i++){
+      if (plot==sl.at(i)) it=i;
+    }
+}
+if (it>=0){
+    int dep=pd->itemDependsOn(it);
+    if (dep<0) dep=0;
+    intList il;
+    il.append(dep);
+    il.append(it);
+    file f;
+    string tempFile;
+    tempFile=f.tempPath()+"/"+"csvdata.csv";
+    pd->writeData(tempFile,"csveurope",il);
+    stringList sl;
+    sl.append(tempFile);
+    bool b=process::externalTool("Microsoft Office/Office14","excel",sl,"");
+    if (!b) b=process::externalTool("Microsoft Office/Office15","excel",sl,"");
+    if (!b) b=process::externalTool("Microsoft Office/Office16","excel",sl,"");
+    if (!b) b=process::externalTool("Microsoft Office/Office17","excel",sl,"");
+    if (!b) b=process::externalTool("LibreOffice 4/program","scalc",sl,"");
+    if (!b) b=process::externalTool("","libreoffice",sl,"");
+    if (!b) pd->setError("Microsoft Excel was not found on your system. Please adjust path settings inside this macro (line 35 ff).");
+}
+//else pd->setError("no data found");
+
+}

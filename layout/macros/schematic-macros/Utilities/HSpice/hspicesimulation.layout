@@ -1,0 +1,118 @@
+#!/usr/bin/layout
+#name=Simulate + Waveform Viewer
+#help=Displays the netlist for Spice
+
+void setupHSpice(){
+  string license=process::getEnv("SNPSLMD_LICENSE_FILE");
+
+  //adjust this line to the correct license server
+  if (license=="") process::setEnv("SNPSLMD_LICENSE_FILE","27000@licenseServer");
+
+
+}
+
+void setupSpectre(){
+  string license=process::getEnv("SNPSLMD_LICENSE_FILE");
+
+  //adjust this line to the correct license server
+  if (license=="") process::setEnv("SNPSLMD_LICENSE_FILE","27000@licenseServer");
+
+}
+
+void spiceEdit(){
+  string s1=schematic->generateNetList("spice");
+  string s;
+  s+="**************************************************************"; 
+  s+="\n*"; 
+  s+="\n* Adjust the macro to start the simulation with the schematic!"; 
+  s+="\n*"; 
+  s+="\n* No HSPICE found or error in netlist"; 
+  s+="\n*"; 
+  s+="\n* Please, adjust pathes used in this macro!"; 
+  s+="\n* see also: http://www.layouteditor.net/wiki/HSpiceLibrary";
+  s+="\n*"; 
+  s+="\n**************************************************************\n"; 
+  s+=s1;
+  textEdit *te=project::getCentralTextEditor();
+  te->newDoc();
+  te->drawing->setText(s);
+  te->drawing->setLexer("spice");
+  te->drawing->title="netlist";
+}
+
+int main(){
+
+  string type="hspice";
+
+  //type="spectre"; // uncommend to use spectre netlist format 
+
+  file f;
+  string types="ma0 ma1 ma2 ac0 ac1 ac2 ac3 ac4 ms0 ms1 ms2 sw0 sw1 sw2 sw3 mt0 tr0 tr1";
+  stringList resultfiles=types.split(" ");
+  int i;
+  for (i=0;i<resultfiles.size();i++){
+    f.filename=f.tempPath()+"/hspice_tmp."+resultfiles.at(i);
+    f.remove();
+  }
+  setup::checkNetlistSetup("spectre");
+  setup::checkNetlistSetup("hspice");
+  if (type=="spectre") setupSpectre();
+  else setupHSpice();
+  
+  string temp=f.tempPath()+"/hspice_tmp.sp";
+  string out=f.tempPath()+"/hspice_tmp";
+  string listing=f.tempPath()+"/hspice_tmp.lis";
+  f.filename= listing;
+  f.remove();
+  schematic->saveNetList(temp,type);
+  
+
+  stringList sl;
+  sl.append(temp);
+  if (type=="spectre") sl.append("-spectre ");
+  sl.append("-o");
+  sl.append(out);
+  // adjust this line to the correct hspice location
+  int i=process::execute("/opt/synopsys/hspice/suse32/hspice",sl);//temp+add+" -o "+out);
+
+  if (f.exists()){
+      textEdit *te=project::getCentralTextEditor();
+      te->newDoc();
+      te->drawing->openFile(listing);
+  }
+  else if (i!=0) {
+      spiceEdit();
+      return 0;
+      }
+  
+  if (i!=0)
+  {
+      string s;
+      s="***************************\n";
+      s+="* generated netlist:\n";
+      s+="* for type: '"+type+"'\n";
+      s+="***************************\n";
+      s+=schematic->generateNetList(type);
+      textEdit *te=project::getCentralTextEditor();
+      te->newDoc();
+      te->drawing->setText(s);
+      te->drawing->setLexer("spice");
+  }
+
+  stringList out2;
+   
+  for (i=0;i<resultfiles.size();i++){
+    f.filename=f.tempPath()+"/hspice_tmp."+resultfiles.at(i);
+    if (f.exists()){
+        out2.append(f.filename);
+	}
+  }
+  // adjust this line to the correct waveform viewer location
+  bool b=true;
+  if (out2.size()!=0) b=process::startDetached("/opt/synopsys/cx/bin/wv",out2);
+
+  return 0;
+}
+
+
+ 

@@ -1,0 +1,45 @@
+#!/usr/bin/layout
+#name=rectangle
+#help=generate a rectangle
+
+//parameter with default value
+#parameter width "5µm"
+#parameter height "50µm"
+#parameterDouble parabol 3
+#parameter layer "1"
+#parameterInt points 100
+
+#include "shapelib.layout"
+
+int main(){
+int width=databaseunits(iPar("width"));
+int height=databaseunits(iPar("height"));
+double parabol=iPar("parabol");
+double points=iPar("points");
+int layer=getLayer(iPar("layer"));
+string cellname="paraboliclens"+userunits(width)+"_"+userunits(height)+"_"+ iPar("parabol")+"_"+iPar("points")+"_"+layer;
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=layer;
+int pos= parabol*height/4;
+parabol=parabol/height;
+if (pos>0) pos=pos+width;
+else pos=  width;
+int i;
+for ( i=0;i<=points;i++){
+	double y= - height/2 +(1.0*height/(points)*i);
+	if (i==points) y=height/2;
+	double x= -parabol*y*y+pos;
+	layout->drawing->point(x,y);
+	}
+layout->drawing->point(0,height/2);
+layout->drawing->point(0,-height/2);
+layout->drawing->polygon();
+}
+
+

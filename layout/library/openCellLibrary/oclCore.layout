@@ -1,0 +1,580 @@
+//core macro function for the openCellLibrary
+
+int m1Layer=11;
+int m2Layer=13;
+int m3Layer=15;
+int m4Layer=17;
+int m5Layer=19;
+int m6Layer=21;
+int via1Layer=12;
+int via2Layer=14;
+int via3Layer=16;
+int via4Layer=18;
+int via5Layer=20;
+int cmimLayer=30;
+int cmimViaLayer=31;
+int actLayer=1;
+int contLayer=10;
+int pImpLayer=5;
+int pWellLayer=2;
+int nImpLayer=4;
+int nWellLayer=3;
+int polyLayer=9;
+int bipNDifLayer=45;
+int bipPDifLayer=43;
+int bipNDeepLayer=41;
+int bipEpiLayer=42;
+int bipBurriedLayer=40;
+
+int contSpace=100;
+int contSize=100;
+int contEdge=15;
+int polySize=100;
+int polySpace=100;
+int polyExtent=100;
+int distPolyCont=85;
+int distActCont=25;
+int impExt=150;  //implant extension over active
+int wellExt=330; //well extension over active
+int m1Size=130;
+
+void checkSetup(){
+ if (!checkUnits()) correctUnits();
+ if (layers::num[m1Layer].name!="metal1") layerSetup();
+ else if (layers::num[actLayer].name!="active") layerSetup();
+}
+
+bool checkUnits(){
+if (layout->drawing->databaseunits!=0.000000001) return false;
+if (layout->drawing->userunits!=0.001) return false;
+return true;
+}
+
+void correctUnits(){
+if (!checkUnits()){
+	cellList *cells=layout->drawing->firstCell;
+	double scale=layout->drawing->databaseunits/0.000000001;
+  	// loop over all cells
+  	while (cells!=NULL){  
+    	if (cells->thisCell!=NULL){
+			cells->thisCell->resize(scale);
+		}
+	cells=cells->nextCell;
+	}
+	layout->drawing->databaseunits=0.000000001;
+	layout->drawing->userunits=0.001;
+	layout->drawing->scaleFull();
+	}
+}
+
+void layerSetup(){
+setup::paintEngine=1;
+setup::placeModeForPCB=false;
+setup::lefCellBoundaryLayer=235;
+layers::disableAllLayer();
+layers::reset3dView();
+layers::num[contLayer].set3dView(0,100);
+layers::num[m1Layer].set3dView(100,170);
+layers::num[via1Layer].set3dView(170,240);
+layers::num[m2Layer].set3dView(240,310);
+layers::num[via2Layer].set3dView(310,380);
+layers::num[m3Layer].set3dView(380,480);
+layers::num[via3Layer].set3dView(480,580);
+layers::num[m4Layer].set3dView(580,700);
+layers::num[via4Layer].set3dView(700,820);
+layers::num[m5Layer].set3dView(820,940);
+layers::num[via5Layer].set3dView(940,1060);
+layers::num[m6Layer].set3dView(1060,1180);
+layers::num[0].enable();
+layers::num[0].name="error";
+layers::num[0].setStyle(7);
+layers::num[0].setColor(255,0,0);
+layers::num[0].shortkey="e";
+layers::num[actLayer].enable();
+layers::num[actLayer].name="active";
+layers::num[actLayer].setStyle(5);
+layers::num[actLayer].setColor(95,95,36);
+layers::num[actLayer].shortkey="a";
+layers::num[pWellLayer].enable();
+layers::num[pWellLayer].name="pwell";
+layers::num[pWellLayer].shortkey="w";
+layers::num[pWellLayer].setStyle(8);
+layers::num[pWellLayer].setColor(33,0,0);
+layers::num[nWellLayer].enable();
+layers::num[nWellLayer].name="nwell";
+layers::num[nWellLayer].shortkey="Shift+w";
+layers::num[nWellLayer].setStyle(8);
+layers::num[nWellLayer].setColor(13,44,0);
+layers::num[nImpLayer].enable();
+layers::num[nImpLayer].name="nimplant";
+layers::num[nImpLayer].setStyle(8);
+layers::num[nImpLayer].setColor(52,0,0);
+layers::num[nImpLayer].shortkey="i";
+layers::num[pImpLayer].enable();
+layers::num[pImpLayer].name="pimplant";
+layers::num[pImpLayer].setStyle(5);
+layers::num[pImpLayer].setColor(52,52,3);
+layers::num[pImpLayer].shortkey="Shift+i";
+layers::num[6].enable();
+layers::num[6].name="vtg";
+layers::num[6].setStyle(8);
+layers::num[6].setColor(76,112,125);
+layers::num[6].shortkey="v";
+layers::num[7].enable();
+layers::num[7].name="vth";
+layers::num[7].setStyle(7);
+layers::num[7].setColor(12,89,189);
+layers::num[7].shortkey="Shift+v";
+layers::num[8].enable();
+layers::num[8].name="thkox";
+layers::num[8].setStyle(8);
+layers::num[8].setColor(166,97,44);
+layers::num[8].shortkey="t";
+layers::num[polyLayer].enable();
+layers::num[polyLayer].name="poly";
+layers::num[polyLayer].setStyle(15);
+layers::num[polyLayer].setColor(143,45,46);
+layers::num[polyLayer].shortkey="p";
+layers::num[polyLayer].set3dView(0,30);
+layers::num[contLayer].enable();
+layers::num[contLayer].name="contact";
+layers::num[contLayer].setStyle(31);
+layers::num[contLayer].setColor(173,188,182);
+layers::num[contLayer].shortkey="c";
+layers::num[contLayer].set3dView(30,70);
+layers::num[m1Layer].enable();
+layers::num[m1Layer].name="metal1";
+layers::num[m1Layer].setStyle(17);
+layers::num[m1Layer].setColor(32,27,176);
+layers::num[m1Layer].shortkey="1";
+layers::num[m1Layer].set3dView(100,70);
+layers::num[via1Layer].enable();
+layers::num[via1Layer].name="via1";
+layers::num[via1Layer].setStyle(30);
+layers::num[via1Layer].setColor(103,96,40);
+layers::num[via1Layer].shortkey="Ctrl+1";
+layers::num[via1Layer].set3dView(170,70);
+layers::num[m2Layer].enable();
+layers::num[m2Layer].name="metal2";
+layers::num[m2Layer].setStyle(16);
+layers::num[m2Layer].setColor(31,96,126);
+layers::num[m2Layer].shortkey="2";
+layers::num[m2Layer].set3dView(240,70);
+layers::num[via2Layer].enable();
+layers::num[via2Layer].name="via2";
+layers::num[via2Layer].setStyle(33);
+layers::num[via2Layer].setColor(108,188,140);
+layers::num[via2Layer].shortkey="Ctrl+2";
+layers::num[via2Layer].set3dView(310,70);
+layers::num[m3Layer].enable();
+layers::num[m3Layer].name="metal3";
+layers::num[m3Layer].setStyle(15);
+layers::num[m3Layer].setColor(38,168,188);
+layers::num[m3Layer].shortkey="3";
+layers::num[m3Layer].set3dView(380,100);
+layers::num[via3Layer].enable();
+layers::num[via3Layer].name="via3";
+layers::num[via3Layer].setStyle(39);
+layers::num[via3Layer].setColor(202,181,40);
+layers::num[via3Layer].shortkey="Ctrl+3";
+layers::num[via3Layer].set3dView(480,100);
+layers::num[m4Layer].enable();
+layers::num[m4Layer].name="metal4";
+layers::num[m4Layer].setStyle(13);
+layers::num[m4Layer].setColor(104,17,179);
+layers::num[m4Layer].shortkey="4";
+layers::num[m4Layer].set3dView(580,120);
+layers::num[via4Layer].enable();
+layers::num[via4Layer].name="via4";
+layers::num[via4Layer].setStyle(1);
+layers::num[via4Layer].setColor(41,145,156);
+layers::num[via4Layer].shortkey="Ctrl+4";
+layers::num[via4Layer].set3dView(700,120);
+layers::num[m5Layer].enable();
+layers::num[m5Layer].name="metal5";
+layers::num[m5Layer].setStyle(12);
+layers::num[m5Layer].setColor(24,86,141);
+layers::num[m5Layer].shortkey="5";
+layers::num[m5Layer].set3dView(820,120);
+layers::num[via5Layer].enable();
+layers::num[via5Layer].name="via5";
+layers::num[via5Layer].setStyle(1);
+layers::num[via5Layer].setColor(241,241,138);
+layers::num[via5Layer].shortkey="Ctrl+5";
+layers::num[via5Layer].set3dView(940,120);
+layers::num[m6Layer].enable();
+layers::num[m6Layer].name="metal6";
+layers::num[m6Layer].setStyle(12);
+layers::num[m6Layer].setColor(10,172,113);
+layers::num[m6Layer].shortkey="6";
+layers::num[m6Layer].set3dView(1060,120);
+layers::num[30].enable();
+layers::num[30].name="cmim";
+layers::num[30].setStyle(30);
+layers::num[30].setColor(70,105,210);
+layers::num[30].set3dView(490,30);
+layers::num[31].enable();
+layers::num[31].name="viamim";
+layers::num[31].setStyle(31);
+layers::num[31].setColor(187,130,37);
+layers::num[31].set3dView(520,60);
+/*layers::num[80].enable();
+layers::num[80].name="nodrc";
+layers::num[80].setStyle(22);
+layers::num[80].setColor(160,62,53);*/
+layers::num[235].enable();
+layers::num[235].name="cellBoundary";
+layers::num[235].setStyle(0);
+layers::num[235].setColor(90,102,131);
+layers::num[238].enable();
+layers::num[238].name="marker";
+layers::num[238].setStyle(6);
+layers::num[238].setColor(132,133,117);
+// bipolar layer:
+// 40     n-buried
+// 41     n-deep
+// 42     epi-island
+// 43     p-diffusion
+// 44     p(-)-diffusion
+// 45     n-diffusion
+layers::num[40].enable();
+layers::num[40].name="n-buried";
+layers::num[40].setStyle(7);
+layers::num[40].setColor(82,115,76);
+layers::num[40].set3dView(-500,100);
+layers::num[41].enable();
+layers::num[41].name="n-deep";
+layers::num[41].setStyle(16);
+layers::num[41].setColor(114,236,226);
+layers::num[41].set3dView(-400,350);
+layers::num[42].enable();
+layers::num[42].name="epi-island";
+layers::num[42].setStyle(8);
+layers::num[42].setColor(76,68,60);
+layers::num[42].set3dView(0,0);
+layers::num[43].enable();
+layers::num[43].name="p-diffusion";
+layers::num[43].setStyle(13);
+layers::num[43].setColor(210,76,14);
+layers::num[43].set3dView(-150,160);
+layers::num[44].enable();
+layers::num[44].name="p(-)-diffusion";
+layers::num[44].setStyle(16);
+layers::num[44].setColor(210,168,70);
+layers::num[44].set3dView(-150,160);
+layers::num[45].enable();
+layers::num[45].name="n-diffusion";
+layers::num[45].setStyle(14);
+layers::num[45].setColor(103,176,210);
+layers::num[45].set3dView(-50,80);
+layers::technologyLayerRemoveAll();
+layers::technologyLayerAdd(polyLayer,2);
+layers::technologyLayerSetParameter(polyLayer,0,0);
+layers::technologyLayerSetParameter(polyLayer,1,100);
+layers::technologyLayerSetParameter(polyLayer,2,100);
+layers::technologyLayerAdd(contLayer,1);
+layers::technologyLayerSetParameter(contLayer,0,1);
+layers::technologyLayerSetParameter(contLayer,1,100);
+layers::technologyLayerSetParameter(contLayer,2,20);
+layers::technologyLayerSetParameter(contLayer,3,25);
+layers::technologyLayerSetParameter(contLayer,4,100);
+layers::technologyLayerSetParameter(contLayer,5,0);
+layers::technologyLayerAdd(m1Layer,2);
+layers::technologyLayerSetParameter(m1Layer,0,2);
+layers::technologyLayerSetParameter(m1Layer,1,140);
+layers::technologyLayerSetParameter(m1Layer,2,130);
+layers::technologyLayerAdd(via1Layer,1);
+layers::technologyLayerSetParameter(via1Layer,0,3);
+layers::technologyLayerSetParameter(via1Layer,1,100);
+layers::technologyLayerSetParameter(via1Layer,2,20);
+layers::technologyLayerSetParameter(via1Layer,3,20);
+layers::technologyLayerSetParameter(via1Layer,4,100);
+layers::technologyLayerSetParameter(via1Layer,5,0);
+layers::technologyLayerAdd(m2Layer,2);
+layers::technologyLayerSetParameter(m2Layer,0,4);
+layers::technologyLayerSetParameter(m2Layer,1,140);
+layers::technologyLayerSetParameter(m2Layer,2,130);
+layers::technologyLayerAdd(via2Layer,1);
+layers::technologyLayerSetParameter(via2Layer,0,5);
+layers::technologyLayerSetParameter(via2Layer,1,100);
+layers::technologyLayerSetParameter(via2Layer,2,20);
+layers::technologyLayerSetParameter(via2Layer,3,20);
+layers::technologyLayerSetParameter(via2Layer,4,100);
+layers::technologyLayerSetParameter(via2Layer,5,0);
+layers::technologyLayerAdd(m3Layer,2);
+layers::technologyLayerSetParameter(m3Layer,0,6);
+layers::technologyLayerSetParameter(m3Layer,1,140);
+layers::technologyLayerSetParameter(m3Layer,2,130);
+layers::technologyLayerAdd(via3Layer,1);
+layers::technologyLayerSetParameter(via3Layer,0,7);
+layers::technologyLayerSetParameter(via3Layer,1,100);
+layers::technologyLayerSetParameter(via3Layer,2,20);
+layers::technologyLayerSetParameter(via3Layer,3,20);
+layers::technologyLayerSetParameter(via3Layer,4,100);
+layers::technologyLayerSetParameter(via3Layer,5,0);
+layers::technologyLayerAdd(m4Layer,2);
+layers::technologyLayerSetParameter(m4Layer,0,8);
+layers::technologyLayerSetParameter(m4Layer,1,140);
+layers::technologyLayerSetParameter(m4Layer,2,130);
+layers::technologyLayerAdd(via4Layer,1);
+layers::technologyLayerSetParameter(via4Layer,0,9);
+layers::technologyLayerSetParameter(via4Layer,1,100);
+layers::technologyLayerSetParameter(via4Layer,2,20);
+layers::technologyLayerSetParameter(via4Layer,3,20);
+layers::technologyLayerSetParameter(via4Layer,4,100);
+layers::technologyLayerSetParameter(via4Layer,5,0);
+layers::technologyLayerAdd(m5Layer,2);
+layers::technologyLayerSetParameter(m5Layer,0,10);
+layers::technologyLayerSetParameter(m5Layer,1,140);
+layers::technologyLayerSetParameter(m5Layer,2,130);
+layers::technologyLayerAdd(via5Layer,1);
+layers::technologyLayerSetParameter(via5Layer,0,11);
+layers::technologyLayerSetParameter(via5Layer,1,200);
+layers::technologyLayerSetParameter(via5Layer,2,60);
+layers::technologyLayerSetParameter(via5Layer,3,60);
+layers::technologyLayerSetParameter(via5Layer,4,200);
+layers::technologyLayerSetParameter(via5Layer,5,0);
+layers::technologyLayerAdd(m6Layer,2);
+layers::technologyLayerSetParameter(m6Layer,0,12);
+layers::technologyLayerSetParameter(m6Layer,1,320);
+layers::technologyLayerSetParameter(m6Layer,2,320);
+
+if (setup::whiteBackground()){
+    layers::num[actLayer].setStyle(5);
+    layers::num[actLayer].setColor(194,197,100);
+    layers::num[pWellLayer].setStyle(8);
+    layers::num[pWellLayer].setColor(254,187,187);
+    layers::num[nWellLayer].setStyle(8);
+    layers::num[nWellLayer].setColor(189,255,178);
+    layers::num[nImpLayer].setStyle(8);
+    layers::num[nImpLayer].setColor(221,135,132);
+    layers::num[pImpLayer].setStyle(5);
+    layers::num[pImpLayer].setColor(190,190,109);
+    layers::num[6].setStyle(8);
+    layers::num[6].setColor(119,180,193);
+    layers::num[7].setStyle(7);
+    layers::num[7].setColor(69,133,189);
+    layers::num[8].setStyle(8);
+    layers::num[8].setColor(166,97,44);
+    layers::num[polyLayer].setStyle(8);
+    layers::num[polyLayer].setColor(249,122,124);
+    layers::num[contLayer].setStyle(31);
+    layers::num[contLayer].setColor(113,135,123);
+    layers::num[m1Layer].setStyle(7);
+    layers::num[m1Layer].setColor(110,141,255);
+}
+
+}
+
+void pGard(point p, int length, int width, int orent){
+if (width<contSpace+2*contEdge) width=contSpace+2*contEdge;
+if (length<contSpace+2*contEdge) length=contSpace+2*contEdge;
+if (orent==0) {
+    layout->drawing->activeLayer=m1Layer;
+    layout->drawing->point(p);
+    layout->drawing->pointRel(width,-length);
+    layout->drawing->box();
+    layout->drawing->activeLayer=actLayer;
+    layout->drawing->point(p);
+    layout->drawing->pointRel(width,-length);
+    layout->drawing->box();
+    fillContact(p,length,width,orent);
+    layout->drawing->activeLayer=pImpLayer;
+    layout->drawing->point(p.x()-impExt,p.y()+impExt);
+    layout->drawing->pointRel(width+2*impExt,-length-2*impExt);
+    layout->drawing->box();
+    layout->drawing->activeLayer=pWellLayer;
+    layout->drawing->point(p.x()-wellExt,p.y()+wellExt);
+    layout->drawing->pointRel(width+2*wellExt,-length-2*wellExt);
+    layout->drawing->box();
+}
+else if (orent==1) {
+    layout->drawing->activeLayer=m1Layer;
+    layout->drawing->point(p);
+    layout->drawing->pointRel(length,-width);
+    layout->drawing->box();
+    layout->drawing->activeLayer=actLayer;
+    layout->drawing->point(p);
+    layout->drawing->pointRel(length,-width);
+    layout->drawing->box();
+    fillContact(p,length,width,orent);
+    layout->drawing->activeLayer=pImpLayer;
+    layout->drawing->point(p.x()-impExt,p.y()+impExt);
+    layout->drawing->pointRel(length+2*impExt,-width-2*impExt);
+    layout->drawing->box();
+    layout->drawing->activeLayer=pWellLayer;
+    layout->drawing->point(p.x()-wellExt,p.y()+wellExt);
+    layout->drawing->pointRel(length+2*wellExt,-width-2*wellExt);
+    layout->drawing->box();
+}
+}
+
+void nGard(point p, int length, int width, int orent){
+if (width<contSpace+2*contEdge) width=contSpace+2*contEdge;
+if (length<contSpace+2*contEdge) length=contSpace+2*contEdge;
+if (orent==0) {
+    layout->drawing->activeLayer=m1Layer;
+    layout->drawing->point(p);
+    layout->drawing->pointRel(width,-length);
+    layout->drawing->box();
+    layout->drawing->activeLayer=actLayer;
+    layout->drawing->point(p);
+    layout->drawing->pointRel(width,-length);
+    layout->drawing->box();
+    fillContact(p,length,width,orent);
+    layout->drawing->activeLayer=nImpLayer;
+    layout->drawing->point(p.x()-impExt,p.y()+impExt);
+    layout->drawing->pointRel(width+2*impExt,-length-2*impExt);
+    layout->drawing->box();
+    layout->drawing->activeLayer=nWellLayer;
+    layout->drawing->point(p.x()-wellExt,p.y()+wellExt);
+    layout->drawing->pointRel(width+2*wellExt,-length-2*wellExt);
+    layout->drawing->box();
+}
+else if (orent==1) {
+    layout->drawing->activeLayer=m1Layer;
+    layout->drawing->point(p);
+    layout->drawing->pointRel(length,-width);
+    layout->drawing->box();
+    layout->drawing->activeLayer=actLayer;
+    layout->drawing->point(p);
+    layout->drawing->pointRel(length,-width);
+    layout->drawing->box();
+    layout->drawing->activeLayer=contLayer;
+    fillContact(p,length,width,orent);
+    layout->drawing->activeLayer=nImpLayer;
+    layout->drawing->point(p.x()-impExt,p.y()+impExt);
+    layout->drawing->pointRel(length+2*impExt,-width-2*impExt);
+    layout->drawing->box();
+    layout->drawing->activeLayer=nWellLayer;
+    layout->drawing->point(p.x()-wellExt,p.y()+wellExt);
+    layout->drawing->pointRel(length+2*wellExt,-width-2*wellExt);
+    layout->drawing->box();
+}
+}
+
+void fillContact(point p, int length, int width, int orent){
+int ncl=(length-2*contEdge+contSpace)/(contSpace+contSize);
+int ncw=(width-2*contEdge+contSpace)/(contSpace+contSize);
+if (ncl<1) return;
+if (ncw<1) return;
+if (orent==0) {
+    layout->drawing->activeLayer=contLayer;
+    int i,j;
+    int dif=length-ncl*contSize-(ncl-1)*contSpace-2*contEdge;
+    for (i=0;i<ncl;i++){
+      int y=-i*(contSpace+contSize)-contEdge+p.y();
+      if (i>ncl/2) y-=dif;
+      for (j=0;j<ncw;j++){
+       if ((i%2)==0){
+         layout->drawing->point(p.x()+contEdge+j*(contSpace+contSize),y);
+         layout->drawing->pointRel(contSize,-contSize);
+         layout->drawing->box();
+       }
+       else {
+           layout->drawing->point(p.x()+width-contEdge-j*(contSpace+contSize),y);
+           layout->drawing->pointRel(-contSize,-contSize);
+           layout->drawing->box();
+       }
+      }
+    }
+}
+else if (orent==1) {
+    layout->drawing->activeLayer=contLayer;
+    int i,j;
+    int dif=length-ncl*contSize-(ncl-1)*contSpace-2*contEdge;
+    for (i=0;i<ncl;i++){
+      int x=i*(contSpace+contSize)+contEdge+p.x();
+      if (i>ncl/2) x+=dif;
+      for (j=0;j<ncw;j++){
+       if ((i%2)==0){
+         layout->drawing->point(x,p.y()-contEdge-j*(contSpace+contSize));
+         layout->drawing->pointRel(contSize,-contSize);
+         layout->drawing->box();
+       }
+       else {
+           layout->drawing->point(x,p.y()-width+contEdge+j*(contSpace+contSize));
+           layout->drawing->pointRel(contSize,contSize);
+           layout->drawing->box();
+       }
+      }
+    }
+}
+}
+
+int databaseunits(string s){
+// return database units of the string s
+int i;
+double convert=0.000001; //default um if no units;
+if (s.contains("mm")){
+        convert=0.001;
+        s.remove("mm");
+        }
+if (s.contains("um")){
+        convert=0.000001;
+        s.remove("um");
+        }
+if (s.contains("µm")){
+        convert=0.000001;
+        s.remove("µm");
+        }
+if (s.contains("nm")){
+        convert=0.000000001;
+        s.remove("nm");
+        }
+if (s.contains("cm")){
+        convert=0.01;
+        s.remove("cm");
+        }
+if (s.contains("dm")){
+        convert=0.1;
+        s.remove("dm");
+        }
+if (s.contains("m")){
+        convert=0.001;
+        s.remove("m");
+        }
+if (s.contains("u")){
+        convert=0.000001;
+        s.remove("u");
+        }
+if (s.contains("µ")){
+        convert=0.000001;
+        s.remove("µ");
+        }
+if (s.contains("n")){
+        convert=0.000000001;
+        s.remove("n");
+        }
+if (s.contains("c")){
+        convert=0.01;
+        s.remove("c");
+        }
+if (s.contains("d")){
+        convert=0.1;
+        s.remove("d");
+        }
+double d=s.toDouble()*convert/layout->drawing->databaseunits;
+element e;
+i = e.round(d);
+return i;
+}
+
+string userunits(int i){
+double d=layout->drawing->userunits*i;
+string s;
+s.setNum(d,3);
+return s;
+}
+
+void doVoid(){
+layout->drawing->activeLayer=0;
+layout->drawing->point(0,0);
+layout->drawing->text("void");
+}
+
+void doError(string s){
+layout->drawing->activeLayer=0;
+layout->drawing->point(0,0);
+layout->drawing->text(s);
+}

@@ -1,0 +1,58 @@
+#!/usr/bin/layout
+#name=drc example with log file
+#help=example with a log file
+
+void log(string message){
+  file f;
+  string s="drc.log";
+  f.filename=s;
+  bool b=true;
+  // read all
+  f.open(b);
+  s=f.read();
+  f.close();
+
+  // add message
+  string time;
+  time=time.setDateTime();
+  s+=time+": "+message+"\n";
+
+  //write log
+  b=false;
+  f.open(b);
+  f.write(s);
+  f.close();
+}
+
+int main(){
+log("drc started");
+layout->drcTool->result="DRC (LayoutEditor example) \r\n";
+
+// setup error layer
+layout->drawing->activeLayer=0;
+layout->drcTool->setErrorLayerToActiveLayer();
+
+// check for layer metal 1
+layout->drcTool->ruleName= "Minimum Size Metal1";
+layout->drcTool->minimumSize(800,6,true);
+layout->drcTool->ruleName= "Minimum Distance Metal1";
+layout->drcTool->minimumElementDistance(800,6,true);
+log("rules \"layer metal 1\" competed");
+
+// check for layer metal 2
+layout->drcTool->ruleName= "Minimum Size Metal2";
+layout->drcTool->minimumSize(900,8,true);
+layout->drcTool->ruleName= "Minimum Distance Metal2";
+layout->drcTool->minimumElementDistance(900,8,true);
+log("rules \"layer metal 2\" competed");
+
+// check for via1  (metal1 to metal2)
+layout->drcTool->ruleName= "Via in metal1";
+layout->drcTool->inside(50,7,6);
+layout->drcTool->ruleName= "Via in metal2";
+layout->drcTool->inside(60,7,8);
+log("rules \"check for via1  (metal1 to metal2)\" competed");
+
+layout->drcTool->showReport();
+
+}

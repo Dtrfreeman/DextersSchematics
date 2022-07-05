@@ -1,0 +1,55 @@
+#!/usr/bin/layout
+#name=star
+#help=generate a siemens star
+
+//parameter with default value
+#parameter radius "100µm"
+#parameter inside_aperture "2µm"
+#parameter layer "1"
+#parameterDouble arcwidth 1.4
+#parameterDouble arcspace .7
+
+#include "shapelib.layout"
+
+int main(){
+int radius=databaseunits(iPar("radius"));
+int aperture=databaseunits(iPar("inside_aperture"));
+double width=iPar("arcwidth");
+double space=iPar("arcspace");
+double arc=1.0*width/360*2*3.141;
+int layer=getLayer(iPar("layer"));
+string cellname="s_star"+userunits(radius)+"_"+userunits(aperture)+"_"+iPar("arcspace")+"_"+iPar("arcwidth")+"_"+layer;
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=layer;
+pointArray pa;
+pa.resize(4);
+pa.set(0,0,0);
+pa.set(1,radius,0);
+pa.set(2,math::cos(arc)*radius,math::sin(arc)*radius);
+pa.set(3,0,0);
+element *e=cl->thisCell->addPolygon(pa,layer);
+double step=width+space;
+if (step<=0) step=1;
+double d;
+for (d=step;d<360;d+=step){
+	e->selectAll();
+	layout->drawing->point(0,0);
+	layout->drawing->copy();
+	layout->drawing->point(0,0);
+	layout->drawing->rotate(d);
+	layout->drawing->deselectAll();
+	}
+
+if (aperture>0) {
+    point p; p.set(0,0);
+    cl->thisCell->addCircle(layer,p,aperture);
+}
+}
+
+

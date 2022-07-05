@@ -1,0 +1,40 @@
+#!/usr/bin/layout
+#name=triangle
+#help=generate a triangle
+
+//parameter with default value
+#parameter lengtha "110µm"
+#parameter lengthb "150µm"
+#parameter lengthc "123µm"
+#parameter layer "1"
+
+#include "shapelib.layout"
+
+int main(){
+int a=databaseunits(iPar("lengtha"));
+int b=databaseunits(iPar("lengthb"));
+int c=databaseunits(iPar("lengthc"));
+int layer=getLayer(iPar("layer"));
+string cellname="triangle"+userunits(a)+"_"+userunits(b)+"_"+userunits(c)+"_"+layer;
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+int x=((c*c)-(b*b)+(a*a))/(2*a);
+int y=math::sqrt(c*c-x*x);
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=layer;
+layout->drawing->point(0,0);
+layout->drawing->point(a,0);
+layout->drawing->point(x,y);
+layout->drawing->point(0,0);
+layout->drawing->polygon();
+layout->drawing->selectAll();
+layout->drawing->point(0,0);
+layout->drawing->centerXY();
+layout->drawing->deselectAll();
+}
+
+

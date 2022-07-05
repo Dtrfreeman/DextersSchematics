@@ -1,0 +1,121 @@
+#!/usr/bin/layout
+#name=poly line->set of boxes
+#help=takes a simple line and converts it to boxes of a given width
+/***
+ * written by Arun (arun@users.sf.net) 2006-03
+ * using layout version 2006-3-15 (cvs)
+ *
+ * this is just to show what macros can do...
+ * it worked for me, but your mileage may vary
+ */
+
+ 
+int  main() 
+{
+  cellList    *cells;
+  elementList *elements;
+
+  bool selected = 0;
+
+  /* check if something was selected at all */
+  for(cells = layout->drawing->firstCell; cells != NULL; cells = cells->nextCell)
+    {
+      if(cells->thisCell != NULL)
+	{
+	  for(elements = cells->thisCell->firstElement; elements != NULL; elements = elements->nextElement)
+	    {
+	      if(elements->thisElement != NULL)
+		if(elements->thisElement->select)
+		  selected = 1;
+	    };
+	};
+    };
+  
+  if(!selected)
+    layout->showMessage("Macro Help","To use this macro select one ore more polygons and the macro "+
+			"will place boxes over all horizontal and vertical segments.");
+  else
+    {
+      double line_width = layout->getDouble("Input","Please input the line width:");
+      double user_unit  = layout->drawing->userunits;
+      bool first = true;
+
+      /* from user units to internal units */
+      line_width = line_width / user_unit;
+
+      for(cells = layout->drawing->firstCell; cells != NULL; cells = cells->nextCell)
+	{
+	  if(cells->thisCell != NULL)
+	    {
+	      for(elements = cells->thisCell->firstElement; elements != NULL; elements = elements->nextElement)
+		{
+		  if(elements->thisElement != NULL)
+		    if(elements->thisElement->select)
+		      {
+			pointArray pa;
+			point p1,p2;
+			int x1,x2,y1,y2;
+			
+			int i;
+			int ln = elements->thisElement->layerNum;
+			
+			pa = elements->thisElement->getPoints();
+			
+			for(i=0;i<pa.size()-1;i++)
+			  {
+			    p1 = pa.point(i);
+			    p2 = pa.point(i+1);
+			    
+			    x1 = p1.x();
+			    y1 = p1.y();
+			    
+			    x2 = p2.x();
+			    y2 = p2.y();
+
+			    /* output a square at the beginning this is done, so that the next boxes can
+			       be positioned, so that they don't overlap */
+			    if(first)
+			      {
+				cells->thisCell->addBox(x1-line_width/2,y1-line_width/2,line_width,line_width,ln);
+				first = 0;
+			      };
+
+			    
+			    /* do we need to rotate the box? 
+			       Not if two X values or two Y are the same... */
+			    if(  (x1==x2) && (y1<y2))
+			      cells->thisCell->addBox(x1-line_width/2,y1-line_width/2,line_width,(y2-y1),ln);
+			    else if(  x1==x2 )
+			      cells->thisCell->addBox(x1-line_width/2,y1+line_width/2,line_width,(y2-y1),ln);
+			    else if(  (y1==y2)  && (x1<x2))
+			      cells->thisCell->addBox(x1-line_width/2,y1-line_width/2,(x2-x1),line_width,ln);
+			    else if(  y1==y2 )
+			      cells->thisCell->addBox(x1+line_width/2,y1-line_width/2,(x2-x1),line_width,ln);
+			    /* if box needs to be rotated */
+			    /* problem: would need to rotate without deselecting everything else to be able to do this
+			       haven't figured out how to do it at the moment 
+			      {
+				element *e,*n;
+				double w = e->distance(p1,p2);
+				double a = e->angle(p1,p2);
+
+				n=cells->thisCell->addBox(x1-5/d,y1-5/d,w,10/d,ln);
+				cells->thisCell->deselectAll();
+				n->select=1;
+				cells->thisCell->rotateSelect(a,p1);
+				cells->thisCell->deselectAll();
+				}
+			    */
+			  };
+			/* add last box */
+			cells->thisCell->addBox(x2-line_width/2,y2-line_width/2,line_width,line_width,ln);
+		      };
+		};
+	    };
+	}; /* end for loop over cells */
+    }; /* end if selected */
+};
+
+/* Local Variables:    */
+/* mode: c             */
+/* End:                */  

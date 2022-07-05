@@ -1,0 +1,9 @@
+#!/usr/bin/layout
+#codec=UTF-8
+#name=Macro: Код работает!
+#help=Recorded Код работает! Fr. Jan 8 2010
+
+
+int main(){
+layout->showMessage("Ура", "Код работает!");
+}

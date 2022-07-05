@@ -1,0 +1,57 @@
+#!/usr/bin/layout
+#name=#6: File I/O
+#help=write all polygons on layer 23 in a file
+
+int  main() {
+  file f;
+
+  // add platform spezific path like "/home/username/filename" or "c:/my Files/filename.txt"
+  string s="poly_on_23.txt";
+  f.filename=s;
+  bool b=false;
+
+  //open for output
+  f.open(b);
+
+  s="";
+  point p;
+  string s1,s2,s3;
+  int r;
+  
+  // loop over all cels
+  cellList *cells=layout->drawing->firstCell;
+    while (cells!=NULL){
+    if (cells->thisCell!=NULL){
+       elementList *l=cells->thisCell->firstElement;
+
+       // loop over all elements
+       while (l!=NULL) {
+  	  if (l->thisElement!=NULL) {
+             if (l->thisElement->layerNum==23){
+		if ( l->thisElement->isPolygon() ) {
+			pointArray pa=l->thisElement->getPoints();
+			int i;
+			s3.setNum(pa.size());
+			s+="Polygon ("+s3+"):";
+			for (i=0; i<pa.size(); i++){
+				p=pa.point(i);
+				s1.setNum(p.x());
+				s2.setNum(p.y());
+				s+="("+s1+","+s2+") ";
+				}
+			s+="\n";
+			}
+		}}
+  	  l=l->nextElement;
+	}
+      }
+   cells=cells->nextCell;
+  }
+
+  // write string
+  f.write(s);
+
+  // close file
+  f.close();
+}
+

@@ -1,0 +1,21 @@
+#!/usr/bin/layout
+#name=extraction
+#help=device and netlist extraction
+
+#include "lib.layout"
+
+int main(){
+  checkSetup();
+  layout->extractionTool->removeExtractedDevices(); // remove all devices from extractions done before
+  layout->drawing->currentCell->clearProperties(); // remove any data from a schematic driven layout
+  layout->extractionTool->extractComponent("NMOS","openCellLibrary"); // extract devices: NMOS, PMOS, ....
+  layout->extractionTool->extractComponent("PMOS","openCellLibrary");
+  layout->extractionTool->extractComponent("Cmim","openCellLibrary");
+  layout->extractionTool->extractComponent("Cparasitic","openCellLibrary");
+  layout->extractionTool->extractComponent("PNP","openCellLibrary");
+  layout->extractionTool->extractComponent("NPN","openCellLibrary");
+  layout->extractionTool->extractComponent("R_p-","openCellLibrary");
+  layout->netlistTool->buildConnect(); // build connectivity
+  layout->netlistTool->extractNetList(); // extract netlist
+  layout->netlistTool->editExtractedNetList(); // open editor
+}

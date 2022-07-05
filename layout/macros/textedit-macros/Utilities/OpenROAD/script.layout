@@ -1,0 +1,44 @@
+#!/usr/bin/layout
+#name=exec OpenROAD script
+#help=executes the currently opened file as a OpenROAD script
+
+
+int main(){
+    file f;
+    string callbackDir=f.currentPath()+"/../../../callback/";
+
+    if (text->drawing->modified())text->save();
+    string scriptFile=text->filename;
+
+
+layout->showProgress("start OpenROAD");
+// starting openroad
+if (process::isWindows()) {  // use WIndows subsystem for Linux
+    // mapping for wsl required
+    process::setEnv("WINDOWSPATHMAPPING",layout->getVersion());
+    // forward environment to WSL
+    process::setEnv("WSLENV","LD_LIBRARY_PATH/p:WINDOWSPATHMAPPING/u");
+    bool b;
+    stringList sl;
+    sl.append("openroad");
+    sl.append("-exit");
+    string fn=filenameToWsl(scriptFile);
+    sl.append("\""+fn+"\"");
+    b=process::externalTool("/usr/local/bin/","wsl",sl,callbackDir+"openroad.layout",true);
+    if (!b) b=process::externalTool("/usr/bin/","wsl",sl,callbackDir+"openroad.layout",true);
+    if (!b) layout->showMessage("","Windows Subsystem for Linux (WSL) ist not installed on your system.\nPlease activate and install it. See manuel ( www.layouteditor.org ) for more details.");
+    else layout->showStatus("OpenROAD started");
+}
+else {
+    bool b;
+    stringList sl;
+    sl.append("-exit");
+    sl.append("\""+scriptFile+"\"");
+    //sl.append("-gui");
+    b=process::externalTool("/usr/local/bin/","openroad",sl,callbackDir+"openroad.layout",true);
+    if (!b)  b=process::externalTool("/usr/bin/","openroad",sl,callbackDir+"openroad.layout",true);
+    if (!b) layout->showMessage("","'OpenROAD' was not found on your system.\nPlease download and install it ( /https://theopenroadproject.org/ )\nor adjust the path of it in this macro.");
+    else layout->showStatus("OpenROAD started");
+    }
+
+}

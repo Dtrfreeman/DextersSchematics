@@ -1,0 +1,34 @@
+#!/usr/bin/layout
+#name=remove text
+#help=remove text "Generated with the LayoutEditor"
+
+int  main() {
+  // get first cell
+  cellList *cells=layout->drawing->firstCell;
+
+  // loop over all cells
+  while (cells!=NULL){  
+   if (cells->thisCell!=NULL){
+       // get first Element of this cell
+       elementList *l=cells->thisCell->firstElement;
+       cells->thisCell->deselectAll();
+
+       // loop over all elements
+       while (l!=NULL) {
+             if (l->thisElement!=NULL) {
+		
+		
+             if (l->thisElement->isText() ){
+		if (l->thisElement->getName().left(31)=="Generated with the LayoutEditor")
+		   l->thisElement->selectAll();
+		}
+           }
+          l=l->nextElement;
+     }
+
+
+    cells->thisCell->deleteSelect();
+    }
+   cells=cells->nextCell;
+ }
+}

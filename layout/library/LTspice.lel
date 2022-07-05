@@ -1,0 +1,1879 @@
+<Component netlisttext>
+<Description>
+for display of netlist text only
+</Description>
+<Parameter>
+<string value>
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix N>
+<Label>
+$value
+</Label>
+<Symbol>
+</Symbol>
+<Netlist spice>
+$value
+</Netlist>
+</Component>
+<Component bi>
+<Description>
+Arbitrary
+</Description>
+<Parameter>
+<string value I=F(...)>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix B>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 0 -80 ->
+<Port 0 0 +>
+<Circle -32 -8 32 -72 wire>
+<Line 0 0 0 -8 wire>
+<Line 0 -80 0 -72 wire>
+<Line 0 -24 0 -44 wire>
+<Line -4 -44 4 -44 wire>
+<Line 0 -56 -4 -44 wire>
+<Line 0 -56 4 -44 wire>
+</Symbol>
+<Offsetlabel 0 24 0>
+<Netlist spice>
+$devicename $node(+) $node(-) $value
+</Netlist>
+</Component>
+<Component bi2>
+<Description>
+Arbitrary
+</Description>
+<Parameter>
+<string value I=F(...)>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix B>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 0 0 ->
+<Port 0 -80 +>
+<Circle -32 -8 32 -72 wire>
+<Line 0 0 0 -8 wire>
+<Line 0 -80 0 -72 wire>
+<Line 0 -36 0 -56 wire>
+<Line -4 -36 4 -36 wire>
+<Line 0 -24 -4 -36 wire>
+<Line 0 -24 4 -36 wire>
+</Symbol>
+<Offsetlabel 0 24 0>
+<Netlist spice>
+$devicename $node(+) $node(-) $value
+</Netlist>
+</Component>
+<Component csw>
+<Description>
+Current
+</Description>
+<Parameter>
+<string value CSW>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix W>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 0 -80 ->
+<Port 0 0 +>
+<Circle 16 -40 24 -48 wire>
+<Circle -4 -60 4 -52 wire>
+<Circle -32 -8 32 -72 wire>
+<Line 0 -20 20 -44 wire>
+<Line 0 0 0 -20 wire>
+<Line 0 -80 0 -56 wire>
+</Symbol>
+<Offsetlabel 0 24 0>
+<Netlist spice>
+$devicename $node(+) $node(-) $value
+</Netlist>
+</Component>
+<Component current>
+<Description>
+Current
+</Description>
+<Parameter>
+<string value I>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix I>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 0 -80 ->
+<Port 0 0 +>
+<Circle -32 -8 32 -72 wire>
+<Line 0 0 0 -8 wire>
+<Line 0 -80 0 -72 wire>
+<Line 0 -24 0 -44 wire>
+<Line -4 -44 4 -44 wire>
+<Line 0 -56 -4 -44 wire>
+<Line 0 -56 4 -44 wire>
+</Symbol>
+<Offsetlabel 0 24 0>
+<Netlist spice>
+$devicename $node(+) $node(-) $value
+</Netlist>
+</Component>
+<Component diode2>
+<Description>
+Diode
+</Description>
+<Parameter>
+<string value D>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix D>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 16 -64 ->
+<Port 16 0 +>
+<Line 16 -44 16 -64 wire>
+<Line 16 0 16 -20 wire>
+<Line 0 -20 16 -44 wire>
+<Line 32 -20 16 -44 wire>
+<Line 0 -20 32 -20 wire>
+<Line 0 -44 32 -44 wire>
+</Symbol>
+<Offsetlabel 0 64 0>
+<Netlist spice>
+$devicename $node(+) $node(-) $value
+</Netlist>
+</Component>
+<Component e>
+<Description>
+Voltage
+</Description>
+<Parameter>
+<string value E>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix E>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port -48 -80 N>
+<Port -48 -32 P>
+<Port 0 -96 ->
+<Port 0 -16 +>
+<Circle -32 -24 32 -88 wire>
+<Line 0 -36 0 -44 wire>
+<Line -4 -40 4 -40 wire>
+<Line -4 -72 4 -72 wire>
+<Line -44 -36 -44 -44 wire>
+<Line -48 -40 -40 -40 wire>
+<Line -48 -72 -40 -72 wire>
+<Line 0 -96 0 -88 wire>
+<Line 0 -16 0 -24 wire>
+<Line -32 -80 -24 -76 wire>
+<Line -48 -80 -32 -80 wire>
+<Line -32 -32 -24 -36 wire>
+<Line -48 -32 -32 -32 wire>
+</Symbol>
+<Offsetlabel 0 24 -16>
+<Netlist spice>
+$devicename $node(+) $node(-) $node(P) $node(N) $value
+</Netlist>
+</Component>
+<Component e2>
+<Description>
+Voltage
+</Description>
+<Parameter>
+<string value E>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix E>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port -48 -32 N>
+<Port -48 -80 P>
+<Port 0 -96 ->
+<Port 0 -16 +>
+<Circle -32 -24 32 -88 wire>
+<Line 0 -36 0 -44 wire>
+<Line -4 -40 4 -40 wire>
+<Line -4 -72 4 -72 wire>
+<Line -48 -40 -40 -40 wire>
+<Line -44 -76 -44 -68 wire>
+<Line -48 -72 -40 -72 wire>
+<Line 0 -96 0 -88 wire>
+<Line 0 -16 0 -24 wire>
+<Line -32 -80 -24 -76 wire>
+<Line -48 -80 -32 -80 wire>
+<Line -32 -32 -24 -36 wire>
+<Line -48 -32 -32 -32 wire>
+</Symbol>
+<Offsetlabel 0 24 -16>
+<Netlist spice>
+$devicename $node(+) $node(-) $node(P) $node(N) $value
+</Netlist>
+</Component>
+<Component f>
+<Description>
+Linear
+</Description>
+<Parameter>
+<string value F>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix F>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 0 -80 ->
+<Port 0 0 +>
+<Circle -32 -8 32 -72 wire>
+<Line 0 0 0 -8 wire>
+<Line 0 -80 0 -72 wire>
+<Line 0 -24 0 -44 wire>
+<Line -4 -44 4 -44 wire>
+<Line 0 -56 -4 -44 wire>
+<Line 0 -56 4 -44 wire>
+</Symbol>
+<Offsetlabel 0 24 0>
+<Netlist spice>
+$devicename $node(+) $node(-) $value
+</Netlist>
+</Component>
+<Component g>
+<Description>
+Voltage
+</Description>
+<Parameter>
+<string value G>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix G>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port -48 -80 NC->
+<Port -48 -32 NC+>
+<Port 0 -16 ->
+<Port 0 -96 +>
+<Circle -32 -24 32 -88 wire>
+<Line 0 -52 0 -72 wire>
+<Line -4 -52 4 -52 wire>
+<Line -4 -52 0 -40 wire>
+<Line 4 -52 0 -40 wire>
+<Line -44 -36 -44 -44 wire>
+<Line -48 -40 -40 -40 wire>
+<Line -48 -72 -40 -72 wire>
+<Line 0 -96 0 -88 wire>
+<Line 0 -16 0 -24 wire>
+<Line -32 -80 -24 -76 wire>
+<Line -48 -80 -32 -80 wire>
+<Line -32 -32 -24 -36 wire>
+<Line -48 -32 -32 -32 wire>
+</Symbol>
+<Offsetlabel 0 24 -16>
+<Netlist spice>
+$devicename $node(+) $node(-) $node(NC+) $node(NC-) $value
+</Netlist>
+</Component>
+<Component g2>
+<Description>
+Voltage
+</Description>
+<Parameter>
+<string value G>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix G>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port -48 -32 NC->
+<Port -48 -80 NC+>
+<Port 0 -16 ->
+<Port 0 -96 +>
+<Circle -32 -24 32 -88 wire>
+<Line 0 -52 0 -72 wire>
+<Line -4 -52 4 -52 wire>
+<Line -4 -52 0 -40 wire>
+<Line 4 -52 0 -40 wire>
+<Line -44 -76 -44 -68 wire>
+<Line -48 -40 -40 -40 wire>
+<Line -48 -72 -40 -72 wire>
+<Line 0 -96 0 -88 wire>
+<Line 0 -16 0 -24 wire>
+<Line -32 -80 -24 -76 wire>
+<Line -48 -80 -32 -80 wire>
+<Line -32 -32 -24 -36 wire>
+<Line -48 -32 -32 -32 wire>
+</Symbol>
+<Offsetlabel 0 24 -16>
+<Netlist spice>
+$devicename $node(+) $node(-) $node(NC+) $node(NC-) $value
+</Netlist>
+</Component>
+<Component LED>
+<Description>
+Light
+</Description>
+<Parameter>
+<string value D>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix D>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 16 -64 ->
+<Port 16 0 +>
+<Arc 64 -44 56 -44 72 -48 wire>
+<Arc 48 -44 56 -44 40 -40 wire>
+<Arc 64 -28 56 -28 72 -32 wire>
+<Arc 48 -28 56 -28 40 -24 wire>
+<Line 72 -48 64 -48 wire>
+<Line 72 -48 68 -56 wire>
+<Line 72 -32 64 -32 wire>
+<Line 72 -32 68 -40 wire>
+<Line 16 -44 16 -64 wire>
+<Line 16 0 16 -20 wire>
+<Line 0 -20 16 -44 wire>
+<Line 32 -20 16 -44 wire>
+<Line 0 -20 32 -20 wire>
+<Line 0 -44 32 -44 wire>
+</Symbol>
+<Offsetlabel 0 24 0>
+<Netlist spice>
+$devicename $node(+) $node(-) $value
+</Netlist>
+</Component>
+<Component load>
+<Description>
+Current
+</Description>
+<Parameter>
+<string value I>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix I>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 16 -64 B>
+<Port 16 0 A>
+<Line 16 -56 16 -64 wire>
+<Line 16 0 16 -8 wire>
+<Line 24 -8 8 -8 wire>
+<Line 24 -56 24 -8 wire>
+<Line 8 -56 24 -56 wire>
+<Line 8 -8 8 -56 wire>
+<Line 40 -8 36 -20 wire>
+<Line 40 -8 28 -12 wire>
+<Line 0 -48 40 -8 wire>
+</Symbol>
+<Offsetlabel 0 48 -8>
+<Netlist spice>
+$devicename $node(A) $node(B) $value
+</Netlist>
+</Component>
+<Component load2>
+<Description>
+Current
+</Description>
+<Parameter>
+<string value I>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix I>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 0 -80 ->
+<Port 0 0 +>
+<Circle -32 -8 32 -72 wire>
+<Line 0 0 0 -8 wire>
+<Line 0 -80 0 -72 wire>
+<Line 0 -24 0 -48 wire>
+<Line -4 -48 4 -48 wire>
+<Line 0 -56 -4 -48 wire>
+<Line 0 -56 4 -48 wire>
+<Line -32 -72 36 -4 wire>
+<Line 36 -4 24 -8 wire>
+<Line 36 -4 32 -16 wire>
+</Symbol>
+<Offsetlabel 0 17 16>
+<Netlist spice>
+$devicename $node(+) $node(-) $value
+</Netlist>
+</Component>
+<Component lpnp>
+<Description>
+Bipolar
+</Description>
+<Parameter>
+<string value LPNP>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix QP>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 64 -48 S>
+<Port 64 -96 E>
+<Port 0 -48 B>
+<Port 64 0 C>
+<Line 52 -56 36 -48 wire>
+<Line 52 -40 36 -48 wire>
+<Line 52 -40 52 -56 wire>
+<Line 36 -40 36 -56 wire>
+<Line 16 -48 36 -48 wire>
+<Line 52 -48 64 -48 wire>
+<Line 16 -48 0 -48 wire>
+<Line 16 -32 64 0 wire>
+<Line 16 -80 16 -16 wire>
+<Line 40 -80 64 -96 wire>
+<Line 16 -64 36 -84 wire>
+<Line 44 -76 36 -84 wire>
+<Line 16 -64 44 -76 wire>
+</Symbol>
+<Offsetlabel 0 72 -32>
+<Netlist spice>
+$devicename $node(C) $node(B) $node(E) $node(S) $value
+</Netlist>
+</Component>
+<Component ltline>
+<Description>
+Lossy
+</Description>
+<Parameter>
+<string value LTRA>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix O>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 48 -16 R2>
+<Port 48 16 I2>
+<Port -48 -16 R1>
+<Port -48 16 I1>
+<Line 32 0 40 0 wire>
+<Line 24 8 32 0 wire>
+<Line 8 -8 24 8 wire>
+<Line -8 8 8 -8 wire>
+<Line -24 -8 -8 8 wire>
+<Line -32 0 -24 -8 wire>
+<Line -40 0 -32 0 wire>
+<Line 48 16 36 12 wire>
+<Line 48 -16 36 -12 wire>
+<Line -48 16 -36 12 wire>
+<Line -48 -16 -36 -12 wire>
+<Line -48 16 48 16 wire>
+<Line -36 12 36 12 wire>
+<Line -36 -12 36 -12 wire>
+<Line -48 -16 48 -16 wire>
+</Symbol>
+<Offsetlabel 0 0 32>
+<Netlist spice>
+$devicename $node(I1) $node(R1) $node(I2) $node(R2) $value
+</Netlist>
+</Component>
+<Component mesfet>
+<Description>
+GaAs
+</Description>
+<Parameter>
+<string value NMF>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix Z>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 48 -96 S>
+<Port 0 -80 G>
+<Port 48 0 D>
+<Line 16 -80 48 -80 wire>
+<Line 0 -80 16 -80 wire>
+<Line 16 -16 48 -16 wire>
+<Line 48 -16 48 0 wire>
+<Line 48 -80 48 -96 wire>
+<Line 16 -12 16 -84 wire>
+</Symbol>
+<Offsetlabel 0 56 -32>
+<Netlist spice>
+$devicename $node(D) $node(G) $node(S) $value
+</Netlist>
+</Component>
+<Component npn2>
+<Description>
+Bipolar
+</Description>
+<Parameter>
+<string value NPN>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix QN>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 64 -96 E>
+<Port 0 -48 B>
+<Port 64 0 C>
+<Rect 16 -72 12 -24 wire>
+<Line 12 -48 0 -48 wire>
+<Line 16 -32 64 0 wire>
+<Line 40 -80 16 -64 wire>
+<Line 64 -96 36 -84 wire>
+<Line 64 -96 44 -76 wire>
+<Line 44 -76 36 -84 wire>
+</Symbol>
+<Offsetlabel 0 56 -32>
+<Netlist spice>
+$devicename $node(C) $node(B) $node(E) $value
+</Netlist>
+</Component>
+<Component npn3>
+<Description>
+Bipolar
+</Description>
+<Parameter>
+<string value NPN>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix QN>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 64 -96 E>
+<Port 0 -48 B>
+<Port 64 0 C>
+<Line 12 -48 0 -48 wire>
+<Line 20 -32 64 0 wire>
+<Line 20 -24 12 -24 wire>
+<Line 20 -72 12 -72 wire>
+<Line 12 -72 12 -24 wire>
+<Line 20 -72 20 -24 wire>
+<Line 40 -80 20 -64 wire>
+<Line 64 -96 36 -84 wire>
+<Line 64 -96 44 -76 wire>
+<Line 44 -76 36 -84 wire>
+</Symbol>
+<Offsetlabel 0 56 -32>
+<Netlist spice>
+$devicename $node(C) $node(B) $node(E) $value
+</Netlist>
+</Component>
+<Component npn4>
+<Description>
+Bipolar
+</Description>
+<Parameter>
+<string value NPN>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix QN>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 64 -48 S>
+<Port 64 -96 E>
+<Port 0 -48 B>
+<Port 64 0 C>
+<Line 64 -32 48 -28 wire>
+<Line 48 -44 48 -28 wire>
+<Line 48 -44 64 -32 wire>
+<Line 40 -32 56 -20 wire>
+<Line 64 -48 56 -40 wire>
+<Line 40 -16 48 -28 wire>
+<Line 44 -76 36 -84 wire>
+<Line 64 -96 44 -76 wire>
+<Line 64 -96 36 -84 wire>
+<Line 40 -80 16 -64 wire>
+<Line 16 -80 16 -16 wire>
+<Line 16 -32 64 0 wire>
+<Line 16 -48 0 -48 wire>
+</Symbol>
+<Offsetlabel 0 72 -32>
+<Netlist spice>
+$devicename $node(C) $node(B) $node(E) $node(S) $value
+</Netlist>
+</Component>
+<Component pjf>
+<Description>
+P-Channel
+</Description>
+<Parameter>
+<string value PJF>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix JP>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 48 -96 S>
+<Port 0 -64 G>
+<Port 48 0 D>
+<Line 12 -60 12 -68 wire>
+<Line 12 -60 0 -64 wire>
+<Line 12 -68 0 -64 wire>
+<Line 12 -64 16 -64 wire>
+<Line 16 -24 48 -24 wire>
+<Line 48 -24 48 0 wire>
+<Line 16 -72 48 -72 wire>
+<Line 48 -72 48 -96 wire>
+<Line 16 -16 16 -80 wire>
+</Symbol>
+<Offsetlabel 0 56 -32>
+<Netlist spice>
+$devicename $node(D) $node(G) $node(S) $value
+</Netlist>
+</Component>
+<Component pnp2>
+<Description>
+Bipolar
+</Description>
+<Parameter>
+<string value PNP>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix QP>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 64 -96 E>
+<Port 0 -48 B>
+<Port 64 0 C>
+<Rect 16 -72 12 -24 wire>
+<Line 12 -48 0 -48 wire>
+<Line 16 -32 64 0 wire>
+<Line 40 -80 64 -96 wire>
+<Line 16 -64 36 -84 wire>
+<Line 44 -76 36 -84 wire>
+<Line 16 -64 44 -76 wire>
+</Symbol>
+<Offsetlabel 0 84 -32>
+<Netlist spice>
+$devicename $node(C) $node(B) $node(E) $value
+</Netlist>
+</Component>
+<Component pnp4>
+<Description>
+Bipolar
+</Description>
+<Parameter>
+<string value PNP>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix QP>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 64 -48 S>
+<Port 64 -96 E>
+<Port 0 -48 B>
+<Port 64 0 C>
+<Line 56 -20 56 -40 wire>
+<Line 40 -32 56 -40 wire>
+<Line 48 -44 64 -32 wire>
+<Line 40 -32 56 -20 wire>
+<Line 64 -48 56 -40 wire>
+<Line 40 -16 48 -28 wire>
+<Line 16 -48 0 -48 wire>
+<Line 16 -32 64 0 wire>
+<Line 16 -80 16 -16 wire>
+<Line 40 -80 64 -96 wire>
+<Line 16 -64 36 -84 wire>
+<Line 44 -76 36 -84 wire>
+<Line 16 -64 44 -76 wire>
+</Symbol>
+<Offsetlabel 0 72 -32>
+<Netlist spice>
+$devicename $node(C) $node(B) $node(E) $node(S) $value
+</Netlist>
+</Component>
+<Component polcap>
+<Description>
+Polarized
+</Description>
+<Parameter>
+<string value C>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix C>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 16 -64 B>
+<Port 16 0 A>
+<Arc 16 -68 32 -40 0 -40 wire>
+<Line 0 -28 32 -28 wire>
+<Line 4 -16 12 -16 wire>
+<Line 8 -12 8 -20 wire>
+<Line 16 0 16 -28 wire>
+<Line 16 -36 16 -64 wire>
+</Symbol>
+<Offsetlabel 0 24 -8>
+<Netlist spice>
+$devicename $node(A) $node(B) $value
+</Netlist>
+</Component>
+<Component SLM>
+<Description>
+W�rth
+</Description>
+<Parameter>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix X>
+<Label>
+$devicename
+</Label>
+<Symbol>
+<Port 64 -48 4>
+<Port -64 -48 3>
+<Port 64 48 2>
+<Port -64 48 1>
+<Arc 24 -24 32 -24 16 -24 wire>
+<Arc 8 -24 16 -24 0 -24 wire>
+<Arc -8 -24 0 -24 -16 -24 wire>
+<Arc -24 -24 -16 -24 -32 -24 wire>
+<Arc 24 24 16 24 32 24 wire>
+<Arc 8 24 0 24 16 24 wire>
+<Arc -8 24 -16 24 0 24 wire>
+<Arc -24 24 -32 24 -16 24 wire>
+<Circle -38 -30 -44 -24 wire>
+<Circle -37 24 -43 30 wire>
+<Rect 64 -64 -64 64 wire>
+<Line 32 -24 32 -48 wire>
+<Line 32 -48 64 -48 wire>
+<Line -32 -24 -32 -48 wire>
+<Line -32 -48 -64 -48 wire>
+<Line 32 24 32 48 wire>
+<Line 32 48 64 48 wire>
+<Line -32 24 -32 48 wire>
+<Line -32 48 -64 48 wire>
+<Line 32 5 -32 5 wire>
+<Line 32 -5 -32 -5 wire>
+</Symbol>
+<Offsetlabel 0 0 64>
+<Netlist spice>
+$devicename $node(1) $node(2) $node(3) $node(4) $value
+</Netlist>
+<Model spice>
+.include "744242101"
+</Model>
+</Component>
+<Component SLx>
+<Description>
+W�rth
+</Description>
+<Parameter>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix X>
+<Label>
+$devicename
+</Label>
+<Symbol>
+<Port 64 -48 4>
+<Port -64 -48 3>
+<Port 64 48 2>
+<Port -64 48 1>
+<Arc 24 -24 32 -24 16 -24 wire>
+<Arc 8 -24 16 -24 0 -24 wire>
+<Arc -8 -24 0 -24 -16 -24 wire>
+<Arc -24 -24 -16 -24 -32 -24 wire>
+<Arc 24 24 16 24 32 24 wire>
+<Arc 8 24 0 24 16 24 wire>
+<Arc -8 24 -16 24 0 24 wire>
+<Arc -24 24 -32 24 -16 24 wire>
+<Circle -38 -30 -44 -24 wire>
+<Circle -37 24 -43 30 wire>
+<Rect 64 -64 -64 64 wire>
+<Line 32 -24 32 -48 wire>
+<Line 32 -48 64 -48 wire>
+<Line -32 -24 -32 -48 wire>
+<Line -32 -48 -64 -48 wire>
+<Line 32 24 32 48 wire>
+<Line 32 48 64 48 wire>
+<Line -32 24 -32 48 wire>
+<Line -32 48 -64 48 wire>
+<Line 32 5 -32 5 wire>
+<Line 32 -5 -32 -5 wire>
+<Line 64 -48 64 -48 wire>
+<Line 64 48 64 48 wire>
+<Line -64 -48 -64 -48 wire>
+<Line -64 48 -64 48 wire>
+</Symbol>
+<Offsetlabel 0 0 64>
+<Netlist spice>
+$devicename $node(1) $node(2) $node(3) $node(4) $value
+</Netlist>
+<Model spice>
+.include "744212100"
+</Model>
+</Component>
+<Component sw>
+<Description>
+Voltage
+</Description>
+<Parameter>
+<string value SW>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix S>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port -48 -32 NC->
+<Port -48 -80 NC+>
+<Port 0 -96 B>
+<Port 0 -16 A>
+<Circle 16 -56 24 -64 wire>
+<Circle -4 -76 4 -68 wire>
+<Circle -32 -24 32 -88 wire>
+<Line -48 -40 -40 -40 wire>
+<Line -44 -76 -44 -68 wire>
+<Line -48 -72 -40 -72 wire>
+<Line 0 -36 20 -60 wire>
+<Line 0 -16 0 -36 wire>
+<Line 0 -96 0 -72 wire>
+<Line -32 -80 -24 -76 wire>
+<Line -48 -80 -32 -80 wire>
+<Line -32 -32 -24 -36 wire>
+<Line -48 -32 -32 -32 wire>
+</Symbol>
+<Offsetlabel 0 24 -16>
+<Netlist spice>
+$devicename $node(A) $node(B) $node(NC+) $node(NC-) $value
+</Netlist>
+</Component>
+<Component tline>
+<Description>
+Ideal
+</Description>
+<Parameter>
+<string value Td=50n>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix T>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 48 -16 R2>
+<Port 48 16 I2>
+<Port -48 -16 R1>
+<Port -48 16 I1>
+<Line 48 16 32 8 wire>
+<Line 48 -16 32 -8 wire>
+<Line -48 16 -32 8 wire>
+<Line -48 -16 -32 -8 wire>
+<Line -48 16 48 16 wire>
+<Line -32 8 32 8 wire>
+<Line -32 -8 32 -8 wire>
+<Line -48 -16 48 -16 wire>
+</Symbol>
+<Offsetlabel 0 -40 36>
+<Netlist spice>
+$devicename $node(I1) $node(R1) $node(I2) $node(R2) $value
+</Netlist>
+</Component>
+<Component LT1001>
+<Description>
+LT1001 Symbol for LT spice import
+</Description>
+<Parameter>
+<list Package SO8N DIP8 >
+</Parameter>
+<Layout>
+[parts]
+# part-type 	layout-file 	cellname pin name pin number
+Package=SO8N	pcb/SO8N.gds	SO8N	in+ 3 in- 2 V+ 7 V- 4 out 6 nc 1 nc 5 nc 8
+Package=DIP8	pcb/DIP8.gds	DIP8	in+ 3 in- 2 V+ 7 V- 4 out 6 nc 1 nc 5 nc 8
+</Layout>
+<Prefix U>
+<Label>
+LT1001
+$devicename
+</Label>
+<Symbol>
+<Line 0 -80 0 -96 #ff0000>
+<Line 0 -32 0 -48 #ff0000>
+<Line -24 -84 -24 -76 #ff0000>
+<Line -28 -80 -20 -80 #ff0000>
+<Line -28 -48 -20 -48 #ff0000>
+<Line -32 -32 -32 -96 #ff0000>
+<Line -32 -96 32 -64 #ff0000>
+<Line -32 -32 32 -64 #ff0000>
+<Port 0 -32 V+>
+<Port 0 -96 V->
+<Port 32 -64 out>
+<Port -32 -80 in+>
+<Port -32 -48 in->
+</Symbol>
+<Offsetlabel 0 0 -16>
+<Netlist spice>
+X$devicename $node(in+) $node(in-) $node(V+) $node(V-) $node(out) LT1001
+</Netlist>
+<Model spice>
+* Copyright � Linear Technology Corp. 2000-2005.  All rights reserved.
+*
+* Linear Technology Corporation hereby grants the users of this
+* macromodel a non-exclusive, nontransferrable license to use this
+* macromodel under the following conditions:
+*
+* The user agrees that this macromodel is licensed from Linear
+* Technology and agrees that the macromodel may be used, loaned,
+* given away or included in other model libraries as long as this
+* notice and the model in its entirety and unchanged is included.
+* No right to make derivative works or modifications to the
+* macromodel is granted hereby. All such rights are reserved.
+*
+* This model is provided as is. Linear Technology makes no
+* warranty, either expressed or implied about the suitability or
+* fitness of this model for any particular purpose. In no event
+* will Linear Technology be liable for special, collateral,
+* incidental or consequential damages in connection with or arising
+* out of the use of this macromodel. It should be remembered that
+* models are a simplification of the actual circuit.
+*
+* Linear Technology reserves the right to change these macromodels
+* without prior notice. Contact Linear Technology at 1630 McCarthy
+* Blvd., Milpitas, CA, 95035-7417 or telephone (408) 432-1900 for
+* datasheets on the actual amplifiers or the latest macromodels.
+* Also check our website at:
+*
+* www.linear.com
+*
+* LT and LTC are registered trademarks of Linear Technology Corporation
+*
+* This library of macromodels is being supplied to LTC users as an
+* aid to circuit design. While the models reflect reasonably
+* close similarity to corresponding devices in performance terms,
+* their use is not suggested as a replacement for breadboarding.
+* Simulation should be used as a forerunner or a supplement to
+* traditional lab testing.
+*
+* Users should very carefully note the following factors regarding
+* these models: Model performance in general will reflect typical
+* baseline specs for a given device, and certain aspects of per-
+* formance may not be modeled fully. While reasonable care has
+* been taken in their preparation, we cannot be responsible for
+* correct application on any and all computer systems. Model users
+* are hereby notified that these models are supplied "as is", with
+* no direct or implied responsibility on the part of LTC for their
+* operation within a customer circuit or system. Further, Linear
+* Technology Corporation reserves the right to change these models
+* without prior notice.
+*
+* In all cases, the current data sheet information for a given real
+* device is your final design guideline, and is the only actual
+* performance guarantee. For further technical information, refer
+* to individual device data sheets.
+*
+* Each model is written as a subcircuit using the .SUBCKT statement, and ends
+* with a .ENDS statement. There are also comment line asterisks "*" and a
+* triple asterisk "***" separating each file as shown below:
+*
+* .ENDS LT1078
+* *
+* ***
+* *
+* .SUBCKT LT1079
+*
+* You can copy models and paste them into your own customized library files,
+* but make sure you get everything between the * *** * separators.
+*
+* Some of our models, such as the duals and quads of a single op amp, call
+* the .SUBCKT of the single, thereby nesting .SUBCKT calls. Where this
+* occurs, you'll have to copy not only the .SUBCKT for the device you're
+* after, but also the nested .SUBCKT. For example, if you want to copy the
+* LT1101 instrumentation amplifier, you'll have to also copy the LT1078
+* subcircuit from which the LT1101 is constructed. Presently, maximum nesting
+* is one deep, simplifying this task, but some top-level models combine
+* several subcircuits.
+*
+* Calls from a SPICE circuit file to a model .SUBCKT file are accomplished as
+* follows:
+*
+* XANYNAME 3 2 7 4 6 LT1078
+* .LIB LTC.LIB
+*
+* The device XANYNAME must start with the letter X, and can be followed
+* with a name of your choice. X1, X2, X3, XOA1 XOA2, XPREAMP, XFILTER,
+* XBUFFER, XGAIN10 are examples of names you can use for subcircuit calls.
+*
+* The node numbers DO NOT have to match those used by LTC in the .SUBCKT
+* file. Only the ORDER and QUANTITY of node numbers are important. You can
+* just as easily use the following pin numbering scheme:
+*
+* XANYNAME POS NEG 7 0 385 LT1078
+*
+* When SPICE calls the LT1078, nodes POS NEG 7 0 385 from your circuit file
+* will be paired with 3 2 7 4 6 from the .SUBCKT in that order. You can
+* pick your own names, but you can't change the order of the connections.
+* For example, you can't use
+*
+* XANYNAME 7 4 3 2 6 LT1078
+*
+* and expect node 7 to be the positive supply connection. SPICE will connect
+* node 7 to the first .SUBCKT node entry, the non-inverting input.
+*
+* The last item in a subcircuit call is the name of the subcircuit, shown
+* in the examples above as LT1078.
+*
+* Don't forget the .LIB statement. The circuit file will use this to
+* look for your subcircuit calls. In the example above, SPICE will search
+* the file LTC.LIB until it finds a statement .SUBCKT LT1078. Next it extracts
+* all lines that follow until it finds .ENDS LT1078. This becomes the XANYNAME
+* subcircuit definition for your circuit file.
+*
+* If you have a complicated circuit with 2 or more different op amps, only one
+* .LIB statement is necessary. For example:
+*
+* XPREAMP 3 2 7 4 6 LT2078
+* XDRIVE 13 12 7 4 16 LT1413
+* XCOMP 16 22 7 4 26 LT1413
+* .LIB LTC.LIB
+*
+* Note that on the website and CDROM our library file now carries the version
+* number (e.g. LTC36.LIB for version 3.6). This should eliminate previous
+* confusion surrounding the revision number of a particular .LIB file.
+*
+* Macromodel connections:
+*
+* The LTC model library has one basic connection type.
+* Almost all of the op amp models use a conventional 8-pin, single op amp
+* pinout. This means the connection node numbers match the pin numbers
+* on an actual "standard" 8-pin, single op amp package:
+*
+* CONNECTIONS: + - V+ V- O
+*.SUBCKT LT1078A 3 2 7 4 6
+*
+* Even if the op amp is a dual, quad, or has a non-"standard" pinout
+* or package, we still try to adhere to this node order and numbering system
+* to denote the five pins/nodes essential to any amplifier.
+*
+* Some amplifiers have compensation pins, and nodes 1 and 8 are used for
+* this purpose. Compensation nodes are listed after the first 5 connections:
+*
+* CONNECTIONS: + - V+ V- O CA CB
+*.SUBCKT LM101A 3 2 7 4 6 1 8
+* USE C=30 PF IN MAIN CIRCUIT (CA TO CB).
+*
+* A few devices have other features, such as the reference on the LM10C. For
+* this model nodes 1 and 8 match the pins: 1=ref out, 8=ref feedback. In
+* other cases node numbers 1 and 8 may not match the physical pinout
+* of the actual device, but are still used by the subcircuit to designate
+* connections to the extra features. There are several cases where, to avoid
+* confusion, nodes connecting to the extra features carry the pin name,
+* instead of the pin number, such as REF, FB, etc.
+*
+* The 1006, 1413, 1014, and 1490 node connections are in the + - V+ V- O
+* order, but the nodes are named 1-2-3-4-5.
+*
+* Several devices have unusual features or functions and do not follow the
+* 3-2-7-4-6 connection convention. For these special cases the node
+* connections are explained at the beginning of the model. Examples include:
+*
+* LT1251 video fader
+* LT1256 video fader
+* LT1228 OTA/CFA
+* LT1100 instrumentation amplifier
+* LT1101 instrumentation amplifier
+* LT1102 instrumentation amplifier
+*
+* The whole purpose for following the 3-2-7-4-6 convention is to simplify
+* swapping models within a circuit file, making it easy to compare the
+* response of various amplifiers. It is important to note that when a
+* model is called within a circuit file, you are allowed to name the nodes
+* as you see fit; only the ORDER and QUANTITY of the connections is
+* important.
+*
+***
+*
+.SUBCKT LT1001 3 2 7 4 6
+* INPUT
+RC1 7 80 6631
+RC2 7 90 6631
+Q1 80 102 10 QM1
+Q2 90 103 11 QM2
+RB1 2 102 500
+RB2 3 103 500
+DDM1 102 104 DM2
+DDM3 104 103 DM2
+DDM2 103 105 DM2
+DDM4 105 102 DM2
+C1 80 90 8.66e-12
+RE1 10 12 1409
+RE2 11 12 1409
+IEE 12 4 9.901e-6
+RE 12 0 20200000
+CE 12 0 1.579E-12
+* INTERMEDIATE
+GCM 0 8 12 0 7.558E-11
+GA 8 0 80 90 1.508E-04
+R2 8 0 100000
+C2 1 8 3e-11
+GB 1 0 8 0 1538
+* OUTPUT
+RO1 1 6 25.75
+RO2 1 0 34.25
+RC 17 0 4.228e-6
+GC 0 17 6 0 236500
+D1 1 17 DM1
+D2 17 1 DM1
+D3 6 13 DM2
+D4 14 6 DM2
+VC 7 13 1.803
+VE 14 4 1.803
+IP 7 4 0.00159
+DSUB 4 7 DM2
+* MODELS
+.MODEL QM1 NPN(IS=8e-16 BF=5500)
+.MODEL QM2 NPN(IS=8.006E-16 BF=9900)
+.MODEL DM1 D(IS=2.331e-8)
+.MODEL DM2 D(IS=8e-16)
+.ENDS LT1001
+</Model>
+</Component>
+<Component voltage>
+<Description>
+LTspice Import
+</Description>
+<Parameter>
+<string value>
+</Parameter>
+<Layout>
+[ignore]
+*
+</Layout>
+<Prefix V>
+<Label>
+</Label>
+<Symbol>
+<Port 0 -96 ->
+<Port 0 -16 +>
+<Circle -32 -24 32 -88 #08f8b8>
+<Line 0 -16 0 -24 #48f8b8>
+<Line 0 -96 0 -88 #48f8b8>
+<Line 0 -28 0 -44 #48f8b8>
+<Line -8 -76 8 -76 #48f8b8>
+<Line -8 -36 8 -36 #48f8b8>
+</Symbol>
+<Netlist spice>
+$devicename $node(+) $node(-) $value
+</Netlist>
+</Component>
+<Component ind>
+<Description>
+Inductor
+</Description>
+<Parameter>
+<string value L>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix L>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Arc 16 -56 4 -68 4 -44 wire>
+<Arc 16 -80 16 -96 4 -68 wire>
+<Arc 16 -32 4 -44 16 -16 wire>
+<Port 16 -16 A>
+<Port 16 -96 B>
+</Symbol>
+<Offsetlabel 0 36 -40>
+<Netlist inductEx>
+$devicename $nodeNum(A) $nodeNum(B) $value
+</Netlist>
+<Netlist spice>
+$devicename $node(A) $node(B) $value
+</Netlist>
+</Component>
+<Component ind2>
+<Description>
+Inductor
+</Description>
+<Parameter>
+<string value L>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix L>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 16 -96 B>
+<Port 16 -16 A>
+<Arc 16 -32 4 -44 16 -16 wire>
+<Arc 16 -80 16 -96 4 -68 wire>
+<Arc 16 -56 4 -68 4 -44 wire>
+<Circle 4 -80 12 -88 wire>
+</Symbol>
+<Offsetlabel 0 36 -40>
+<Netlist inductEx>
+$devicename $nodeNum(A) $nodeNum(B) $value
+</Netlist>
+<Netlist spice>
+$devicename $node(A) $node(B) $value
+</Netlist>
+</Component>
+<Component coupling>
+<Description>
+magnetic coupling between inductors
+</Description>
+<Parameter>
+<string L1 L1>
+<string L2 L2>
+<string value 1>
+</Parameter>
+<Layout>
+[ignore]
+# ignored for parameter
+*
+</Layout>
+<Prefix K>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Line -3 52 -3 -52 #646464>
+<Line 3 52 3 -51 #646464>
+</Symbol>
+<Offsetlabel 0 -21 83>
+<Netlist inductEx>
+$devicename $L1 $L2 $value
+</Netlist>
+<Netlist spice>
+$devicename $L1 $L2 $value
+</Netlist>
+</Component>
+<Component nmos4>
+<Description>
+N-Channel
+</Description>
+<Parameter>
+<string value NMOS>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix MN>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 48 -48 B>
+<Port 48 -96 S>
+<Port 0 -80 G>
+<Port 48 0 D>
+<Line 48 0 48 -16 wire>
+<Line 48 -16 16 -16 wire>
+<Line 8 -16 8 -80 wire>
+<Line 0 -80 8 -80 wire>
+<Line 16 -72 16 -88 wire>
+<Line 16 -40 16 -56 wire>
+<Line 16 -8 16 -24 wire>
+<Line 40 -44 40 -52 wire>
+<Line 16 -48 40 -52 wire>
+<Line 16 -48 40 -44 wire>
+<Line 40 -48 48 -48 wire>
+<Line 16 -80 48 -80 wire>
+<Line 48 -80 48 -96 wire>
+</Symbol>
+<Offsetlabel 0 56 -32>
+<Netlist spice>
+M$devicename $node(D) $node(G) $node(S) $node(B) $value
+</Netlist>
+</Component>
+<Component pmos4>
+<Description>
+P-Channel
+</Description>
+<Parameter>
+<string value PMOS>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix MP>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 48 -48 B>
+<Port 48 -96 S>
+<Port 0 -80 G>
+<Port 48 0 D>
+<Line 48 0 48 -16 wire>
+<Line 48 -16 16 -16 wire>
+<Line 8 -16 8 -80 wire>
+<Line 0 -80 8 -80 wire>
+<Line 16 -72 16 -88 wire>
+<Line 16 -40 16 -56 wire>
+<Line 16 -8 16 -24 wire>
+<Line 24 -44 24 -52 wire>
+<Line 48 -48 24 -52 wire>
+<Line 48 -48 24 -44 wire>
+<Line 16 -48 24 -48 wire>
+<Line 16 -80 48 -80 wire>
+<Line 48 -80 48 -96 wire>
+</Symbol>
+<Offsetlabel 0 56 -32>
+<Netlist spice>
+M$devicename $node(D) $node(G) $node(S) $node(B) $value
+</Netlist>
+</Component>
+<Component cap>
+<Description>
+LTspice Import
+</Description>
+<Parameter>
+<string value>
+<list Package 1206 0805 >
+</Parameter>
+<Layout>
+[macro]
+# device-type	macro-file		pins
+*		pcb/capacitor.layout	pin1 pin2
+</Layout>
+<Prefix C>
+<Label>
+$devicename
+  $value
+</Label>
+<Symbol>
+<Port 16 -64 out>
+<Port 16 0 in>
+<Line 0 -36 32 -36 #08f8b8>
+<Line 0 -28 32 -28 #08f8b8>
+<Line 16 -36 16 -64 wire>
+<Line 16 0 16 -28 wire>
+</Symbol>
+<Offsetlabel 0 26 -40>
+<Offsetlabel 270 -70 -25>
+<Netlist spice>
+$devicename $node(in) $node(out) $value
+</Netlist>
+</Component>
+<Component pmos>
+<Description>
+P-Channel
+</Description>
+<Parameter>
+<string value PMOS>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix MP>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 48 -96 S>
+<Port 0 -80 G>
+<Port 48 0 D>
+<Line 48 0 48 -16 wire>
+<Line 48 -16 16 -16 wire>
+<Line 8 -16 8 -80 wire>
+<Line 0 -80 8 -80 wire>
+<Line 16 -72 16 -88 wire>
+<Line 16 -40 16 -56 wire>
+<Line 16 -8 16 -24 wire>
+<Line 24 -44 24 -52 wire>
+<Line 48 -48 24 -52 wire>
+<Line 48 -48 24 -44 wire>
+<Line 16 -48 24 -48 wire>
+<Line 16 -80 48 -80 wire>
+<Line 48 -48 48 -96 wire>
+</Symbol>
+<Offsetlabel 0 56 -32>
+<Netlist spice>
+M$devicename $node(D) $node(G) $node(S) $value
+</Netlist>
+<Extraction MOS-default>
+<ExtractionParameter>
+# transitor layers
+layerPoly=poly
+layerActive=active
+layerContact=contact
+# optional layers
+layerRequiredWell=nwell
+layerOutsideWell=pwell
+# ports as used by this component
+ports=S,D,G
+</ExtractionParameter>
+<ExtractionDeviceParameter>
+value=pmos
+</ExtractionDeviceParameter>
+</Extraction>
+</Component>
+<Component res>
+<Description>
+LTspice Import
+</Description>
+<Parameter>
+<string value>
+<list Package 1206 0805 >
+</Parameter>
+<Layout>
+[macro]
+# device-type	macro-file		pins
+*		pcb/resistor.layout	pin1 pin2
+</Layout>
+<Prefix R>
+<Label>
+$devicename
+  $value
+</Label>
+<Symbol>
+<Port 16 -96 pin2>
+<Port 16 -16 pin1>
+<Line 16 -24 32 -32 #08f8b8>
+<Line 16 -16 16 -24 wire>
+<Line 32 -32 0 -48 #08f8b8>
+<Line 0 -48 32 -64 #08f8b8>
+<Line 32 -64 0 -80 #08f8b8>
+<Line 0 -80 16 -88 #08f8b8>
+<Line 16 -88 16 -96 wire>
+</Symbol>
+<Offsetlabel -360 30 70>
+<Offsetlabel -270 40 -25>
+<Offsetlabel -180 0 -40>
+<Offsetlabel -90 -70 5>
+<Offsetlabel 0 26 -40>
+<Offsetlabel 90 46 5>
+<Offsetlabel 180 0 70>
+<Offsetlabel 270 -70 -25>
+<Netlist spice>
+$devicename $node(pin1) $node(pin2) $value
+</Netlist>
+</Component>
+<Component res2>
+<Description>
+A
+</Description>
+<Parameter>
+<string value R>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix R>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 16 -64 B>
+<Port 16 0 A>
+<Line 0 -60 16 -64 wire>
+<Line 0 -60 32 -52 wire>
+<Line 0 -44 32 -52 wire>
+<Line 0 -44 32 -36 wire>
+<Line 0 -28 32 -36 wire>
+<Line 0 -28 32 -20 wire>
+<Line 0 -12 32 -20 wire>
+<Line 0 -12 32 -4 wire>
+<Line 16 0 32 -4 wire>
+</Symbol>
+<Offsetlabel 0 36 -16>
+<Netlist spice>
+$devicename $node(A) $node(B) $value
+</Netlist>
+</Component>
+<Component varactor>
+<Description>
+Diode
+</Description>
+<Parameter>
+<string value D>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix D>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Line 0 -36 32 -36 wire>
+<Line 0 -44 32 -44 wire>
+<Line 0 -16 32 -16 wire>
+<Line 32 -16 16 -36 wire>
+<Line 0 -16 16 -36 wire>
+<Line 16 0 16 -16 wire>
+<Line 16 -44 16 -64 wire>
+<Port 16 0 +>
+<Port 16 -64 ->
+</Symbol>
+<Offsetlabel 0 38 -12>
+<Netlist spice>
+$devicename $node(+) $node(-) $value
+</Netlist>
+</Component>
+<Component diode>
+<Description>
+Diode
+</Description>
+<Parameter>
+<string value D>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix D>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 16 -64 ->
+<Port 16 0 +>
+<Line 16 -44 16 -64 wire>
+<Line 16 0 16 -20 wire>
+<Line 0 -20 16 -44 wire>
+<Line 32 -20 16 -44 wire>
+<Line 0 -20 32 -20 wire>
+<Line 0 -44 32 -44 wire>
+</Symbol>
+<Offsetlabel 0 24 0>
+<Netlist spice>
+$devicename $node(+) $node(-) $value
+</Netlist>
+<Model spice>
+.lib $LTSpiceLib/cmp/standard.dio
+</Model>
+</Component>
+<Component npn>
+<Description>
+Bipolar
+</Description>
+<Parameter>
+<string value NPN>
+<list Package SOT23 other >
+</Parameter>
+<Layout>
+[package]
+# part-type 	layout-file 	cellname pin name pin number
+Package=SOT23	pcb/SOT23.gds	SOT23	B 1 E 2 C 3
+</Layout>
+<Prefix QN>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 64 -96 E>
+<Port 0 -48 B>
+<Port 64 0 C>
+<Line 16 -48 0 -48 wire>
+<Line 16 -32 64 0 wire>
+<Line 16 -80 16 -16 wire>
+<Line 40 -80 16 -64 wire>
+<Line 64 -96 36 -84 wire>
+<Line 64 -96 44 -76 wire>
+<Line 44 -76 36 -84 wire>
+</Symbol>
+<Offsetlabel 0 56 -32>
+<Netlist spice>
+$devicename $node(C) $node(B) $node(E) $value
+</Netlist>
+<Model spice>
+.lib $LTSpiceLib/cmp/standard.bjt
+</Model>
+</Component>
+<Component pnp>
+<Description>
+Bipolar
+</Description>
+<Parameter>
+<string value PNP>
+</Parameter>
+<Layout>
+[package]
+# part-type 	layout-file 	cellname 			pin name pin number
+*	pcb/SOT23.gds	SOT23	B 1 E 2 C 3
+</Layout>
+<Prefix QP>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 64 -96 E>
+<Port 0 -48 B>
+<Port 64 0 C>
+<Line 16 -48 0 -48 wire>
+<Line 16 -32 64 0 wire>
+<Line 16 -80 16 -16 wire>
+<Line 40 -80 64 -96 wire>
+<Line 16 -64 36 -84 wire>
+<Line 44 -76 36 -84 wire>
+<Line 16 -64 44 -76 wire>
+</Symbol>
+<Offsetlabel 0 84 -32>
+<Netlist spice>
+$devicename $node(C) $node(B) $node(E) $value
+</Netlist>
+<Model spice>
+.lib $LTSpiceLib/cmp/standard.bjt
+</Model>
+</Component>
+<Component nmos>
+<Description>
+N-Channel
+</Description>
+<Parameter>
+<string value NMOS>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix MN>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 48 -96 S>
+<Port 0 -80 G>
+<Port 48 0 D>
+<Line 48 0 48 -16 wire>
+<Line 48 -16 16 -16 wire>
+<Line 8 -16 8 -80 wire>
+<Line 0 -80 8 -80 wire>
+<Line 16 -72 16 -88 wire>
+<Line 16 -40 16 -56 wire>
+<Line 16 -8 16 -24 wire>
+<Line 40 -44 40 -52 wire>
+<Line 16 -48 40 -52 wire>
+<Line 16 -48 40 -44 wire>
+<Line 40 -48 48 -48 wire>
+<Line 16 -80 48 -80 wire>
+<Line 48 -48 48 -96 wire>
+</Symbol>
+<Offsetlabel 0 56 -32>
+<Netlist spice>
+M$devicename $node(D) $node(G) $node(S) $value
+</Netlist>
+<Model spice>
+.lib $LTSpiceLib/cmp/standard.mos
+</Model>
+<Extraction MOS-default>
+<ExtractionParameter>
+# transitor layers
+layerPoly=poly
+layerActive=active
+layerContact=contact
+# optional layers
+layerRequiredWell=pwell
+layerOutsideWell=nwell
+# ports as used by this component
+ports=S,D,G
+</ExtractionParameter>
+<ExtractionDeviceParameter>
+value=NMOS
+</ExtractionDeviceParameter>
+</Extraction>
+</Component>
+<Component njf>
+<Description>
+N-Channel
+</Description>
+<Parameter>
+<string value NJF>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix JN>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 48 -96 S>
+<Port 0 -64 G>
+<Port 48 0 D>
+<Line 4 -60 4 -68 wire>
+<Line 4 -60 16 -64 wire>
+<Line 4 -68 16 -64 wire>
+<Line 0 -64 4 -64 wire>
+<Line 16 -24 48 -24 wire>
+<Line 48 -24 48 0 wire>
+<Line 16 -72 48 -72 wire>
+<Line 48 -72 48 -96 wire>
+<Line 16 -16 16 -80 wire>
+</Symbol>
+<Offsetlabel 0 56 -32>
+<Netlist spice>
+$devicename $node(D) $node(G) $node(S) $value
+</Netlist>
+<Model spice>
+.lib $LTSpiceLib/cmp/standard.jft
+</Model>
+</Component>
+<Component schottky>
+<Description>
+Schottky
+</Description>
+<Parameter>
+<string value D>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix D>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Line 0 -36 4 -36 wire>
+<Line 0 -44 0 -36 wire>
+<Line 0 -44 32 -44 wire>
+<Line 32 -44 32 -52 wire>
+<Line 32 -52 28 -52 wire>
+<Line 0 -20 32 -20 wire>
+<Line 32 -20 16 -44 wire>
+<Line 0 -20 16 -44 wire>
+<Line 16 0 16 -20 wire>
+<Line 16 -44 16 -64 wire>
+<Port 16 0 +>
+<Port 16 -64 ->
+</Symbol>
+<Offsetlabel 0 38 -6>
+<Offsetlabel 180 4 17>
+<Offsetlabel 270 -40 -35>
+<Netlist spice>
+$devicename $node(+) $node(-) $value
+</Netlist>
+<Model spice>
+.lib $LTSpiceLib/cmp/standard.dio
+</Model>
+</Component>
+
+<Component zener>
+<Description>
+Zener
+</Description>
+<Parameter>
+<string value D>
+</Parameter>
+<Layout>
+</Layout>
+<Prefix D>
+<Label>
+$devicename
+$value
+</Label>
+<Symbol>
+<Port 16 -64 ->
+<Port 16 0 +>
+<Line 16 -44 16 -64 wire>
+<Line 16 0 16 -20 wire>
+<Line 0 -20 16 -44 wire>
+<Line 32 -20 16 -44 wire>
+<Line 0 -20 32 -20 wire>
+<Line 0 -44 32 -44 wire>
+<Line 32 -44 36 -40 wire>
+<Line 0 -44 -4 -48 wire>
+</Symbol>
+<Offsetlabel 0 24 0>
+<Netlist spice>
+$devicename $node(+) $node(-) $value
+</Netlist>
+<Model spice>
+.lib $LTSpiceLib/cmp/standard.dio
+</Model>
+</Component>

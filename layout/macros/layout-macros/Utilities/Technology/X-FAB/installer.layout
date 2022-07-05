@@ -1,0 +1,559 @@
+#!/usr/bin/layout
+#name=PDK Installer
+#help=installs PDKs packages supplied by X-FAB
+
+
+string result;
+string baseDir;
+stringList oaLibs;
+string processName;
+bool restartRequired=false;
+bool hasDocFiles=false;
+bool installAll=false;
+
+bool windows(){
+     if (process::isWindows()) return true;
+     return false; 
+}
+
+void showResult(){
+ textEdit *te=project::getCentralTextEditor();
+ te->newDoc();
+ te->drawing->setText(result);
+ te->drawing->setLexer("ERRORREPORT");
+ te->drawing->title="Result PDK Installation";
+}
+
+bool checkLinux(){
+ if (process::isLinux()) return true;
+ result+="A Linux system is recommended for any OpenAccess PDK. However this installer\n";
+ result+="supports Windows as well. On Max OS X system OpenAccess and iPDK is not available.\n";
+ return false;
+}
+
+bool checkPyCell(){
+ if (windows()) return checkPyCellWindows();
+ file f;
+ f.filename="/opt/synopsys/bin/cnpy";
+ if (f.exists()||(process::getEnv("CNI_ROOT")!="")){
+   setup::placeModeForPCB=false;
+   if (setup::openAccessPyCell=="") {result+="- PyCell activated\n";restartRequired=true;}
+   if (f.exists()) setup::openAccessPyCell="default";
+   else setup::openAccessPyCell="CNI_ROOT";
+   return true;
+ }
+ else {
+   result+="PyCell not found on your system. Please install it. The package can be downloaded from the Synopsys web page.\n";
+   showResult();
+   return false;
+ }
+ return false;
+}
+
+bool checkPyCellWindows(){
+ file f;
+ f.filename="C:/synopsys";
+ if (f.exists()||(process::getEnv("CNI_ROOT")!="")){
+   setup::placeModeForPCB=false;
+   if (setup::openAccessPyCell=="") {result+="- PyCell activated\n";restartRequired=true;setup::openAccessPyCell="default";}
+   if (f.exists()) setup::openAccessPyCell="default";
+   return true;
+ }
+ else {
+   result+="PyCell not found on your system. Please install it. The package can be downloaded from the Synopsys web page.\n";
+   showResult();
+   return false;
+ }
+ return false;
+}
+
+bool createDir(string dir,string name){
+ if (!file::isDir(dir+"/"+name)){
+    file::mkDir(dir,name);
+    if (!file::isDir(dir+"/"+name)){
+        result+="Folder '"+name+"'could not be created\n";
+        showResult();
+        return false;
+    }
+    result+="folder "+dir+"/"+name+" created\n";
+    }
+  return true;
+}
+
+bool makeDir(string dir){
+   stringList sl=dir.split("/");
+   string name=sl.at(sl.size()-1);
+   sl.removeAt(sl.size()-1);
+   dir=sl.join("/");
+   if (!file::isDir(dir)) makeDir(dir);
+   createDir(dir,name);
+}
+
+
+
+bool removeDir(string dir,string name){
+ if (name=="") return true;  
+layout->showStatus("remove folder "+name);
+ bool rmResult=true;
+ if (file::isDir(dir+"/"+name)){
+    file f;
+    f.findDir(dir+"/"+name,"*");
+    while (f.filename!=""){
+          if (f.filename.right(1)!=".")
+            removeDir(dir+"/"+name,f.fileName());
+          f.findNext();
+    }
+    f.find(dir+"/"+name,"*");
+    while (f.filename!=""){
+            f.remove();
+            f.findNext();
+    }
+    if (!file::rmDir(dir,name)){
+          file f;
+          f.filename=dir+"/"+name;
+          f.remove();
+    }
+    return rmResult;
+    }
+  else {
+          file f;
+          f.filename=dir+"/"+name;
+          f.remove();
+  }
+  return rmResult;
+}
+
+bool unpack(string file){
+         if (windows()) return unpackWindows(file);
+        layout->showProgress("extract files");
+         stringList sl;
+         sl.append("-xzf");
+         sl.append(file);
+         sl.append("-C");
+         sl.append(baseDir+"/unpack");
+         if (process::execute("/bin/tar",sl)!=0)
+           if (process::execute("/usr/bin/tar",sl)!=0) {
+               result+="extraction of file '"+file+"' failed\n";
+               showResult();
+                   //debug.show();
+               return false;
+           }
+         return true;
+}
+
+bool unpackWindows(string file){
+        layout->showProgress("extract files");
+         stringList sl;
+         sl.append("-xzf");
+         sl.append(file);
+         sl.append("-C");
+         sl.append(baseDir+"/unpack");
+         if (process::execute("tar",sl)!=0)
+           if (process::execute("c:/Windows/system32/tar",sl)!=0) {
+               result+="extraction of file '"+file+"' failed\n";
+               result+="'tar' command not found on your system. Windows 10 build 1705 or newer required\n";
+               showResult();
+               return false;
+           }
+         result+="extracting files to "+baseDir+"/unpack\n";
+         return true;
+}
+
+bool findOaLibs(string dir,string dir2){
+    file f;
+    f.find(dir,".oalib");
+    if (f.filename!=""){
+           oaLibs.append(dir2);
+           return true;
+    }
+    f.find(dir,"*.html:*.pdf");
+    if (f.filename!=""){
+           hasDocFiles=true;
+    }
+    f.findDir(dir,"*");
+    while (f.filename!=""){
+          if (f.filename.right(1)!=".")
+            findOaLibs(f.filename,dir2+"/"+f.fileName());
+          f.findNext();
+    }
+    return false;
+}
+
+bool libHasSymbols(string dir){
+file f;
+f.findDir(dir,"*");
+while (f.filename!=""){
+      if (f.filename.right(1)!="."){
+          file f2;
+          f2.findDir(f.filename,"symbol");
+          if (f2.filename!="") return true;
+      }
+      f.findNext();
+}
+return false;
+}
+
+
+
+bool hasOa(string dir){
+    file f;
+    f.find(dir,".oalib");
+    if (f.filename!=""){
+           return true;
+    }
+    return false;
+}
+
+bool hasDoc(string dir){
+    file f;
+    f.find(dir,"*.html:*.pdf");
+    if (f.filename!=""){
+           return true;
+    }
+    return false;
+}
+
+
+
+bool installData(string dir,string dir2){
+    bool install=false;
+    file f;
+    f.findDir(dir,"*");
+    while (f.filename!=""){
+          if (f.filename.right(1)!=".") {
+            if (dir2=="") processName=f.fileName().toUpper();
+            if (hasOa(f.filename)) install=true;
+            else if (hasDoc(f.filename)) install=true;
+            else if (installAll) {
+               if (!file::isDir(baseDir+dir2)) install=true;
+               }
+          }
+          f.findNext();
+    }
+    if (install){
+            result+="install: "+baseDir+dir2+"\n";
+            if (!file::isDir(baseDir+dir2)) makeDir(baseDir+dir2);
+            f.findDir(dir,"*");
+            while (f.filename!=""){
+                if (f.filename.right(1)!=".") {
+                       string destination=baseDir+dir2+"/"+f.fileName();
+                       if  (file::isDir(destination)) removeDir(baseDir+dir2,f.fileName()); 
+                       layout->showStatus("install folder "+f.fileName());
+                       file processFile;
+                       processFile.filename=f.filename;
+                       processFile.rename(destination);
+                }
+                f.findNext();
+          }
+    } else {
+        f.findDir(dir,"*");
+        while (f.filename!=""){
+              if (f.filename.right(1)!=".") {
+                if (dir2=="") processName=f.fileName().toUpper();
+                installData(f.filename,dir2+"/"+f.fileName());
+              }
+              f.findNext();
+        }
+    }
+    return false;
+}
+
+bool checkBaseDir(){
+        baseDir="";
+        if (windows()){
+                    if (file::isDir("c:/LayoutEditor")){  baseDir="c:/LayoutEditor"; }
+                    else if (file::isDir("d:/LayoutEditor")){  baseDir="d:/LayoutEditor"; }
+                    else if (file::isDir("e:/LayoutEditor")){  baseDir="e:/LayoutEditor"; }
+                    else {
+                            result+="Please create installation folder 'c:\LayoutEditor' and set\n";
+                            result+="file privileges in a ways that it is writable for this installer\n";
+                            result+="Alternatively the installastion folder can be set on drive D: or E:, but \n";
+                            result+="always it needs to be named 'LayoutEditor' and must be place in the top\n";
+                            result+="level of the drive.\n";
+                            showResult();
+                            return false;
+                    }
+                    result+="using "+baseDir+" as installation folder\n";
+
+        }
+        else  { //Linux
+                 baseDir=file::homePath()+"/LayoutEditor";
+                 if (!createDir(file::homePath(),"LayoutEditor")) {
+                         result+="error accassing "+baseDir+". Please check file permissions!\n";
+                         return false;
+                 }
+        }
+        if (!createDir(baseDir,"unpack")) {
+                 result+="error accassing "+baseDir+". Please check file permissions!\n";
+                 showResult();
+                 return false;
+        }
+        return true;
+}
+
+
+void setCallbackPath(){
+if (!setup::callbackPath.contains(".")) {
+        setup::callbackPath.append(".");
+        result+="adjust callback path, '.' (library folder itself) added\n";
+}
+}
+
+void finalize(){
+    setup::lefCellBoundaryLayer=62;
+    setup::openAccessBoundary=62;
+    setup::autoLoadLayerFiles=true;
+    setup::openAccessMapLayerNames=true;
+    setup::gdsMapLayer=false;
+    setup::oasisMapLayer=false;
+    if (restartRequired) {
+       result+="Restart the LayoutEditor to use the new installed package!\n";
+    } else {
+       result+="Installation complete\n";
+    }
+    showResult();
+}
+
+void createLink(string processname,string workdir){
+        file f;
+        f.filename=f.tempPath()+"/vblink.vbs";
+        string s;
+        s+="Set oWS = WScript.CreateObject(\"WScript.Shell\")\r\n";
+        s+="sLinkFile = \""+f.homePath()+"\\Desktop\\LayoutEditor "+processname+".lnk\"\r\n";
+        s+="Set oLink = oWS.CreateShortcut(sLinkFile) \r\n";
+        s+="oLink.TargetPath = \"C:\\Program Files (x86)\\LayoutEditor\\layout.bat\" \r\n";
+        s+="oLink.WorkingDirectory = \""+workdir+"\" \r\n";
+        s+="oLink.Description = \""+processname+"\" \r\n";
+        s+="oLink.IconLocation = \"C:\\Program Files (x86)\\LayoutEditor\\bin\\layout.exe, 0\" \r\n";
+        s+="oLink.Save \r\n";
+        f.open(false);
+        f.write(s);
+        f.close();
+        stringList sl;
+        sl.append( f.filename);
+        process::execute("cscript",sl);
+        result+="Desktop link created ("+processname+")\n";
+}
+
+
+int main(){
+         file f;
+         result="";
+         result+="****************************************************************\n";
+         result+="*  \n";
+         result+="*  PDK Install for X-FAB packages\n";
+         result+="*  \n";
+         result+="*  This installer is still bata, please report any problems and validate a correct installation manual!\n";
+         result+="*  \n";
+         result+="*  Please download required PDK from https://my.xfab.com \n";
+         result+="*  For PRIMLIB use the EDA-vendor-agnostic iPDK packages (*stdformats-iPDK-*),\n";
+         result+="*  these package need an extra activation by XFAB.\n";
+         result+="*  \n";
+         if (windows()) {
+                     result+="*  \n";
+                     result+="*  Packages for Windows needs to be created on a Linux system before\n";
+                     result+="*  running this installation script.\n";
+                     result+="*  \n";
+         }
+         result+="*  for all deatils on this installation macro please see:\n";
+         result+="*  https://layouteditor.org/schematiceditor/libraries/xfab\n";
+         result+="*  \n";
+         result+="****************************************************************\n";
+         result+="Installation log: (add this log to any iPDK related bug report)\n";
+         checkLinux();
+         if (process::isMac()) { showResult(); return 0;}
+         if (!checkPyCell()) return 0;
+         if (!checkBaseDir()) return 0;
+         string package;
+         if (windows())  package=layout->getOpenFilename("X-Fab package (*.wzip)",f.homePath());
+         else package=layout->getOpenFilename("X-Fab package (*.tar.gz)",f.homePath());
+         if (package=="") {
+                 result+="No package selected, installation terminated\n"; 
+                 showResult();
+                 return 0;
+         } else {
+                  result+="Installation package "+package+"\n"; 
+         }
+         bool correctPackage=true;
+         bool digiInfo=false;
+         if (package.contains("mentor"))correctPackage=false;
+         if (package.contains("synopsys"))correctPackage=false;
+         if (package.contains("cadence"))correctPackage=false;
+         if (package.contains("tanner"))correctPackage=false;
+         if (package.contains("gds"))correctPackage=false;
+         if (package.contains("stdformats-iPDK"))correctPackage=true;
+         if (package.contains("D_CELLS")){correctPackage=true;digiInfo=true;installAll=true;}
+         if (package.contains("techLEF")){correctPackage=true;digiInfo=true;installAll=true;}
+         if (digiInfo) {
+             result+="****************************************************************\n";
+             result+="* for a full support of digital libraries these packages are required:\n";
+             result+="* - process-cadence-techLEF\n";
+             result+="* - process-D_CELLS_xx-LEF\n";
+             result+="* - process-D_CELLS_xx-liberty\n";
+             result+="* - process-D_CELLS_xx-synopsys_CustomCompiler\n";
+             result+="****************************************************************\n";
+         }
+         if (!correctPackage) {
+             result+="****************************************************************\n";
+             result+="* Please use in iPDK standard format, named 'stdformats-iPDK'!\n";
+             result+="* The package you have choosen may not work with the LayoutEditor\n";
+             result+="****************************************************************\n";
+         }
+         if (!unpack(package)) return 0;
+                 
+         oaLibs.clear();
+         findOaLibs(baseDir+"/unpack","");
+         if ((oaLibs.size()==0)&&(!hasDocFiles)&&(!installAll)){
+                 result+="No OpenAccess libraries found in the package, installation terminated\n";
+                 removeDir(baseDir,"unpack");
+                 showResult();
+                 return 0;
+         }
+         layout->showProgress("install PDK");
+         installData(baseDir+"/unpack","");
+         stringList libName,libPath;
+         stringList primLibName,primLibPath;
+         stringList techName,techPath;
+         for (int i=0;i<oaLibs.size();++i){
+                 stringList path=oaLibs.at(i).split("/");
+                 string name=path.at(path.size()-1);
+                 //result+=name+" -> " +oaLibs.at(i)+"\n";
+                 if (name.left(7)=="PRIMLIB"){
+                         primLibName.append(name);
+                         primLibPath.append(oaLibs.at(i));
+                 } else if (name.left(4)=="TECH"){
+                         techName.append(name);
+                         techPath.append(oaLibs.at(i));
+                 } else {
+                        libName.append(name); //+"_"+processName
+                        libPath.append(oaLibs.at(i));
+                 }
+         }
+         int techLib=-1;
+         int techLibHD=-1;
+         int primLib=-1;
+         string mainLib;
+         if (primLibName.size()>0){
+                 layout->showStatus("choose technology");
+                 mainLib=layout->getItem("Install XFAB PDK","Please choose your technology module:",primLibName);
+                 if (mainLib!=""){
+                         int i=mainLib.indexOf("_");
+                         string sub=mainLib.mid(i);
+                         for (int k=0;k<techName.size();++k){
+                                if (techName.at(k).contains(sub)) {
+                                  if (techName.at(k).contains("_HD")) techLibHD=k;
+                                  else techLib=k;
+                                  }
+                         }
+                         for (int k=0;k<primLibName.size();++k){
+                                if (primLibName.at(k)==mainLib) primLib=k;
+                         }
+                 }
+         }
+         if (primLib>=0) {
+                 libName.append("PRIMLIB");
+                 libPath.append(primLibPath.at(primLib));
+         }
+         if (techLib>=0) {
+                 libName.append("TECH_"+processName);
+                 libPath.append(techPath.at(techLib));
+         }
+         if (techLibHD>=0) {
+                 libName.append("TECH_"+processName+"_HD");
+                 libPath.append(techPath.at(techLib));
+         }
+         if (libName.size()>0){
+             layout->showStatus("add in new libs to lib.defs");
+             f.filename=setup::getLibDefsFilename();
+             f.open(true);
+             string libDef=f.read();
+             f.close();
+             stringList libLines=libDef.split("\n");
+             intList existingLibs;
+             for (int i=0;i<libLines.size();++i){
+                     string line=libLines.at(i).trimmed();
+                     if (line.left(6)=="DEFINE"){
+                             stringList args=line.split(" ");
+                             if (args.size()>2){
+                                     if (libName.contains(args.at(1).trimmed())){
+                                             int index=libName.indexOf(args.at(1).trimmed());
+                                             if (index>=0) {
+                                                     args.set(2,baseDir+libPath.at(index));
+                                                     line=args.join(" ");
+                                                     libLines.set(i,line);
+                                                     existingLibs.append(index);
+                                             }
+                                     }
+                             }
+                     }
+             }
+             for (int i=0;i<libName.size();++i){
+                     if (!existingLibs.contains(i)){
+                             libLines.append("DEFINE "+libName.at(i)+" "+baseDir+libPath.at(i));
+                             libLines.append("ASSIGN "+libName.at(i)+" libMode shared");
+                     }
+             }
+             libDef=libLines.join("\n");
+             f.open(false);
+             f.write(libDef);
+             f.close();
+             result+="adjust lib.defs file\n";
+             layout->showStatus("adjust setup");
+         }
+         setCallbackPath();
+
+         // add new libraries
+         layout->showStatus("loading new libraries");
+         stringList libs=components::getLibs();
+         for (int i=0;i<libName.size();++i){
+                 if (libName.at(i).left(4)!="TECH"){
+                         //add libraries to schematic
+                        if (!libs.contains(libName.at(i)+".oa")){
+                              if (libHasSymbols(baseDir+libPath.at(i))){
+                                // new added libraries
+                                components::addLib(libName.at(i)+".oa");
+                                }
+                        }
+                 } else {
+                         // import layer settings
+                         //setTechnologyLayer();
+                         //layers::importLayerSettings(libName.at(i));
+                         //result+="reading layer setting from "+libName.at(i)+"\n";
+                         //result+="technology setting like prefered width and space of metal layer are NOT loaded, adjust be hand in the LayerManager\n";
+                 }
+         }
+         
+         if (windows()) {
+                 f.filename=baseDir+"/unpack/XFABlibs.txt";
+                 if (f.exists()){
+                         f.open(true);
+                         string files=f.read();
+                         f.close();
+                         stringList sl=files.split("\n");
+                         for (int i=0;i<sl.size();++i){ 
+                                 f.filename=baseDir+sl.at(i).mid(1);
+                                 if (f.exists()){
+                                        result+=f.filename+" is adjusted\n";
+                                        f.open(true);
+                                        string fc=f.read();
+                                        f.close();
+                                        fc=fc.replace("$FTK_KIT_DIR",baseDir);
+                                        f.open(false);
+                                        f.write(fc);
+                                        f.close();
+                                        if (mainLib.size()>=4)
+                                        if (f.filename.contains(mainLib.right(4))) {
+                                                string dir=f.filename.remove("XFABlib.defs");
+                                                createLink( processName+"-"+mainLib,dir);
+                                        }
+                                 }
+                         }
+                 }
+         }
+         
+         layout->showStatus("clean up");
+         if (!removeDir(baseDir,"unpack")) {showResult();return 0;}
+
+         finalize();
+         layout->showStatus("installation complete");
+}

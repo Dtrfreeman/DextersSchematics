@@ -1,0 +1,32 @@
+#!/usr/bin/layout
+#name=dxf load
+#help=loads a file and ask for userunits if it is a DXF file
+
+
+int main(){
+	layout->closeDesign(); // close, if a design is still open
+	string fileName=layout->getOpenFilename();
+        string resultName=fileName;
+        string extension=fileName.mid(fileName.length()-4);
+	if ((extension==".DXF")||(extension==".dxf")){
+	        // setting correct units for a DXF file
+		string units= layout->getText("units","Units? (um,mm,nm)","mm");
+                layout->drawing->databaseunits=0.000000001;
+                if (units=="um")layout->drawing->userunits=0.001;
+                else if (units=="µm")layout->drawing->userunits=0.001;
+                else if (units=="mm")layout->drawing->userunits=0.000001;
+                else if (units=="nm")layout->drawing->userunits=1;
+		else {
+			layout->drawing->userunits=0.001;
+			layout->showMessage("???","unknow units, using µm");
+		}
+                resultName=fileName;
+		}
+        else 
+             resultName=fileName;
+        //open file
+	layout->drawing->openFile(fileName);
+	layout->drawing->userunits=0.001;
+	layout->filename=resultName;
+        layout->drawing->scaleFull();
+}

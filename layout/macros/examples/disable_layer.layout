@@ -1,0 +1,43 @@
+#!/usr/bin/layout
+#name=Disable Layers
+#help=Disable drawing layers by entering a number or a range (two numbers separated by a space);
+// By Matt Hopcroft, hopcroft@mems.stanford.edu
+// v1.1 NOV2007 fix enable/disable typo
+// v1.0 MAY2007
+
+int main() {
+
+string s, stemp1, stemp2;
+int i, a, b, slength;
+
+// dialog box
+s=layout->getText("Disable Layers","Enter layer number(s)");
+
+// did user enter a space-delimited range?
+int spi=s.indexOf(" ",1);
+int slength=s.length();
+//layout->showMessage("Length",slength);
+
+// if range, separate the two numbers and operate on range
+if (spi != -1)
+	{
+	stemp1=s.mid(0,spi);
+	stemp2=s.mid(spi+1,slength-1);
+	a=stemp1.toInt();
+	b=stemp2.toInt();
+	for (i=a;i<=b;i++)
+		{
+		layers::num[i].disable();
+		}
+	
+	layout->showMessage("Disabled:","Layers: "+stemp1+" to "+stemp2);
+	}
+else // or just a single value
+	{
+	a=s.toInt();
+	layers::num[a].disable(); // enable the layer
+	layout->showMessage("Disabled:","Layer: "+s);	
+	}
+ 
+
+} // end main

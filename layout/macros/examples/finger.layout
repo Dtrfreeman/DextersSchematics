@@ -1,0 +1,157 @@
+#!/usr/bin/layout
+#name=box->connected lines
+#help=Replaces a box with a set of lines;
+/***
+ * written by Arun (arun@users.sf.net) 2006-03
+ * using layout version 2006-3-15 (cvs)
+ *
+ * this is just to show what macros can do...
+ * it worked for me, but your mileage may vary
+ */
+ 
+int  main() 
+{
+  cellList    *cells;
+  elementList *elements;
+      
+  bool selected = 0; /* was something selected */    
+  
+  /* check if something was selected at all */
+  for(cells = layout->drawing->firstCell; cells!=NULL; cells=cells->nextCell)
+    {
+      if(cells->thisCell!=NULL)
+	{
+	  for(elements=cells->thisCell->firstElement; elements!=NULL; elements=elements->nextElement)
+	    {
+	      if(elements->thisElement!=NULL)
+		if(elements->thisElement->select)
+		  selected=1;
+	    };
+	};
+    };
+  
+  if(!selected)
+    {
+      layout->showMessage("Macro Help","To use this macro select one or more boxes and the macro"+
+			  " will replace it with a set of lines which are connected on one side.");
+    }
+  else
+    {
+      /* ask on which side the contact area should be */
+      string s=layout->getText("Input","Please tell me on which side the lines should be connected (top, bottom, left, right):");
+      
+      double finger_width   = layout->getDouble("Input","Please input the line width:");
+      double finger_spacing = layout->getDouble("Input","Please input the line spacing:");
+      
+      double user_unit = layout->drawing->userunits;
+      
+      /* from user units to internal units */
+      finger_width   = finger_width   / user_unit;
+      finger_spacing = finger_spacing / user_unit;
+      
+      /* loop over all cells */
+      for(cells = layout->drawing->firstCell; cells!=NULL; cells=cells->nextCell)
+	{
+	  if (cells->thisCell!=NULL)
+	    {
+	      /* loop over all elements,  */
+	      for(elements=cells->thisCell->firstElement; elements!=NULL; /*see end of for loop*/)
+		{
+		  element     *element = elements->thisElement;
+		  elementList *next;
+		  
+		  /* save ref to next element, in case we delete this one */
+		  next = elements->nextElement;
+		  
+		  if (element!=NULL) 
+		    {
+		      /* only change selected boxes */
+		      if(element->select && element->isBox()) 
+			{
+			  /* get layer number */
+			  int layernr = element->layerNum;
+			  
+			  /* get coordinates */
+			  pointArray pa = element->getPoints();
+			  
+			  int x1,y1,x2,y2,x,y,tmp;
+			  point p;
+			  
+			  if(pa.size()==2) /* shouldn't be anything else */
+			    {
+			      p=pa.point(0);
+			      x1=p.x();
+			      y1=p.y();
+			      
+			      p=pa.point(1);
+			      x2=p.x();
+			      y2=p.y();
+			      
+			      /* always make x1/y1 the lower left corner */
+			      if(x1>x2) 
+				{
+				  tmp = x1;
+				  x1  = x2;
+				  x2  = tmp;
+				};
+			      
+			      if(y1>y2) 
+				{
+				  tmp = y1;
+				  y1  = y2;
+				  y2  = tmp;
+				};
+			      
+			      /* output new boxes */
+			      if(s=="bottom")
+				{			  
+				  cells->thisCell->addBox(x1,y1,x2-x1,finger_width,layernr);
+				  
+				  for( x=x1; x<x2-finger_width; x+=finger_width+finger_spacing)
+				    {
+				      cells->thisCell->addBox(x,y1+finger_width,finger_width,y2-y1-finger_width,layernr);
+				    };
+				}
+			      else if (s=="top")
+				{
+				  cells->thisCell->addBox(x1,y2-finger_width,x2-x1,finger_width,layernr);
+				  
+				  for( x=x1; x<x2-finger_width; x+=finger_width+finger_spacing)
+				    {
+				      cells->thisCell->addBox(x,y1,finger_width,y2-y1-finger_width,layernr);
+				    };
+				  
+				}
+			      else if (s=="left")
+				{
+				  cells->thisCell->addBox(x1,y1,finger_width,y2-y1,layernr);
+				  
+				  for( y=y1; y<y2-finger_width; y+=finger_width+finger_spacing)
+				    {
+				      cells->thisCell->addBox(x1+finger_width,y,x2-x1-finger_width,finger_width,layernr);
+				    };
+				  
+				}
+			      else if (s=="right")
+				{
+				  cells->thisCell->addBox(x2-finger_width,y1,finger_width,y2-y1,layernr);
+				  
+				  for( y=y1; y<y2-finger_width; y+=finger_width+finger_spacing)
+				    {
+				      cells->thisCell->addBox(x1,y,x2-x1-finger_width,finger_width,layernr);
+				    };
+				  
+				};
+			    };
+			  cells->thisCell->deleteElement(element);
+			};
+		    };
+		  elements=next; 
+		};/* end loop elements */
+	    };
+	}; /* end loop cells */
+    }; /* end if selected */
+};
+/* Local Variables:    */
+/* mode: c             */
+/* End:                */  

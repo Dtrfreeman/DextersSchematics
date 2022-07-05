@@ -1,0 +1,154 @@
+#!/usr/bin/layout
+#name=autoload example
+#help=example for an automatic loaded macro from the working folder
+/*
+ if automatic loading of setup/layer files is enabled to load order is:
+ - autostart macro as defined under setup/macro/autostart_macro
+ - .map and .layertable file from the working folder
+ - display.drf file from the working folder
+ - autoLoadMacro.layout from the working folder
+*/
+
+
+void setTechnologyLayer(){ 
+        /* 
+        * this function sets the conductie and via layers
+        * use for the conductor highlight mode were all electrical connected shapes are highlighed in one step
+        * This function also sets default values for wires and via for the assist routing mode
+        */
+        layers::technologyLayerRemoveAll();
+        int l=layers::findLayer("POLY1");
+        if (l>=0) {
+              layers::technologyLayerAdd(l,2); // conductor layer
+              layers::technologyLayerSetParameter(l,0,0); // set to lowerst level (0)
+              layers::technologyLayerSetParameter(l,1,200);  // default width for poly1 in database units
+              layers::technologyLayerSetParameter(l,2,200);  // default spacing for poly1
+        }
+        l=layers::findLayer("CONT");
+        if (l>=0) {
+                layers::technologyLayerAdd(l,1); // via layer
+                layers::technologyLayerSetParameter(l,0,1); // level1
+                layers::technologyLayerSetParameter(l,1,100); // via size
+                layers::technologyLayerSetParameter(l,2,20); // space via/conductor to upper layer
+                layers::technologyLayerSetParameter(l,3,25); // space  via/conductor to lower layer
+                layers::technologyLayerSetParameter(l,4,100); // space between to vias
+                layers::technologyLayerSetParameter(l,5,0); // square via 0,  round/sqare via 1 round via 2
+        }
+        l=layers::findLayer("MET1");
+        if (l>=0) {
+                layers::technologyLayerAdd(l,2);  // conductor layer
+                layers::technologyLayerSetParameter(l,0,2); // level2
+                layers::technologyLayerSetParameter(l,1,140);
+                layers::technologyLayerSetParameter(l,2,130);
+        }
+        l=layers::findLayer("VIA1");
+        if (l>=0) {
+                layers::technologyLayerAdd(l,1);  // via layer
+                layers::technologyLayerSetParameter(l,0,3); // level3
+                layers::technologyLayerSetParameter(l,1,100);
+                layers::technologyLayerSetParameter(l,2,20);
+                layers::technologyLayerSetParameter(l,3,20);
+                layers::technologyLayerSetParameter(l,4,100);
+                layers::technologyLayerSetParameter(l,5,0);
+        }
+        l=layers::findLayer("MET2");
+        if (l>=0) {
+                layers::technologyLayerAdd(l,2);
+                layers::technologyLayerSetParameter(l,0,4);
+                layers::technologyLayerSetParameter(l,1,140);
+                layers::technologyLayerSetParameter(l,2,130);
+        }
+        l=layers::findLayer("VIA2");
+        if (l>=0) {
+                layers::technologyLayerAdd(l,1);
+                layers::technologyLayerSetParameter(l,0,5);
+                layers::technologyLayerSetParameter(l,1,100);
+                layers::technologyLayerSetParameter(l,2,20);
+                layers::technologyLayerSetParameter(l,3,20);
+                layers::technologyLayerSetParameter(l,4,100);
+                layers::technologyLayerSetParameter(l,5,0);
+        }
+        l=layers::findLayer("MET3");
+        if (l>=0) {
+                layers::technologyLayerAdd(l,2);
+                layers::technologyLayerSetParameter(l,0,6);
+                layers::technologyLayerSetParameter(l,1,140);
+                layers::technologyLayerSetParameter(l,2,130);
+        }
+        l=layers::findLayer("VIA3");
+        if (l>=0) {
+                layers::technologyLayerAdd(l,1);
+                layers::technologyLayerSetParameter(l,0,7);
+                layers::technologyLayerSetParameter(l,1,100);
+                layers::technologyLayerSetParameter(l,2,20);
+                layers::technologyLayerSetParameter(l,3,20);
+                layers::technologyLayerSetParameter(l,4,100);
+                layers::technologyLayerSetParameter(l,5,0);
+        }
+        l=layers::findLayer("MET4");
+        if (l>=0) {
+                layers::technologyLayerAdd(l,2);
+                layers::technologyLayerSetParameter(l,0,8);
+                layers::technologyLayerSetParameter(l,1,140);
+                layers::technologyLayerSetParameter(l,2,130);
+        }
+        l=layers::findLayer("VIA4");
+        if (l>=0) {
+                layers::technologyLayerAdd(l,1);
+                layers::technologyLayerSetParameter(l,0,9);
+                layers::technologyLayerSetParameter(l,1,100);
+                layers::technologyLayerSetParameter(l,2,20);
+                layers::technologyLayerSetParameter(l,3,20);
+                layers::technologyLayerSetParameter(l,4,100);
+                layers::technologyLayerSetParameter(l,5,0);
+        }
+        l=layers::findLayer("MET5");
+        if (l>=0) {
+                layers::technologyLayerAdd(l,2);
+                layers::technologyLayerSetParameter(l,0,8);
+                layers::technologyLayerSetParameter(l,1,140);
+                layers::technologyLayerSetParameter(l,2,130);
+        }
+        l=layers::findLayer("VIA5");
+        if (l>=0) {
+                layers::technologyLayerAdd(l,1);
+                layers::technologyLayerSetParameter(l,0,9);
+                layers::technologyLayerSetParameter(l,1,100);
+                layers::technologyLayerSetParameter(l,2,20);
+                layers::technologyLayerSetParameter(l,3,20);
+                layers::technologyLayerSetParameter(l,4,100);
+                layers::technologyLayerSetParameter(l,5,0);
+        }
+        l=layers::findLayer("METL");
+        if (l>=0) {
+                layers::technologyLayerAdd(l,2);
+                layers::technologyLayerSetParameter(l,0,10);
+                layers::technologyLayerSetParameter(l,1,140);
+                layers::technologyLayerSetParameter(l,2,130);
+        }
+}
+
+
+int main(){
+  setup::autoLoadLayerFiles=true;
+  setup::lefCellBoundaryLayer=62;
+  setup::openAccessMapLayerNames=true;
+  setup::defaultTextWidth= 500;
+  setup::gdsAutoMapDatatypes=false;
+  setup::oasisAutoMapDatatypes=false;
+  setup::gdsMapLayer=false;
+  setup::oasisMapLayer=false;
+  setup::autoDisableUnusedLayers=false;
+  if (!setup::callbackPath.contains(".")) {
+        setup::callbackPath.append(".");
+        // search the autoload.file in the OpenAccess library folder. If not found any tcl file will be loaded in that folder
+ }
+ setup::setInstanceColor(230,230,230); // all setup parameter can be used as descripbed at https://layouteditor.org/layoutscript/api/setup
+ setTechnologyLayer(); // set the connectivity for wire highlighting and width and space of the wire layers for the wireing mode
+ 
+ layout->setShortcut(1018,"shift+N"); // adjust shortcuts, feature code are listed at https://layouteditor.org/info/featurecodes , existing shortcuts at https://layouteditor.org/info/shortcuts
+ schematic->setShortcut(4002,"shift+L"); // use schematic to adjsut shortcut in the schematic windows
+ 
+return 0;
+}
+ 

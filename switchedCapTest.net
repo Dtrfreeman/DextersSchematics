@@ -1,0 +1,30 @@
+* C:\Users\User\Documents\LTspiceXVII\switchedCapTest.asc
+V1 Vdd 0 9
+V2 Vss 0 -9
+V3 Clk1 0 PULSE(0 5 0 1ns 1ns {0.3*tclk} {tclk})
+V5 N003 0 SINE(0 1 1000)
+V4 Clk2 0 PULSE(0 5 {0.5*tclk} 1ns 1ns {0.3*tclk} {tclk})
+S1 P001 N003 Clk1 0 mysw SW
+S2 0 P001 Clk2 0 mysw SW
+C1 N006 P001 1n
+S3 0 N006 Clk2 0 mysw SW
+S4 N006 N004 Clk1 0 mysw SW
+C2 0 N004 100n
+XU1 P002 N002 Vdd Vss N002 level.2 Avol=1Meg GBW=10Meg Slew=10Meg ilimit=25m rail=0 Vos=0 phimargin=45 en=0 enk=0 in=0 ink=0 Rin=500Meg
+S5 P003 N002 Clk1 0 mysw SW
+S6 0 P003 Clk2 0 mysw SW
+C3 N007 P003 1n
+S7 0 N007 Clk2 0 mysw SW
+S8 N007 N005 Clk1 0 mysw SW
+C4 0 N005 100n
+XU2 P004 N001 Vdd Vss N001 level.2 Avol=1Meg GBW=10Meg Slew=10Meg ilimit=25m rail=0 Vos=0 phimargin=45 en=0 enk=0 in=0 ink=0 Rin=500Meg
+R1 P004 N005 10k
+R2 P002 N004 10k
+C5 P002 0 1n
+C6 P004 0 1n
+.tran 0.002
+.model mysw SW(Ron=220 Roff=220Meg Vt=1 Vh=0.4)
+.step oct param tclk 10u 1u 10
+.lib UniversalOpamps2.sub
+.backanno
+.end

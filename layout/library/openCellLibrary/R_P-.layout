@@ -1,0 +1,76 @@
+#!/usr/bin/layout
+#name=resistor
+#help=resistor in the lightly doped part of the bipolyar well
+#include "oclCore.layout"
+
+#parameter value "200"
+#parameterInt meander "1"
+
+int main(){
+checkSetup();
+double r=iPDK_getParameterValue("value").toDoubleFromEng();
+int n=iPDK_getParameterValue("meander");
+string cellname="R_p-_"+iPDK_getParameterHash(); 
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+string val,meander;val.setNum(r);meander.setNum(n);
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+if ((r<40)||(r>100000)){
+    layout->drawing->p(0,0);
+    layout->drawing->text("resistance out of range");
+    return 0;
+}
+layout->drawing->activeLayer=28;
+double rsq=40; //resistance in ohm/square
+int length=(r/meander-10)/rsq*2500; //length in databaseuntis (10ohm contanct resistance)
+int step=5000;
+int in;
+for (in=0;in<n;in++){
+    layout->drawing->activeLayer=contLayer;
+    layout->drawing->point(in*step,0);
+    layout->drawing->point(in*step+500,-500);
+    layout->drawing->box();
+    layout->drawing->point(in*step,length);
+    layout->drawing->point(in*step+500,length+500);
+    layout->drawing->box();
+    layout->drawing->activeLayer=44; //p- layer
+    layout->drawing->point(in*step-1000,-1500);
+    layout->drawing->point(in*step+1500,length+1500);
+    layout->drawing->box();
+    if (in==0){
+        layout->drawing->activeLayer=m1Layer;
+        layout->drawing->point(-100,100);
+        layout->drawing->point(600,-600);
+        layout->drawing->box();
+        layout->drawing->point(-100,100);
+        layout->drawing->text("A");
+    }
+    int pos=in%2;
+    if (pos==0) pos=length+500;
+    else pos=0;
+    if (in==n-1){
+        layout->drawing->activeLayer=m1Layer;
+        layout->drawing->point(in*step-100,100+pos);
+        layout->drawing->point(in*step+600,-600+pos);
+        layout->drawing->box();
+        layout->drawing->point(in*step-100,100+pos);
+        layout->drawing->text("B");
+    } else {
+        layout->drawing->activeLayer=m1Layer;
+        layout->drawing->point(in*step-100,100+pos);
+        layout->drawing->point(in*step+600+step,-600+pos);
+        layout->drawing->box();
+    }
+}
+
+layout->drawing->activeLayer=42; //island layer
+layout->drawing->point(-5000,-5500);
+layout->drawing->point(n*step+500,length+5500);
+layout->drawing->box();
+
+
+}

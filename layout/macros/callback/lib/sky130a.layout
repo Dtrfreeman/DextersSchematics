@@ -1,0 +1,33 @@
+#!/usr/bin/layout
+#name=Set Datatype for Metal Layers
+#help=sets datatype of metal layer to 20 for drawing and 16 for pins
+
+
+int main(){ 
+   layout->showStatus("adjust datatype of metal layer");
+   cellList *cl=layout->drawing->firstCell;
+    while (cl!=NULL) {
+      if (cl->thisCell!=NULL){
+         elementList *el=cl->thisCell->firstElement;
+         while (el!=NULL) {
+            if (el->thisElement!=NULL)  {
+                int layer=el->thisElement->layerNum;
+                if ((layer>66)&&(layer<73)){
+                          if (el->thisElement->datatype==0) {
+                                if (el->thisElement->isText())el->thisElement->datatype=16;
+                                else if (el->thisElement->isShape())el->thisElement->datatype=20;
+                          } else if (layout->drawing->currentCell!=cl->thisCell) break; // don't adjust already adjusted cells ecept the current displayed cell
+                }
+            }
+            el=el->nextElement;
+         }
+      }
+      cl=cl->nextCell;
+    }
+}
+
+
+
+
+
+

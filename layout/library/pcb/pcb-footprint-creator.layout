@@ -1,0 +1,86 @@
+#!/usr/bin/layout
+#name=created 02.01.16
+#help=convert KiCAD footprints to GDS format
+
+ 
+
+int main(){
+
+ string baseDir="/home/thies/Downloads/library-repos/";
+ string outDir="/home/thies/layout/library/pcb";
+
+  setup::circularDefault=15;
+  setup::showGrid=false;
+
+file f;
+f.findDir(baseDir,"*.pretty");
+//debug.clear();
+while (f.filename!="") {
+  layout->closeDesign();
+  file f2;
+  f2.find(f.filename+"/","*.kicad_mod");
+  while (f2.filename!=""){
+        //debug(f2.filename);
+        layout->drawing->importFile(f2.filename);
+        f2.findNext();
+   }
+  layout->drawing->stripEmptyCells();
+  string s=f.baseName();
+  s.remove(".pretty");
+  layout->drawing->saveFile(outDir+"/"+s+".oas");
+  f.findNext();
+}
+layout->closeDesign();
+// create catalog file
+string out;
+int num=0;
+f.find(outDir,"*.oas");
+int pass=0;
+while (f.filename!=""){
+      //debug(f2.filename);
+      layout->drawing->openFile(f.filename);
+      int i=f.filename.lastIndexOf("/");
+      string base=f.filename.mid(i+1);
+      if (base=="cross-section.gds") {f.findNext();continue;}
+      cellList *cl=layout->drawing->firstCell;
+      while (cl!=NULL) {
+         if (cl->thisCell!=NULL) 
+           if (cl->thisCell->cellName!="noname"){
+             elementList *el=cl->thisCell->firstElement;
+             int pins=0;
+             int count=0;
+             while (el!=NULL) {
+                   if (el->thisElement!=NULL) {             
+                    if (((el->thisElement->layerNum==28) ||(el->thisElement->layerNum==60))&&
+                         (el->thisElement->isText() )){
+                             count++;
+                             int n= el->thisElement->getName().toInt();
+                             if (n>pins) pins=n;
+                    }}
+             el=el->nextElement;
+             }
+             string sPin; sPin.setNum(pins);
+             if (pins<=0) {sPin.setNum(count);}
+             num++;
+             string sPng; sPng.setNum(num);
+             layout->drawing->setCell(cl->thisCell);
+             layout->drawing->scaleFull();
+             layout->drawing->saveScreenshot(outDir+"/png/"+sPng+".png");
+             out=out+cl->thisCell->cellName+","+base+",png/"+sPng+".png,"+sPin+"\n";
+         }
+         cl=cl->nextCell;
+      }
+      f.findNext();
+      if ((pass==0)&&(f.filename=="")){
+             f.find(outDir,"*.gds");
+             pass=1;
+      }
+ }
+f.filename=outDir+"/catalog";
+f.open(false);
+f.write(out);
+f.close();
+layout->closeDesign();
+//debug(out);
+ //debug.show();
+}

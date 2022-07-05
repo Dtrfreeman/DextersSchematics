@@ -1,0 +1,45 @@
+#!/usr/bin/layout
+#name=callback ltspice simulation
+#help=callback macro called after completing the ltspice simualtion
+
+string temp;
+
+int main(){
+  file f;
+  temp=f.tempPath()+"/";
+  f.filename=temp+"ltspice-netlist.raw";
+  if (f.exists()){
+    textEdit *te=project::getCentralTextEditor();
+    te->open(temp+"ltspice-netlist.raw");
+    te->drawing->setLexer("");
+    te->drawing->title="LTSpice simulation results";
+    te->drawing->setModifySaved();
+    plotData pd;
+    pd.setSource(temp+"ltspice-netlist.raw","ltspice");
+    schematic->drawing->setProbeMode(&pd);
+  }
+  f.filename=temp+"ltspice-netlist.op.raw";
+  if (f.exists()){
+    textEdit *te=project::getCentralTextEditor();
+    te->open(temp+"ltspice-netlist.op.raw");
+    te->drawing->setLexer("");
+    te->drawing->title="LTSpice op results";
+    te->drawing->setModifySaved();
+  }
+  f.filename=temp+"ltspice-netlist.log";
+  if (f.exists()){
+    textEdit *te=project::getCentralTextEditor();
+    te->open(temp+"ltspice-netlist.log");
+    if (te->drawing->text().size()<2) {
+       // for LTSpice XVII use UTF-16 encoding
+       te->drawing->openFile(temp+"ltspice-netlist.log","UTF-16");
+    }
+    te->drawing->setLexer("");
+    te->drawing->title="LTSpice report";
+    te->drawing->setModifySaved();
+  }
+  return 0;
+}
+
+
+ 

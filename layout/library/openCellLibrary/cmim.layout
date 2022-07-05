@@ -1,0 +1,116 @@
+#!/usr/bin/layout
+#name=gard
+#help=generate a gard
+
+#include "oclCore.layout"
+
+void fillCmimVia(point p, int length, int width, int orent){
+int contEdge=25;
+int contSpace=100;
+int contSize=100;
+int ncl=(length-2*contEdge+contSpace)/(contSpace+contSize);
+int ncw=(width-2*contEdge+contSpace)/(contSpace+contSize);
+if (ncl<1) return;
+if (ncw<1) return;
+if (orent==0) {
+    layout->drawing->activeLayer=cmimViaLayer;
+    int i,j;
+    int dif=length-ncl*contSize-(ncl-1)*contSpace-2*contEdge;
+    for (i=0;i<ncl;i++){
+      int y=-i*(contSpace+contSize)-contEdge+p.y();
+      if (i>ncl/2) y-=dif;
+      for (j=0;j<ncw;j++){
+       if ((i%2)==0){
+         layout->drawing->point(p.x()+contEdge+j*(contSpace+contSize),y);
+         layout->drawing->pointRel(contSize,-contSize);
+         layout->drawing->box();
+       }
+       else {
+           layout->drawing->point(p.x()+width-contEdge-j*(contSpace+contSize),y);
+           layout->drawing->pointRel(-contSize,-contSize);
+           layout->drawing->box();
+       }
+      }
+    }
+}
+else if (orent==1) {
+    layout->drawing->activeLayer=cmimViaLayer;
+    int i,j;
+    int dif=length-ncl*contSize-(ncl-1)*contSpace-2*contEdge;
+    for (i=0;i<ncl;i++){
+      int x=i*(contSpace+contSize)+contEdge+p.x();
+      if (i>ncl/2) x+=dif;
+      for (j=0;j<ncw;j++){
+       if ((i%2)==0){
+         layout->drawing->point(x,p.y()-contEdge-j*(contSpace+contSize));
+         layout->drawing->pointRel(contSize,-contSize);
+         layout->drawing->box();
+       }
+       else {
+           layout->drawing->point(x,p.y()-width+contEdge+j*(contSpace+contSize));
+           layout->drawing->pointRel(contSize,contSize);
+           layout->drawing->box();
+       }
+      }
+    }
+}
+}
+
+
+#parameter width "6u"
+#parameter length "4u"
+
+int main(){
+checkSetup();
+int overlap=100;
+int width=databaseunits(iPDK_getParameterValue("width"));
+int length=databaseunits(iPDK_getParameterValue("length"));
+string cellname="cmim_"+iPDK_getParameterHash();
+if (layout->drawing->existCellname(cellname)) {
+        layout->drawing->setCell(cellname);
+        return 0;
+        }
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cl->thisCell);
+layout->drawing->activeLayer=m3Layer;
+layout->drawing->point(-overlap,-overlap);
+layout->drawing->point(width+overlap,length+overlap);
+layout->drawing->box();
+layout->drawing->activeLayer=cmimLayer;
+layout->drawing->point(0,0);
+layout->drawing->point(width,length);
+layout->drawing->box();
+layout->drawing->activeLayer=m4Layer;
+layout->drawing->point(width/2,length/2);
+layout->drawing->text("top");
+layout->drawing->activeLayer=m3Layer;
+layout->drawing->point(0,0);
+layout->drawing->text("bot");
+int step=500;
+int count=(width-150)/step;
+int start,end;
+start=width/2-75;
+end=width/2+75;
+if (count>1) {
+    int contLength=step*count+150;
+    start=width/2-contLength/2;
+    end=width/2+(contLength-contLength/2);
+    layout->drawing->activeLayer=m4Layer;
+    layout->drawing->point(start,length/2-70);
+    layout->drawing->point(end,length/2+70);
+    layout->drawing->box();
+}
+count=start;
+do {
+    point p;
+    p.set(count,length);
+    fillCmimVia(p,length,150,0);
+    layout->drawing->activeLayer=m4Layer;
+    layout->drawing->point(count,0);
+    layout->drawing->point(count+150,length);
+    layout->drawing->box();
+    count+=step;
+} while (count<end);
+
+}

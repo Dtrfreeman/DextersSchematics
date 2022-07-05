@@ -1,0 +1,22 @@
+#!/usr/bin/layout
+#name=fillet a just creared polygon
+#help=fillet a just creared polygon
+
+int main(){
+//create the polygon
+layout->drawing->point(13900,37400);
+layout->drawing->point(13900,66225);
+layout->drawing->point(17100,66225);
+layout->drawing->point(17100,37400);
+layout->drawing->polygon();
+// select the last created polygon
+layout->drawing->currentCell->firstElement->thisElement->selectAll();
+// filletRound
+layout->drawing->currentCell->filletRoundSelect(500,0,0);
+
+// alternative way
+layout->drawing->currentCell->addRoundedBox(18900,37400,3200, 66225-37400,500, 3);
+
+
+}
+

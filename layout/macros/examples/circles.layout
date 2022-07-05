@@ -1,0 +1,33 @@
+#!/usr/bin/layout
+#name=read circles from file
+#help=reads and create circle from a file
+
+
+int main(){
+  file f;
+  f.filename="circles.txt";
+  bool b=true;
+  f.open(b);
+  string s=f.read();
+  f.close();
+  stringList sl=s.split("\n");
+  int i,k;
+  layout->drawing->clearPoints();
+  for(i=0;i<sl.size();i++){
+    if (sl.at(i).left(1)!="#"){
+      stringList sl2=sl.at(i).split(",");
+      if (sl2.size()>=3){
+	double x=sl2.at(0).toDouble();
+	double y=sl2.at(1).toDouble();
+	double r=sl2.at(2).toDouble();
+	int layer=1;
+	if (sl2.size()>3) layer=sl2.at(3).toInt();
+	layout->drawing->activeLayer=layer;
+	layout->drawing->p(x,y);
+	layout->drawing->p(x,y+r);
+	layout->drawing->circle();
+      }
+    }
+  }
+  layout->drawing->scaleFull();
+}

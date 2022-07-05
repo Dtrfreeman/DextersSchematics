@@ -1,0 +1,49 @@
+#!/usr/bin/layout
+#name=comb
+#help=generate a comb
+
+//parameter with default value
+#parameter length "30µm"
+#parameter width "5µm"
+#parameter space "2µm"
+#parameter base "10µm"
+#parameter layer "1"
+#parameterInt turns 8
+
+#include "shapelib.layout"
+
+int main(){
+int space=databaseunits(iPar("space"));
+int length=databaseunits(iPar("length"));
+int width=databaseunits(iPar("width"));
+int base=databaseunits(iPar("base"));
+int turns=iPar("turns");
+int layer=getLayer(iPar("layer"));
+string cellname="comb"+userunits(base)+"_"+userunits(width)+"_"+userunits(space)+"_"+userunits(length)+"_"+iPar("turns")+"_"+layer;
+if (layout->drawing->existCellname(cellname)) {
+	layout->drawing->setCell(cellname);
+	return 0;
+	}
+cellList *cl=layout->drawing->addCell();
+cl->thisCell->cellName=cellname;
+layout->drawing->setCell(cellname);
+layout->drawing->activeLayer=layer;
+int i;
+int pos=0;
+for (i=0;i<turns;i++){
+	layout->drawing->point(pos,0);
+	layout->drawing->point(pos+width,length);
+	layout->drawing->box();
+	pos+=width+space;
+	}
+pos-=space;
+layout->drawing->point(0,0);
+layout->drawing->point(pos,-base);
+layout->drawing->box();
+layout->drawing->selectAll();
+layout->drawing->point(0,0);
+layout->drawing->centerXY();
+layout->drawing->deselectAll();
+}
+
+

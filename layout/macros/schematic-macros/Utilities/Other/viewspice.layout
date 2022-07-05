@@ -1,0 +1,21 @@
+#!/usr/bin/layout
+#name=View Spice Netlist
+#help=Displays the Spice Netlist in a TextEditor
+
+void showNetlist(string net){
+  string s=schematic->generateNetList(net);
+  textEdit *te=project::getCentralTextEditor();
+  te->newDoc();
+  te->drawing->setText(s);
+  te->drawing->setLexer("spice");
+  te->drawing->title=net+" netlist";
+}
+
+int main(){
+  setup::checkNetlistSetup("spice");
+  showNetlist("spice"); 
+  return 0;
+}
+
+
+ 

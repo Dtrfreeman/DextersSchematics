@@ -1,0 +1,213 @@
+#!/usr/bin/layout
+#name=Pleace && Route
+#help=place and route the current displayed cell with openROAD
+
+#include "../../../../callback/lib/openroad-tools.layout"
+
+
+int main(){
+layout->showStatus("place & route started");
+// search callback macro to be called after completing openROAD
+file f;
+string callbackDir=f.currentPath()+"/../../../../callback/";
+if (!f.isDir(callbackDir)) return showError("Library files not found. Please make sure that the 'callback/lib' folder exists at the correct place.");
+
+// loads project settings from the "ProjectSettings.tcl" file
+process::executeTcl("if {[llength [namespace which ProjectSettings]]} {} else {\nsource "+file::projectPath()+"/ProjectSettings.tcl \n}\nif {[info exists Project]} { } else {ProjectSettings}\n");
+// read project setting data
+string technology=process::executeTcl("set i 0\nforeach j $Project {\nset value [lindex $j 0]\nif { $value==\"Technology\" } { puts [lindex $j 1] }\nincr i\n}\n").trimmed();
+string PRIMLIB=process::executeTcl("set i 0\nforeach j $Project {\nset value [lindex $j 0]\nif { $value==\"PRIMLIB\" } { puts [lindex $j 1] }\nincr i\n}\n").trimmed();
+string libCode=process::executeTcl("set i 0\nforeach j $Project {\nset value [lindex $j 0]\nif { $value==\"libCode\" } { puts [lindex $j 1] }\nincr i\n}\n").trimmed();
+stringList digitalLibs=process::executeTcl("set i 0\nforeach j $Project {\nset value [lindex $j 0]\nif { $value==\"DigitalLibs\" } { puts [lindex $j 1] }\nincr i\n}\n").trimmed().remove("\"").split(" ");
+if (technology.size()<1) return showError("Settings from the ProjectSetting.tcl file cannot be read. Make sure that it exists and you have started the LayoutEditor from your project folder.");
+if (digitalLibs.at(0).size()<1) return showError("No digital library defined. Please set it inside the ProjectSettings.tcl file in your project folder.");
+
+cout("your project settings:\n");
+cout("technology: "+technology+"\n");
+cout("digital library: ");
+for (int i=0;i<digitalLibs.size();++i){
+    if (i>0) cout(", ");
+    cout(digitalLibs.at(i));
+    if (i==0) cout("(will be used)");
+}
+cout("\n");
+
+// search library path from loaded lib in the SchematicEditor
+stringList sl=components::getLibs();
+int i;
+string path="";
+string lib="";
+for(i=0; i<sl.size();i++){
+    int pos=sl.at(i).indexOf(digitalLibs.at(0),0);
+    //cout(sl.at(i)+"\n");
+    if (pos>=0) {
+        path=components::getPath(sl.at(i));
+        lib=digitalLibs.at(0);
+        }
+}
+//cout(path+"\n");
+if (!f.isDir(path)) return showError("Digital Library "+digitalLibs.at(0)+" not found. Please add it to the library in the SchematicEditor.");
+
+// search required PDK files
+
+string root=path;
+int pos=root.indexOf(technology,0);
+if (pos>0) root=root.left(pos+technology.size());
+string digiPath=path;
+pos=digiPath.indexOf(digitalLibs.at(0),0);
+if (pos>0) digiPath=digiPath.left(pos+digitalLibs.at(0).size());
+
+string techpath=searchPath(root+"/cadence","MAX(v*);techLEF;MAX(v*)");
+string add="";
+if(digitalLibs.at(0).contains("_HD")) add="_HD";
+//f.find(techpath,technology+"_xx"+libCode.mid(2)+add+"*");
+process::setEnv("LEF_TECH",getTLEF(techpath,technology,libCode,add));
+string libpath=searchPath(digiPath,"MAX(v*);LEF;MAX(v*)");
+f.find(libpath,technology+"_"+digitalLibs.at(0)+".lef");
+process::setEnv("LEF_LIB",f.filename);
+libpath=searchPath(digiPath,"MAX(v*);MAX(liberty*);MAX(v*);MAX(*)");
+f.find(libpath,"*.lib");
+process::setEnv("LIBERTY",f.filename);
+
+// set environment data to forward it to openroad
+process::setEnv("PDK_ROOT",root);
+process::setEnv("PDK",technology);
+process::setEnv("STD_CELL_LIBRARY",lib);
+process::setEnv("STD_CELL_PATH",path);
+process::setEnv("DESIGN",layout->drawing->currentCell->cellName);
+process::setEnv("LIBCODE",libCode);
+process::setEnv("LCODE",getLetterCode(lib));
+
+f.filename=layout->filename;
+string wpath=f.path();
+if (wpath==".") wpath=f.tempPath();
+if (!file::isDir(wpath)) wpath=f.tempPath();
+if (wpath.contains(" ")) {
+    if (process::isWindows()){
+      wpath=process::getEnv("TEMP");
+    } else {
+      wpath=f.tempPath();
+    }
+}
+string run; run.setDateTime("yyyyMMdd-hhmmss");
+if (wpath.right(1)=="/") workPath=wpath+run;
+else workPath=wpath+"/"+run;
+if (!file::isDir(wpath+"/"+run)) file::mkDir(wpath,run);
+process::setEnv("WORK_ROOT",workPath);
+
+// set die area
+layout->drawing->currentCell->deselectAll();
+layout->drawing->currentCell->selectLayer(setup::lefCellBoundaryLayer);
+point max=layout->drawing->currentCell->maximumSelect();
+point min=layout->drawing->currentCell->minimumSelect();
+layout->drawing->currentCell->invertSelect();
+layout->drawing->currentCell->deleteSelect();
+if (min.x()<0) min.setX(0);
+if (min.y()<0) min.setY(0);
+if (max.y()<=0) {
+    int devices=0;
+    netList *nl=layout->netlistTool->getSchematicNetList(layout->drawing->currentCell->cellName);
+    if (nl!=NULL) devices=nl->devicesCount();
+    else {
+        nl=layout->netlistTool->getLoadedNetList(layout->drawing->currentCell->cellName);
+        if (nl!=NULL) devices=nl->devicesCount();
+    }
+    if (devices==0) return showError("Current displayed cell does not contain a netlist.");
+    else if (devices<20) {
+        if (technology.mid(2).toInt()>30){ // 300nm process
+            process::setEnv("DIEAREA","0 ; 0 ; 80 ; 80");
+            process::setEnv("COREAREA","5 ; 14 ; 75 ; 75");
+        } else{
+            process::setEnv("DIEAREA","0 ; 0 ; 50 ; 50");
+            process::setEnv("COREAREA","5 ; 5 ; 45 ; 45");
+        }
+    } else {
+        process::setEnv("DIEAREA","auto");
+        process::setEnv("COREAREA","auto");
+    }
+} else {
+   string s1,s2,s3,s4;
+   s1.setNum(min.x()/1000);
+   s2.setNum(min.y()/1000);
+   s3.setNum(max.x()/1000);
+   s4.setNum(max.y()/1000);
+   process::setEnv("DIEAREA",s1+";"+s2+";"+s3+";"+s4);
+   s1.setNum(min.x()/1000+5);
+   s2.setNum(min.y()/1000+5);
+   s3.setNum(max.x()/1000-5);
+   s4.setNum(max.y()/1000-5);
+   process::setEnv("COREAREA",s1+";"+s2+";"+s3+";"+s4);
+}
+
+
+// storing LEF/DEF file
+
+
+setup::defSpecialnets.clear();
+setup::defSpecialnets.append("vdd");
+setup::defSpecialnets.append("gnd");
+setup::lefPitchHorizontal=280;
+setup::lefPitchVertical=380;
+setup::lefExtra="";
+setup::defExtra="";
+setup::defExtraLibs.clear();
+setup::defExtraLibs.append(lib);
+setup::defExtraLibs.append("TECH_"+technology.toUpper());
+
+stringList oaLibs=components::getOaLibs();
+if (!oaLibs.contains("TECH_"+technology.toUpper())) return showError("library "+"TECH_"+technology.toUpper()+" is missing in your libs.def file.");
+if (!oaLibs.contains(lib)) return showError("library '"+lib+"' is missing in your libs.def file.");
+if (add!="") {
+ if (!oaLibs.contains("TECH_"+technology.toUpper()+add)) return showError("library '"+"TECH_"+technology.toUpper()+add+"' is missing in your libs.def file.");
+}
+
+file f;
+string tempPath=f.tempPath();
+if (tempPath.contains(" ")) if (process::isWindows())tempPath=process::getEnv("TEMP");
+
+layout->drawing->saveFile(workPath+"/router.lef");
+layout->drawing->saveFile(workPath+"/router.def");
+
+process::setEnv("LEF",workPath+"/router.lef");
+process::setEnv("DEF",workPath+"/router.def");
+process::setEnv("TEMP_DIR",tempPath);
+
+// removed previous output
+f.filename=workPath+"/placedrouted.def";
+if (f.exists()) f.remove();
+
+mergeLEF(process::getEnv("LEF_TECH"),process::getEnv("LEF_LIB"));
+string scriptPath=getScriptPath("placeroute-xfab",callbackDir);
+process::setEnv("SCRIPT_DIR",scriptPath);
+if (scriptPath=="") return showError("OpenROAD script not found.");
+process::setEnv("POSTPROCESSOR","");
+
+layout->showProgress("start OpenROAD");
+// starting openroad
+if (process::isWindows()) {  // use WIndows subsystem for Linux
+    // forward environment to WSL
+    process::setEnv("WSLENV","PDK_ROOT/p:PDK/u:STD_CELL_LIBRARY/u:LIBCODE/u:LCODE/u:DESIGN/u:LEF/p:DEF/p:LEF_LIB/p:LIBERTY/p:SCRIPT_DIR/p:WORK_ROOT/p:TEMP_DIR/p:LEF_MERGED/p:LEF_TECH/p:DIEAREA/u:COREAREA/u:LD_LIBRARY_PATH/p");
+    bool b;
+    stringList sl;
+    sl.append("openroad");
+    sl.append("-exit");
+    string fn=filenameToWsl(scriptPath+"/placeroute-xfab.tcl");
+    sl.append("\""+fn+"\"");
+    b=process::externalTool("/usr/local/bin/","wsl",sl,callbackDir+"placeroute.layout",true);
+    if (!b) b=process::externalTool("/usr/bin/","wsl",sl,callbackDir+"placeroute.layout",true);
+    if (!b) layout->showMessage("","Windows Subsystem for Linux (WSL) ist not installed on your system.\nPlease activate and install it. See manuel ( www.layouteditor.org ) for more details.");
+    else layout->showStatus("OpenROAD started");
+}
+else {
+    bool b;
+    stringList sl;
+    sl.append("-exit");
+    sl.append("\""+scriptPath+"/placeroute-xfab.tcl\"");
+    //sl.append("-gui");
+    b=process::externalTool("/usr/local/bin/","openroad",sl,callbackDir+"placeroute.layout",true);
+    if (!b)  b=process::externalTool("/usr/bin/","openroad",sl,callbackDir+"placeroute.layout",true);
+    if (!b) layout->showMessage("","'OpenROAD' was not found on your system.\nPlease download and install it ( /https://theopenroadproject.org/ )\nor adjust the path of it in this macro.");
+    else layout->showStatus("OpenROAD started");
+}
+
+}

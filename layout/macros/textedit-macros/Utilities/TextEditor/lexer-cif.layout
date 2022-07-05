@@ -1,0 +1,11 @@
+#!/usr/bin/layout
+#name=CIF
+#help=Highligh the current file for CIF
+
+string temp;
+
+
+int main(){
+
+text->setLexer("CIF");
+}

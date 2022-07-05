@@ -1,0 +1,78 @@
+#!/usr/bin/layout
+#name=DRC (via+conductor)
+#help=Design Rule Check for the standard PCB setup.
+
+int globalVia;
+int minViaRing;
+
+void drcConductor(int layerNum){
+  layout->drcTool->ruleName= "Minimum Size on "+layers::num[layerNum].name;
+  int i=layers::technologyLayerConductorSize(layerNum)-1;
+  if (i>0) layout->drcTool->minimumSize(i,layerNum,true);
+
+  layout->drcTool->ruleName= "Minimum Spacing on "+layers::num[layerNum].name;
+  i = layers::technologyLayerConductorSpaceing(layerNum)-1;
+  if (i>0) layout->drcTool->minimumElementDistance(i,layerNum,true);
+
+  if (globalVia>=0){
+     layout->drcTool->ruleName= "Global Via Ring for "+layers::num[layerNum].name;
+     if (minViaRing>0) layout->drcTool->inside(minViaRing,globalVia,layerNum);
+
+  }
+}
+
+void drcVia(int layerNum, int subLayer, int nextLayer){
+  layout->drcTool->ruleName= "Via Radius on "+layers::num[layerNum].name;
+  int i=layers::technologyLayerGetParameter(layerNum,1)/2-1;
+  if (i>0) layout->drcTool->circleRadiusOnLayer(i,0,layerNum);
+
+  if (subLayer>0) {
+          layout->drcTool->ruleName= "Via Ring for "+layers::num[layerNum].name+"/"+layers::num[subLayer].name;
+          i=layers::technologyLayerGetParameter(layerNum,2)*0.97;
+          if (minViaRing>0) layout->drcTool->inside(i,layerNum,subLayer);
+  }
+  if (nextLayer>0) {
+          layout->drcTool->ruleName= "Via Ring for "+layers::num[layerNum].name+"/"+layers::num[nextLayer].name;
+          i=layers::technologyLayerGetParameter(layerNum,3)*0.97;
+          if (minViaRing>0) layout->drcTool->inside(i,layerNum,nextLayer);
+  }
+}
+
+
+int main(){
+  globalVia=layers::globalVia();
+  minViaRing=-1;
+  if (globalVia>=0) {
+        minViaRing=layers::technologyLayerGetParameter(globalVia,2)*0.97; // resulting due to non ideal circles
+        int diameter=layers::technologyLayerGetParameter(globalVia,1)-1;
+        layout->drcTool->ruleName= "Global Via Diameter";
+        layout->drcTool->circleRadiusOnLayer(diameter/2,0,globalVia);
+        }
+
+  layout->drcTool->clearDRC();
+  layout->drcTool->clearViolationView();
+  layout->drcTool->result="PCB-Design Rule Check\r\n\r\n";
+  layout->drcTool->errorLayer=0;
+  layers::num[0].enable();
+  layers::num[0].name="error";
+  layers::num[0].setColor(255,0,0);
+  int max=layers::maxLevel(); // maximal conductor level
+  int k;
+  int previousLayer=-1;
+  for (k=0;k<=max;k++){
+     int lay=layers::findLevel(k);
+     if (lay>=0){
+         if (layers::num[lay].isConductor()) {
+            drcConductor(lay);
+            previousLayer=lay;
+         }
+         if (lay!=globalVia)
+            if (layers::num[lay].isVia()) {
+                 int next=layers::findLevel(k+1);
+                 if (lay>=0) drcVia(lay,previousLayer,next); //no global only via
+                 previousLayer=-1;
+             }
+     }
+  }
+  layout->drcTool->showReport();
+}

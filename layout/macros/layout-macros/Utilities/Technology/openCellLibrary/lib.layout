@@ -1,0 +1,126 @@
+
+string libPath(){
+
+stringList sl=layout->netlistTool->getLibrary();
+int i;
+string path="";
+for(i=0; i<sl.size();i++){
+	int pos=sl.at(i).indexOf("openCellLibrary.lel",0);
+	if (pos>0) {
+		path=sl.at(i).left(pos);
+		}
+}
+return path;
+}
+
+string netlistFilename(){
+string fn=layout->filename;
+int pos=fn.lastIndexOf(".",-1);
+if (pos>=0) {
+	fn=fn.left(pos+1);
+		}
+else fn="noname.";
+fn+="sp";
+return fn;
+}
+
+bool checkUnits(){
+if (layout->drawing->databaseunits!=0.000000001) return false;
+if (layout->drawing->userunits!=0.001) return false;
+return true;
+}
+
+/*
+string parasitics(string cell){
+layout->drawing->setCell(cell);
+string parsi="";
+if (layout->drawing->currentCell->cellName!=cell) return parsi;
+netList *nl=layout->netlistTool->getExtracatedNetList(cell);
+if (nl==NULL) return parsi;
+int count=1;
+stringList sl=nl->getNodes();
+int i;
+for (i=0;i<sl.size();i++){
+	layout->drawing->currentCell->deselectAll();
+	int node=nl->getNode(sl.at(i));
+	double cap;
+	layout->drawing->currentCell->selectNodeOnLayer(node,11);
+	cap=layout->drawing->currentCell->areaSelect()*7.71613e-17;
+	layout->drawing->currentCell->deselectAll();
+	layout->drawing->currentCell->selectNodeOnLayer(node,13);
+	cap+=layout->drawing->currentCell->areaSelect()*4.08957e-17;
+	layout->drawing->currentCell->deselectAll();
+	layout->drawing->currentCell->selectNodeOnLayer(node,15);
+	cap+=layout->drawing->currentCell->areaSelect()*2.7745e-17;
+	layout->drawing->currentCell->deselectAll();
+	layout->drawing->currentCell->selectNodeOnLayer(node,17);
+	cap+=layout->drawing->currentCell->areaSelect()*2.07429e-17;
+	layout->drawing->currentCell->deselectAll();
+	layout->drawing->currentCell->selectNodeOnLayer(node,19);
+	cap+=layout->drawing->currentCell->areaSelect()*1.3527e-17;
+	layout->drawing->currentCell->deselectAll();
+	layout->drawing->currentCell->selectNodeOnLayer(node,21);
+	cap+=layout->drawing->currentCell->areaSelect()*1.00359e-17;
+	layout->drawing->currentCell->deselectAll();
+	string sCap,sNum;
+	sCap.setNum(cap*1e7,3);
+	sNum.setNum(count);
+	parsi+="C"+sNum+" "+sl.at(i)+" VSS "+sCap+"fF\r\n";
+	count++;
+}
+return parsi;
+}
+*/
+
+/*string getLibraryNetlist(string cellname){
+string s="";
+if (cellname=="") return s;
+file f;
+f.filename=libPath()+cellname+".sp";
+if (f.open(true)) 
+	{
+	s=f.read();
+	f.close();
+	int pos=s.indexOf(".SUBCKT",0);
+	int pos1=s.indexOf("\n",pos);
+	int pos2=s.indexOf(".ENDS",pos1);
+	s=s.mid(pos1+1,pos2-pos1-1);
+	}
+return s;
+}
+*/
+
+void layerSetup(){
+stringList sl=components::getLibs();
+int i;
+string path="";
+for(i=0; i<sl.size();i++){
+    int pos=sl.at(i).indexOf("openCellLibrary",0);
+    if (pos>=0) {
+        path=components::getPath(sl.at(i));
+        }
+}
+file f;
+f.filename=path+"/openCellLibrary/layerSetup.layout";
+//layout->showMessage("macrofilename",f.filename);
+if (f.exists())
+  layout->executeMacro(f.filename);
+else layout->showMessage("Layer Setup","openCellLibrary not found!\nPlease add it within the SchmeaticEditor.");
+
+}
+
+void checkSetup(){
+stringList sl=components::getLibs();
+int i;
+string path="";
+for(i=0; i<sl.size();i++){
+    int pos=sl.at(i).indexOf("openCellLibrary",0);
+    if (pos>=0) {
+        path=components::getPath(sl.at(i));
+        }
+}
+file f;
+f.filename=path+"/openCellLibrary/checkSetup.layout";
+if (f.exists())
+  layout->executeMacro(f.filename);
+}

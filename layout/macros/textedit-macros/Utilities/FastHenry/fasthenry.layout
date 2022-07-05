@@ -1,0 +1,26 @@
+#!/usr/bin/layout
+#name=Run
+#help=Starts a inductance calculation with fasthenry
+
+string temp;
+
+int main(){
+  file f;
+  stringList sl;
+  sl.append(text->drawing->fileName);
+  string callbackDir=f.currentPath()+"/../../../callback/";
+  bool b=process::externalTool("fasthenry","fasthenry",sl,callbackDir+"fasthenry-run.layout");
+  if (!b) {
+      string s1="**************************************************\n* FastHenry was not found on your system!\n* Install it or \n* adjust this macro with the text editor!\n**************************************************\n\n\n";
+      text->newFile();
+      text->setFile(text->countFiles()-1);
+      text->drawing->setText(s1);
+      text->drawing->setLexer("");
+      text->drawing->title="FastHenry problem";
+  }
+  return 0;
+
+}
+
+
+ 
